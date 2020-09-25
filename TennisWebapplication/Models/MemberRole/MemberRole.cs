@@ -12,7 +12,7 @@ namespace TennisWebapplication.Models
         public int RoleId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public virtual Member MemberReference { get; set; }
-        public virtual Role RoleReference { get; set; }
+        public virtual Member MemberNavigation { get; set; }
+        public virtual Role RoleNavigation { get; set; }
     }
 }

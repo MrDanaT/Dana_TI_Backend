@@ -22,7 +22,7 @@ namespace TennisWebapplication.Models
             builder.Property(i => i.HandoutDate).HasColumnType("date");
             builder.Property(i => i.PaymentDate).HasColumnType("date");
 
-            builder.HasOne(i => i.MemberReference)
+            builder.HasOne(i => i.MemberNavigation)
                 .WithMany(m => m.MemberFines)
                 .HasForeignKey(i => i.MemberId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken.

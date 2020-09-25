@@ -30,7 +30,7 @@ namespace TennisWebapplication.Models
         public virtual ICollection<MemberRole> MemberRoles { get; set; }
         public virtual ICollection<MemberFine> MemberFines { get; set; }
         public virtual ICollection<Game> Games { get; set; }
-        public virtual Gender GenderReference { get; set; }
+        public virtual Gender GenderNavigation { get; set; }
 
     }
 }

@@ -21,7 +21,7 @@ namespace TennisWebapplication.Models
             builder.Property(i => i.ScoreTeamMember).HasColumnType("tinyint");
             builder.Property(i => i.ScoreOpponent).HasColumnType("tinyint");
 
-            builder.HasOne(i => i.GameReference)
+            builder.HasOne(i => i.GameNavigation)
                 .WithMany(g => g.GameResults)
                 .HasForeignKey(i => i.GameId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken.

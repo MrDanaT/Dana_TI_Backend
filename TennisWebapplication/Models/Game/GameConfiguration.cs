@@ -21,12 +21,12 @@ namespace TennisWebapplication.Models
             builder.Property(i => i.LeagueId).HasColumnType("tinyint");
             builder.Property(i => i.Date).HasColumnType("date");
 
-            builder.HasOne(i => i.LeagueReference)
+            builder.HasOne(i => i.LeagueNavigation)
                 .WithMany(l => l.Games)
                 .HasForeignKey(i => i.LeagueId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken.
 
-            builder.HasOne(i => i.LeagueReference)
+            builder.HasOne(i => i.LeagueNavigation)
                 .WithMany(l => l.Games)
                 .HasForeignKey(i => i.LeagueId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken.

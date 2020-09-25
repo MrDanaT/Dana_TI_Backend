@@ -12,7 +12,7 @@ namespace TennisWebapplication.Models
         public byte SetNr { get; set; }
         public byte ScoreTeamMember { get; set; }
         public byte ScoreOpponent { get; set; }
-        public virtual Game GameReference { get; set; }
+        public virtual Game GameNavigation { get; set; }
 
     }
 }

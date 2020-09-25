@@ -13,9 +13,9 @@ namespace TennisWebapplication.Models
         public decimal Amount { get; set; }
         public DateTime HandoutDate { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public virtual Member MemberReference { get; set; }
+        public virtual Member MemberNavigation { get; set; }
 
-        // public virtual Game GameId { get; set; }
+        //  public virtual Game GameId { get; set; } // TODO: vragen.
 
     }
 }

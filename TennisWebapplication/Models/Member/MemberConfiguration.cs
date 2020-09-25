@@ -28,7 +28,7 @@ namespace TennisWebapplication.Models
             builder.Property(i => i.City).HasColumnType("varchar(30)");
             builder.Property(i => i.PhoneNr).HasColumnType("varchar(15)");
 
-            builder.HasOne(i => i.GenderReference)
+            builder.HasOne(i => i.GenderNavigation)
                 .WithMany(g => g.Members)
                 .HasForeignKey(i => i.GenderId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken.
