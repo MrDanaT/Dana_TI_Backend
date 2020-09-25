@@ -22,9 +22,18 @@ namespace TennisWebapplication.Models
         public DbSet<MemberRole> MemberRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder mB)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new GameConfiguration());
+            modelBuilder.ApplyConfiguration(new GameResultConfiguration());
+            modelBuilder.ApplyConfiguration(new GenderConfiguration());
+            modelBuilder.ApplyConfiguration(new LeagueConfiguration());
+            modelBuilder.ApplyConfiguration(new MemberConfiguration());
+            modelBuilder.ApplyConfiguration(new MemberFineConfiguration());
+            modelBuilder.ApplyConfiguration(new MemberRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
