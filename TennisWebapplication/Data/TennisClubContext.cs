@@ -22,10 +22,12 @@ namespace TennisWebapplication.Models
         public DbSet<MemberRole> MemberRoles { get; set; }
         public DbSet<Role> Roles { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder mB)
         {
-            modelBuilder.Entity<Gender>().Property(i => i.Id).HasMaxLength(3);
-            modelBuilder.Entity<Gender>().Property(i => i.Name).HasMaxLength(10);
+            mB.Entity<Gender>().HasKey(i => i.Id);
+            mB.Entity<Gender>().HasAlternateKey(i => i.Name);
+            mB.Entity<Gender>().Property(i => i.Id).HasColumnName("tinyint(3)");
+            mB.Entity<Gender>().Property(i => i.Name).HasColumnType("varchar(10)");
         }
     }
 }
