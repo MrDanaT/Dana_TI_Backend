@@ -24,10 +24,7 @@ namespace TennisWebapplication.Models
 
         protected override void OnModelCreating(ModelBuilder mB)
         {
-            mB.Entity<Gender>().HasKey(i => i.Id);
-            mB.Entity<Gender>().HasAlternateKey(i => i.Name);
-            mB.Entity<Gender>().Property(i => i.Id).HasColumnName("tinyint(3)");
-            mB.Entity<Gender>().Property(i => i.Name).HasColumnType("varchar(10)");
+
         }
     }
 }

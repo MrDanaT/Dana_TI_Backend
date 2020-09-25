@@ -9,10 +9,11 @@ namespace TennisWebapplication.Models
     {
         public int Id { get; set; }
         public int FineNumber { get; set; }
-        public virtual Member MemberId { get; set; }
+        public int MemberId { get; set; }
         public decimal Amount { get; set; }
         public DateTime HandoutDate { get; set; }
         public DateTime? PaymentDate { get; set; }
+        public virtual Member MemberReference { get; set; }
 
         // public virtual Game GameId { get; set; }
 
