@@ -15,18 +15,18 @@ namespace TennisWebapplication.Models
 
             builder.HasAlternateKey(i => i.FederationNr);
 
-            builder.Property(i => i.Id).HasColumnName("integer(10)");
-            builder.Property(i => i.FederationNr).HasColumnName("varchar(10)");
-            builder.Property(i => i.FirstName).HasColumnName("varchar(25)");
-            builder.Property(i => i.LastName).HasColumnName("varchar(35)");
-            builder.Property(i => i.BirthDate).HasColumnName("date");
-            builder.Property(i => i.GenderId).HasColumnName("tinyint(3)");
-            builder.Property(i => i.Address).HasColumnName("varchar(70)");
-            builder.Property(i => i.Number).HasColumnName("varchar(6)");
-            builder.Property(i => i.Addition).HasColumnName("varchar(2)");
-            builder.Property(i => i.Zipcode).HasColumnName("varchar(6)");
-            builder.Property(i => i.City).HasColumnName("varchar(30)");
-            builder.Property(i => i.PhoneNr).HasColumnName("varchar(15)");
+            builder.Property(i => i.Id).HasColumnType("integer(10)");
+            builder.Property(i => i.FederationNr).HasColumnType("varchar(10)");
+            builder.Property(i => i.FirstName).HasColumnType("varchar(25)");
+            builder.Property(i => i.LastName).HasColumnType("varchar(35)");
+            builder.Property(i => i.BirthDate).HasColumnType("date");
+            builder.Property(i => i.GenderId).HasColumnType("tinyint(3)");
+            builder.Property(i => i.Address).HasColumnType("varchar(70)");
+            builder.Property(i => i.Number).HasColumnType("varchar(6)");
+            builder.Property(i => i.Addition).HasColumnType("varchar(2)");
+            builder.Property(i => i.Zipcode).HasColumnType("varchar(6)");
+            builder.Property(i => i.City).HasColumnType("varchar(30)");
+            builder.Property(i => i.PhoneNr).HasColumnType("varchar(15)");
 
             builder.HasOne(i => i.GenderReference)
                 .WithMany(g => g.Members)

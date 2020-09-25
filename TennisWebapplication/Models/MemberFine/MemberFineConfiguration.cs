@@ -15,7 +15,7 @@ namespace TennisWebapplication.Models
 
             builder.HasAlternateKey(i => i.FineNumber);
 
-            builder.Property(i => i.Id).HasColumnName("tinyint(3)");
+            builder.Property(i => i.Id).HasColumnType("tinyint(3)");
             builder.Property(i => i.FineNumber).HasColumnType("integer(10)");
             builder.Property(i => i.MemberId).HasColumnType("integer(10)");
             builder.Property(i => i.Amount).HasColumnType("decimal(7, 2)");
