@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace TennisClubAPI.Data
+namespace TennisWebapplication.Models
 {
     public class Game
     {
