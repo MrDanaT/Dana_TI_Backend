@@ -17,6 +17,6 @@ namespace TennisWebapplication.Models
         public virtual League LeagueId { get; set; }
         public DateTime Date { get; set; }
 
-        public ICollection<GameResult> GameResults { get; set; }
+        public virtual ICollection<GameResult> GameResults { get; set; }
     }
 }

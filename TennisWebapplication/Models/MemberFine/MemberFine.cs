@@ -14,7 +14,7 @@ namespace TennisWebapplication.Models
         public DateTime HandoutDate { get; set; }
         public DateTime? PaymentDate { get; set; }
 
-        public virtual Game GameId { get; set; }
+        // public virtual Game GameId { get; set; }
 
     }
 }
