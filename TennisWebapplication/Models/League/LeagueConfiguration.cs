@@ -14,8 +14,13 @@ namespace TennisWebapplication.Models
             builder.HasKey(i => i.Id);
             builder.HasAlternateKey(i => i.Name);
 
-            builder.Property(i => i.Id).HasColumnType("tinyint");
             builder.Property(i => i.Name).HasColumnType("varchar(20)").IsRequired();
+
+            builder.HasData(
+                new League { Id = 1, Name = "Recreatief" },
+                new League { Id = 2, Name = "Competitie" },
+                new League { Id = 3, Name = "Toptennis" }
+            );
 
             builder.ToTable("Leagues");
         }
