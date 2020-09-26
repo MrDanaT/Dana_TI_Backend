@@ -1,16 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using TennisWebapplication.Models;
 
-namespace TennisWebapplication.Models
+namespace TennisWebapplication.Data
 {
     public class TennisClubContext : DbContext
     {
         public TennisClubContext(DbContextOptions<TennisClubContext> options) : base(options)
         {
-
         }
 
         public DbSet<Game> Games { get; set; }
