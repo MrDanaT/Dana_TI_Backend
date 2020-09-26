@@ -16,17 +16,17 @@ namespace TennisWebapplication.Models
             builder.HasAlternateKey(i => i.FederationNr);
 
             builder.Property(i => i.Id).HasColumnType("integer");
-            builder.Property(i => i.FederationNr).HasColumnType("varchar(10)");
-            builder.Property(i => i.FirstName).HasColumnType("varchar(25)");
-            builder.Property(i => i.LastName).HasColumnType("varchar(35)");
-            builder.Property(i => i.BirthDate).HasColumnType("date");
-            builder.Property(i => i.GenderId).HasColumnType("tinyint");
-            builder.Property(i => i.Address).HasColumnType("varchar(70)");
-            builder.Property(i => i.Number).HasColumnType("varchar(6)");
-            builder.Property(i => i.Addition).HasColumnType("varchar(2)");
-            builder.Property(i => i.Zipcode).HasColumnType("varchar(6)");
-            builder.Property(i => i.City).HasColumnType("varchar(30)");
-            builder.Property(i => i.PhoneNr).HasColumnType("varchar(15)");
+            builder.Property(i => i.FederationNr).HasColumnType("varchar(10)").IsRequired();
+            builder.Property(i => i.FirstName).HasColumnType("varchar(25)").IsRequired();
+            builder.Property(i => i.LastName).HasColumnType("varchar(35)").IsRequired();
+            builder.Property(i => i.BirthDate).HasColumnType("date").IsRequired();
+            builder.Property(i => i.GenderId).HasColumnType("tinyint").IsRequired();
+            builder.Property(i => i.Address).HasColumnType("varchar(70)").IsRequired();
+            builder.Property(i => i.Number).HasColumnType("varchar(6)").IsRequired();
+            builder.Property(i => i.Addition).HasColumnType("varchar(2)").IsRequired(false);
+            builder.Property(i => i.Zipcode).HasColumnType("varchar(6)").IsRequired();
+            builder.Property(i => i.City).HasColumnType("varchar(30)").IsRequired();
+            builder.Property(i => i.PhoneNr).HasColumnType("varchar(15)").IsRequired(false);
 
             builder.HasOne(i => i.GenderNavigation)
                 .WithMany(g => g.Members)

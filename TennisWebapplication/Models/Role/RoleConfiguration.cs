@@ -15,7 +15,7 @@ namespace TennisWebapplication.Models
             builder.HasAlternateKey(i => i.Name);
 
             builder.Property(i => i.Id).HasColumnType("tinyint");
-            builder.Property(i => i.Name).HasColumnType("varchar(20)");
+            builder.Property(i => i.Name).HasColumnType("varchar(20)").IsRequired();
 
             builder.ToTable("Roles");
         }

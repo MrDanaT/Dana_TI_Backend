@@ -16,10 +16,10 @@ namespace TennisWebapplication.Models
             builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate});
 
             builder.Property(i => i.Id).HasColumnType("integer");
-            builder.Property(i => i.MemberId).HasColumnType("integer");
-            builder.Property(i => i.RoleId).HasColumnType("tinyint");
-            builder.Property(i => i.StartDate).HasColumnType("date");
-            builder.Property(i => i.EndDate).HasColumnType("date");
+            builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
+            builder.Property(i => i.RoleId).HasColumnType("tinyint").IsRequired();
+            builder.Property(i => i.StartDate).HasColumnType("date").IsRequired();
+            builder.Property(i => i.EndDate).HasColumnType("date"); // TODO: vragen in combinatie met de unique key. .IsRequired(false);
 
             builder.HasOne(i => i.MemberNavigation)
                 .WithMany(m => m.MemberRoles)

@@ -15,7 +15,7 @@ namespace TennisWebapplication.Models
             builder.HasAlternateKey(i => i.Name);
 
             builder.Property(i => i.Id).HasColumnType("tinyint");
-            builder.Property(i => i.Name).HasColumnType("varchar(10)");
+            builder.Property(i => i.Name).HasColumnType("varchar(10)").IsRequired();
 
             builder.ToTable("Genders");
         }
