@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TennisWebapplication.Models;
 
-namespace TennisWebapplication.Data
+namespace TennisWebapplication.Models
 {
     public class TennisClubContext : DbContext
     {
