@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TennisWebapplication.Models;
+using TennisWebapplication.Repositories.MemberFineRepository;
 
 namespace TennisWebapplication.Repositories.RoleRepository
 {
-    interface IRoleRepository
+    interface IRoleRepository : ISavable
     {
-        void SaveChanges();
-
         void CreateRole(Role role);
 
         void UpdateRole(Role role);
