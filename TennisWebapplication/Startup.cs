@@ -44,6 +44,7 @@ namespace TennisWebapplication
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -52,15 +53,9 @@ namespace TennisWebapplication
 
             app.UseEndpoints(endpoints =>
             {
-                /*
                 endpoints.MapControllerRoute(
-                    name: "gender",
-                    pattern: "{controller=Gender}/{action=Index}/{id?}"
-                );
-                */
-
-
-                endpoints.MapControllers();
+                    name: "default",
+                    pattern: "{controller}/{action}/{id?}");
             });
         }
     }
