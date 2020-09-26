@@ -12,5 +12,7 @@ namespace TennisWebapplication.Repositories.RoleRepository
         void CreateRole(Role role);
 
         void UpdateRole(Role role);
+        void GetAllRoles();
+        void GetRoleById(int id);
     }
 }

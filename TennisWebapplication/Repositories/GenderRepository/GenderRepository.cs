@@ -20,7 +20,7 @@ namespace TennisWebapplication.Repositories.GenderRepository
             return _context.Genders.ToList();
         }
 
-        public Gender GetGenderById(int id)
+        public Gender GetGenderById(byte id)
         {
             return _context.Genders.FirstOrDefault(g => g.Id == id);
         }
