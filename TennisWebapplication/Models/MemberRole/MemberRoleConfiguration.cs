@@ -19,7 +19,7 @@ namespace TennisWebapplication.Models
             builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
             builder.Property(i => i.RoleId).HasColumnType("tinyint").IsRequired();
             builder.Property(i => i.StartDate).HasColumnType("date").IsRequired();
-            builder.Property(i => i.EndDate).HasColumnType("date"); // TODO: vragen in combinatie met de unique key. .IsRequired(false);
+            builder.Property(i => i.EndDate).HasColumnType("date"); // TODO: vragen in combinatie met de unique key. .IsRequired(false); // Is onmogelijk.
 
             builder.HasOne(i => i.MemberNavigation)
                 .WithMany(m => m.MemberRoles)
