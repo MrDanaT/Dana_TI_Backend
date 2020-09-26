@@ -15,7 +15,6 @@ namespace TennisWebapplication.Models
 
             builder.HasAlternateKey(i => new { i.SetNr, i.GameId });
 
-            builder.Property(i => i.Id).HasColumnType("integer");
             builder.Property(i => i.GameId).HasColumnType("integer").IsRequired();
             builder.Property(i => i.SetNr).HasColumnType("tinyint").IsRequired();
             builder.Property(i => i.ScoreTeamMember).HasColumnType("tinyint").IsRequired();
