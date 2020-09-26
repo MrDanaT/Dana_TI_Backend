@@ -12,7 +12,7 @@ namespace TennisWebapplication.Repositories.GenderRepository
 
         public GenderRepository(TennisClubContext context)
         {
-        _context = context;
+            _context = context;
         }
 
         public IEnumerable<Gender> GetAllGenders()
