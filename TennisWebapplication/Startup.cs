@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TennisWebapplication.Models;
-using TennisWebapplication.Models;
 
 namespace TennisWebapplication
 {

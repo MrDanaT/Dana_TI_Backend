@@ -8,7 +8,7 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
 {
     public class MemberRoleRepository : IMemberRoleRepository
     {
-        public void CreateMemberRole(MemberRole role)
+        public void AssignMemberRole(MemberRole role)
         {
             throw new NotImplementedException();
         }
@@ -23,7 +23,7 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
             throw new NotImplementedException();
         }
 
-        public void RemoveMemberRole(MemberRole role)
+        public void RetractMemberRole(MemberRole role)
         {
             throw new NotImplementedException();
         }

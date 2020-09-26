@@ -6,7 +6,7 @@ using TennisWebapplication.Models;
 
 namespace TennisWebapplication.Repositories.MemberFineRepository
 {
-    interface IMemberFineRepository : ISavable
+    public interface IMemberFineRepository : ISavable
     {
         void CreateMemberFine(MemberFine memberFine);
         void UpdateMemberFine(MemberFine memberFine);

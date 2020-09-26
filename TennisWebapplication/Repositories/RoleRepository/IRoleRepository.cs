@@ -7,7 +7,7 @@ using TennisWebapplication.Repositories.MemberFineRepository;
 
 namespace TennisWebapplication.Repositories.RoleRepository
 {
-    interface IRoleRepository : ISavable
+    public interface IRoleRepository : ISavable
     {
         void CreateRole(Role role);
 

@@ -7,7 +7,7 @@ using TennisWebapplication.Repositories.MemberFineRepository;
 
 namespace TennisWebapplication.Repositories.MemberRoleRepository
 {
-    internal interface IMemberRoleRepository : ISavable
+    public interface IMemberRoleRepository : ISavable
     {
         void AssignMemberRole(MemberRole role);
         void RetractMemberRole(MemberRole role);

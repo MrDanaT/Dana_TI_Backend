@@ -6,7 +6,7 @@ using TennisWebapplication.Models;
 
 namespace TennisWebapplication.Repositories.GenderRepository
 {
-    interface IGenderRepository
+    public interface IGenderRepository
     {
         IEnumerable<Gender> GetAllGenders();
         Gender GetGenderById(int id);

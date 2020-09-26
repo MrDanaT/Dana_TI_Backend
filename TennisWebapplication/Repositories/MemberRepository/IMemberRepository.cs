@@ -7,7 +7,7 @@ using TennisWebapplication.Repositories.MemberFineRepository;
 
 namespace TennisWebapplication.Repositories.MemberRepository
 {
-    interface IMemberRepository : ISavable
+    public interface IMemberRepository : ISavable
     {
         IEnumerable<Member> GetCommandByFederationNr(string federationNr);
         IEnumerable<Member> GetCommandByFirstName(string firstName);
