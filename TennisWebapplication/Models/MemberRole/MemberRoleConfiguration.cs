@@ -13,7 +13,7 @@ namespace TennisWebapplication.Models
         {
             builder.HasKey(i => i.Id);
 
-            builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate});
+            builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate });
 
             builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
             builder.Property(i => i.RoleId).HasColumnType("tinyint").IsRequired();
@@ -22,7 +22,7 @@ namespace TennisWebapplication.Models
 
             builder.HasOne(i => i.MemberNavigation)
                 .WithMany(m => m.MemberRoles)
-                .HasForeignKey(i =>  i.MemberId )
+                .HasForeignKey(i => i.MemberId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken
 
             builder.HasOne(i => i.RoleNavigation)
