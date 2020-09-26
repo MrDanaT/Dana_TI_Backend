@@ -26,7 +26,7 @@ namespace TennisWebapplication.Models
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken.
 
 
-            builder.ToTable("Game_results");
+            builder.ToTable("GameResults");
         }
     }
 }

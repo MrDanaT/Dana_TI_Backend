@@ -30,7 +30,7 @@ namespace TennisWebapplication.Models
                 .HasForeignKey(i => i.RoleId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken
 
-            builder.ToTable("Member_roles");
+            builder.ToTable("MemberRoles");
         }
     }
 }
