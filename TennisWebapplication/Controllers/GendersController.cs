@@ -9,6 +9,8 @@ using TennisWebapplication.Repositories.GenderRepository;
 
 namespace TennisWebapplication.Controllers
 {
+    [Route("api/genders")]
+    [ApiController]
     public class GendersController : Controller
     {
         private readonly IGenderRepository _repo;
@@ -18,6 +20,7 @@ namespace TennisWebapplication.Controllers
             _repo = repo;
         }
 
+        [HttpGet]
         public ActionResult<IEnumerable<Gender>> GetAllGenders()
         {
             IEnumerable<Gender> genderItems = _repo.GetAllGenders();
@@ -25,6 +28,7 @@ namespace TennisWebapplication.Controllers
             return Ok(genderItems);
         }
 
+        [HttpGet("{id}")]
         public ActionResult<Gender> GetGenderById(byte id)
         {
             Gender genderItem = _repo.GetGenderById(id);

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TennisWebapplication.Models;
+using TennisWebapplication.Repositories.GenderRepository;
 
 namespace TennisWebapplication
 {
@@ -30,6 +32,8 @@ namespace TennisWebapplication
             services.AddDbContext<TennisClubContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TennisClubConnection")));
 
             services.AddControllers();
+
+            services.AddScoped<IGenderRepository, GenderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +52,14 @@ namespace TennisWebapplication
 
             app.UseEndpoints(endpoints =>
             {
+                /*
+                endpoints.MapControllerRoute(
+                    name: "gender",
+                    pattern: "{controller=Gender}/{action=Index}/{id?}"
+                );
+                */
+
+
                 endpoints.MapControllers();
             });
         }

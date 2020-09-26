@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,12 +18,12 @@ namespace TennisWebapplication.Repositories.GenderRepository
 
         public IEnumerable<Gender> GetAllGenders()
         {
-            return _context.Genders.ToList();
+            return _context.Genders.AsNoTracking().ToList();
         }
 
         public Gender GetGenderById(byte id)
         {
-            return _context.Genders.FirstOrDefault(g => g.Id == id);
+            return _context.Genders.AsNoTracking().FirstOrDefault(g => g.Id == id);
         }
     }
 }
