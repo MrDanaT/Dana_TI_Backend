@@ -2,7 +2,7 @@
 
 namespace TennisWebapplication.Repositories.LeagueRepository
 {
-    public interface ILeagueRepository : ISavable
+    public interface ILeagueRepository
     {
         void GetAllLeagues();
         void GetLeagueById(byte id);
