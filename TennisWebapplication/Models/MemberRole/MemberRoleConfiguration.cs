@@ -15,7 +15,8 @@ namespace TennisWebapplication.Models
 
             // TODO: voorlopige oplossing kan  zijn:
             // builder.HasIndex(memberRole => new { memberRole.MemberId, memberRole.RoleId, memberRole.StartDate, memberRole.EndDate }).IsUnique(true);
-            builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate });
+            // builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate });
+            builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate });
 
             builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
             builder.Property(i => i.RoleId).HasColumnType("tinyint").IsRequired();
