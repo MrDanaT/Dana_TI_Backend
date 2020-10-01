@@ -27,7 +27,7 @@ namespace TennisWebapplication.Models
                 .HasForeignKey(i => i.MemberId)
                 .OnDelete(DeleteBehavior.Cascade); // TODO: nakijken.
 
-            builder.ToTable("MemberFines");
+            builder.ToTable("tblMemberFines");
         }
     }
 }

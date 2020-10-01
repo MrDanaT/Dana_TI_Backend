@@ -23,7 +23,7 @@ namespace TennisWebapplication.Models
                 new League { Id = 3, Name = "Toptennis" }
             );
 
-            builder.ToTable("Leagues");
+            builder.ToTable("tblLeagues");
         }
     }
 }

@@ -22,7 +22,7 @@ namespace TennisWebapplication.Models
                 new Gender { Id = 2, Name = "Vrouw" }
             );
 
-            builder.ToTable("Genders");
+            builder.ToTable("tblGenders");
         }
     }
 }

@@ -25,7 +25,7 @@ namespace TennisWebapplication.Models
                 new Role { Id = 5, Name = "Speler" }
             );
 
-            builder.ToTable("Roles");
+            builder.ToTable("tblRoles");
         }
     }
 }
