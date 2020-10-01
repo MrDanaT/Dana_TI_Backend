@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,14 +9,24 @@ namespace TennisWebapplication.Repositories.MemberFineRepository
 {
     public class MemberFineRepository : IMemberFineRepository
     {
+        private readonly TennisClubContext _context;
+
+        public MemberFineRepository(TennisClubContext context)
+        {
+            _context = context;
+        }
+
         public void CreateMemberFine(MemberFine memberFine)
         {
-            throw new NotImplementedException();
+            if (memberFine == null)
+                throw new ArgumentNullException(nameof(memberFine));
+
+            _context.MemberFines.Add(memberFine);
         }
 
         public IEnumerable<MemberFine> GetAllMemberFines()
         {
-            throw new NotImplementedException();
+            return _context.MemberFines.AsNoTracking().ToList();
         }
 
         public IEnumerable<MemberFine> GetMemberFinesByMember(Member member)
@@ -25,12 +36,15 @@ namespace TennisWebapplication.Repositories.MemberFineRepository
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges() > 0;
         }
 
         public void UpdateMemberFine(MemberFine memberFine)
         {
-            throw new NotImplementedException();
+            if (memberFine.PaymentDate != null)
+                // TODO: welk is beter?
+                // throw new ArgumentException(nameof(memberFine));
+                _context.Entry(memberFine).State = EntityState.Unchanged;
         }
     }
 }

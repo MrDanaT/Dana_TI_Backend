@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,9 +9,16 @@ namespace TennisWebapplication.Repositories.LeagueRepository
 {
     public class LeagueRepository : ILeagueRepository
     {
+        private readonly TennisClubContext _context;
+
+        public LeagueRepository(TennisClubContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<League> GetAllLeagues()
         {
-            throw new NotImplementedException();
+            return _context.Leagues.AsNoTracking().ToList();
         }
     }
 }

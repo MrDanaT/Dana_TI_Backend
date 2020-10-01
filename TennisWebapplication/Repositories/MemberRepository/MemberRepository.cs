@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,29 +9,42 @@ namespace TennisWebapplication.Repositories.MemberRepository
 {
     public class MemberRepository : IMemberRepository
     {
+        private readonly TennisClubContext _context;
+
+        public MemberRepository(TennisClubContext context)
+        {
+            _context = context;
+        }
+
         public void CreateMember(Member member)
         {
-            throw new NotImplementedException();
+            if (member == null)
+                throw new ArgumentNullException(nameof(member));
+
+            _context.Members.Add(member);
         }
 
         public void DeleteMember(Member member)
         {
-            throw new NotImplementedException();
+            if (member == null)
+                throw new ArgumentNullException(nameof(member));
+
+            _context.Members.Remove(member);
         }
 
         public IEnumerable<Member> GetAllMembers()
         {
-            throw new NotImplementedException();
+            return _context.Members.AsNoTracking().ToList();
         }
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges() > 0;
         }
 
         public void UpdateMember(Member member)
         {
-            throw new NotImplementedException();
+            //Nothing
         }
     }
 }

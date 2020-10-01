@@ -8,14 +8,27 @@ namespace TennisWebapplication.Repositories.GameRepository
 {
     public class GameRepository : IGameRepository
     {
+        private readonly TennisClubContext _context;
+
+        public GameRepository(TennisClubContext context)
+        {
+            _context = context;
+        }
+
         public void CreateGame(Game game)
         {
-            throw new NotImplementedException();
+            if (game == null)
+                throw new ArgumentNullException(nameof(game));
+
+            _context.Games.Add(game);
         }
 
         public void DeleteGame(Game game)
         {
-            throw new NotImplementedException();
+            if (game == null)
+                throw new ArgumentNullException(nameof(game));
+
+            _context.Games.Remove(game);
         }
 
         public IEnumerable<Game> GetFutureGamesByMember(Member member)
@@ -30,12 +43,12 @@ namespace TennisWebapplication.Repositories.GameRepository
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges() > 0;
         }
 
         public void UpdateGame(Game game)
         {
-            throw new NotImplementedException();
+            //Nothing
         }
     }
 }

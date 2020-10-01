@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,27 +9,37 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
 {
     public class MemberRoleRepository : IMemberRoleRepository
     {
-        public void CreateMemberRole(MemberRole role)
+        private readonly TennisClubContext _context;
+
+        public MemberRoleRepository(TennisClubContext context)
+        {
+            _context = context;
+        }
+
+        public void CreateMemberRole(MemberRole memberRole)
+        {
+            if (memberRole == null)
+                throw new ArgumentNullException(nameof(memberRole));
+
+            _context.MemberRoles.Add(memberRole);
+        }
+
+        public IEnumerable<Member> GetMembersByRole(params Role[] roles)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MemberRole> GetMemberRolesByMember(Member member)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Member> GetMembersByRole(params Role[] role)
+        public IEnumerable<Role> GetRolesByMember(Member member)
         {
             throw new NotImplementedException();
         }
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges() > 0;
         }
 
-        public void UpdateMemberRole(MemberRole role)
+        public void UpdateMemberRole(MemberRole memberRole)
         {
             throw new NotImplementedException();
         }

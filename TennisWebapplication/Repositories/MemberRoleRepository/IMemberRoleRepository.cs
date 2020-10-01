@@ -9,9 +9,9 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
 {
     public interface IMemberRoleRepository : ISavable
     {
-        void CreateMemberRole(MemberRole role);
-        void UpdateMemberRole(MemberRole role);
-        IEnumerable<Member> GetMembersByRole(params Role[] role);
-        IEnumerable<MemberRole> GetMemberRolesByMember(Member member);
+        void CreateMemberRole(MemberRole memberRole);
+        void UpdateMemberRole(MemberRole memberRole);
+        IEnumerable<Member> GetMembersByRole(params Role[] roles);
+        IEnumerable<Role> GetRolesByMember(Member member);
     }
 }

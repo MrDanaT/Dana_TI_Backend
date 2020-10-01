@@ -8,9 +8,20 @@ namespace TennisWebapplication.Repositories.GameResultRepository
 {
     public class GameResultRepository : IGameResultRepository
     {
+        private readonly TennisClubContext _context;
+
+
+        public GameResultRepository(TennisClubContext context)
+        {
+            _context = context;
+        }
+
         public void CreateGameResult(GameResult gameResult)
         {
-            throw new NotImplementedException();
+            if (gameResult == null)
+                throw new ArgumentNullException(nameof(gameResult));
+
+            _context.GameResults.Add(gameResult);
         }
 
         public IEnumerable<GameResult> GetGameResultsByMember(Member member)
@@ -20,12 +31,12 @@ namespace TennisWebapplication.Repositories.GameResultRepository
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return _context.SaveChanges() > 0;
         }
 
         public void UpdateGameResult(GameResult gameResult)
         {
-            throw new NotImplementedException();
+            //Nothing
         }
     }
 }
