@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TennisWebapplication.Models;
 using TennisWebapplication.Repositories.MemberFineRepository;
 
@@ -9,6 +11,7 @@ namespace TennisWebapplication.Repositories.GameRepository
         void CreateGame(Game game);
         void UpdateGame(Game game);
         void DeleteGame(Game game);
-        void GetGamesByMemberAndDate(Member member, DateTime date);
+        IEnumerable<Game> GetGamesByMember(Member member);
+        IEnumerable<Game> GetFutureGamesByMember(Member member);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TennisWebapplication.Models;
 using TennisWebapplication.Repositories.MemberFineRepository;
 
@@ -8,6 +9,6 @@ namespace TennisWebapplication.Repositories.GameResultRepository
     {
         void CreateGameResult(GameResult gameResult);
         void UpdateGameResult(GameResult gameResult);
-        void GetGameResultByMemberAndDate(Member member, DateTime date);
+        IEnumerable<GameResult> GetGameResultsByMember(Member member);
     }
 }

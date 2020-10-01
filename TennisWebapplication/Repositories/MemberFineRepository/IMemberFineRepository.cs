@@ -10,7 +10,7 @@ namespace TennisWebapplication.Repositories.MemberFineRepository
     {
         void CreateMemberFine(MemberFine memberFine);
         void UpdateMemberFine(MemberFine memberFine);
-        void GetAllMemberFines();
-        void GetMemberFinesByMember(Member member);
+        IEnumerable<MemberFine> GetAllMemberFines();
+        IEnumerable<MemberFine> GetMemberFinesByMember(Member member);
     }
 }
