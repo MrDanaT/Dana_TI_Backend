@@ -13,7 +13,7 @@ namespace TennisWebapplication.Models
         {
             builder.HasKey(i => i.Id);
 
-            // TODO: voorlopige oplossing kan  zijn:
+            // TODO: voorlopige oplossing kunnen  zijn:
             // builder.HasIndex(memberRole => new { memberRole.MemberId, memberRole.RoleId, memberRole.StartDate, memberRole.EndDate }).IsUnique(true);
             // builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate });
             builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate });
