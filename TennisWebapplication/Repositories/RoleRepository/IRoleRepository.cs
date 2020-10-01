@@ -14,5 +14,6 @@ namespace TennisWebapplication.Repositories.RoleRepository
 
         void UpdateRole(Role role);
         IEnumerable<Role> GetAllRoles();
+        Role GetRoleById(int id);
     }
 }

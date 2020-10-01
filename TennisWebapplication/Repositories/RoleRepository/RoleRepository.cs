@@ -31,6 +31,11 @@ namespace TennisWebapplication.Repositories.RoleRepository
             return _context.Roles.AsNoTracking().ToList();
         }
 
+        public Role GetRoleById(int id)
+        {
+            return _context.Roles.FirstOrDefault(r => r.Id == id);
+        }
+
         public bool SaveChanges()
         {
             return _context.SaveChanges() > 0;
