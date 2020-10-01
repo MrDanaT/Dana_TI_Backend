@@ -18,7 +18,9 @@ namespace TennisWebapplication.Repositories.GameRepository
         public void CreateGame(Game game)
         {
             if (game == null)
+            {
                 throw new ArgumentNullException(nameof(game));
+            }
 
             _context.Games.Add(game);
         }
@@ -26,7 +28,9 @@ namespace TennisWebapplication.Repositories.GameRepository
         public void DeleteGame(Game game)
         {
             if (game == null)
+            {
                 throw new ArgumentNullException(nameof(game));
+            }
 
             _context.Games.Remove(game);
         }

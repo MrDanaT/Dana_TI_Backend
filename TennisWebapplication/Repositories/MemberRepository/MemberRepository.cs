@@ -19,7 +19,9 @@ namespace TennisWebapplication.Repositories.MemberRepository
         public void CreateMember(Member member)
         {
             if (member == null)
+            {
                 throw new ArgumentNullException(nameof(member));
+            }
 
             _context.Members.Add(member);
         }
@@ -27,7 +29,9 @@ namespace TennisWebapplication.Repositories.MemberRepository
         public void DeleteMember(Member member)
         {
             if (member == null)
+            {
                 throw new ArgumentNullException(nameof(member));
+            }
 
             _context.Members.Remove(member);
         }

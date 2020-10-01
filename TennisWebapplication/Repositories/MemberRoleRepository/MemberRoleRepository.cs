@@ -19,7 +19,9 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
         public void CreateMemberRole(MemberRole memberRole)
         {
             if (memberRole == null)
+            {
                 throw new ArgumentNullException(nameof(memberRole));
+            }
 
             _context.MemberRoles.Add(memberRole);
         }

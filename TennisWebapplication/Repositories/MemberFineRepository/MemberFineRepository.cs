@@ -19,7 +19,9 @@ namespace TennisWebapplication.Repositories.MemberFineRepository
         public void CreateMemberFine(MemberFine memberFine)
         {
             if (memberFine == null)
+            {
                 throw new ArgumentNullException(nameof(memberFine));
+            }
 
             _context.MemberFines.Add(memberFine);
         }
@@ -42,9 +44,11 @@ namespace TennisWebapplication.Repositories.MemberFineRepository
         public void UpdateMemberFine(MemberFine memberFine)
         {
             if (memberFine.PaymentDate != null)
+            {
                 // TODO: welk is beter?
                 // throw new ArgumentException(nameof(memberFine));
                 _context.Entry(memberFine).State = EntityState.Unchanged;
+            }
         }
     }
 }

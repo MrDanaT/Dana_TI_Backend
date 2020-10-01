@@ -19,7 +19,9 @@ namespace TennisWebapplication.Repositories.GameResultRepository
         public void CreateGameResult(GameResult gameResult)
         {
             if (gameResult == null)
+            {
                 throw new ArgumentNullException(nameof(gameResult));
+            }
 
             _context.GameResults.Add(gameResult);
         }
