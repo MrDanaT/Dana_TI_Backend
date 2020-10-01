@@ -9,6 +9,5 @@ namespace TennisWebapplication.Repositories.GenderRepository
     public interface IGenderRepository
     {
         IEnumerable<Gender> GetAllGenders();
-        Gender GetGenderById(byte id);
     }
 }

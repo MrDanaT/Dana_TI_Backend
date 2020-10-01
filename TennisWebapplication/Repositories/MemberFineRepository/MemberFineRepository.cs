@@ -13,12 +13,12 @@ namespace TennisWebapplication.Repositories.MemberFineRepository
             throw new NotImplementedException();
         }
 
-        public void GetAllMemberFines()
+        public IEnumerable<MemberFine> GetAllMemberFines()
         {
             throw new NotImplementedException();
         }
 
-        public void GetMemberFinesByMember(Member member)
+        public IEnumerable<MemberFine> GetMemberFinesByMember(Member member)
         {
             throw new NotImplementedException();
         }

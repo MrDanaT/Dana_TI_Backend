@@ -1,10 +1,12 @@
-﻿using TennisWebapplication.Repositories.MemberFineRepository;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TennisWebapplication.Models;
+using TennisWebapplication.Repositories.MemberFineRepository;
 
 namespace TennisWebapplication.Repositories.LeagueRepository
 {
     public interface ILeagueRepository
     {
-        void GetAllLeagues();
-        void GetLeagueById(byte id);
+        IEnumerable<League> GetAllLeagues();
     }
 }

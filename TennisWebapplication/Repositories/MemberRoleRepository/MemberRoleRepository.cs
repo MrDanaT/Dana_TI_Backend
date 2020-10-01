@@ -13,22 +13,22 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
             throw new NotImplementedException();
         }
 
-        public void GetMemberRolesByMember(Member member)
+        public IEnumerable<MemberRole> GetMemberRolesByMember(Member member)
         {
             throw new NotImplementedException();
         }
 
-        public void GetMembersRolesByRole(params Role[] role)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateMemberRole(MemberRole role)
+        public IEnumerable<Member> GetMembersByRole(params Role[] role)
         {
             throw new NotImplementedException();
         }
 
         public void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateMemberRole(MemberRole role)
         {
             throw new NotImplementedException();
         }

@@ -13,12 +13,7 @@ namespace TennisWebapplication.Repositories.RoleRepository
             throw new NotImplementedException();
         }
 
-        public void GetAllRoles()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetRoleById(int id)
+        public IEnumerable<Role> GetAllRoles()
         {
             throw new NotImplementedException();
         }

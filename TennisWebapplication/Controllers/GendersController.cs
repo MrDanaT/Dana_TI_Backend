@@ -24,15 +24,5 @@ namespace TennisWebapplication.Controllers
 
             return Ok(genderItems);
         }
-
-        public ActionResult<Gender> GetGenderById(byte id)
-        {
-            Gender genderItem = _repo.GetGenderById(id);
-
-            if (genderItem != null)
-                return Ok(genderItem);
-            else
-                return NotFound();
-        }
     }
 }

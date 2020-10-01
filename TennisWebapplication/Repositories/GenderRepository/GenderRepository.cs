@@ -20,10 +20,5 @@ namespace TennisWebapplication.Repositories.GenderRepository
         {
             return _context.Genders.AsNoTracking().ToList();
         }
-
-        public Gender GetGenderById(byte id)
-        {
-            return _context.Genders.AsNoTracking().FirstOrDefault(g => g.Id == id);
-        }
     }
 }

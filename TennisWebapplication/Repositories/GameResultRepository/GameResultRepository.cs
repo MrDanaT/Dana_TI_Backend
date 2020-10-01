@@ -13,7 +13,7 @@ namespace TennisWebapplication.Repositories.GameResultRepository
             throw new NotImplementedException();
         }
 
-        public void GetGameResultByMemberAndDate(Member member, DateTime date)
+        public IEnumerable<GameResult> GetGameResultsByMember(Member member)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ namespace TennisWebapplication.Repositories.RoleRepository
         void CreateRole(Role role);
 
         void UpdateRole(Role role);
-        void GetAllRoles();
-        void GetRoleById(int id);
+        IEnumerable<Role> GetAllRoles();
     }
 }

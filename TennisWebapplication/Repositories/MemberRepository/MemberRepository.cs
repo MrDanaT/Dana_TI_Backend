@@ -18,22 +18,7 @@ namespace TennisWebapplication.Repositories.MemberRepository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Member> GetCommandByCity(string city)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Member> GetCommandByFederationNr(string federationNr)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Member> GetCommandByFirstName(string firstName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Member> GetCommandByLastNameAndZipcode(string lastName, string zipcode)
+        public IEnumerable<Member> GetAllMembers()
         {
             throw new NotImplementedException();
         }
