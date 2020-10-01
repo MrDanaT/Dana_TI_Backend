@@ -28,7 +28,7 @@ namespace TennisWebapplication.Repositories.GameRepository
             throw new NotImplementedException();
         }
 
-        public void SaveChanges()
+        public bool SaveChanges()
         {
             throw new NotImplementedException();
         }

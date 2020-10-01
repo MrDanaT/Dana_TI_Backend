@@ -23,7 +23,7 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
             throw new NotImplementedException();
         }
 
-        public void SaveChanges()
+        public bool SaveChanges()
         {
             throw new NotImplementedException();
         }

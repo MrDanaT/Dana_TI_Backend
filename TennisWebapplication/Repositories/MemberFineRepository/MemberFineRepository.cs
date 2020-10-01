@@ -23,7 +23,7 @@ namespace TennisWebapplication.Repositories.MemberFineRepository
             throw new NotImplementedException();
         }
 
-        public void SaveChanges()
+        public bool SaveChanges()
         {
             throw new NotImplementedException();
         }

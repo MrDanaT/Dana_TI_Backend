@@ -2,6 +2,6 @@
 {
     public interface ISavable
     {
-        void SaveChanges();
+        bool SaveChanges();
     }
 }
