@@ -11,7 +11,7 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
     {
         void CreateMemberRole(MemberRole memberRole);
         void UpdateMemberRole(MemberRole memberRole);
-        IEnumerable<Member> GetMembersByRole(params Role[] roles);
+        IEnumerable<Member> GetMembersByRoles(params Role[] roles);
         IEnumerable<Role> GetRolesByMember(Member member);
     }
 }

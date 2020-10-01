@@ -26,7 +26,7 @@ namespace TennisWebapplication.Repositories.MemberRoleRepository
             _context.MemberRoles.Add(memberRole);
         }
 
-        public IEnumerable<Member> GetMembersByRole(params Role[] roles)
+        public IEnumerable<Member> GetMembersByRoles(params Role[] roles)
         {
             throw new NotImplementedException();
         }
