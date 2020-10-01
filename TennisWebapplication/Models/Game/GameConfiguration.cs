@@ -15,6 +15,7 @@ namespace TennisWebapplication.Models
 
             builder.HasAlternateKey(i => i.GameNumber);
 
+            builder.Property(i => i.Id).HasColumnType("integer(10)").IsRequired();
             builder.Property(i => i.GameNumber).HasColumnType("varchar(10)").IsRequired();
             builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
             builder.Property(i => i.LeagueId).HasColumnType("tinyint").IsRequired();
