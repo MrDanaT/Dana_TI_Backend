@@ -9,7 +9,7 @@ namespace TennisClub.BL.Entities
         public byte RoleId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public virtual Member MemberNavigation { get; set; }
-        public virtual Role RoleNavigation { get; set; }
+        public  Member MemberNavigation { get; set; }
+        public  Role RoleNavigation { get; set; }
     }
 }

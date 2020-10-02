@@ -10,6 +10,6 @@ namespace TennisClub.BL.Entities
         public decimal Amount { get; set; }
         public DateTime HandoutDate { get; set; }
         public DateTime? PaymentDate { get; set; }
-        public virtual Member MemberNavigation { get; set; }
+        public  Member MemberNavigation { get; set; }
     }
 }

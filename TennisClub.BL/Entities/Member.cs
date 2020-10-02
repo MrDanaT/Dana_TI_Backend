@@ -27,10 +27,10 @@ namespace TennisClub.BL.Entities
         public string City { get; set; }
         public string PhoneNr { get; set; }
 
-        public virtual ICollection<MemberRole> MemberRoles { get; set; }
-        public virtual ICollection<MemberFine> MemberFines { get; set; }
-        public virtual ICollection<Game> Games { get; set; }
-        public virtual Gender GenderNavigation { get; set; }
+        public  ICollection<MemberRole> MemberRoles { get; set; }
+        public  ICollection<MemberFine> MemberFines { get; set; }
+        public  ICollection<Game> Games { get; set; }
+        public  Gender GenderNavigation { get; set; }
 
     }
 }

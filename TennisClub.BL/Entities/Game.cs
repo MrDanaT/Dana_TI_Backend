@@ -16,8 +16,8 @@ namespace TennisClub.BL.Entities
         public byte LeagueId { get; set; }
         public DateTime Date { get; set; }
 
-        public virtual ICollection<GameResult> GameResults { get; set; }
-        public virtual Member MemberNavigation { get; set; }
-        public virtual League LeagueNavigation { get; set; }
+        public  ICollection<GameResult> GameResults { get; set; }
+        public  Member MemberNavigation { get; set; }
+        public  League LeagueNavigation { get; set; }
     }
 }
