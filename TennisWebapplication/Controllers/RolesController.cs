@@ -5,6 +5,8 @@ using TennisClub.DAL.Repositories.RoleRepository;
 
 namespace TennisWebapplication.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class RolesController : Controller
     {
         private readonly IRoleRepository _repo;
@@ -13,7 +15,9 @@ namespace TennisWebapplication.Controllers
         {
             _repo = repo;
         }
-
+        
+        // GET: api/roles
+        [HttpGet]
         public ActionResult<IEnumerable<Role>> GetAllRoles()
         {
             IEnumerable<Role> roleItems = _repo.GetAllRoles();
@@ -21,16 +25,35 @@ namespace TennisWebapplication.Controllers
             return Ok(roleItems);
         }
 
-        // Test, vervangen door DTO's.
+        // GET: api/roles/{id}
+        [HttpGet("{id}", Name = "GetRoleById")]
+        public ActionResult<Role> GetRoleById(int id)
+        {
+            Role commandItem = _repo.GetRoleById(id);
+
+            if (commandItem != null)
+            {
+                return Ok(commandItem);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        // POST: api/roles
+        [HttpPost]
         public ActionResult<Role> CreateRole(Role role)
         {
             _repo.CreateRole(role);
             _repo.SaveChanges();
 
-            return Ok(role);
+            return CreatedAtRoute(nameof(GetRoleById), new { role.Id }, role);
         }
 
-        // Test, vervangen door DTO's.
+        
+        // PUT: api/roles/{id} 
+        [HttpPut("{id}")]
         public ActionResult<Role> UpdateRole(int id, Role role)
         {
             Role roleFromRepo = _repo.GetRoleById(id);
