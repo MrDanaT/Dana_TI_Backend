@@ -1,9 +1,12 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
+using System;
 using TennisClub.DAL;
 using TennisClub.DAL.Repositories.GenderRepository;
 
@@ -23,7 +26,12 @@ namespace TennisWebapplication
         {
             services.AddDbContext<TennisClubContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("TennisClubConnection")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IGenderRepository, GenderRepository>();
         }
