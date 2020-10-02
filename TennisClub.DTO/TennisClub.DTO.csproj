@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="Game\" />
     <Folder Include="GameResult\" />
-    <Folder Include="League\" />
     <Folder Include="MemberFine\" />
     <Folder Include="Member\" />
     <Folder Include="MemberRole\" />
