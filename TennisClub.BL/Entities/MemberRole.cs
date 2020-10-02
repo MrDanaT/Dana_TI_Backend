@@ -1,10 +1,10 @@
 ﻿using System;
-using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {
-    public class MemberRole : BaseEntity
+    public class MemberRole
     {
+        public int Id { get; set; }
         public int MemberId { get; set; }
         public byte RoleId { get; set; }
         public DateTime StartDate { get; set; }

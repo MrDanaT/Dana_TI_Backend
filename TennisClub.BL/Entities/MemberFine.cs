@@ -1,10 +1,10 @@
 ﻿using System;
-using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {
-    public class MemberFine : BaseEntity
+    public class MemberFine
     {
+        public int Id { get; set; }
         public int FineNumber { get; set; }
         public int MemberId { get; set; }
         public decimal Amount { get; set; }

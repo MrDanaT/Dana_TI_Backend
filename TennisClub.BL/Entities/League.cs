@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {
-    public class League : BaseEntity
+    public class League
     {
         public League()
         {
             Games = new HashSet<Game>();
         }
 
+        public byte Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }

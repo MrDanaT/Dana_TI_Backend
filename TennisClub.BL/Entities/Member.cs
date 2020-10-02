@@ -1,11 +1,10 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {
-    public class Member : BaseEntity
+    public class Member
     {
         public Member()
         {
@@ -14,6 +13,7 @@ namespace TennisClub.BL.Entities
             Games = new HashSet<Game>();
         }
 
+        public int Id { get; set; }
         public string FederationNr { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

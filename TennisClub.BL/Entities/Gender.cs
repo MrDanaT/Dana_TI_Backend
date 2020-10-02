@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
-using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {
-    public class Gender : BaseEntity
+    public class Gender
     {
         public Gender()
         {
             Members = new HashSet<Member>();
         }
-
-
+        public byte Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Member> Members { get; set; }

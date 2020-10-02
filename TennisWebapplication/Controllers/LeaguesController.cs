@@ -5,6 +5,8 @@ using TennisClub.DAL.Repositories.LeagueRepository;
 
 namespace TennisWebapplication.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class LeaguesController : Controller
     {
         private readonly ILeagueRepository _repo;
@@ -14,6 +16,8 @@ namespace TennisWebapplication.Controllers
             _repo = repo;
         }
 
+        // GET: api/leagues
+        [HttpGet]
         public ActionResult<IEnumerable<League>> GetAllLeagues()
         {
             IEnumerable<League> leagueItems = _repo.GetAllLeagues();

@@ -1,9 +1,8 @@
-﻿using TennisClub.BL.Entities.Common;
-
-namespace TennisClub.BL.Entities
+﻿namespace TennisClub.BL.Entities
 {
-    public class GameResult : BaseEntity
+    public class GameResult
     {
+        public int Id { get; set; }
         public int GameId { get; set; }
         public byte SetNr { get; set; }
         public byte ScoreTeamMember { get; set; }

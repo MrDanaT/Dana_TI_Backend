@@ -5,6 +5,8 @@ using TennisClub.DAL.Repositories.GenderRepository;
 
 namespace TennisWebapplication.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class GendersController : Controller
     {
         private readonly IGenderRepository _repo;
@@ -14,6 +16,8 @@ namespace TennisWebapplication.Controllers
             _repo = repo;
         }
 
+        // GET: api/genders
+        [HttpGet]
         public ActionResult<IEnumerable<Gender>> GetAllGenders()
         {
             IEnumerable<Gender> genderItems = _repo.GetAllGenders();
