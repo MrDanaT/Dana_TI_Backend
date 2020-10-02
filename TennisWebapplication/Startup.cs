@@ -9,6 +9,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using TennisClub.DAL;
 using TennisClub.DAL.Repositories.GenderRepository;
+using TennisClub.DAL.Repositories.LeagueRepository;
 
 namespace TennisWebapplication
 {
@@ -34,6 +35,7 @@ namespace TennisWebapplication
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IGenderRepository, GenderRepository>();
+            services.AddScoped<ILeagueRepository, LeagueRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

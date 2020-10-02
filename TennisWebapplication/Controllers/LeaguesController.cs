@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.LeagueRepository;
+using TennisClub.DTO.League;
 
 namespace TennisWebapplication.Controllers
 {
@@ -10,10 +12,12 @@ namespace TennisWebapplication.Controllers
     public class LeaguesController : Controller
     {
         private readonly ILeagueRepository _repo;
+        private readonly IMapper _mapper;
 
-        public LeaguesController(ILeagueRepository repo)
+        public LeaguesController(ILeagueRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         // GET: api/leagues
@@ -22,7 +26,7 @@ namespace TennisWebapplication.Controllers
         {
             IEnumerable<League> leagueItems = _repo.GetAllLeagues();
 
-            return Ok(leagueItems);
+            return Ok(_mapper.Map<IEnumerable<LeagueReadDTO>>(leagueItems));
         }
     }
 }
