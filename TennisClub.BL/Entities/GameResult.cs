@@ -7,7 +7,7 @@
         public byte SetNr { get; set; }
         public byte ScoreTeamMember { get; set; }
         public byte ScoreOpponent { get; set; }
-        public  Game GameNavigation { get; set; }
+        public Game GameNavigation { get; set; }
 
     }
 }

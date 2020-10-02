@@ -12,6 +12,6 @@ namespace TennisClub.BL.Entities
         public byte Id { get; set; }
         public string Name { get; set; }
 
-        public  ICollection<Game> Games { get; set; }
+        public ICollection<Game> Games { get; set; }
     }
 }
