@@ -4,16 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace TennisWebapplication.Models
+namespace TennisClub.BL.Entities
 {
-    public class Gender
+    public class Gender : BaseEntity
     {
         public Gender()
         {
             Members = new HashSet<Member>();
         }
 
-        public byte Id { get; set; }
 
         public string Name { get; set; }
 

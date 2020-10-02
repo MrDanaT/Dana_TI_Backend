@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace TennisWebapplication.Models
+namespace TennisClub.BL.Entities
 {
-    public class Member
+    public class Member : BaseEntity
     {
         public Member()
         {
@@ -13,7 +13,6 @@ namespace TennisWebapplication.Models
             Games = new HashSet<Game>();
         }
 
-        public int Id { get; set; }
         public string FederationNr { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

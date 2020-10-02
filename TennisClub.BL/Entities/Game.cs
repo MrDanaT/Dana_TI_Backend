@@ -2,16 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace TennisWebapplication.Models
+namespace TennisClub.BL.Entities
 {
-    public class Game
+    public class Game : BaseEntity
     {
         public Game()
         {
             GameResults = new HashSet<GameResult>();
         }
 
-        public int Id { get; set; }
         public string GameNumber { get; set; }
         public int MemberId { get; set; }
         public byte LeagueId { get; set; }
