@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {

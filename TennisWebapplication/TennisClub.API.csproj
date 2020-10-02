@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TennisClub.BL\TennisClub.BL.csproj" />
+    <ProjectReference Include="..\TennisClub.Models\TennisClub.DAL.csproj" />
   </ItemGroup>
 
 

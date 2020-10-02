@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {
@@ -13,8 +11,5 @@ namespace TennisClub.BL.Entities
         public DateTime HandoutDate { get; set; }
         public DateTime? PaymentDate { get; set; }
         public virtual Member MemberNavigation { get; set; }
-
-        //  public virtual Game GameId { get; set; } // TODO: vragen.
-
     }
 }

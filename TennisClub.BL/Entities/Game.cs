@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using TennisClub.BL.Entities.Common;
 
 namespace TennisClub.BL.Entities
 {

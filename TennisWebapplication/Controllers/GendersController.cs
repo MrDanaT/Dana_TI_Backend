@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TennisWebapplication.Models;
-using TennisWebapplication.Repositories.GameRepository;
-using TennisWebapplication.Repositories.GenderRepository;
+using TennisClub.BL.Entities;
+using TennisClub.DAL.Repositories.GenderRepository;
 
 namespace TennisWebapplication.Controllers
 {

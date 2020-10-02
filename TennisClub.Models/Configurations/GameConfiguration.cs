@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TennisClub.BL.Entities;
 
-namespace TennisWebapplication.Configurations
+namespace TennisClub.DAL.Configurations
 {
     public class GameConfiguration : IEntityTypeConfiguration<Game>
     {
