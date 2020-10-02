@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using TennisWebapplication.Models;
 using TennisWebapplication.Repositories.RoleRepository;
 
@@ -40,7 +40,9 @@ namespace TennisWebapplication.Controllers
             Role roleFromRepo = _repo.GetRoleById(id);
 
             if (roleFromRepo == null)
+            {
                 return NotFound();
+            }
 
             // TODO: do the changes here
 

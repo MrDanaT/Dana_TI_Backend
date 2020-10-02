@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TennisWebapplication.Models;
 
-namespace TennisWebapplication.Models
+namespace TennisWebapplication.Configurations
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class LeagueConfiguration : IEntityTypeConfiguration<League>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<League> builder)
         {
             builder.HasKey(i => i.Id);
             builder.HasAlternateKey(i => i.Name);
@@ -18,14 +19,12 @@ namespace TennisWebapplication.Models
             builder.Property(i => i.Name).HasColumnType("varchar(20)").IsRequired();
 
             builder.HasData(
-                new Role { Id = 1, Name = "Voorzitter" },
-                new Role { Id = 2, Name = "Bestuurslid" },
-                new Role { Id = 3, Name = "Secretaris" },
-                new Role { Id = 4, Name = "Penningmeester" },
-                new Role { Id = 5, Name = "Speler" }
+                new League { Id = 1, Name = "Recreatief" },
+                new League { Id = 2, Name = "Competitie" },
+                new League { Id = 3, Name = "Toptennis" }
             );
 
-            builder.ToTable("tblRoles");
+            builder.ToTable("tblLeagues");
         }
     }
 }

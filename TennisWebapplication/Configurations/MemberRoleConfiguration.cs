@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TennisWebapplication.Models;
 
-namespace TennisWebapplication.Models
+namespace TennisWebapplication.Configurations
 {
     public class MemberRoleConfiguration : IEntityTypeConfiguration<MemberRole>
     {
