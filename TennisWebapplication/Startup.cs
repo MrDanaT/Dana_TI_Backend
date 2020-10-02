@@ -53,9 +53,7 @@ namespace TennisWebapplication
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "api/{controller}/{action}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }

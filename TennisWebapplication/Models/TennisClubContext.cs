@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TennisWebapplication.Configurations;
 
 namespace TennisWebapplication.Models
 {
