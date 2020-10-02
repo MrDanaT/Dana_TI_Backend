@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TennisClub.DAL;
 using TennisClub.DAL.Repositories.GenderRepository;
-using TennisWebapplication.Models;
 
 namespace TennisWebapplication
 {

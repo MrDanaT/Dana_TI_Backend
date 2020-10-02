@@ -46,8 +46,8 @@ namespace TennisClub.DAL
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(@Directory.GetCurrentDirectory() + "/../TennisClub.API/appsettings.json")
                 .Build();
-            var builder = new DbContextOptionsBuilder<TennisClubContext>();
-            var connectionString = configuration.GetConnectionString("TennisClubConnection");
+            DbContextOptionsBuilder<TennisClubContext> builder = new DbContextOptionsBuilder<TennisClubContext>();
+            string connectionString = configuration.GetConnectionString("TennisClubConnection");
             builder.UseSqlServer(connectionString);
             return new TennisClubContext(builder.Options);
         }
