@@ -34,10 +34,10 @@ namespace TennisClub.API.Controllers
         }
 
         // GET: api/memberfine/5
-        [HttpGet("{id}", Name = "GetMemberFinesById")]
-        public ActionResult<MemberFineReadDTO> GetMemberFinesById(int id)
+        [HttpGet("{id}", Name = "GetMemberFineById")]
+        public ActionResult<MemberFineReadDTO> GetMemberFineById(int id)
         {
-            MemberFine memberFine = _repo.GetMemberFinesById(id);
+            MemberFine memberFine = _repo.GetMemberFineById(id);
 
             if (memberFine == null)
             {
@@ -58,14 +58,14 @@ namespace TennisClub.API.Controllers
 
             MemberFineReadDTO memberFineReadDto = _mapper.Map<MemberFineReadDTO>(memberFineModel);
 
-            return CreatedAtRoute(nameof(GetMemberFinesById), new { memberFineReadDto.Id }, memberFineReadDto);
+            return CreatedAtRoute(nameof(GetMemberFineById), new { memberFineReadDto.Id }, memberFineReadDto);
         }
 
         // PATCH: api/memberfine/{id}
         [HttpPatch("{id}")]
         public ActionResult PartialMemberFineUpdate(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
         {
-            MemberFine memberFineModelFromRepo = _repo.GetMemberFinesById(id);
+            MemberFine memberFineModelFromRepo = _repo.GetMemberFineById(id);
 
             if (memberFineModelFromRepo == null)
             {

@@ -9,6 +9,6 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
         void UpdateMemberFine(MemberFine memberFine);
         IEnumerable<MemberFine> GetAllMemberFines();
         IEnumerable<MemberFine> GetMemberFinesByMember(Member member);
-        MemberFine GetMemberFinesById(int id);
+        MemberFine GetMemberFineById(int id);
     }
 }
