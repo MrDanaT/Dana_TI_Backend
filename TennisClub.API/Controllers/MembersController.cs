@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using TennisClub.BL.Entities;
-using TennisClub.DAL;
 using TennisClub.DAL.Repositories.MemberRepository;
+using TennisClub.DTO.Member;
 
 namespace TennisClub.API.Controllers
 {
@@ -28,14 +23,16 @@ namespace TennisClub.API.Controllers
 
         // GET: api/members
         [HttpGet]
-        public ActionResult<IEnumerable<Member>> GetAllMembers()
+        public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers()
         {
-            return Ok(_repo.GetAllMembers());
+            IEnumerable<Member> memberItems = _repo.GetAllMembers();
+
+            return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
         }
 
         // GET: api/members/5
         [HttpGet("{id}", Name = "GetMemberById")]
-        public ActionResult<IEnumerable<Member>> GetMemberById(int id)
+        public ActionResult<IEnumerable<MemberReadDTO>> GetMemberById(int id)
         {
             Member memberFromRepo = _repo.GetMemberById(id);
 
@@ -44,27 +41,58 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            return Ok(memberFromRepo);
+            return Ok(_mapper.Map<MemberReadDTO>(memberFromRepo));
         }
 
         // POST: api/members
         [HttpPost]
-        public ActionResult<Member> CreateMember(Member member)
+        public ActionResult<MemberReadDTO> CreateMember(MemberCreateDTO memberCreateDTO)
         {
-            _repo.CreateMember(member);
+            Member memberModel = _mapper.Map<Member>(memberCreateDTO);
+
+            _repo.CreateMember(memberModel);
             _repo.SaveChanges();
 
-            return CreatedAtRoute(nameof(GetMemberById), new { member.Id }, member);
-        }
+            MemberReadDTO memberReadDTO = _mapper.Map<MemberReadDTO>(memberModel);
 
+            return CreatedAtRoute(nameof(GetMemberById), new { memberReadDTO.Id }, memberReadDTO);
+        }
+        // PATH: api/members/5
+        [HttpPatch("{id}")]
+        public ActionResult PartialMemberUpdate(int id, JsonPatchDocument<MemberUpdateDTO> patchDoc)
+        {
+            Member memberModelFromRepo = _repo.GetMemberById(id);
+
+            if (memberModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            MemberUpdateDTO memberToPatch = _mapper.Map<MemberUpdateDTO>(memberModelFromRepo);
+            patchDoc.ApplyTo(memberToPatch, ModelState);
+
+            if (!TryValidateModel(memberModelFromRepo))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(memberToPatch, memberModelFromRepo);
+
+            _repo.UpdateMember(memberModelFromRepo);
+            _repo.SaveChanges();
+
+            return NoContent();
+        }
         // DELETE: api/members/5
-        [HttpDelete("{id")]
-        public ActionResult<Member> DeleteMember(int id)
+        [HttpDelete("{id}")]
+        public ActionResult DeleteMember(int id)
         {
             Member memberFromRepo = _repo.GetMemberById(id);
 
             if (memberFromRepo == null)
+            {
                 return NotFound();
+            }
 
             _repo.DeleteMember(memberFromRepo);
             _repo.SaveChanges();
@@ -72,26 +100,6 @@ namespace TennisClub.API.Controllers
             return NoContent();
         }
 
-        // PATH: api/members/5
-        [HttpPatch("{id")]
-        public ActionResult<Member> PartialMemberUpdate(int id, JsonPatchDocument<Member> patchDoc)
-        {
-            Member memberFromRepo = _repo.GetMemberById(id);
 
-            if (memberFromRepo == null)
-                return NotFound();
-
-            patchDoc.ApplyTo(memberFromRepo, ModelState);
-
-            if (!TryValidateModel(memberFromRepo))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _repo.UpdateMember(memberFromRepo);
-            _repo.SaveChanges();
-
-            return NoContent();
-        }
     }
 }
