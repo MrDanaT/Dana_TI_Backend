@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TennisClub.DTO.League
+﻿namespace TennisClub.DTO.League
 {
     public class LeagueReadDTO
     {
+        public byte Id { get; set; }
         public string Name { get; set; }
     }
 }
