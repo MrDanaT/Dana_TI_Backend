@@ -56,17 +56,6 @@ namespace TennisClub.DAL.Repositories.GameRepository
             //Nothing
         }
 
-        public IEnumerable<Game> GetFutureGamesByMemberAndDate(Member member, DateTime date)
-        {
-            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            IQueryable<Game> gameItems = _context.Games
-                .AsNoTracking()
-                .Where(g => g.MemberId == member.Id && g.Date == date)
-                .Select(g => g);
-
-            return gameItems.AsEnumerable();
-        }
-
         public IEnumerable<Game> GetAllGames()
         {
             return _context.Games.AsNoTracking().ToList();

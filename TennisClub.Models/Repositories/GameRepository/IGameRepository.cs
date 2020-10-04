@@ -11,7 +11,6 @@ namespace TennisClub.DAL.Repositories.GameRepository
         void DeleteGame(Game game);
         IEnumerable<Game> GetAllGames();
         IEnumerable<Game> GetFutureGamesByMember(Member member);
-        IEnumerable<Game> GetFutureGamesByMemberAndDate(Member member, DateTime date);
         Game GetGameById(int id);
     }
 }
