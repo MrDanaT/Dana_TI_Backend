@@ -11,7 +11,7 @@ namespace TennisClub.DAL.Configurations
             builder.HasKey(i => i.Id);
             builder.HasAlternateKey(i => i.Name);
 
-            builder.Property(i => i.Id).HasColumnType("tinyint").IsRequired();
+            builder.Property(i => i.Id).HasColumnType("tinyint").HasMaxLength(3);
             builder.Property(i => i.Name).HasColumnType("varchar(10)").IsRequired();
 
             builder.HasData(
