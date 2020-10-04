@@ -38,7 +38,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
                 .Where(mr => roles.Any(r => r == mr.RoleNavigation.Name))
                 .Select(mr => mr.MemberNavigation);
 
-            return members;
+            return members.AsEnumerable();
         }
 
         public IEnumerable<Role> GetRolesByMember(Member member)
@@ -49,7 +49,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
                 .Where(mr => mr.MemberId == member.Id)
                 .Select(mr => mr.RoleNavigation);
 
-            return roles;
+            return roles.AsEnumerable(); ;
         }
 
         public bool SaveChanges()

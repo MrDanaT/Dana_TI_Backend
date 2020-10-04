@@ -43,7 +43,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
                 .Where(mf => mf.MemberId == member.Id)
                 .Select(mf => mf);
 
-            return memberFineItems;
+            return memberFineItems.AsEnumerable();
         }
 
         public bool SaveChanges()
