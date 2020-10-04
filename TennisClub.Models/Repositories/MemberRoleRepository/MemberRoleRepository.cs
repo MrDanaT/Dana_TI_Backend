@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TennisClub.BL.Entities;
@@ -26,7 +27,9 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
 
         public IEnumerable<Member> GetMembersByRoles(IEnumerable<Role> roles)
         {
+            // TODO: zie of het sneller of trager gaat hierdoor.
             IQueryable<Member> filteredMembersByRoles = _context.MemberRoles
+                .AsNoTracking()
                 .Where(mr => roles.Any(r => r.Id == mr.RoleId))
                 .Select(mr => mr.MemberNavigation);
 
@@ -35,7 +38,9 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
 
         public IEnumerable<Role> GetRolesByMember(Member member)
         {
+            // TODO: zie of het sneller of trager gaat hierdoor.
             IQueryable<Role> filteredMemberRoles = _context.MemberRoles
+                .AsNoTracking()
                 .Where(mr => mr.MemberId == member.Id)
                 .Select(mr => mr.RoleNavigation);
 
