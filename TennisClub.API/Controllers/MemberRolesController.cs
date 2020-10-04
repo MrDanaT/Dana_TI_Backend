@@ -30,8 +30,8 @@ namespace TennisClub.API.Controllers
             _memberRepo = memberRepo;
         }
 
-        // GET: api/memberroles/getrolesbymember/5
-        [HttpGet("getrolesbymember/{id}")]
+        // GET: api/memberroles/getrolesbymemberid/5
+        [HttpGet("getrolesbymemberid/{id}")]
         public ActionResult<IEnumerable<RoleReadDTO>> GetRolesByMemberId(int id)
         {
             // TODO: Dit nakijken samen met repository.
@@ -90,15 +90,15 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            MemberRoleUpdateDTO modelRoleToPatch = _mapper.Map<MemberRoleUpdateDTO>(memberRoleModelFromRepo);
-            patchDoc.ApplyTo(modelRoleToPatch, ModelState);
+            MemberRoleUpdateDTO memberRoleToPatch = _mapper.Map<MemberRoleUpdateDTO>(memberRoleModelFromRepo);
+            patchDoc.ApplyTo(memberRoleToPatch, ModelState);
 
-            if (!TryValidateModel(modelRoleToPatch))
+            if (!TryValidateModel(memberRoleToPatch))
             {
                 return ValidationProblem(ModelState);
             }
 
-            _mapper.Map(modelRoleToPatch, memberRoleModelFromRepo);
+            _mapper.Map(memberRoleToPatch, memberRoleModelFromRepo);
 
             _repo.UpdateMemberRole(memberRoleModelFromRepo);
             _repo.SaveChanges();
