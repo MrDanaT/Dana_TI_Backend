@@ -10,7 +10,9 @@ using System;
 using TennisClub.DAL;
 using TennisClub.DAL.Repositories.GenderRepository;
 using TennisClub.DAL.Repositories.LeagueRepository;
+using TennisClub.DAL.Repositories.MemberFineRepository;
 using TennisClub.DAL.Repositories.MemberRepository;
+using TennisClub.DAL.Repositories.MemberRoleRepository;
 using TennisClub.DAL.Repositories.RoleRepository;
 
 namespace TennisClub
@@ -40,6 +42,8 @@ namespace TennisClub
             services.AddScoped<ILeagueRepository, LeagueRepository>();
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IMemberRoleRepository, MemberRoleRepository>();
+            services.AddScoped<IMemberFineRepository, MemberFineRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
