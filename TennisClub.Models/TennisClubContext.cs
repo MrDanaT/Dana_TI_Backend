@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using TennisClub.BL.Entities;
 using TennisClub.DAL.Configurations;
 
@@ -36,20 +33,5 @@ namespace TennisClub.DAL
             base.OnModelCreating(modelBuilder);
         }
 
-    }
-
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<TennisClubContext>
-    {
-        public TennisClubContext CreateDbContext(string[] args)
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(@Directory.GetCurrentDirectory() + "/../TennisClub.API/appsettings.json")
-                .Build();
-            DbContextOptionsBuilder<TennisClubContext> builder = new DbContextOptionsBuilder<TennisClubContext>();
-            string connectionString = configuration.GetConnectionString("TennisClubConnection");
-            builder.UseSqlServer(connectionString);
-            return new TennisClubContext(builder.Options);
-        }
     }
 }
