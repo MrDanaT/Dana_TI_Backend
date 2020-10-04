@@ -26,9 +26,14 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
             _context.GameResults.Add(gameResult);
         }
 
-        public IEnumerable<GameResult> GetAllGameResults(Member member)
+        public IEnumerable<GameResult> GetAllGameResults()
         {
             return _context.GameResults.AsNoTracking().ToList();
+        }
+
+        public GameResult GetGameResultById(int id)
+        {
+            return _context.GameResults.AsNoTracking().FirstOrDefault(gr => gr.Id == id);
         }
 
         public IEnumerable<GameResult> GetGameResultsByMember(Member member)

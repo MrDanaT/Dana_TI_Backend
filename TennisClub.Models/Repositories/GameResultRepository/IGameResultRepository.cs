@@ -8,6 +8,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
         void CreateGameResult(GameResult gameResult);
         void UpdateGameResult(GameResult gameResult);
         IEnumerable<GameResult> GetGameResultsByMember(Member member);
-        IEnumerable<GameResult> GetAllGameResults (Member member);
+        IEnumerable<GameResult> GetAllGameResults ();
+        GameResult GetGameResultById(int id);
     }
 }
