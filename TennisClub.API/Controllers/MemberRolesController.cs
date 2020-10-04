@@ -17,7 +17,7 @@ namespace TennisClub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MemberRolesController : ControllerBase
+    public class MemberRolesController : Controller
     {
         private readonly IMemberRoleRepository _repo;
         private readonly IMapper _mapper;

@@ -15,7 +15,7 @@ namespace TennisClub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GamesController : ControllerBase
+    public class GamesController : Controller
     {
         private readonly IGameRepository _repo;
         private readonly IMapper _mapper;
