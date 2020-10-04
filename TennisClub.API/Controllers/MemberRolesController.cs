@@ -46,7 +46,7 @@ namespace TennisClub.API.Controllers
         public ActionResult<IEnumerable<MemberReadDTO>> GetMembersByRoles(List<string> roles)
         {
             // TODO: Dit nakijken samen met repository.
-            var memberItems = _repo.GetMembersByRoles(roles);
+            IEnumerable<Member> memberItems = _repo.GetMembersByRoles(roles);
 
             return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
         }
@@ -57,14 +57,12 @@ namespace TennisClub.API.Controllers
         {
             MemberRole memberRoleItem = _repo.GetMemberRoleById(id);
 
-            if (memberRoleItem != null)
-            {
-                return Ok(_mapper.Map<MemberRoleReadDTO>(memberRoleItem));
-            }
-            else
+            if (memberRoleItem == null)
             {
                 return NotFound();
             }
+
+            return Ok(_mapper.Map<MemberRoleReadDTO>(memberRoleItem));
         }
 
         // POST: api/memberroles
@@ -78,7 +76,7 @@ namespace TennisClub.API.Controllers
 
             MemberRoleReadDTO memberRoleReadDTO = _mapper.Map<MemberRoleReadDTO>(memberRoleModel);
 
-            return CreatedAtRoute(nameof(GetRolesByMemberId), new { memberRoleReadDTO.Id }, memberRoleReadDTO);
+            return CreatedAtRoute(nameof(GetMemberRoleById), new { memberRoleReadDTO.Id }, memberRoleReadDTO);
         }
 
         // PATCH api/memberroles/{id}
@@ -96,7 +94,9 @@ namespace TennisClub.API.Controllers
             patchDoc.ApplyTo(modelRoleToPatch, ModelState);
 
             if (!TryValidateModel(modelRoleToPatch))
+            {
                 return ValidationProblem(ModelState);
+            }
 
             _mapper.Map(modelRoleToPatch, memberRoleModelFromRepo);
 
