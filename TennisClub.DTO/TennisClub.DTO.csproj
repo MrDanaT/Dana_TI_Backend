@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="GameResult\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TennisClub.BL\TennisClub.BL.csproj" />
   </ItemGroup>
 
