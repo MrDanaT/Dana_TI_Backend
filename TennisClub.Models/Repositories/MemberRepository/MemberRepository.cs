@@ -35,6 +35,11 @@ namespace TennisClub.DAL.Repositories.MemberRepository
             member.Deleted = true;
         }
 
+        public IEnumerable<Member> GetAllActiveMembers()
+        {
+            return _context.Members.AsNoTracking().Where(m => m.Deleted == false).ToList();
+        }
+
         public IEnumerable<Member> GetAllMembers()
         {
             return _context.Members.AsNoTracking().ToList();
