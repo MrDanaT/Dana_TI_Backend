@@ -24,6 +24,7 @@ namespace TennisClub.DAL.Configurations
             builder.Property(i => i.Zipcode).HasColumnType("varchar(6)").IsRequired();
             builder.Property(i => i.City).HasColumnType("varchar(30)").IsRequired();
             builder.Property(i => i.PhoneNr).HasColumnType("varchar(15)").IsRequired(false);
+            builder.Property(i => i.Deleted).HasColumnType("bit").IsRequired().HasDefaultValue(false).IsRequired();
 
             builder.HasOne(i => i.GenderNavigation)
                 .WithMany(g => g.Members)
