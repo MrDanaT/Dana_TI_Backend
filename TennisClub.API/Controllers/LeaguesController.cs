@@ -28,5 +28,19 @@ namespace TennisClub.API.Controllers
 
             return Ok(_mapper.Map<IEnumerable<LeagueReadDTO>>(leagueItems));
         }
+
+        // GET: api/leagues/5
+        [HttpGet("{id}")]
+        public ActionResult<LeagueReadDTO> GetGenderById(int id)
+        {
+            League leagueFromRepo = _repo.GetLeagueById(id);
+
+            if (leagueFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<LeagueReadDTO>(leagueFromRepo));
+        }
     }
 }
