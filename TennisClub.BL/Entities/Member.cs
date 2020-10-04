@@ -26,7 +26,7 @@ namespace TennisClub.BL.Entities
         public string Zipcode { get; set; }
         public string City { get; set; }
         public string PhoneNr { get; set; }
-        public bool Deleted { get; set; }
+        public bool? Deleted { get; set; }
 
         public ICollection<MemberRole> MemberRoles { get; set; }
         public ICollection<MemberFine> MemberFines { get; set; }
