@@ -22,7 +22,7 @@ namespace TennisClub.API.Controllers
 
         // GET: api/genders
         [HttpGet]
-        public ActionResult<IEnumerable<Gender>> GetAllGenders()
+        public ActionResult<IEnumerable<GenderReadDTO>> GetAllGenders()
         {
             IEnumerable<Gender> genderItems = _repo.GetAllGenders();
 
@@ -31,7 +31,7 @@ namespace TennisClub.API.Controllers
 
         // GET: api/genders/5
         [HttpGet]
-        public ActionResult<IEnumerable<Gender>> GetGenderById(int id)
+        public ActionResult<IEnumerable<GenderReadDTO>> GetGenderById(int id)
         {
             Gender genderFromRepo = _repo.GetGenderById(id);
 
@@ -43,3 +43,4 @@ namespace TennisClub.API.Controllers
             return Ok(_mapper.Map<GenderReadDTO>(genderFromRepo));
         }
     }
+}

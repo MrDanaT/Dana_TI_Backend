@@ -22,7 +22,7 @@ namespace TennisClub.API.Controllers
 
         // GET: api/leagues
         [HttpGet]
-        public ActionResult<IEnumerable<League>> GetAllLeagues()
+        public ActionResult<IEnumerable<LeagueReadDTO>> GetAllLeagues()
         {
             IEnumerable<League> leagueItems = _repo.GetAllLeagues();
 
