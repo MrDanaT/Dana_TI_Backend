@@ -9,9 +9,9 @@ namespace TennisClub.API.Profiles
         public MemberFinesProfile()
         {
             CreateMap<MemberFine, MemberFineReadDTO>();
-            CreateMap<MemberFineReadDTO, MemberFine>();
             CreateMap<MemberFineCreateDTO, MemberFine>();
-            CreateMap<MemberFine, MemberFineCreateDTO>();
+            CreateMap<MemberFineUpdateDTO, MemberFine>();
+            CreateMap<MemberFine, MemberFineUpdateDTO>();
         }
     }
 }

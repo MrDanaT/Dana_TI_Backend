@@ -9,9 +9,9 @@ namespace TennisClub.API.Profiles
         public GamesProfile()
         {
             CreateMap<Game, GameReadDTO>();
-            CreateMap<GameReadDTO, Game>();
             CreateMap<GameCreateDTO, Game>();
-            CreateMap<Game, GameCreateDTO>();
+            CreateMap<GameUpdateDTO, Game>();
+            CreateMap<Game, GameUpdateDTO>();
         }
     }
 }
