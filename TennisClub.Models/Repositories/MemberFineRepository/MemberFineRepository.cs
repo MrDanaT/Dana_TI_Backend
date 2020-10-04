@@ -30,6 +30,11 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
             return _context.MemberFines.AsNoTracking().ToList();
         }
 
+        public MemberFine GetMemberFinesById(int id)
+        {
+            return _context.MemberFines.AsNoTracking().FirstOrDefault(mf => mf.Id == id);
+        }
+
         public IEnumerable<MemberFine> GetMemberFinesByMember(Member member)
         {
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
