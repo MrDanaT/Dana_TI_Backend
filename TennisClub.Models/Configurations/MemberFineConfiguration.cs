@@ -12,7 +12,7 @@ namespace TennisClub.DAL.Configurations
 
             builder.HasAlternateKey(i => i.FineNumber);
 
-            builder.Property(i => i.Id).HasColumnType("integer").HasMaxLength(10);
+            builder.Property(i => i.Id).HasColumnType("integer").HasMaxLength(10).UseIdentityColumn();
             builder.Property(i => i.FineNumber).HasColumnType("integer").IsRequired();
             builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
             builder.Property(i => i.Amount).HasColumnType("decimal(7, 2)").IsRequired();
