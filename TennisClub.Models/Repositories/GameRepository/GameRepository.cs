@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameRepository
@@ -35,12 +37,13 @@ namespace TennisClub.DAL.Repositories.GameRepository
 
         public IEnumerable<Game> GetFutureGamesByMember(Member member)
         {
-            throw new NotImplementedException();
-        }
+            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
+            IQueryable<Game> gameItems = _context.Games
+                .AsNoTracking()
+                .Where(g => g.Date >= DateTime.Today)
+                .Select(g => g);
 
-        public IEnumerable<Game> GetGamesByMember(Member member)
-        {
-            throw new NotImplementedException();
+            return gameItems.AsEnumerable();
         }
 
         public bool SaveChanges()
@@ -51,6 +54,27 @@ namespace TennisClub.DAL.Repositories.GameRepository
         public void UpdateGame(Game game)
         {
             //Nothing
+        }
+
+        public IEnumerable<Game> GetFutureGamesByMemberAndDate(Member member, DateTime date)
+        {
+            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
+            IQueryable<Game> gameItems = _context.Games
+                .AsNoTracking()
+                .Where(g => g.MemberId == member.Id && g.Date == date)
+                .Select(g => g);
+
+            return gameItems.AsEnumerable();
+        }
+
+        public IEnumerable<Game> GetAllGames()
+        {
+            return _context.Games.AsNoTracking().ToList();
+        }
+
+        public Game GetGameById(int id)
+        {
+            return _context.Games.AsNoTracking().FirstOrDefault(g => g.Id == id);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameRepository
@@ -8,7 +9,9 @@ namespace TennisClub.DAL.Repositories.GameRepository
         void CreateGame(Game game);
         void UpdateGame(Game game);
         void DeleteGame(Game game);
-        IEnumerable<Game> GetGamesByMember(Member member);
+        IEnumerable<Game> GetAllGames();
         IEnumerable<Game> GetFutureGamesByMember(Member member);
+        IEnumerable<Game> GetFutureGamesByMemberAndDate(Member member, DateTime date);
+        Game GetGameById(int id);
     }
 }
