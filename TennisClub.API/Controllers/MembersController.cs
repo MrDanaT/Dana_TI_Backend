@@ -32,7 +32,7 @@ namespace TennisClub.API.Controllers
 
         // GET: api/members/5
         [HttpGet("{id}", Name = "GetMemberById")]
-        public ActionResult<IEnumerable<MemberReadDTO>> GetMemberById(int id)
+        public ActionResult<MemberReadDTO> GetMemberById(int id)
         {
             Member memberFromRepo = _repo.GetMemberById(id);
 

@@ -31,7 +31,7 @@ namespace TennisClub.API.Controllers
 
         // GET: api/genders/5
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<GenderReadDTO>> GetGenderById(int id)
+        public ActionResult<GenderReadDTO> GetGenderById(int id)
         {
             Gender genderFromRepo = _repo.GetGenderById(id);
 
