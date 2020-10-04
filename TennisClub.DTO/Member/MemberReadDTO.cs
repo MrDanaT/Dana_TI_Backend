@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TennisClub.DTO.Member
+﻿namespace TennisClub.DTO.Member
 {
     public class MemberReadDTO : MemberBaseDTO
     {

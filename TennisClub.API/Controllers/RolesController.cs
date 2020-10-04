@@ -37,7 +37,9 @@ namespace TennisClub.API.Controllers
             Role roleItem = _repo.GetRoleById(id);
 
             if (roleItem == null)
+            {
                 return NotFound();
+            }
 
             return Ok(_mapper.Map<RoleReadDTO>(roleItem));
         }
@@ -72,7 +74,9 @@ namespace TennisClub.API.Controllers
             patchDoc.ApplyTo(roleToPatch, ModelState);
 
             if (!TryValidateModel(roleToPatch))
+            {
                 return ValidationProblem(ModelState);
+            }
 
             _mapper.Map(roleToPatch, roleModelFromRepo);
 

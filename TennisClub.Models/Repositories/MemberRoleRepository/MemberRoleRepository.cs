@@ -26,7 +26,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
 
         public IEnumerable<Member> GetMembersByRoles(IEnumerable<Role> roles)
         {
-            var filteredMembersByRoles = _context.MemberRoles
+            IQueryable<Member> filteredMembersByRoles = _context.MemberRoles
                 .Where(mr => roles.Any(r => r.Id == mr.RoleId))
                 .Select(mr => mr.MemberNavigation);
 
