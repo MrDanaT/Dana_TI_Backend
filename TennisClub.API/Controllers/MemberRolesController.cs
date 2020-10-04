@@ -26,6 +26,15 @@ namespace TennisClub.API.Controllers
             _mapper = mapper;
             _memberRepo = memberRepo;
         }
+        
+        // GET: api/memberroles
+        [HttpGet]
+        public ActionResult<IEnumerable<MemberRoleReadDTO>> GetAllMemberRoles()
+        {
+            IEnumerable<MemberRole> memberRoleItems = _repo.GetAllMemberRoles();
+
+            return Ok(_mapper.Map<IEnumerable<MemberRoleReadDTO>>(memberRoleItems));
+        }
 
         // GET api/memberroles/{id}
         [HttpGet("{id}", Name = "GetMemberRoleById")]

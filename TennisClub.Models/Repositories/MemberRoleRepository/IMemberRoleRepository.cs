@@ -10,5 +10,6 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
         IEnumerable<Member> GetMembersByRoles(List<string> roles);
         IEnumerable<Role> GetRolesByMember(Member member);
         MemberRole GetMemberRoleById(int id);
+        IEnumerable<MemberRole> GetAllMemberRoles();
     }
 }

@@ -25,6 +25,11 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
             _context.MemberRoles.Add(memberRole);
         }
 
+        public IEnumerable<MemberRole> GetAllMemberRoles()
+        {
+            return _context.MemberRoles.AsNoTracking().ToList();
+        }
+
         public MemberRole GetMemberRoleById(int id)
         {
             return _context.MemberRoles.AsNoTracking().FirstOrDefault(mr => mr.Id == id);
