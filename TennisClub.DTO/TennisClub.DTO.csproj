@@ -8,7 +8,6 @@
     <Folder Include="Game\" />
     <Folder Include="GameResult\" />
     <Folder Include="MemberFine\" />
-    <Folder Include="Member\" />
     <Folder Include="MemberRole\" />
     <Folder Include="Role\" />
   </ItemGroup>
