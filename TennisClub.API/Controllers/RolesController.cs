@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.RoleRepository;
 
-namespace TennisWebapplication.Controllers
+namespace TennisClub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -15,7 +15,7 @@ namespace TennisWebapplication.Controllers
         {
             _repo = repo;
         }
-        
+
         // GET: api/roles
         [HttpGet]
         public ActionResult<IEnumerable<Role>> GetAllRoles()
@@ -25,7 +25,7 @@ namespace TennisWebapplication.Controllers
             return Ok(roleItems);
         }
 
-        // GET: api/roles/{id}
+        // GET: api/roles/5
         [HttpGet("{id}", Name = "GetRoleById")]
         public ActionResult<Role> GetRoleById(int id)
         {
@@ -51,8 +51,8 @@ namespace TennisWebapplication.Controllers
             return CreatedAtRoute(nameof(GetRoleById), new { role.Id }, role);
         }
 
-        
-        // PUT: api/roles/{id} 
+
+        // PUT: api/roles/5 
         [HttpPut("{id}")]
         public ActionResult<Role> UpdateRole(int id, Role role)
         {

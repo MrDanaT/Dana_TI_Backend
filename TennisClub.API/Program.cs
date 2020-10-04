@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using TennisClub.DAL;
 
-namespace TennisWebapplication
+namespace TennisClub
 {
     public class Program
     {

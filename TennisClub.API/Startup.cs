@@ -11,7 +11,7 @@ using TennisClub.DAL;
 using TennisClub.DAL.Repositories.GenderRepository;
 using TennisClub.DAL.Repositories.LeagueRepository;
 
-namespace TennisWebapplication
+namespace TennisClub
 {
     public class Startup
     {

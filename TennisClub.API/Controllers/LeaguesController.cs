@@ -5,7 +5,7 @@ using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.LeagueRepository;
 using TennisClub.DTO.League;
 
-namespace TennisWebapplication.Controllers
+namespace TennisClub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

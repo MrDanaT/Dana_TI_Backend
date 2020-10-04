@@ -5,7 +5,7 @@ using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.GenderRepository;
 using TennisClub.DTO.Gender;
 
-namespace TennisWebapplication.Controllers
+namespace TennisClub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
