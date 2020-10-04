@@ -25,26 +25,31 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
             _context.MemberRoles.Add(memberRole);
         }
 
-        public IEnumerable<Member> GetMembersByRoles(IEnumerable<Role> roles)
+        public MemberRole GetMemberRoleById(int id)
         {
-            // TODO: zie of het sneller of trager gaat hierdoor.
-            IQueryable<Member> filteredMembersByRoles = _context.MemberRoles
+            return _context.MemberRoles.AsNoTracking().FirstOrDefault(mr => mr.Id == id);
+        }
+
+        public IEnumerable<Member> GetMembersByRoles(List<string> roles)
+        {
+            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
+            IQueryable<Member> members = _context.MemberRoles
                 .AsNoTracking()
-                .Where(mr => roles.Any(r => r.Id == mr.RoleId))
+                .Where(mr => roles.Any(r => r == mr.RoleNavigation.Name))
                 .Select(mr => mr.MemberNavigation);
 
-            return filteredMembersByRoles;
+            return members;
         }
 
         public IEnumerable<Role> GetRolesByMember(Member member)
         {
-            // TODO: zie of het sneller of trager gaat hierdoor.
-            IQueryable<Role> filteredMemberRoles = _context.MemberRoles
+            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
+            IQueryable<Role> roles = _context.MemberRoles
                 .AsNoTracking()
                 .Where(mr => mr.MemberId == member.Id)
                 .Select(mr => mr.RoleNavigation);
 
-            return filteredMemberRoles;
+            return roles;
         }
 
         public bool SaveChanges()

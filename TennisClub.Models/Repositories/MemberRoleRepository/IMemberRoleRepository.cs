@@ -7,7 +7,8 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
     {
         void CreateMemberRole(MemberRole memberRole);
         void UpdateMemberRole(MemberRole memberRole);
-        IEnumerable<Member> GetMembersByRoles(IEnumerable<Role> roles);
+        IEnumerable<Member> GetMembersByRoles(List<string> roles);
         IEnumerable<Role> GetRolesByMember(Member member);
+        MemberRole GetMemberRoleById(int id);
     }
 }
