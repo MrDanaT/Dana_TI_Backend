@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.RoleRepository;
+using TennisClub.DTO.Role;
 
 namespace TennisClub.API.Controllers
 {
@@ -10,62 +13,70 @@ namespace TennisClub.API.Controllers
     public class RolesController : Controller
     {
         private readonly IRoleRepository _repo;
+        private readonly IMapper _mapper;
 
-        public RolesController(IRoleRepository repo)
+        public RolesController(IRoleRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         // GET: api/roles
         [HttpGet]
-        public ActionResult<IEnumerable<Role>> GetAllRoles()
+        public ActionResult<IEnumerable<RoleReadDTO>> GetAllRoles()
         {
             IEnumerable<Role> roleItems = _repo.GetAllRoles();
 
-            return Ok(roleItems);
+            return Ok(_mapper.Map<RoleReadDTO>(roleItems));
         }
 
         // GET: api/roles/5
         [HttpGet("{id}", Name = "GetRoleById")]
-        public ActionResult<Role> GetRoleById(int id)
+        public ActionResult<RoleReadDTO> GetRoleById(int id)
         {
-            Role commandItem = _repo.GetRoleById(id);
+            Role roleItem = _repo.GetRoleById(id);
 
-            if (commandItem != null)
-            {
-                return Ok(commandItem);
-            }
-            else
-            {
+            if (roleItem == null)
                 return NotFound();
-            }
+
+            return Ok(_mapper.Map<RoleReadDTO>(roleItem));
         }
 
         // POST: api/roles
         [HttpPost]
-        public ActionResult<Role> CreateRole(Role role)
+        public ActionResult<RoleReadDTO> CreateRole(RoleCreateDTO roleCreateDTO)
         {
-            _repo.CreateRole(role);
+            Role roleModel = _mapper.Map<Role>(roleCreateDTO);
+
+            _repo.CreateRole(roleModel);
             _repo.SaveChanges();
 
-            return CreatedAtRoute(nameof(GetRoleById), new { role.Id }, role);
+            RoleReadDTO roleReadDTO = _mapper.Map<RoleReadDTO>(roleModel);
+
+            return CreatedAtRoute(nameof(GetRoleById), new { roleReadDTO.Id }, roleReadDTO);
         }
 
 
-        // PUT: api/roles/5 
-        [HttpPut("{id}")]
-        public ActionResult<Role> UpdateRole(int id, Role role)
+        // PATCH: api/roles/5 
+        [HttpPatch("{id}")]
+        public ActionResult<Role> UpdateRole(int id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
         {
-            Role roleFromRepo = _repo.GetRoleById(id);
+            Role roleModelFromRepo = _repo.GetRoleById(id);
 
-            if (roleFromRepo == null)
+            if (roleModelFromRepo == null)
             {
                 return NotFound();
             }
 
-            // TODO: do the changes here
+            RoleUpdateDTO roleToPatch = _mapper.Map<RoleUpdateDTO>(roleModelFromRepo);
+            patchDoc.ApplyTo(roleToPatch, ModelState);
 
-            _repo.UpdateRole(role);
+            if (!TryValidateModel(roleToPatch))
+                return ValidationProblem(ModelState);
+
+            _mapper.Map(roleToPatch, roleModelFromRepo);
+
+            _repo.UpdateRole(roleModelFromRepo);
             _repo.SaveChanges();
 
             return NoContent();
