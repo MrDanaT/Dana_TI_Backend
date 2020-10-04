@@ -15,9 +15,9 @@ namespace TennisClub.DAL.Configurations
             builder.Property(i => i.Name).HasColumnType("varchar(20)").IsRequired();
 
             builder.HasData(
-                new League { Id = 1, Name = "Recreatief" },
-                new League { Id = 2, Name = "Competitie" },
-                new League { Id = 3, Name = "Toptennis" }
+                new League { Id = 0, Name = "Recreatief" },
+                new League { Id = 1, Name = "Competitie" },
+                new League { Id = 2, Name = "Toptennis" }
             );
 
             builder.ToTable("tblLeagues");
