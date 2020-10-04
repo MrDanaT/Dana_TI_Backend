@@ -27,7 +27,7 @@ namespace TennisClub.API.Controllers
         {
             IEnumerable<Role> roleItems = _repo.GetAllRoles();
 
-            return Ok(_mapper.Map<RoleReadDTO>(roleItems));
+            return Ok(_mapper.Map<IEnumerable<RoleReadDTO>>(roleItems));
         }
 
         // GET: api/roles/5
