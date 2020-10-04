@@ -100,6 +100,13 @@ namespace TennisClub.API.Controllers
             return NoContent();
         }
 
+        // GET: api/members/active
+        [HttpGet("active")]
+        public ActionResult<IEnumerable<MemberReadDTO>> GetAllActiveMembers()
+        {
+            IEnumerable<Member> memberItems = _repo.GetAllActiveMembers();
 
+            return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
+        }
     }
 }
