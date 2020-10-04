@@ -6,5 +6,6 @@ namespace TennisClub.DAL.Repositories.LeagueRepository
     public interface ILeagueRepository
     {
         IEnumerable<League> GetAllLeagues();
+        League GetLeagueById(int id);
     }
 }

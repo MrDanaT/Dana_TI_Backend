@@ -18,5 +18,10 @@ namespace TennisClub.DAL.Repositories.LeagueRepository
         {
             return _context.Leagues.AsNoTracking().ToList();
         }
+
+        public League GetLeagueById(int id)
+        {
+            return _context.Leagues.AsNoTracking().FirstOrDefault(l => l.Id == id);
+        }
     }
 }
