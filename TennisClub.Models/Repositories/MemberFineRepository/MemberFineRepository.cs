@@ -32,7 +32,13 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
 
         public IEnumerable<MemberFine> GetMemberFinesByMember(Member member)
         {
-            throw new NotImplementedException();
+            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
+            IQueryable<MemberFine> memberFineItems = _context.MemberFines
+                .AsNoTracking()
+                .Where(mf => mf.MemberId == member.Id)
+                .Select(mf => mf);
+
+            return memberFineItems;
         }
 
         public bool SaveChanges()
@@ -42,12 +48,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
 
         public void UpdateMemberFine(MemberFine memberFine)
         {
-            if (memberFine.PaymentDate != null)
-            {
-                // TODO: welk is beter?
-                // throw new ArgumentException(nameof(memberFine));
-                _context.Entry(memberFine).State = EntityState.Unchanged;
-            }
+            // Nothing
         }
     }
 }
