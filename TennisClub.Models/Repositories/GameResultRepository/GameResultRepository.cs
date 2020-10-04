@@ -39,7 +39,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
         public IEnumerable<GameResult> GetGameResultsByMember(Member member)
         {
             // TODO: Nakijken
-            var gameResultItems = _context.GameResults
+            IQueryable<GameResult> gameResultItems = _context.GameResults
                 .AsNoTracking()
                 .Where(gr => gr.GameNavigation.MemberId == member.Id)
                 .Include(x => x.GameNavigation)

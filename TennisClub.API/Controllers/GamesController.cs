@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.GameRepository;
 using TennisClub.DAL.Repositories.MemberRepository;
@@ -55,7 +51,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("futurebymemberid/{id}")]
         public ActionResult<IEnumerable<GameReadDTO>> GetAllFutureGamesByMemberId(int id)
         {
-            var memberItem = _memberRepo.GetMemberById(id);
+            Member memberItem = _memberRepo.GetMemberById(id);
             IEnumerable<Game> gameItems = _repo.GetFutureGamesByMember(memberItem);
 
             return Ok(_mapper.Map<IEnumerable<GameReadDTO>>(gameItems));
@@ -79,16 +75,20 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialGameUpdate(int id, JsonPatchDocument<GameUpdateDTO> patchDoc)
         {
-            var gameModelFromRepo = _repo.GetGameById(id);
+            Game gameModelFromRepo = _repo.GetGameById(id);
 
             if (gameModelFromRepo == null)
+            {
                 return NotFound();
+            }
 
             GameUpdateDTO gameToPatch = _mapper.Map<GameUpdateDTO>(gameModelFromRepo);
             patchDoc.ApplyTo(gameToPatch, ModelState);
 
             if (!TryValidateModel(gameToPatch))
+            {
                 return ValidationProblem(ModelState);
+            }
 
             _mapper.Map(gameToPatch, gameModelFromRepo);
 

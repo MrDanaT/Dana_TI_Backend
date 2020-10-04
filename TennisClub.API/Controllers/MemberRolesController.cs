@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.MemberRepository;
 using TennisClub.DAL.Repositories.MemberRoleRepository;

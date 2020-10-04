@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameRepository
