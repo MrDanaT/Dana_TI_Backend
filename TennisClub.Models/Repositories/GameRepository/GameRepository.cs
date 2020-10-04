@@ -40,7 +40,7 @@ namespace TennisClub.DAL.Repositories.GameRepository
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             IQueryable<Game> gameItems = _context.Games
                 .AsNoTracking()
-                .Where(g => g.Date >= DateTime.Today)
+                .Where(g => g.Date > DateTime.Today)
                 .Select(g => g);
 
             return gameItems.AsEnumerable();
