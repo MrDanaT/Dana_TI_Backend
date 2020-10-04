@@ -9,5 +9,6 @@ namespace TennisClub.DAL.Repositories.MemberRepository
         void UpdateMember(Member member);
         void DeleteMember(Member member);
         IEnumerable<Member> GetAllMembers();
+        Member GetMemberById(int id);
     }
 }
