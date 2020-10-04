@@ -57,7 +57,7 @@ namespace TennisClub.API.Controllers
 
             return CreatedAtRoute(nameof(GetMemberById), new { memberReadDTO.Id }, memberReadDTO);
         }
-        // PATH: api/members/5
+        // PATCH: api/members/5
         [HttpPatch("{id}")]
         public ActionResult PartialMemberUpdate(int id, JsonPatchDocument<MemberUpdateDTO> patchDoc)
         {

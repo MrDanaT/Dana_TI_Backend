@@ -61,7 +61,7 @@ namespace TennisClub.API.Controllers
 
         // PATCH: api/roles/5 
         [HttpPatch("{id}")]
-        public ActionResult<Role> UpdateRole(int id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
+        public ActionResult<Role> PartialRoleUpdate(int id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
         {
             Role roleModelFromRepo = _repo.GetRoleById(id);
 
