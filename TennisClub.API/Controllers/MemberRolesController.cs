@@ -30,7 +30,7 @@ namespace TennisClub.API.Controllers
             _memberRepo = memberRepo;
         }
 
-        // GET api/commands/{id}
+        // GET api/memberroles/{id}
         [HttpGet("{id}", Name = "GetMemberRoleById")]
         public ActionResult<MemberRoleReadDTO> GetMemberRoleById(int id)
         {

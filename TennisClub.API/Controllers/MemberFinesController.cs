@@ -53,9 +53,9 @@ namespace TennisClub.API.Controllers
 
         // POST: api/memberfine
         [HttpPost]
-        public ActionResult<MemberFineReadDTO> CreateCommand(MemberFineCreateDTO commandCreateDto)
+        public ActionResult<MemberFineReadDTO> CreateMemberFine(MemberFineCreateDTO memberFineCreateDto)
         {
-            MemberFine memberFineModel = _mapper.Map<MemberFine>(commandCreateDto);
+            MemberFine memberFineModel = _mapper.Map<MemberFine>(memberFineCreateDto);
 
             _repo.CreateMemberFine(memberFineModel);
             _repo.SaveChanges();
