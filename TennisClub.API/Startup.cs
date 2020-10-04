@@ -9,6 +9,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using TennisClub.DAL;
 using TennisClub.DAL.Repositories.GameRepository;
+using TennisClub.DAL.Repositories.GameResultRepository;
 using TennisClub.DAL.Repositories.GenderRepository;
 using TennisClub.DAL.Repositories.LeagueRepository;
 using TennisClub.DAL.Repositories.MemberFineRepository;
@@ -39,6 +40,7 @@ namespace TennisClub
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddScoped<IGameResultRepository, GameResultRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
             services.AddScoped<IGenderRepository, GenderRepository>();
             services.AddScoped<ILeagueRepository, LeagueRepository>();
