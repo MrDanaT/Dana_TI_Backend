@@ -32,12 +32,17 @@ namespace TennisClub.DAL.Repositories.MemberRepository
                 throw new ArgumentNullException(nameof(member));
             }
 
-            _context.Members.Remove(member);
+            member.Deleted = true;
         }
 
         public IEnumerable<Member> GetAllMembers()
         {
             return _context.Members.AsNoTracking().ToList();
+        }
+
+        public Member GetMemberById(int id)
+        {
+            return _context.Members.FirstOrDefault(m => m.Id.Equals(id));
         }
 
         public bool SaveChanges()
