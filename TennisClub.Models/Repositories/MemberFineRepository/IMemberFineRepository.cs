@@ -3,7 +3,7 @@ using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberFineRepository
 {
-    public interface IMemberFineRepository : ISavable
+    public interface IMemberFineRepository : IUpdatable
     {
         void CreateMemberFine(MemberFine memberFine);
         void UpdateMemberFine(MemberFine memberFine);

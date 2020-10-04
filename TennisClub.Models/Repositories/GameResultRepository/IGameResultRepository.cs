@@ -3,7 +3,7 @@ using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameResultRepository
 {
-    public interface IGameResultRepository : ISavable
+    public interface IGameResultRepository : IUpdatable
     {
         void CreateGameResult(GameResult gameResult);
         void UpdateGameResult(GameResult gameResult);

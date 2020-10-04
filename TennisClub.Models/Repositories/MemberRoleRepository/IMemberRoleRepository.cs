@@ -3,7 +3,7 @@ using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRoleRepository
 {
-    public interface IMemberRoleRepository : ISavable
+    public interface IMemberRoleRepository : IUpdatable
     {
         void CreateMemberRole(MemberRole memberRole);
         void UpdateMemberRole(MemberRole memberRole);

@@ -1,6 +1,6 @@
 ﻿namespace TennisClub.DAL.Repositories
 {
-    public interface ISavable
+    public interface IUpdatable
     {
         bool SaveChanges();
     }
