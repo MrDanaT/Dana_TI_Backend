@@ -18,5 +18,10 @@ namespace TennisClub.DAL.Repositories.GenderRepository
         {
             return _context.Genders.AsNoTracking().ToList();
         }
+
+        public Gender GetGenderById(int id)
+        {
+            return _context.Genders.FirstOrDefault(g => g.Id == id);
+        }
     }
 }

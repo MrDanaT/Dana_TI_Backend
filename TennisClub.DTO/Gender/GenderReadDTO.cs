@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TennisClub.BL.Entities;
-
-namespace TennisClub.DTO.Gender
+﻿namespace TennisClub.DTO.Gender
 {
     public class GenderReadDTO
     {
+        public byte Id { get; set; }
         public string Name { get; set; }
     }
 }
