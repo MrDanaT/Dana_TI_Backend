@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRoleRepository
@@ -23,14 +24,22 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
             _context.MemberRoles.Add(memberRole);
         }
 
-        public IEnumerable<Member> GetMembersByRoles(params Role[] roles)
+        public IEnumerable<Member> GetMembersByRoles(IEnumerable<Role> roles)
         {
-            throw new NotImplementedException();
+            var filteredMembersByRoles = _context.MemberRoles
+                .Where(mr => roles.Any(r => r.Id == mr.RoleId))
+                .Select(mr => mr.MemberNavigation);
+
+            return filteredMembersByRoles;
         }
 
         public IEnumerable<Role> GetRolesByMember(Member member)
         {
-            throw new NotImplementedException();
+            IQueryable<Role> filteredMemberRoles = _context.MemberRoles
+                .Where(mr => mr.MemberId == member.Id)
+                .Select(mr => mr.RoleNavigation);
+
+            return filteredMemberRoles;
         }
 
         public bool SaveChanges()
@@ -40,7 +49,9 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
 
         public void UpdateMemberRole(MemberRole memberRole)
         {
-            throw new NotImplementedException();
+            // Nothing
         }
+
+
     }
 }
