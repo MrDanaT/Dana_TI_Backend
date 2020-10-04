@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TennisClub.BL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameResultRepository
@@ -24,9 +26,21 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
             _context.GameResults.Add(gameResult);
         }
 
+        public IEnumerable<GameResult> GetAllGameResults(Member member)
+        {
+            return _context.GameResults.AsNoTracking().ToList();
+        }
+
         public IEnumerable<GameResult> GetGameResultsByMember(Member member)
         {
-            throw new NotImplementedException();
+            // TODO: Nakijken
+            var gameResultItems = _context.GameResults
+                .AsNoTracking()
+                .Where(gr => gr.GameNavigation.MemberId == member.Id)
+                .Include(x => x.GameNavigation)
+                .Select(gr => gr);
+
+            return gameResultItems.AsEnumerable();
         }
 
         public bool SaveChanges()
