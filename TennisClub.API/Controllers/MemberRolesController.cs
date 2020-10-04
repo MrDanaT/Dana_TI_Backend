@@ -30,27 +30,6 @@ namespace TennisClub.API.Controllers
             _memberRepo = memberRepo;
         }
 
-        // GET: api/memberroles/getrolesbymemberid/5
-        [HttpGet("getrolesbymemberid/{id}")]
-        public ActionResult<IEnumerable<RoleReadDTO>> GetRolesByMemberId(int id)
-        {
-            // TODO: Dit nakijken samen met repository.
-            Member memberFromRepo = _memberRepo.GetMemberById(id);
-            IEnumerable<Role> roleItems = _repo.GetRolesByMember(memberFromRepo).ToList();
-
-            return Ok(_mapper.Map<IEnumerable<RoleReadDTO>>(roleItems));
-        }
-
-        // GET: api/memberroles/getmembersbyroles
-        [HttpGet("getmembersbyroles")]
-        public ActionResult<IEnumerable<MemberReadDTO>> GetMembersByRoles(List<string> roles)
-        {
-            // TODO: Dit nakijken samen met repository.
-            IEnumerable<Member> memberItems = _repo.GetMembersByRoles(roles);
-
-            return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
-        }
-
         // GET api/commands/{id}
         [HttpGet("{id}", Name = "GetMemberRoleById")]
         public ActionResult<MemberRoleReadDTO> GetMemberRoleById(int id)
@@ -104,6 +83,27 @@ namespace TennisClub.API.Controllers
             _repo.SaveChanges();
 
             return NoContent();
+        }
+
+        // GET: api/memberroles/bymemberid/5
+        [HttpGet("bymemberid/{id}")]
+        public ActionResult<IEnumerable<RoleReadDTO>> GetRolesByMemberId(int id)
+        {
+            // TODO: Dit nakijken samen met repository.
+            Member memberFromRepo = _memberRepo.GetMemberById(id);
+            IEnumerable<Role> roleItems = _repo.GetRolesByMember(memberFromRepo).ToList();
+
+            return Ok(_mapper.Map<IEnumerable<RoleReadDTO>>(roleItems));
+        }
+
+        // GET: api/memberroles/byroles
+        [HttpGet("byroles")]
+        public ActionResult<IEnumerable<MemberReadDTO>> GetMembersByRoles(List<string> roles)
+        {
+            // TODO: Dit nakijken samen met repository.
+            IEnumerable<Member> memberItems = _repo.GetMembersByRoles(roles);
+
+            return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
         }
     }
 }

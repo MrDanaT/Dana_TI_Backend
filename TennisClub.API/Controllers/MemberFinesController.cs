@@ -92,8 +92,8 @@ namespace TennisClub.API.Controllers
             return NoContent();
         }
 
-        // GET: api/memberfine/getmemberfinesbymemberid/5
-        [HttpGet("getmemberfinesbymemberid/{id}")]
+        // GET: api/memberfine/bymemberid/5
+        [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetMemberFinesByMemberId(int id)
         {
             Member memberFromRepo = _memberRepo.GetMemberById(id);
