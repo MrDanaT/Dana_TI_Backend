@@ -21,7 +21,7 @@ namespace TennisClub.DAL.Repositories.LeagueRepository
 
         public League GetLeagueById(int id)
         {
-            return _context.Leagues.AsNoTracking().FirstOrDefault(l => l.Id == id);
+            return _context.Leagues.FirstOrDefault(l => l.Id == id);
         }
     }
 }

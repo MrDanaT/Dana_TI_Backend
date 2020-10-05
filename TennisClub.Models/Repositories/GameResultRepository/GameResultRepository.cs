@@ -33,7 +33,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
 
         public GameResult GetGameResultById(int id)
         {
-            return _context.GameResults.AsNoTracking().FirstOrDefault(gr => gr.Id == id);
+            return _context.GameResults.FirstOrDefault(gr => gr.Id == id);
         }
 
         public IEnumerable<GameResult> GetGameResultsByMember(Member member)

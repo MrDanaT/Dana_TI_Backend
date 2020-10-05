@@ -32,7 +32,7 @@ namespace TennisClub.DAL.Repositories.RoleRepository
 
         public Role GetRoleById(int id)
         {
-            return _context.Roles.AsNoTracking().FirstOrDefault(r => r.Id == id);
+            return _context.Roles.FirstOrDefault(r => r.Id == id);
         }
 
         public bool SaveChanges()

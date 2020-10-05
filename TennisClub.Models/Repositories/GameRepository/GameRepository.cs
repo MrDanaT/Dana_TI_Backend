@@ -63,7 +63,7 @@ namespace TennisClub.DAL.Repositories.GameRepository
 
         public Game GetGameById(int id)
         {
-            return _context.Games.AsNoTracking().FirstOrDefault(g => g.Id == id);
+            return _context.Games.FirstOrDefault(g => g.Id == id);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
 
         public MemberFine GetMemberFineById(int id)
         {
-            return _context.MemberFines.AsNoTracking().FirstOrDefault(mf => mf.Id == id);
+            return _context.MemberFines.FirstOrDefault(mf => mf.Id == id);
         }
 
         public IEnumerable<MemberFine> GetMemberFinesByMember(Member member)

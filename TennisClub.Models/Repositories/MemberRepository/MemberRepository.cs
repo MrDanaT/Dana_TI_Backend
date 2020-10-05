@@ -47,7 +47,7 @@ namespace TennisClub.DAL.Repositories.MemberRepository
 
         public Member GetMemberById(int id)
         {
-            return _context.Members.AsNoTracking().FirstOrDefault(m => m.Id == id);
+            return _context.Members.FirstOrDefault(m => m.Id == id);
         }
 
         public bool SaveChanges()
