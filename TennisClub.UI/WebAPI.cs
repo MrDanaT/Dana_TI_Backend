@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace TennisClub.UI
@@ -22,12 +20,12 @@ namespace TennisClub.UI
                     client.Timeout = TimeSpan.FromSeconds(900);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.GetAsync(apiUrl);
+                    Task<HttpResponseMessage> response = client.GetAsync(apiUrl);
                     response.Wait();
                     return response;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -45,12 +43,12 @@ namespace TennisClub.UI
                     client.Timeout = TimeSpan.FromSeconds(900);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.PostAsJsonAsync(apiUrl, model);
+                    Task<HttpResponseMessage> response = client.PostAsJsonAsync(apiUrl, model);
                     response.Wait();
                     return response;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -68,12 +66,12 @@ namespace TennisClub.UI
                     client.Timeout = TimeSpan.FromSeconds(900);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.PatchAsync(apiUrl, model);
+                    Task<HttpResponseMessage> response = client.PatchAsync(apiUrl, model);
                     response.Wait();
                     return response;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -91,12 +89,12 @@ namespace TennisClub.UI
                     client.Timeout = TimeSpan.FromSeconds(900);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    var response = client.DeleteAsync(apiUrl);
+                    Task<HttpResponseMessage> response = client.DeleteAsync(apiUrl);
                     response.Wait();
                     return response;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
