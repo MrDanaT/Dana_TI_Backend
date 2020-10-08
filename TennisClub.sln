@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TennisClub.DTO", "TennisClu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TennisClub.API", "TennisClub.API\TennisClub.API.csproj", "{AEA68AD3-E402-4897-864E-FDD4E387148B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TennisClub.UI", "TennisClub.UI\TennisClub.UI.csproj", "{3AAF4906-1417-4F2E-A985-6D72A2AB117A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{AEA68AD3-E402-4897-864E-FDD4E387148B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEA68AD3-E402-4897-864E-FDD4E387148B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEA68AD3-E402-4897-864E-FDD4E387148B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AAF4906-1417-4F2E-A985-6D72A2AB117A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AAF4906-1417-4F2E-A985-6D72A2AB117A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AAF4906-1417-4F2E-A985-6D72A2AB117A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AAF4906-1417-4F2E-A985-6D72A2AB117A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
