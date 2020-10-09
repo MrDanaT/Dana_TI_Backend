@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using TennisClub.BL.Entities;
 using TennisClub.DAL.Repositories.GameRepository;
 using TennisClub.DAL.Repositories.MemberRepository;
-using TennisClub.DTO.Game;
 
 namespace TennisClub.API.Controllers
 {

@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using TennisClub.BL.Entities;
-using TennisClub.DTO.MemberRole;
 
 namespace TennisClub.API.Profiles
 {

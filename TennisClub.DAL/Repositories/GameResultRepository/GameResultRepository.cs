@@ -1,0 +1,60 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace TennisClub.DAL.Repositories.GameResultRepository
+{
+    public class GameResultRepository : IGameResultRepository
+    {
+        private readonly TennisClubContext _context;
+
+
+        public GameResultRepository(TennisClubContext context)
+        {
+            _context = context;
+        }
+
+        public void Create(GameResult gameResult)
+        {
+            if (gameResult == null)
+            {
+                throw new ArgumentNullException(nameof(gameResult));
+            }
+
+            _context.GameResults.Add(gameResult);
+        }
+
+        public IEnumerable<GameResult> GetAllGameResults()
+        {
+            return _context.GameResults.AsNoTracking().ToList();
+        }
+
+        public GameResult GetGameResultById(int id)
+        {
+            return _context.GameResults.FirstOrDefault(gr => gr.Id == id);
+        }
+
+        public IEnumerable<GameResult> GetGameResultsByMember(Member member)
+        {
+            // TODO: Nakijken
+            IQueryable<GameResult> gameResultItems = _context.GameResults
+                .AsNoTracking()
+                .Where(gr => gr.GameNavigation.MemberId == member.Id)
+                .Include(x => x.GameNavigation)
+                .Select(gr => gr);
+
+            return gameResultItems.AsEnumerable();
+        }
+
+        public bool SaveChanges()
+        {
+            return _context.SaveChanges() > 0;
+        }
+
+        public void Update(GameResult gameResult)
+        {
+            //Nothing
+        }
+    }
+}

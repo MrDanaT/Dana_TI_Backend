@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using TennisClub.BL.Entities;
+using TennisClub.Common.MemberFine;
 using TennisClub.DAL.Repositories.MemberFineRepository;
 using TennisClub.DAL.Repositories.MemberRepository;
-using TennisClub.DTO.MemberFine;
 
 namespace TennisClub.API.Controllers
 {

@@ -3,12 +3,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using TennisClub.BL.Entities;
-using TennisClub.DAL.Repositories.MemberRepository;
-using TennisClub.DAL.Repositories.MemberRoleRepository;
-using TennisClub.DTO.Member;
-using TennisClub.DTO.MemberRole;
-using TennisClub.DTO.Role;
 
 namespace TennisClub.API.Controllers
 {

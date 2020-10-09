@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using TennisClub.BL.Entities;
-using TennisClub.DAL.Repositories.GenderRepository;
-using TennisClub.DTO.Gender;
 
 namespace TennisClub.API.Controllers
 {
