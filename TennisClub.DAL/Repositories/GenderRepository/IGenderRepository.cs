@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TennisClub.DAL.Entities;
+﻿using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GenderRepository
 {
