@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using TennisClub.Common.League;
+using TennisClub.DAL.Entities;
+using TennisClub.DAL.Repositories.LeagueRepository;
 
 namespace TennisClub.API.Controllers
 {
@@ -21,7 +24,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<LeagueReadDTO>> GetAllLeagues()
         {
-            IEnumerable<League> leagueItems = _repo.GetAllLeagues();
+            IEnumerable<League> leagueItems = _repo.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<LeagueReadDTO>>(leagueItems));
         }
@@ -30,7 +33,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<LeagueReadDTO> GetGenderById(int id)
         {
-            League leagueFromRepo = _repo.GetLeagueById(id);
+            League leagueFromRepo = _repo.GetById(id);
 
             if (leagueFromRepo == null)
             {

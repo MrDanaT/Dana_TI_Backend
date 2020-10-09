@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Configurations
 {
