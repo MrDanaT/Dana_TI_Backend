@@ -19,7 +19,7 @@ namespace TennisClub.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("TennisClub.BL.Entities.Game", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.Game", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace TennisClub.DAL.Migrations
                     b.ToTable("tblGames");
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.GameResult", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.GameResult", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,7 +82,7 @@ namespace TennisClub.DAL.Migrations
                     b.ToTable("tblGameResults");
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.Gender", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.Gender", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -115,7 +115,7 @@ namespace TennisClub.DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.League", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.League", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -153,7 +153,7 @@ namespace TennisClub.DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.Member", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.Member", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,7 +217,7 @@ namespace TennisClub.DAL.Migrations
                     b.ToTable("tblMembers");
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.MemberFine", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.MemberFine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,7 +251,7 @@ namespace TennisClub.DAL.Migrations
                     b.ToTable("tblMemberFines");
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.MemberRole", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.MemberRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -282,7 +282,7 @@ namespace TennisClub.DAL.Migrations
                     b.ToTable("tblMemberRoles");
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.Role", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.Role", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -330,57 +330,57 @@ namespace TennisClub.DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.Game", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.Game", b =>
                 {
-                    b.HasOne("TennisClub.BL.Entities.League", "LeagueNavigation")
+                    b.HasOne("TennisClub.DAL.Entities.League", "LeagueNavigation")
                         .WithMany("Games")
                         .HasForeignKey("LeagueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TennisClub.BL.Entities.Member", "MemberNavigation")
+                    b.HasOne("TennisClub.DAL.Entities.Member", "MemberNavigation")
                         .WithMany("Games")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.GameResult", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.GameResult", b =>
                 {
-                    b.HasOne("TennisClub.BL.Entities.Game", "GameNavigation")
+                    b.HasOne("TennisClub.DAL.Entities.Game", "GameNavigation")
                         .WithMany("GameResults")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.Member", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.Member", b =>
                 {
-                    b.HasOne("TennisClub.BL.Entities.Gender", "GenderNavigation")
+                    b.HasOne("TennisClub.DAL.Entities.Gender", "GenderNavigation")
                         .WithMany("Members")
                         .HasForeignKey("GenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.MemberFine", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.MemberFine", b =>
                 {
-                    b.HasOne("TennisClub.BL.Entities.Member", "MemberNavigation")
+                    b.HasOne("TennisClub.DAL.Entities.Member", "MemberNavigation")
                         .WithMany("MemberFines")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TennisClub.BL.Entities.MemberRole", b =>
+            modelBuilder.Entity("TennisClub.DAL.Entities.MemberRole", b =>
                 {
-                    b.HasOne("TennisClub.BL.Entities.Member", "MemberNavigation")
+                    b.HasOne("TennisClub.DAL.Entities.Member", "MemberNavigation")
                         .WithMany("MemberRoles")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TennisClub.BL.Entities.Role", "RoleNavigation")
+                    b.HasOne("TennisClub.DAL.Entities.Role", "RoleNavigation")
                         .WithMany("MemberRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
