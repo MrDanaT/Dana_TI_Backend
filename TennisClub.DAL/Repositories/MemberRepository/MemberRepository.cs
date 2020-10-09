@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRepository
 {
@@ -39,12 +40,12 @@ namespace TennisClub.DAL.Repositories.MemberRepository
             return _context.Members.AsNoTracking().Where(m => m.Deleted == false).ToList();
         }
 
-        public IEnumerable<Member> GetAllMembers()
+        public IEnumerable<Member> GetAll()
         {
             return _context.Members.AsNoTracking().ToList();
         }
 
-        public Member GetMemberById(int id)
+        public Member GetById(int id)
         {
             return _context.Members.FirstOrDefault(m => m.Id == id);
         }

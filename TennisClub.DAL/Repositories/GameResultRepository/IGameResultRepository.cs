@@ -3,10 +3,8 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameResultRepository
 {
-    public interface IGameResultRepository : IUpdatable<GameResult>
+    public interface IGameResultRepository : IRepository<GameResult>
     {
         IEnumerable<GameResult> GetGameResultsByMember(Member member);
-        IEnumerable<GameResult> GetAllGameResults();
-        GameResult GetGameResultById(int id);
     }
 }

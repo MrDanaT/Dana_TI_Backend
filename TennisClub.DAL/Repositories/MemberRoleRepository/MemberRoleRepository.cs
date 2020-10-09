@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRoleRepository
 {
@@ -24,12 +25,17 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
             _context.MemberRoles.Add(memberRole);
         }
 
-        public IEnumerable<MemberRole> GetAllMemberRoles()
+        public void Delete(MemberRole entity)
+        {
+            // Nothing
+        }
+
+        public IEnumerable<MemberRole> GetAll()
         {
             return _context.MemberRoles.AsNoTracking().ToList();
         }
 
-        public MemberRole GetMemberRoleById(int id)
+        public MemberRole GetById(int id)
         {
             return _context.MemberRoles.FirstOrDefault(mr => mr.Id == id);
         }

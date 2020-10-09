@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.Common.MemberFine;
+using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories.MemberFineRepository;
 using TennisClub.DAL.Repositories.MemberRepository;
 
@@ -27,7 +28,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetAllMemberFines()
         {
-            IEnumerable<MemberFine> memberFineItems = _repo.GetAllMemberFines();
+            IEnumerable<MemberFine> memberFineItems = _repo.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems));
         }
@@ -36,7 +37,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetMemberFineById")]
         public ActionResult<MemberFineReadDTO> GetMemberFineById(int id)
         {
-            MemberFine memberFine = _repo.GetMemberFineById(id);
+            MemberFine memberFine = _repo.GetById(id);
 
             if (memberFine == null)
             {
@@ -64,7 +65,7 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialMemberFineUpdate(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
         {
-            MemberFine memberFineModelFromRepo = _repo.GetMemberFineById(id);
+            MemberFine memberFineModelFromRepo = _repo.GetById(id);
 
             if (memberFineModelFromRepo == null)
             {
@@ -91,7 +92,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetMemberFinesByMemberId(int id)
         {
-            Member memberFromRepo = _memberRepo.GetMemberById(id);
+            Member memberFromRepo = _memberRepo.GetById(id);
             IEnumerable<MemberFine> memberFineItems = _repo.GetMemberFinesByMember(memberFromRepo);
 
             return Ok(_mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems));

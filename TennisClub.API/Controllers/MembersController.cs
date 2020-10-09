@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using TennisClub.Common.Member;
+using TennisClub.DAL.Entities;
+using TennisClub.DAL.Repositories.MemberRepository;
 
 namespace TennisClub.API.Controllers
 {
@@ -22,7 +25,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers()
         {
-            IEnumerable<Member> memberItems = _repo.GetAllMembers();
+            IEnumerable<Member> memberItems = _repo.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
         }
@@ -31,7 +34,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetMemberById")]
         public ActionResult<MemberReadDTO> GetMemberById(int id)
         {
-            Member memberFromRepo = _repo.GetMemberById(id);
+            Member memberFromRepo = _repo.GetById(id);
 
             if (memberFromRepo == null)
             {
@@ -58,7 +61,7 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialMemberUpdate(int id, JsonPatchDocument<MemberUpdateDTO> patchDoc)
         {
-            Member memberModelFromRepo = _repo.GetMemberById(id);
+            Member memberModelFromRepo = _repo.GetById(id);
 
             if (memberModelFromRepo == null)
             {
@@ -84,7 +87,7 @@ namespace TennisClub.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteMember(int id)
         {
-            Member memberFromRepo = _repo.GetMemberById(id);
+            Member memberFromRepo = _repo.GetById(id);
 
             if (memberFromRepo == null)
             {

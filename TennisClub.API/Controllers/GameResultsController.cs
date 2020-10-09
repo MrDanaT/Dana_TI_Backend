@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using TennisClub.Common.GameResult;
+using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories.GameResultRepository;
 using TennisClub.DAL.Repositories.MemberRepository;
 
@@ -26,7 +28,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<GameResultReadDTO>> GetAllGameResults()
         {
-            IEnumerable<GameResult> gameResultItems = _repo.GetAllGameResults();
+            IEnumerable<GameResult> gameResultItems = _repo.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems));
         }
@@ -35,7 +37,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetGameResultById")]
         public ActionResult<GameResultReadDTO> GetGameResultById(int id)
         {
-            GameResult gameResultItem = _repo.GetGameResultById(id);
+            GameResult gameResultItem = _repo.GetById(id);
 
             if (gameResultItem != null)
             {
@@ -63,7 +65,7 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialGameResultUpdate(int id, JsonPatchDocument<GameResultUpdateDTO> patchDoc)
         {
-            GameResult gameResultModelFromRepo = _repo.GetGameResultById(id);
+            GameResult gameResultModelFromRepo = _repo.GetById(id);
 
             if (gameResultModelFromRepo == null)
             {
@@ -90,7 +92,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<GameResultReadDTO> GetGameResultsByMember(int id)
         {
-            Member memberItem = _memberRepo.GetMemberById(id);
+            Member memberItem = _memberRepo.GetById(id);
             IEnumerable<GameResult> gameResultItems = _repo.GetGameResultsByMember(memberItem);
 
             return Ok(_mapper.Map<GameResultReadDTO>(gameResultItems));

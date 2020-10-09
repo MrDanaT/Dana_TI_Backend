@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using TennisClub.Common.Role;
+using TennisClub.DAL.Entities;
+using TennisClub.DAL.Repositories.RoleRepository;
 
 namespace TennisClub.API.Controllers
 {
@@ -22,7 +25,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<RoleReadDTO>> GetAllRoles()
         {
-            IEnumerable<Role> roleItems = _repo.GetAllRoles();
+            IEnumerable<Role> roleItems = _repo.GetAll();
 
             return Ok(_mapper.Map<IEnumerable<RoleReadDTO>>(roleItems));
         }
@@ -31,7 +34,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetRoleById")]
         public ActionResult<RoleReadDTO> GetRoleById(int id)
         {
-            Role roleItem = _repo.GetRoleById(id);
+            Role roleItem = _repo.GetById(id);
 
             if (roleItem == null)
             {
@@ -60,7 +63,7 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult<Role> PartialRoleUpdate(int id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
         {
-            Role roleModelFromRepo = _repo.GetRoleById(id);
+            Role roleModelFromRepo = _repo.GetById(id);
 
             if (roleModelFromRepo == null)
             {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameResultRepository
 {
@@ -25,12 +26,17 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
             _context.GameResults.Add(gameResult);
         }
 
-        public IEnumerable<GameResult> GetAllGameResults()
+        public void Delete(GameResult entity)
+        {
+            // Nothing
+        }
+
+        public IEnumerable<GameResult> GetAll()
         {
             return _context.GameResults.AsNoTracking().ToList();
         }
 
-        public GameResult GetGameResultById(int id)
+        public GameResult GetById(int id)
         {
             return _context.GameResults.FirstOrDefault(gr => gr.Id == id);
         }

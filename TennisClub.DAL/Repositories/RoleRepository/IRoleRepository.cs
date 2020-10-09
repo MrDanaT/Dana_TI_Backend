@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using TennisClub.DAL.Entities;
+﻿using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.RoleRepository
 {
-    public interface IRoleRepository : IUpdatable<Role>
+    public interface IRoleRepository : IRepository<Role>
     {
-        IEnumerable<Role> GetAllRoles();
-        Role GetRoleById(int id);
     }
 }

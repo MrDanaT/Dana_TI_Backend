@@ -3,9 +3,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.LeagueRepository
 {
-    public interface ILeagueRepository
+    public interface ILeagueRepository : IRepository<League>
     {
-        IEnumerable<League> GetAllLeagues();
-        League GetLeagueById(int id);
     }
 }

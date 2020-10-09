@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GenderRepository
 {
@@ -13,14 +14,34 @@ namespace TennisClub.DAL.Repositories.GenderRepository
             _context = context;
         }
 
-        public IEnumerable<Gender> GetAllGenders()
+        public void Create(Gender entity)
+        {
+            // Nothing
+        }
+
+        public void Delete(Gender entity)
+        {
+            // Nothing
+        }
+
+        public IEnumerable<Gender> GetAll()
         {
             return _context.Genders.AsNoTracking().ToList();
         }
 
-        public Gender GetGenderById(int id)
+        public Gender GetById(int id)
         {
             return _context.Genders.FirstOrDefault(g => g.Id == id);
+        }
+
+        public bool SaveChanges()
+        {
+            return false;
+        }
+
+        public void Update(Gender entity)
+        {
+            // Nothing
         }
     }
 }

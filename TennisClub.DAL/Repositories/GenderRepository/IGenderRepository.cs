@@ -3,9 +3,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GenderRepository
 {
-    public interface IGenderRepository
+    public interface IGenderRepository : IRepository<Gender>
     {
-        IEnumerable<Gender> GetAllGenders();
-        Gender GetGenderById(int id);
     }
 }

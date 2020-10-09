@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberFineRepository
 {
@@ -24,12 +25,17 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
             _context.MemberFines.Add(memberFine);
         }
 
-        public IEnumerable<MemberFine> GetAllMemberFines()
+        public void Delete(MemberFine entity)
+        {
+            // Nothing
+        }
+
+        public IEnumerable<MemberFine> GetAll()
         {
             return _context.MemberFines.AsNoTracking().ToList();
         }
 
-        public MemberFine GetMemberFineById(int id)
+        public MemberFine GetById(int id)
         {
             return _context.MemberFines.FirstOrDefault(mf => mf.Id == id);
         }

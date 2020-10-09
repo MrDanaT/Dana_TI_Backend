@@ -3,10 +3,8 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberFineRepository
 {
-    public interface IMemberFineRepository : IUpdatable<MemberFine>
+    public interface IMemberFineRepository : IRepository<MemberFine>
     {
-        IEnumerable<MemberFine> GetAllMemberFines();
         IEnumerable<MemberFine> GetMemberFinesByMember(Member member);
-        MemberFine GetMemberFineById(int id);
     }
 }

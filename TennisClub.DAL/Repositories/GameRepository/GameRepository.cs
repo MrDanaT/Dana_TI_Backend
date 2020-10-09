@@ -56,12 +56,12 @@ namespace TennisClub.DAL.Repositories.GameRepository
             //Nothing
         }
 
-        public IEnumerable<Game> GetAllGames()
+        public IEnumerable<Game> GetAll()
         {
             return _context.Games.AsNoTracking().ToList();
         }
 
-        public Game GetGameById(int id)
+        public Game GetById(int id)
         {
             return _context.Games.FirstOrDefault(g => g.Id == id);
         }
