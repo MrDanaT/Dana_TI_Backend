@@ -8,12 +8,14 @@ namespace TennisClub.UI
 {
     public class WebAPI
     {
+        private const string BASE_API_URL = "https://localhost:44356/api/";
+
         public static Task<HttpResponseMessage> GetCall(string url)
         {
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = "https://localhost:44356/api/" + url;
+                string apiUrl = BASE_API_URL + url;
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(apiUrl);
@@ -36,7 +38,7 @@ namespace TennisClub.UI
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = "https://localhost:44356/api/" + url;
+                string apiUrl = BASE_API_URL + url;
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(apiUrl);
@@ -59,7 +61,7 @@ namespace TennisClub.UI
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = "https://localhost:44356/api/" + url;
+                string apiUrl = BASE_API_URL + url;
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(apiUrl);
@@ -82,7 +84,7 @@ namespace TennisClub.UI
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = "https://localhost:44356/api/" + url;
+                string apiUrl = BASE_API_URL + url;
                 using (HttpClient client = new HttpClient())
                 {
                     client.BaseAddress = new Uri(apiUrl);
