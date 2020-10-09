@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
-using TennisClub.BL.Entities;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.UI
 {
@@ -14,7 +14,6 @@ namespace TennisClub.UI
         public MainWindow()
         {
             InitializeComponent();
-            GetRoles();
         }
 
         private void GetRoles()
@@ -24,6 +23,11 @@ namespace TennisClub.UI
             {
                 RoleData.ItemsSource = roles.Result.Content.ReadAsAsync<List<Role>>().Result;
             }
+        }
+
+        private void GetRolesButton_Click(object sender, RoutedEventArgs e)
+        {
+            GetRoles();
         }
     }
 }
