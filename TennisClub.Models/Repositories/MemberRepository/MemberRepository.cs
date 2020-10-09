@@ -15,7 +15,7 @@ namespace TennisClub.DAL.Repositories.MemberRepository
             _context = context;
         }
 
-        public void CreateMember(Member member)
+        public void Create(Member member)
         {
             if (member == null)
             {
@@ -25,7 +25,7 @@ namespace TennisClub.DAL.Repositories.MemberRepository
             _context.Members.Add(member);
         }
 
-        public void DeleteMember(Member member)
+        public void Delete(Member member)
         {
             if (member == null)
             {
@@ -55,7 +55,7 @@ namespace TennisClub.DAL.Repositories.MemberRepository
             return _context.SaveChanges() > 0;
         }
 
-        public void UpdateMember(Member member)
+        public void Update(Member member)
         {
             //Nothing
         }

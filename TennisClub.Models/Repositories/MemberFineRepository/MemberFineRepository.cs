@@ -15,7 +15,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
             _context = context;
         }
 
-        public void CreateMemberFine(MemberFine memberFine)
+        public void Create(MemberFine memberFine)
         {
             if (memberFine == null)
             {
@@ -51,7 +51,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepository
             return _context.SaveChanges() > 0;
         }
 
-        public void UpdateMemberFine(MemberFine memberFine)
+        public void Update(MemberFine memberFine)
         {
             // Nothing
         }

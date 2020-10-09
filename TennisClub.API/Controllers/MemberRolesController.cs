@@ -56,7 +56,7 @@ namespace TennisClub.API.Controllers
         {
             MemberRole memberRoleModel = _mapper.Map<MemberRole>(memberRoleCreateDTO);
 
-            _repo.CreateMemberRole(memberRoleModel);
+            _repo.Create(memberRoleModel);
             _repo.SaveChanges();
 
             MemberRoleReadDTO memberRoleReadDTO = _mapper.Map<MemberRoleReadDTO>(memberRoleModel);
@@ -85,7 +85,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(memberRoleToPatch, memberRoleModelFromRepo);
 
-            _repo.UpdateMemberRole(memberRoleModelFromRepo);
+            _repo.Update(memberRoleModelFromRepo);
             _repo.SaveChanges();
 
             return NoContent();

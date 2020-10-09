@@ -53,7 +53,7 @@ namespace TennisClub.API.Controllers
         {
             MemberFine memberFineModel = _mapper.Map<MemberFine>(memberFineCreateDto);
 
-            _repo.CreateMemberFine(memberFineModel);
+            _repo.Create(memberFineModel);
             _repo.SaveChanges();
 
             MemberFineReadDTO memberFineReadDto = _mapper.Map<MemberFineReadDTO>(memberFineModel);
@@ -82,7 +82,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(modelFineToPatch, memberFineModelFromRepo);
 
-            _repo.UpdateMemberFine(memberFineModelFromRepo);
+            _repo.Update(memberFineModelFromRepo);
             _repo.SaveChanges();
 
             return NoContent();

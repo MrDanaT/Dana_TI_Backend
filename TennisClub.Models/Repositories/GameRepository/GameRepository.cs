@@ -15,7 +15,7 @@ namespace TennisClub.DAL.Repositories.GameRepository
             _context = context;
         }
 
-        public void CreateGame(Game game)
+        public void Create(Game game)
         {
             if (game == null)
             {
@@ -25,7 +25,7 @@ namespace TennisClub.DAL.Repositories.GameRepository
             _context.Games.Add(game);
         }
 
-        public void DeleteGame(Game game)
+        public void Delete(Game game)
         {
             if (game == null)
             {
@@ -51,7 +51,7 @@ namespace TennisClub.DAL.Repositories.GameRepository
             return _context.SaveChanges() > 0;
         }
 
-        public void UpdateGame(Game game)
+        public void Update(Game game)
         {
             //Nothing
         }

@@ -53,7 +53,7 @@ namespace TennisClub.API.Controllers
         {
             GameResult gameResultModel = _mapper.Map<GameResult>(gameResultCreateDto);
 
-            _repo.CreateGameResult(gameResultModel);
+            _repo.Create(gameResultModel);
             _repo.SaveChanges();
 
             GameResultReadDTO gameResultReadDto = _mapper.Map<GameResultReadDTO>(gameResultModel);
@@ -82,7 +82,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(gameResultToPatch, gameResultModelFromRepo);
 
-            _repo.UpdateGameResult(gameResultModelFromRepo);
+            _repo.Update(gameResultModelFromRepo);
             _repo.SaveChanges();
 
             return NoContent();

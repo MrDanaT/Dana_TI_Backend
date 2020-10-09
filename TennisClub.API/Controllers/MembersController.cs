@@ -50,7 +50,7 @@ namespace TennisClub.API.Controllers
         {
             Member memberModel = _mapper.Map<Member>(memberCreateDTO);
 
-            _repo.CreateMember(memberModel);
+            _repo.Create(memberModel);
             _repo.SaveChanges();
 
             MemberReadDTO memberReadDTO = _mapper.Map<MemberReadDTO>(memberModel);
@@ -78,7 +78,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(memberToPatch, memberModelFromRepo);
 
-            _repo.UpdateMember(memberModelFromRepo);
+            _repo.Update(memberModelFromRepo);
             _repo.SaveChanges();
 
             return NoContent();
@@ -94,7 +94,7 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            _repo.DeleteMember(memberFromRepo);
+            _repo.Delete(memberFromRepo);
             _repo.SaveChanges();
 
             return NoContent();

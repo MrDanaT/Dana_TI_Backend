@@ -16,7 +16,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
             _context = context;
         }
 
-        public void CreateGameResult(GameResult gameResult)
+        public void Create(GameResult gameResult)
         {
             if (gameResult == null)
             {
@@ -53,7 +53,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepository
             return _context.SaveChanges() > 0;
         }
 
-        public void UpdateGameResult(GameResult gameResult)
+        public void Update(GameResult gameResult)
         {
             //Nothing
         }

@@ -63,7 +63,7 @@ namespace TennisClub.API.Controllers
         {
             Game gameModel = _mapper.Map<Game>(gameCreateDTO);
 
-            _repo.CreateGame(gameModel);
+            _repo.Create(gameModel);
             _repo.SaveChanges();
 
             GameReadDTO gameReadDto = _mapper.Map<GameReadDTO>(gameModel);
@@ -92,7 +92,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(gameToPatch, gameModelFromRepo);
 
-            _repo.UpdateGame(gameModelFromRepo);
+            _repo.Update(gameModelFromRepo);
             _repo.SaveChanges();
 
             return NoContent();
@@ -109,7 +109,7 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            _repo.DeleteGame(gameModelFromRepo);
+            _repo.Delete(gameModelFromRepo);
             _repo.SaveChanges();
 
             return NoContent();

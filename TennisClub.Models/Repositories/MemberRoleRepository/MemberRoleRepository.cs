@@ -15,7 +15,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
             _context = context;
         }
 
-        public void CreateMemberRole(MemberRole memberRole)
+        public void Create(MemberRole memberRole)
         {
             if (memberRole == null)
             {
@@ -62,7 +62,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
             return _context.SaveChanges() > 0;
         }
 
-        public void UpdateMemberRole(MemberRole memberRole)
+        public void Update(MemberRole memberRole)
         {
             // Nothing
         }
