@@ -90,12 +90,12 @@ namespace TennisClub.API.Controllers
 
         // GET: api/gameresults/bymemberid/5
         [HttpGet("bymemberid/{id}")]
-        public ActionResult<GameResultReadDTO> GetGameResultsByMember(int id)
+        public ActionResult<IEnumerable<GameResultReadDTO>> GetGameResultsByMember(int id)
         {
             Member memberItem = _memberRepo.GetById(id);
             IEnumerable<GameResult> gameResultItems = _repo.GetGameResultsByMember(memberItem);
 
-            return Ok(_mapper.Map<GameResultReadDTO>(gameResultItems));
+            return Ok(_mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems));
         }
     }
 }

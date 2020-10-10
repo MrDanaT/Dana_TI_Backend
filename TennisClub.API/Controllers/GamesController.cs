@@ -33,7 +33,7 @@ namespace TennisClub.API.Controllers
             return Ok(_mapper.Map<IEnumerable<GameReadDTO>>(gameItems));
         }
 
-        // GET api/games/{id}
+        // GET: api/games/5
         [HttpGet("{id}", Name = "GetGameById")]
         public ActionResult<GameReadDTO> GetGameById(int id)
         {
@@ -98,7 +98,7 @@ namespace TennisClub.API.Controllers
             return NoContent();
         }
 
-        // DELETE api/games/{id}
+        // DELETE: api/games/5
         [HttpDelete("{id}")]
         public ActionResult DeleteGame(int id)
         {

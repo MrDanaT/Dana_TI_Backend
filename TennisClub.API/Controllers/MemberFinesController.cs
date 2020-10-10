@@ -61,7 +61,7 @@ namespace TennisClub.API.Controllers
             return CreatedAtRoute(nameof(GetMemberFineById), new { memberFineReadDto.Id }, memberFineReadDto);
         }
 
-        // PATCH: api/memberfine/{id}
+        // PATCH: api/memberfine/5
         [HttpPatch("{id}")]
         public ActionResult PartialMemberFineUpdate(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
         {

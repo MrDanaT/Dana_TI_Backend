@@ -36,7 +36,7 @@ namespace TennisClub.API.Controllers
             return Ok(_mapper.Map<IEnumerable<MemberRoleReadDTO>>(memberRoleItems));
         }
 
-        // GET api/memberroles/{id}
+        // GET api/memberroles/5
         [HttpGet("{id}", Name = "GetMemberRoleById")]
         public ActionResult<MemberRoleReadDTO> GetMemberRoleById(int id)
         {
@@ -64,7 +64,7 @@ namespace TennisClub.API.Controllers
             return CreatedAtRoute(nameof(GetMemberRoleById), new { memberRoleReadDTO.Id }, memberRoleReadDTO);
         }
 
-        // PATCH api/memberroles/{id}
+        // PATCH api/memberroles/5
         [HttpPatch("{id}")]
         public ActionResult PartialMemberRoleUpdate(int id, JsonPatchDocument<MemberRoleUpdateDTO> patchDoc)
         {
