@@ -104,10 +104,11 @@ namespace TennisClub.API.Controllers
 
         // GET: api/memberroles/byroles
         [HttpGet("byroles")]
-        public ActionResult<IEnumerable<MemberReadDTO>> GetMembersByRoles(List<string> roles)
+        public ActionResult<IEnumerable<MemberReadDTO>> GetMembersByRoles(List<RoleCreateDTO> roleCreateDTOs)
         {
             // TODO: Dit nakijken samen met repository.
-            IEnumerable<Member> memberItems = _repo.GetMembersByRoles(roles);
+            var rolesFromRepo = _mapper.Map<List<Role>>(roleCreateDTOs);
+            IEnumerable<Member> memberItems = _repo.GetMembersByRoles(rolesFromRepo);
 
             return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
         }

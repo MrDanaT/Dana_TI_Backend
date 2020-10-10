@@ -40,12 +40,12 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepository
             return _context.MemberRoles.FirstOrDefault(mr => mr.Id == id);
         }
 
-        public IEnumerable<Member> GetMembersByRoles(List<string> roles)
+        public IEnumerable<Member> GetMembersByRoles(List<Role> roles)
         {
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             IQueryable<Member> members = _context.MemberRoles
                 .AsNoTracking()
-                .Where(mr => roles.Any(r => r == mr.RoleNavigation.Name))
+                .Where(mr => roles.Any(r => r == mr.RoleNavigation))
                 .Select(mr => mr.MemberNavigation);
 
             return members.AsEnumerable();
