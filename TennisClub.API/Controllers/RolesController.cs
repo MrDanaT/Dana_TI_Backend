@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using TennisClub.BL;
 using TennisClub.Common.Role;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories.RoleRepository;
@@ -12,12 +13,12 @@ namespace TennisClub.API.Controllers
     [ApiController]
     public class RolesController : Controller
     {
-        private readonly IRoleRepository _repo;
+        private readonly RoleLogic _logic;
         private readonly IMapper _mapper;
 
-        public RolesController(IRoleRepository repo, IMapper mapper)
+        public RolesController(RoleLogic logic, IMapper mapper)
         {
-            _repo = repo;
+            _logic = logic;
             _mapper = mapper;
         }
 
@@ -25,7 +26,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<RoleReadDTO>> GetAllRoles()
         {
-            IEnumerable<Role> roleItems = _repo.GetAll();
+            IEnumerable<Role> roleItems = _logic.GetAllRoles();
 
             return Ok(_mapper.Map<IEnumerable<RoleReadDTO>>(roleItems));
         }
@@ -34,7 +35,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetRoleById")]
         public ActionResult<RoleReadDTO> GetRoleById(int id)
         {
-            Role roleItem = _repo.GetById(id);
+            Role roleItem = _logic.GetRoleById(id);
 
             if (roleItem == null)
             {
@@ -50,8 +51,7 @@ namespace TennisClub.API.Controllers
         {
             Role roleModel = _mapper.Map<Role>(roleCreateDTO);
 
-            _repo.Create(roleModel);
-            _repo.SaveChanges();
+            _logic.CreateRole(roleModel);
 
             RoleReadDTO roleReadDTO = _mapper.Map<RoleReadDTO>(roleModel);
 
@@ -63,7 +63,7 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult<Role> PartialRoleUpdate(int id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
         {
-            Role roleModelFromRepo = _repo.GetById(id);
+            Role roleModelFromRepo = _logic.GetRoleById(id);
 
             if (roleModelFromRepo == null)
             {
@@ -80,8 +80,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(roleToPatch, roleModelFromRepo);
 
-            _repo.Update(roleModelFromRepo);
-            _repo.SaveChanges();
+            _logic.PartialRoleUpdate(roleModelFromRepo);
 
             return NoContent();
         }
