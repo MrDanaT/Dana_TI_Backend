@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using TennisClub.BL;
 using TennisClub.Common.GameResult;
 using TennisClub.DAL.Entities;
-using TennisClub.DAL.Repositories.GameResultRepository;
-using TennisClub.DAL.Repositories.MemberRepository;
 
 namespace TennisClub.API.Controllers
 {
@@ -27,7 +25,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<GameResultReadDTO>> GetAllGameResults()
         {
-            var gameResultItems = _logic.GetAllGameResults();
+            IEnumerable<GameResult> gameResultItems = _logic.GetAllGameResults();
 
             return Ok(_mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems));
         }
@@ -36,7 +34,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetGameResultById")]
         public ActionResult<GameResultReadDTO> GetGameResultById(int id)
         {
-            var gameResultItem = _logic.GetGameResultById(id);
+            GameResult gameResultItem = _logic.GetGameResultById(id);
 
             if (gameResultItem == null)
             {
@@ -89,7 +87,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<GameResultReadDTO>> GetGameResultsByMember(int id)
         {
-            var gameResultItems = _logic.GetGameResultsByMember(id);
+            IEnumerable<GameResult> gameResultItems = _logic.GetGameResultsByMember(id);
 
             return Ok(_mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems));
         }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories.MemberFineRepository;
 using TennisClub.DAL.Repositories.MemberRepository;

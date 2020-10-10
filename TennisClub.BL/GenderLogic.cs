@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories.GenderRepository;
 
 namespace TennisClub.BL
 {
-   public class GenderLogic
+    public class GenderLogic
     {
         private readonly IGenderRepository _repo;
 

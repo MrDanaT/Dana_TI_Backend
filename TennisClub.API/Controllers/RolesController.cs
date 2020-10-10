@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using TennisClub.BL;
 using TennisClub.Common.Role;
 using TennisClub.DAL.Entities;
-using TennisClub.DAL.Repositories.RoleRepository;
 
 namespace TennisClub.API.Controllers
 {

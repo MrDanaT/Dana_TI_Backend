@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TennisClub.BL;
 using TennisClub.Common.Gender;
 using TennisClub.DAL.Entities;
-using TennisClub.DAL.Repositories.GenderRepository;
 
 namespace TennisClub.API.Controllers
 {

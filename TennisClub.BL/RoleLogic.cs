@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories.RoleRepository;
 
@@ -35,7 +33,7 @@ namespace TennisClub.BL
             _repo.SaveChanges();
         }
 
-        public void PartialRoleUpdate(Role  role)
+        public void PartialRoleUpdate(Role role)
         {
             _repo.Update(role);
             _repo.SaveChanges();

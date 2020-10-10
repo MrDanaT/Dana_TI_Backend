@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TennisClub.Common.GameResult;
+﻿using System.Collections.Generic;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories.GameResultRepository;
 using TennisClub.DAL.Repositories.MemberRepository;
@@ -33,7 +30,8 @@ namespace TennisClub.BL
             return gameResultItem;
         }
 
-        public void CreateGameResult(GameResult gameResult) { 
+        public void CreateGameResult(GameResult gameResult)
+        {
             _repo.Create(gameResult);
             _repo.SaveChanges();
         }

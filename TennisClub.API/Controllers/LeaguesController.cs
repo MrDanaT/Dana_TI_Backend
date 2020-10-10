@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TennisClub.BL;
 using TennisClub.Common.League;
 using TennisClub.DAL.Entities;
-using TennisClub.DAL.Repositories.LeagueRepository;
 
 namespace TennisClub.API.Controllers
 {

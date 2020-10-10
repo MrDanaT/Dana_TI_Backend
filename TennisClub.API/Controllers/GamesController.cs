@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using TennisClub.BL;
 using TennisClub.Common.Game;
 using TennisClub.DAL.Entities;
-using TennisClub.DAL.Repositories.GameRepository;
-using TennisClub.DAL.Repositories.MemberRepository;
 
 namespace TennisClub.API.Controllers
 {
@@ -50,7 +48,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("futurebymemberid/{id}")]
         public ActionResult<IEnumerable<GameReadDTO>> GetAllFutureGamesByMemberId(int id)
         {
-            var gameItems = _logic.GetAllFutureGamesByMemberId(id);
+            IEnumerable<Game> gameItems = _logic.GetAllFutureGamesByMemberId(id);
 
             return Ok(_mapper.Map<IEnumerable<GameReadDTO>>(gameItems));
         }
