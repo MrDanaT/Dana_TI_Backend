@@ -12,7 +12,7 @@ namespace TennisClub.DAL.Configurations
 
             builder.HasAlternateKey(i => i.FederationNr);
 
-            builder.Property(i => i.Id).HasColumnType("integer").HasMaxLength(10).UseIdentityColumn();
+            builder.Property(i => i.Id).HasColumnType("integer").UseIdentityColumn();
             builder.Property(i => i.FederationNr).HasColumnType("varchar(10)").IsRequired();
             builder.Property(i => i.FirstName).HasColumnType("varchar(25)").IsRequired();
             builder.Property(i => i.LastName).HasColumnType("varchar(35)").IsRequired();
