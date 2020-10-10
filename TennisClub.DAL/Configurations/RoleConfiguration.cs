@@ -9,7 +9,7 @@ namespace TennisClub.DAL.Configurations
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(i => i.Id);
-            builder.HasAlternateKey(i => i.Name);
+            builder.HasIndex(i => i.Name).IsUnique(true);
 
             builder.Property(i => i.Id).HasColumnType("tinyint").UseIdentityColumn();
             builder.Property(i => i.Name).HasColumnType("varchar(20)").IsRequired();

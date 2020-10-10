@@ -10,10 +10,7 @@ namespace TennisClub.DAL.Configurations
         {
             builder.HasKey(i => i.Id);
 
-            // TODO: voorlopige oplossing kunnen  zijn:
-            // builder.HasIndex(memberRole => new { memberRole.MemberId, memberRole.RoleId, memberRole.StartDate, memberRole.EndDate }).IsUnique(true);
-            // builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate });
-            builder.HasAlternateKey(i => new { i.MemberId, i.RoleId, i.StartDate });
+            builder.HasIndex(i => new { i.MemberId, i.RoleId, i.StartDate, i.EndDate }).IsUnique(true);
 
             builder.Property(i => i.Id).HasColumnType("integer").UseIdentityColumn();
             builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
