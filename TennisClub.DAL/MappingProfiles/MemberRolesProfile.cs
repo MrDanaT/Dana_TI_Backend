@@ -2,7 +2,7 @@
 using TennisClub.Common.MemberRole;
 using TennisClub.DAL.Entities;
 
-namespace TennisClub.API.Profiles
+namespace TennisClub.DAL.MappingProfiles
 {
     public class MemberRolesProfile : Profile
     {

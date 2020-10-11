@@ -2,7 +2,7 @@
 using TennisClub.Common.League;
 using TennisClub.DAL.Entities;
 
-namespace TennisClub.API.Profiles
+namespace TennisClub.DAL.MappingProfiles
 {
     public class LeaguesProfile : Profile
     {

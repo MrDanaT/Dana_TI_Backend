@@ -2,7 +2,7 @@
 using TennisClub.Common.Gender;
 using TennisClub.DAL.Entities;
 
-namespace TennisClub.API.Profiles
+namespace TennisClub.DAL.MappingProfiles
 {
     public class GendersProfile : Profile
     {
