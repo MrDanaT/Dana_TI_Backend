@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using TennisClub.BL;
+using TennisClub.BL.MemberServiceFolder;
 using TennisClub.Common.Member;
 using TennisClub.DAL.Entities;
 
@@ -12,12 +12,12 @@ namespace TennisClub.API.Controllers
     [ApiController]
     public class MembersController : Controller
     {
-        private readonly MemberLogic _logic;
+        private readonly IMemberService _service;
         private readonly IMapper _mapper;
 
-        public MembersController(MemberLogic logic, IMapper mapper)
+        public MembersController(IMemberService service, IMapper mapper)
         {
-            _logic = logic;
+            _service = service;
             _mapper = mapper;
         }
 
@@ -25,7 +25,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers()
         {
-            IEnumerable<Member> memberItems = _logic.GetAllMembers();
+            IEnumerable<Member> memberItems = _service.GetAllMembers();
 
             return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
         }
@@ -34,7 +34,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetMemberById")]
         public ActionResult<MemberReadDTO> GetMemberById(int id)
         {
-            Member memberFromRepo = _logic.GetMemberById(id);
+            Member memberFromRepo = _service.GetMemberById(id);
 
             if (memberFromRepo == null)
             {
@@ -50,7 +50,7 @@ namespace TennisClub.API.Controllers
         {
             Member memberModel = _mapper.Map<Member>(memberCreateDTO);
 
-            _logic.CreateMember(memberModel);
+            _service.CreateMember(memberModel);
 
             MemberReadDTO memberReadDTO = _mapper.Map<MemberReadDTO>(memberModel);
 
@@ -58,9 +58,9 @@ namespace TennisClub.API.Controllers
         }
         // PATCH: api/members/5
         [HttpPatch("{id}")]
-        public ActionResult PartialMemberUpdate(int id, JsonPatchDocument<MemberUpdateDTO> patchDoc)
+        public ActionResult UpdateMember(int id, JsonPatchDocument<MemberUpdateDTO> patchDoc)
         {
-            Member memberModelFromRepo = _logic.GetMemberById(id);
+            Member memberModelFromRepo = _service.GetMemberById(id);
 
             if (memberModelFromRepo == null)
             {
@@ -77,7 +77,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(memberToPatch, memberModelFromRepo);
 
-            _logic.PartialMemberUpdate(memberModelFromRepo);
+            _service.UpdateMember(memberModelFromRepo);
 
             return NoContent();
         }
@@ -85,14 +85,14 @@ namespace TennisClub.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteMember(int id)
         {
-            Member memberFromRepo = _logic.GetMemberById(id);
+            Member memberFromRepo = _service.GetMemberById(id);
 
             if (memberFromRepo == null)
             {
                 return NotFound();
             }
 
-            _logic.DeleteMember(memberFromRepo);
+            _service.DeleteMember(memberFromRepo);
 
             return NoContent();
         }
@@ -101,7 +101,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("active")]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllActiveMembers()
         {
-            IEnumerable<Member> memberItems = _logic.GetAllActiveMembers();
+            IEnumerable<Member> memberItems = _service.GetAllActiveMembers();
 
             return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
         }

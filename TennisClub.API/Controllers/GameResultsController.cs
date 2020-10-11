@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using TennisClub.BL;
+using TennisClub.BL.GameResultServiceFolder;
 using TennisClub.Common.GameResult;
 using TennisClub.DAL.Entities;
 
@@ -12,12 +12,12 @@ namespace TennisClub.API.Controllers
     [ApiController]
     public class GameResultsController : Controller
     {
-        private readonly GameResultLogic _logic;
+        private readonly IGameResultService _service;
         private readonly IMapper _mapper;
 
-        public GameResultsController(GameResultLogic logic, IMapper mapper)
+        public GameResultsController(IGameResultService service, IMapper mapper)
         {
-            _logic = logic;
+            _service = service;
             _mapper = mapper;
         }
 
@@ -25,7 +25,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<GameResultReadDTO>> GetAllGameResults()
         {
-            IEnumerable<GameResult> gameResultItems = _logic.GetAllGameResults();
+            IEnumerable<GameResult> gameResultItems = _service.GetAllGameResults();
 
             return Ok(_mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems));
         }
@@ -34,7 +34,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetGameResultById")]
         public ActionResult<GameResultReadDTO> GetGameResultById(int id)
         {
-            GameResult gameResultItem = _logic.GetGameResultById(id);
+            GameResult gameResultItem = _service.GetGameResultById(id);
 
             if (gameResultItem == null)
             {
@@ -50,7 +50,7 @@ namespace TennisClub.API.Controllers
         {
             GameResult gameResultModel = _mapper.Map<GameResult>(gameResultCreateDto);
 
-            _logic.CreateGameResult(gameResultModel);
+            _service.CreateGameResult(gameResultModel);
 
             GameResultReadDTO gameResultReadDto = _mapper.Map<GameResultReadDTO>(gameResultModel);
 
@@ -59,9 +59,9 @@ namespace TennisClub.API.Controllers
 
         // PATCH: api/gameresults/5
         [HttpPatch("{id}")]
-        public ActionResult PartialGameResultUpdate(int id, JsonPatchDocument<GameResultUpdateDTO> patchDoc)
+        public ActionResult UpdateGameResult(int id, JsonPatchDocument<GameResultUpdateDTO> patchDoc)
         {
-            GameResult gameResultModelFromRepo = _logic.GetGameResultById(id);
+            GameResult gameResultModelFromRepo = _service.GetGameResultById(id);
 
             if (gameResultModelFromRepo == null)
             {
@@ -78,7 +78,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(gameResultToPatch, gameResultModelFromRepo);
 
-            _logic.PartialGameResultUpdate(gameResultModelFromRepo);
+            _service.UpdateGameResult(gameResultModelFromRepo);
 
             return NoContent();
         }
@@ -87,7 +87,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<GameResultReadDTO>> GetGameResultsByMember(int id)
         {
-            IEnumerable<GameResult> gameResultItems = _logic.GetGameResultsByMember(id);
+            IEnumerable<GameResult> gameResultItems = _service.GetGameResultsByMember(id);
 
             return Ok(_mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems));
         }

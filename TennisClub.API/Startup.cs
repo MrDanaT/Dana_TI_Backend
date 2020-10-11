@@ -7,15 +7,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System;
+using TennisClub.BL.GameResultServiceFolder;
+using TennisClub.BL.GameServiceFolder;
+using TennisClub.BL.GenderServiceFolder;
+using TennisClub.BL.LeagueServiceFolder;
+using TennisClub.BL.MemberFineServiceFolder;
+using TennisClub.BL.MemberRoleServiceFolder;
+using TennisClub.BL.MemberServiceFolder;
+using TennisClub.BL.RoleServiceFolder;
 using TennisClub.DAL;
-using TennisClub.DAL.Repositories.GameRepository;
-using TennisClub.DAL.Repositories.GameResultRepository;
-using TennisClub.DAL.Repositories.GenderRepository;
-using TennisClub.DAL.Repositories.LeagueRepository;
-using TennisClub.DAL.Repositories.MemberFineRepository;
-using TennisClub.DAL.Repositories.MemberRepository;
-using TennisClub.DAL.Repositories.MemberRoleRepository;
-using TennisClub.DAL.Repositories.RoleRepository;
+using TennisClub.DAL.Repositories;
 
 namespace TennisClub
 {
@@ -40,14 +41,15 @@ namespace TennisClub
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IGameResultRepository, GameResultRepository>();
-            services.AddScoped<IGameRepository, GameRepository>();
-            services.AddScoped<IGenderRepository, GenderRepository>();
-            services.AddScoped<ILeagueRepository, LeagueRepository>();
-            services.AddScoped<IMemberFineRepository, MemberFineRepository>();
-            services.AddScoped<IMemberRoleRepository, MemberRoleRepository>();
-            services.AddScoped<IMemberRepository, MemberRepository>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IGameResultService, GameResultService>();
+            services.AddTransient<IGameService, GameService>();
+            services.AddTransient<IGenderService, GenderService>();
+            services.AddTransient<ILeagueService, LeagueService>();
+            services.AddTransient<IMemberFineService, MemberFineService>();
+            services.AddTransient<IMemberRoleService, MemberRoleService>();
+            services.AddTransient<IMemberService, MemberService>();
+            services.AddTransient<IRoleService, RoleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using TennisClub.BL;
+using TennisClub.BL.MemberFineServiceFolder;
 using TennisClub.Common.MemberFine;
 using TennisClub.DAL.Entities;
 
@@ -12,12 +12,12 @@ namespace TennisClub.API.Controllers
     [ApiController]
     public class MemberFinesController : Controller
     {
-        private readonly MemberFineLogic _logic;
+        private readonly IMemberFineService _service;
         private readonly IMapper _mapper;
 
-        public MemberFinesController(MemberFineLogic logic, IMapper mapper)
+        public MemberFinesController(IMemberFineService service, IMapper mapper)
         {
-            _logic = logic;
+            _service = service;
             _mapper = mapper;
         }
 
@@ -25,7 +25,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetAllMemberFines()
         {
-            IEnumerable<MemberFine> memberFineItems = _logic.GetAllMemberFines();
+            IEnumerable<MemberFine> memberFineItems = _service.GetAllMemberFines();
 
             return Ok(_mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems));
         }
@@ -34,7 +34,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetMemberFineById")]
         public ActionResult<MemberFineReadDTO> GetMemberFineById(int id)
         {
-            MemberFine memberFine = _logic.GetMemberFineById(id);
+            MemberFine memberFine = _service.GetMemberFineById(id);
 
             if (memberFine == null)
             {
@@ -50,7 +50,7 @@ namespace TennisClub.API.Controllers
         {
             MemberFine memberFineModel = _mapper.Map<MemberFine>(memberFineCreateDto);
 
-            _logic.CreateMemberFine(memberFineModel);
+            _service.CreateMemberFine(memberFineModel);
 
             MemberFineReadDTO memberFineReadDto = _mapper.Map<MemberFineReadDTO>(memberFineModel);
 
@@ -59,9 +59,9 @@ namespace TennisClub.API.Controllers
 
         // PATCH: api/memberfine/5
         [HttpPatch("{id}")]
-        public ActionResult PartialMemberFineUpdate(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
+        public ActionResult UpdateMemberFine(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
         {
-            MemberFine memberFineModelFromRepo = _logic.GetMemberFineById(id);
+            MemberFine memberFineModelFromRepo = _service.GetMemberFineById(id);
 
             if (memberFineModelFromRepo == null)
             {
@@ -78,7 +78,7 @@ namespace TennisClub.API.Controllers
 
             _mapper.Map(modelFineToPatch, memberFineModelFromRepo);
 
-            _logic.PartialMemberFineUpdate(memberFineModelFromRepo);
+            _service.UpdateMemberFine(memberFineModelFromRepo);
 
             return NoContent();
         }
@@ -87,7 +87,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetMemberFinesByMemberId(int id)
         {
-            IEnumerable<MemberFine> memberFineItems = _logic.GetMemberFinesByMemberId(id);
+            IEnumerable<MemberFine> memberFineItems = _service.GetMemberFinesByMemberId(id);
 
             return Ok(_mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems));
         }

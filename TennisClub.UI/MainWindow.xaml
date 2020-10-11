@@ -29,6 +29,6 @@
                 <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="getRolesButton" Grid.Row="3" Grid.Column="1" Command="{Binding Path=GetRoles}" Click="GetRolesButton_Click">Haal rollen op</Button>
+        <Button x:Name="getRolesButton" Grid.Row="3" Grid.Column="1" Click="GetRolesButton_Click">Haal rollen op</Button>
     </Grid>
 </Window>

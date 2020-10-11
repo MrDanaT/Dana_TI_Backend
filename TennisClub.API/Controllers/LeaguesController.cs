@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using TennisClub.BL;
+using TennisClub.BL.LeagueServiceFolder;
 using TennisClub.Common.League;
 using TennisClub.DAL.Entities;
 
@@ -11,12 +11,12 @@ namespace TennisClub.API.Controllers
     [ApiController]
     public class LeaguesController : Controller
     {
-        private readonly LeagueLogic _logic;
+        private readonly ILeagueService _service;
         private readonly IMapper _mapper;
 
-        public LeaguesController(LeagueLogic logic, IMapper mapper)
+        public LeaguesController(ILeagueService service, IMapper mapper)
         {
-            _logic = logic;
+            _service = service;
             _mapper = mapper;
         }
 
@@ -24,16 +24,16 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<LeagueReadDTO>> GetAllLeagues()
         {
-            IEnumerable<League> leagueItems = _logic.GetAllLeagues();
+            IEnumerable<League> leagueItems = _service.GetAllLeagues();
 
             return Ok(_mapper.Map<IEnumerable<LeagueReadDTO>>(leagueItems));
         }
 
         // GET: api/leagues/5
         [HttpGet("{id}")]
-        public ActionResult<LeagueReadDTO> GetLeagueById(int id)
+        public ActionResult<LeagueReadDTO> GetLeagueById(byte id)
         {
-            League leagueFromRepo = _logic.GetLeagueById(id);
+            League leagueFromRepo = _service.GetLeagueById(id);
 
             if (leagueFromRepo == null)
             {
