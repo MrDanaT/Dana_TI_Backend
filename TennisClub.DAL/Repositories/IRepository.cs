@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace TennisClub.DAL.Repositories
 {
@@ -8,7 +10,8 @@ namespace TennisClub.DAL.Repositories
         void Update(TEntity entity);
         void Delete(TEntity entity);
         IEnumerable<TEntity> GetAll();
-        TEntity GetById(int id);
+        TEntity Find(Expression<Func<TEntity, bool>> predicate);
+        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
         bool SaveChanges();
     }
 }
