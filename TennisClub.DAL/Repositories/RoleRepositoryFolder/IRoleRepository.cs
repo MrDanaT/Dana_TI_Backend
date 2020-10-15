@@ -1,8 +1,9 @@
-﻿using TennisClub.DAL.Entities;
+﻿using TennisClub.Common.Role;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.RoleRepositoryFolder
 {
-    public interface IRoleRepository : IRepository<Role>
+    public interface IRoleRepository : IRepository<RoleCreateDTO, RoleReadDTO, RoleUpdateDTO>
     {
     }
 }

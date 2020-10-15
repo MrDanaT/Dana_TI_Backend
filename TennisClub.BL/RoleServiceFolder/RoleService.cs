@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.Role;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
@@ -13,28 +14,35 @@ namespace TennisClub.BL.RoleServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Role> GetAllRoles()
+        public IEnumerable<RoleReadDTO> GetAllRoles()
         {
-            IEnumerable<Role> roleItems = _unitOfWork.Roles.GetAll();
+            IEnumerable<RoleReadDTO> roleItems = _unitOfWork.Roles.GetAll();
 
             return roleItems;
         }
 
-        public Role GetRoleById(byte id)
+        public RoleReadDTO GetRoleById(byte id)
         {
-            Role roleItem = _unitOfWork.Roles.GetById(id);
+            RoleReadDTO roleItem = _unitOfWork.Roles.GetById(id);
 
             return roleItem;
         }
 
-        public void CreateRole(Role role)
+        public RoleReadDTO CreateRole(RoleCreateDTO role)
         {
-            _unitOfWork.Roles.Create(role);
+            var createdRole = _unitOfWork.Roles.Create(role);
             _unitOfWork.Commit();
+            return createdRole;
         }
 
-        public void UpdateRole(Role role)
+        public RoleUpdateDTO GetUpdateDTOByReadDTO(RoleReadDTO entity)
         {
+            return _unitOfWork.Roles.GetUpdateDTOByReadDTO(entity);
+        }
+
+        public void UpdateRole(RoleUpdateDTO roleToPatch, RoleReadDTO roleModelFromRepo)
+        {
+            _unitOfWork.Roles.MapUpdateDTOToReadDTO(roleToPatch, roleModelFromRepo);
             _unitOfWork.Commit();
         }
     }

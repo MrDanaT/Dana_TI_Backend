@@ -9,6 +9,7 @@ namespace TennisClub.DAL.MappingProfiles
         public LeaguesProfile()
         {
             CreateMap<League, LeagueReadDTO>();
+            CreateMap<LeagueReadDTO, League>();
         }
     }
 }

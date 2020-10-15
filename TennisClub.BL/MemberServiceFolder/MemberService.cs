@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using TennisClub.DAL.Entities;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using System.Collections.Generic;
+using TennisClub.Common.Member;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.MemberServiceFolder
@@ -13,42 +14,49 @@ namespace TennisClub.BL.MemberServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Member> GetAllMembers()
+        public IEnumerable<MemberReadDTO> GetAllMembers()
         {
-            IEnumerable<Member> memberItems = _unitOfWork.Members.GetAll();
+            IEnumerable<MemberReadDTO> memberItems = _unitOfWork.Members.GetAll();
 
             return memberItems;
         }
 
-        public Member GetMemberById(int id)
+        public MemberReadDTO GetMemberById(int id)
         {
-            Member memberFromRepo = _unitOfWork.Members.GetById(id);
+            MemberReadDTO memberFromRepo = _unitOfWork.Members.GetById(id);
 
             return memberFromRepo;
         }
 
-        public void CreateMember(Member member)
+        public MemberReadDTO CreateMember(MemberCreateDTO member)
         {
-            _unitOfWork.Members.Create(member);
+            MemberReadDTO createdMember = _unitOfWork.Members.Create(member);
             _unitOfWork.Commit();
+            return createdMember;
         }
 
-        public void UpdateMember(Member member)
-        {
-            _unitOfWork.Commit();
-        }
-
-        public void DeleteMember(Member member)
+        public void DeleteMember(MemberReadDTO member)
         {
             _unitOfWork.Members.Delete(member);
             _unitOfWork.Commit();
         }
 
-        public IEnumerable<Member> GetAllActiveMembers()
+        public IEnumerable<MemberReadDTO> GetAllActiveMembers()
         {
-            IEnumerable<Member> memberItems = _unitOfWork.Members.GetAllActiveMembers();
+            IEnumerable<MemberReadDTO> memberItems = _unitOfWork.Members.GetAllActiveMembers();
 
             return memberItems;
+        }
+
+        public MemberUpdateDTO GetUpdateDTOByReadDTO(MemberReadDTO entity)
+        {
+            return _unitOfWork.Members.GetUpdateDTOByReadDTO(entity);
+        }
+
+        public void UpdateMember(MemberUpdateDTO memberToPatch, MemberReadDTO memberModelFromRepo)
+        {
+            _unitOfWork.Members.MapUpdateDTOToReadDTO(memberToPatch, memberModelFromRepo);
+            _unitOfWork.Commit();
         }
     }
 }

@@ -1,17 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using TennisClub.Common.Member;
+using TennisClub.Common.MemberFine;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 {
-    public class MemberFineRepository : Repository<MemberFine>, IMemberFineRepository
+    public class MemberFineRepository : Repository<MemberFine, MemberFineCreateDTO, MemberFineReadDTO, MemberFineUpdateDTO>, IMemberFineRepository
     {
-        public MemberFineRepository(TennisClubContext context)
-           : base(context)
+        public MemberFineRepository(TennisClubContext context, IMapper mapper)
+           : base(context, mapper)
         { }
 
-        public IEnumerable<MemberFine> GetMemberFinesByMember(Member member)
+        public IEnumerable<MemberFineReadDTO> GetMemberFinesByMember(MemberReadDTO member)
         {
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             IQueryable<MemberFine> memberFineItems = TennisClubContext.MemberFines
@@ -19,7 +22,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
                 .Where(mf => mf.MemberId == member.Id)
                 .Select(mf => mf);
 
-            return memberFineItems.AsEnumerable();
+            return _mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems);
         }
 
         private TennisClubContext TennisClubContext => Context;

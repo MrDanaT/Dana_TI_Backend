@@ -1,29 +1,33 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using TennisClub.Common.Member;
+using TennisClub.Common.MemberRole;
+using TennisClub.Common.Role;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 {
-    public class MemberRoleRepository : Repository<MemberRole>, IMemberRoleRepository
+    public class MemberRoleRepository : Repository<MemberRole, MemberRoleCreateDTO, MemberRoleReadDTO, MemberRoleUpdateDTO>, IMemberRoleRepository
     {
-        public MemberRoleRepository(TennisClubContext context)
-           : base(context)
+        public MemberRoleRepository(TennisClubContext context, IMapper mapper)
+           : base(context, mapper)
         { }
 
 
-        public IEnumerable<Member> GetMembersByRoles(List<Role> roles)
+        public IEnumerable<MemberReadDTO> GetMembersByRoles(List<RoleReadDTO> roles)
         {
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             IQueryable<Member> members = TennisClubContext.MemberRoles
                 .AsNoTracking()
-                .Where(mr => roles.Any(r => r == mr.RoleNavigation))
+                .Where(mr => roles.Any(r => r.Id == mr.MemberId))
                 .Select(mr => mr.MemberNavigation);
 
-            return members.AsEnumerable();
+            return _mapper.Map<IEnumerable<MemberReadDTO>>(members);
         }
 
-        public IEnumerable<Role> GetRolesByMember(Member member)
+        public IEnumerable<RoleReadDTO> GetRolesByMember(MemberReadDTO member)
         {
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             IQueryable<Role> roles = TennisClubContext.MemberRoles
@@ -31,7 +35,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
                 .Where(mr => mr.MemberId == member.Id)
                 .Select(mr => mr.RoleNavigation);
 
-            return roles.AsEnumerable(); ;
+            return _mapper.Map<IEnumerable<RoleReadDTO>>(roles);
         }
 
 

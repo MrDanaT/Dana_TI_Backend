@@ -13,71 +13,67 @@ namespace TennisClub.API.Controllers
     public class GamesController : Controller
     {
         private readonly IGameService _service;
-        private readonly IMapper _mapper;
 
-        public GamesController(IGameService service, IMapper mapper)
+        public GamesController(IGameService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/games
         [HttpGet]
         public ActionResult<IEnumerable<GameReadDTO>> GetAllGames()
         {
-            IEnumerable<Game> gameItems = _service.GetAllGames();
+            IEnumerable<GameReadDTO> gameItems = _service.GetAllGames();
 
-            return Ok(_mapper.Map<IEnumerable<GameReadDTO>>(gameItems));
+            return Ok(gameItems);
         }
 
         // GET: api/games/5
         [HttpGet("{id}", Name = "GetGameById")]
         public ActionResult<GameReadDTO> GetGameById(int id)
         {
-            Game gameItem = _service.GetGameById(id);
+            GameReadDTO gameItem = _service.GetGameById(id);
 
             if (gameItem == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<GameReadDTO>(gameItem));
+            return Ok(gameItem);
         }
 
         // GET: api/games/futurebymemberid/5
         [HttpGet("futurebymemberid/{id}")]
         public ActionResult<IEnumerable<GameReadDTO>> GetAllFutureGamesByMemberId(int id)
         {
-            IEnumerable<Game> gameItems = _service.GetAllFutureGamesByMemberId(id);
+            IEnumerable<GameReadDTO> gameItems = _service.GetAllFutureGamesByMemberId(id);
 
-            return Ok(_mapper.Map<IEnumerable<GameReadDTO>>(gameItems));
+            return Ok(gameItems);
         }
 
         // POST: api/games
         [HttpPost]
         public ActionResult<GameReadDTO> CreateGame(GameCreateDTO gameCreateDTO)
         {
-            Game gameModel = _mapper.Map<Game>(gameCreateDTO);
 
-            _service.CreateGame(gameModel);
+            GameReadDTO createdGame = _service.CreateGame(gameCreateDTO);
 
-            GameReadDTO gameReadDto = _mapper.Map<GameReadDTO>(gameModel);
 
-            return CreatedAtRoute(nameof(GetGameById), new { gameReadDto.Id }, gameReadDto);
+            return CreatedAtRoute(nameof(GetGameById), new { createdGame.Id }, createdGame);
         }
 
         // PATCH: api/games/5
         [HttpPatch("{id}")]
         public ActionResult UpdateGame(int id, JsonPatchDocument<GameUpdateDTO> patchDoc)
         {
-            Game gameModelFromRepo = _service.GetGameById(id);
+            GameReadDTO gameModelFromRepo = _service.GetGameById(id);
 
             if (gameModelFromRepo == null)
             {
                 return NotFound();
             }
 
-            GameUpdateDTO gameToPatch = _mapper.Map<GameUpdateDTO>(gameModelFromRepo);
+            GameUpdateDTO gameToPatch = _service.GetUpdateDTOByReadDTO(gameModelFromRepo);
             patchDoc.ApplyTo(gameToPatch, ModelState);
 
             if (!TryValidateModel(gameToPatch))
@@ -85,9 +81,7 @@ namespace TennisClub.API.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            _mapper.Map(gameToPatch, gameModelFromRepo);
-
-            _service.UpdateGame(gameModelFromRepo);
+            _service.UpdateGame(gameToPatch, gameModelFromRepo);
 
             return NoContent();
         }
@@ -96,7 +90,7 @@ namespace TennisClub.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteGame(int id)
         {
-            Game gameModelFromRepo = _service.GetGameById(id);
+            GameReadDTO gameModelFromRepo = _service.GetGameById(id);
 
             if (gameModelFromRepo == null)
             {

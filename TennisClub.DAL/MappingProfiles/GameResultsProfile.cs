@@ -9,7 +9,11 @@ namespace TennisClub.DAL.MappingProfiles
         public GameResultsProfile()
         {
             CreateMap<GameResult, GameResultReadDTO>();
+            CreateMap<GameResultReadDTO, GameResult>();
+            CreateMap<GameResultReadDTO, GameResultCreateDTO>();
+
             CreateMap<GameResultCreateDTO, GameResult>();
+
             CreateMap<GameResultUpdateDTO, GameResult>();
             CreateMap<GameResult, GameResultUpdateDTO>();
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.League;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
@@ -13,16 +14,16 @@ namespace TennisClub.BL.LeagueServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<League> GetAllLeagues()
+        public IEnumerable<LeagueReadDTO> GetAllLeagues()
         {
-            IEnumerable<League> leagueItems = _unitOfWork.Leagues.GetAll();
+            IEnumerable<LeagueReadDTO> leagueItems = _unitOfWork.Leagues.GetAll();
 
             return leagueItems;
         }
 
-        public League GetLeagueById(byte id)
+        public LeagueReadDTO GetLeagueById(byte id)
         {
-            League leagueFromRepo = _unitOfWork.Leagues.GetById(id);
+            LeagueReadDTO leagueFromRepo = _unitOfWork.Leagues.GetById(id);
 
             return leagueFromRepo;
         }

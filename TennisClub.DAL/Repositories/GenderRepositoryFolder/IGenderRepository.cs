@@ -1,8 +1,9 @@
-﻿using TennisClub.DAL.Entities;
+﻿using TennisClub.Common.Gender;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GenderRepositoryFolder
 {
-    public interface IGenderRepository : IRepository<Gender>
+    public interface IGenderRepository : IRepository< object, GenderReadDTO, object>
     {
     }
 }

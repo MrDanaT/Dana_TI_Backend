@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.Member;
+using TennisClub.Common.MemberFine;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
@@ -13,38 +15,44 @@ namespace TennisClub.BL.MemberFineServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<MemberFine> GetAllMemberFines()
+        public IEnumerable<MemberFineReadDTO> GetAllMemberFines()
         {
-            IEnumerable<MemberFine> memberFineItems = _unitOfWork.MemberFines.GetAll();
+            IEnumerable<MemberFineReadDTO> memberFineItems = _unitOfWork.MemberFines.GetAll();
 
             return memberFineItems;
         }
 
-        public MemberFine GetMemberFineById(int id)
+        public MemberFineReadDTO GetMemberFineById(int id)
         {
-            MemberFine memberFine = _unitOfWork.MemberFines.GetById(id);
+            MemberFineReadDTO memberFine = _unitOfWork.MemberFines.GetById(id);
 
             return memberFine;
         }
 
-        public void CreateMemberFine(MemberFine memberFine)
+        public MemberFineReadDTO CreateMemberFine(MemberFineCreateDTO memberFine)
         {
-            _unitOfWork.MemberFines.Create(memberFine);
+           var createdMemberFine = _unitOfWork.MemberFines.Create(memberFine);
             _unitOfWork.Commit();
+            return createdMemberFine;
         }
 
-        public void UpdateMemberFine(MemberFine memberFine)
+        public IEnumerable<MemberFineReadDTO> GetMemberFinesByMemberId(int id)
         {
-            _unitOfWork.Commit();
-        }
-
-        public IEnumerable<MemberFine> GetMemberFinesByMemberId(int id)
-        {
-            Member memberFromRepo = _unitOfWork.Members.GetById(id);
-            IEnumerable<MemberFine> memberFineItems = _unitOfWork.MemberFines.GetMemberFinesByMember(memberFromRepo);
+            MemberReadDTO memberFromRepo = _unitOfWork.Members.GetById(id);
+            IEnumerable<MemberFineReadDTO> memberFineItems = _unitOfWork.MemberFines.GetMemberFinesByMember(memberFromRepo);
 
             return memberFineItems;
         }
 
+        public MemberFineUpdateDTO GetUpdateDTOByReadDTO(MemberFineReadDTO entity)
+        {
+            return _unitOfWork.MemberFines.GetUpdateDTOByReadDTO(entity);
+        }
+
+        public void UpdateMemberFine(MemberFineUpdateDTO modelFineToPatch, MemberFineReadDTO memberFineModelFromRepo)
+        {
+            _unitOfWork.MemberFines.MapUpdateDTOToReadDTO(modelFineToPatch, memberFineModelFromRepo);
+            _unitOfWork.Commit();
+        }
     }
 }

@@ -12,35 +12,33 @@ namespace TennisClub.API.Controllers
     public class LeaguesController : Controller
     {
         private readonly ILeagueService _service;
-        private readonly IMapper _mapper;
 
-        public LeaguesController(ILeagueService service, IMapper mapper)
+        public LeaguesController(ILeagueService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/leagues
         [HttpGet]
         public ActionResult<IEnumerable<LeagueReadDTO>> GetAllLeagues()
         {
-            IEnumerable<League> leagueItems = _service.GetAllLeagues();
+            IEnumerable<LeagueReadDTO> leagueItems = _service.GetAllLeagues();
 
-            return Ok(_mapper.Map<IEnumerable<LeagueReadDTO>>(leagueItems));
+            return Ok(leagueItems);
         }
 
         // GET: api/leagues/5
         [HttpGet("{id}")]
         public ActionResult<LeagueReadDTO> GetLeagueById(byte id)
         {
-            League leagueFromRepo = _service.GetLeagueById(id);
+            LeagueReadDTO leagueFromRepo = _service.GetLeagueById(id);
 
             if (leagueFromRepo == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<LeagueReadDTO>(leagueFromRepo));
+            return Ok(leagueFromRepo);
         }
     }
 }

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.MemberServiceFolder;
 using TennisClub.Common.Member;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.API.Controllers
 {
@@ -13,46 +12,40 @@ namespace TennisClub.API.Controllers
     public class MembersController : Controller
     {
         private readonly IMemberService _service;
-        private readonly IMapper _mapper;
 
-        public MembersController(IMemberService service, IMapper mapper)
+        public MembersController(IMemberService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/members
         [HttpGet]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers()
         {
-            IEnumerable<Member> memberItems = _service.GetAllMembers();
+            IEnumerable<MemberReadDTO> memberItems = _service.GetAllMembers();
 
-            return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
+            return Ok(memberItems);
         }
 
         // GET: api/members/5
         [HttpGet("{id}", Name = "GetMemberById")]
         public ActionResult<MemberReadDTO> GetMemberById(int id)
         {
-            Member memberFromRepo = _service.GetMemberById(id);
+            MemberReadDTO memberFromRepo = _service.GetMemberById(id);
 
             if (memberFromRepo == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<MemberReadDTO>(memberFromRepo));
+            return Ok(memberFromRepo);
         }
 
         // POST: api/members
         [HttpPost]
         public ActionResult<MemberReadDTO> CreateMember(MemberCreateDTO memberCreateDTO)
         {
-            Member memberModel = _mapper.Map<Member>(memberCreateDTO);
-
-            _service.CreateMember(memberModel);
-
-            MemberReadDTO memberReadDTO = _mapper.Map<MemberReadDTO>(memberModel);
+            MemberReadDTO memberReadDTO = _service.CreateMember(memberCreateDTO);
 
             return CreatedAtRoute(nameof(GetMemberById), new { memberReadDTO.Id }, memberReadDTO);
         }
@@ -60,14 +53,14 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult UpdateMember(int id, JsonPatchDocument<MemberUpdateDTO> patchDoc)
         {
-            Member memberModelFromRepo = _service.GetMemberById(id);
+            MemberReadDTO memberModelFromRepo = _service.GetMemberById(id);
 
             if (memberModelFromRepo == null)
             {
                 return NotFound();
             }
 
-            MemberUpdateDTO memberToPatch = _mapper.Map<MemberUpdateDTO>(memberModelFromRepo);
+            MemberUpdateDTO memberToPatch = _service.GetUpdateDTOByReadDTO(memberModelFromRepo);
             patchDoc.ApplyTo(memberToPatch, ModelState);
 
             if (!TryValidateModel(memberModelFromRepo))
@@ -75,9 +68,7 @@ namespace TennisClub.API.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            _mapper.Map(memberToPatch, memberModelFromRepo);
-
-            _service.UpdateMember(memberModelFromRepo);
+            _service.UpdateMember(memberToPatch, memberModelFromRepo);
 
             return NoContent();
         }
@@ -85,7 +76,7 @@ namespace TennisClub.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteMember(int id)
         {
-            Member memberFromRepo = _service.GetMemberById(id);
+            MemberReadDTO memberFromRepo = _service.GetMemberById(id);
 
             if (memberFromRepo == null)
             {
@@ -101,9 +92,9 @@ namespace TennisClub.API.Controllers
         [HttpGet("active")]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllActiveMembers()
         {
-            IEnumerable<Member> memberItems = _service.GetAllActiveMembers();
+            IEnumerable<MemberReadDTO> memberItems = _service.GetAllActiveMembers();
 
-            return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
+            return Ok(memberItems);
         }
     }
 }

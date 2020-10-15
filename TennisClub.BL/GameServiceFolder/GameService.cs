@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.Game;
+using TennisClub.Common.Member;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
@@ -12,42 +14,45 @@ namespace TennisClub.BL.GameServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Game> GetAllGames()
+        public IEnumerable<GameReadDTO> GetAllGames()
         {
-            IEnumerable<Game> gameItems = _unitOfWork.Games.GetAll();
+            return _unitOfWork.Games.GetAll();
+        }
+
+        public GameReadDTO GetGameById(int id)
+        {
+            return _unitOfWork.Games.GetById(id);
+        }
+
+        public IEnumerable<GameReadDTO> GetAllFutureGamesByMemberId(int id)
+        {
+            MemberReadDTO memberItem = _unitOfWork.Members.GetById(id);
+            IEnumerable<GameReadDTO> gameItems = _unitOfWork.Games.GetFutureGamesByMember(memberItem);
 
             return gameItems;
         }
 
-        public Game GetGameById(int id)
+        public GameReadDTO CreateGame(GameCreateDTO game)
         {
-            Game gameItem = _unitOfWork.Games.GetById(id);
-
-            return gameItem;
-        }
-
-        public IEnumerable<Game> GetAllFutureGamesByMemberId(int id)
-        {
-            Member memberItem = _unitOfWork.Members.GetById(id);
-            IEnumerable<Game> gameItems = _unitOfWork.Games.GetFutureGamesByMember(memberItem);
-
-            return gameItems;
-        }
-
-        public void CreateGame(Game game)
-        {
-            _unitOfWork.Games.Create(game);
+            var createdGame = _unitOfWork.Games.Create(game);
             _unitOfWork.Commit();
+            return createdGame;
         }
 
-        public void UpdateGame(Game game)
-        {
-            _unitOfWork.Commit();
-        }
-
-        public void DeleteGame(Game game)
+        public void DeleteGame(GameReadDTO game)
         {
             _unitOfWork.Games.Delete(game);
+            _unitOfWork.Commit();
+        }
+
+        public GameUpdateDTO GetUpdateDTOByReadDTO(GameReadDTO entity)
+        {
+            return _unitOfWork.Games.GetUpdateDTOByReadDTO(entity);
+        }
+
+        public void UpdateGame(GameUpdateDTO gameToPatch, GameReadDTO gameModelFromRepo)
+        {
+            _unitOfWork.Games.MapUpdateDTOToReadDTO(gameToPatch, gameModelFromRepo);
             _unitOfWork.Commit();
         }
     }

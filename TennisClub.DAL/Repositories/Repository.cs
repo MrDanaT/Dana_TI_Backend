@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,59 +7,90 @@ using System.Linq.Expressions;
 
 namespace TennisClub.DAL.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity, TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO> : IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO>
+        where TEntity : class
+        where TEntityCreateDTO : class
+        where TEntityReadDTO : class
+        where TEntityUpdateDTO : class
     {
         protected readonly TennisClubContext Context;
+        protected readonly IMapper _mapper;
 
-        public Repository(TennisClubContext context)
+        public Repository(TennisClubContext context, IMapper mapper)
         {
             Context = context;
+            _mapper = mapper;
         }
 
-        public void Create(TEntity entity)
+        public TEntityReadDTO Create(TEntityCreateDTO entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            Context.Set<TEntity>().Add(entity);
+            TEntity mappedObject = _mapper.Map<TEntity>(entity);
+            Context.Set<TEntity>().Add(mappedObject);
+
+            return _mapper.Map<TEntityReadDTO>(mappedObject);
         }
 
-        public void Delete(TEntity entity)
+        public void Delete(TEntityReadDTO entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            Context.Set<TEntity>().Remove(entity);
+            TEntity mappedObject = _mapper.Map<TEntity>(entity);
+            Context.Set<TEntity>().Remove(mappedObject);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntityReadDTO> Find(Expression<Func<TEntityReadDTO, bool>> predicate)
         {
-            return Context.Set<TEntity>().Where(predicate);
+            Expression<Func<TEntity, bool>> predicateToEntity = _mapper.Map<Expression<Func<TEntity, bool>>>(predicate);
+            IQueryable<TEntity> itemsFromDB = Context.Set<TEntity>().Where(predicateToEntity);
+            return _mapper.Map<IEnumerable<TEntityReadDTO>>(itemsFromDB);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntityReadDTO> GetAll()
         {
-            return Context.Set<TEntity>().AsNoTracking().ToList();
+            List<TEntity> itemsFromDB = Context.Set<TEntity>().AsNoTracking().ToList();
+            return _mapper.Map<IEnumerable<TEntityReadDTO>>(itemsFromDB);
 
         }
 
-        public TEntity GetById(int id)
+        public TEntityReadDTO GetById(int id)
         {
-            return Context.Set<TEntity>().Find(id);
+            TEntity itemFromDB = Context.Set<TEntity>().Find(id);
+            return _mapper.Map<TEntityReadDTO>(itemFromDB);
         }
 
-        public TEntity GetById(byte id)
+        public TEntityReadDTO GetById(byte id)
         {
-            return Context.Set<TEntity>().Find(id);
+            TEntity itemFromDB = Context.Set<TEntity>().Find(id);
+            return _mapper.Map<TEntityReadDTO>(itemFromDB);
         }
 
-        public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
+        public TEntityCreateDTO GetCreateDTOByReadDTO(TEntityReadDTO entity)
         {
-            return Context.Set<TEntity>().SingleOrDefault(predicate);
+            return _mapper.Map<TEntityCreateDTO>(entity);
+        }
+        public TEntityUpdateDTO GetUpdateDTOByReadDTO(TEntityReadDTO entity)
+        {
+            return _mapper.Map<TEntityUpdateDTO>(entity);
+        }
+
+        public void MapUpdateDTOToReadDTO(TEntityUpdateDTO memberToPatch, TEntityReadDTO memberModelFromRepo)
+        {
+            _mapper.Map(memberToPatch, memberModelFromRepo);
+        }
+
+        public TEntityReadDTO SingleOrDefault(Expression<Func<TEntityReadDTO, bool>> predicate)
+        {
+            Expression<Func<TEntity, bool>> predicateToEntity = _mapper.Map<Expression<Func<TEntity, bool>>>(predicate);
+            TEntity itemFromDB = Context.Set<TEntity>().SingleOrDefault(predicateToEntity);
+            return _mapper.Map<TEntityReadDTO>(itemFromDB);
         }
     }
 }

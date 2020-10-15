@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.Game;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.GameServiceFolder
 {
     public interface IGameService
     {
-        IEnumerable<Game> GetAllGames();
+        IEnumerable<GameReadDTO> GetAllGames();
 
-        Game GetGameById(int id);
+        GameReadDTO GetGameById(int id);
 
-        IEnumerable<Game> GetAllFutureGamesByMemberId(int id);
+        IEnumerable<GameReadDTO> GetAllFutureGamesByMemberId(int id);
 
-        void CreateGame(Game game);
+        GameReadDTO CreateGame(GameCreateDTO game);
 
-        void UpdateGame(Game game);
+        void UpdateGame(GameUpdateDTO gameToPatch, GameReadDTO gameModelFromRepo);
 
-        void DeleteGame(Game game);
+        void DeleteGame(GameReadDTO game);
+        GameUpdateDTO GetUpdateDTOByReadDTO(GameReadDTO entity);
     }
 }

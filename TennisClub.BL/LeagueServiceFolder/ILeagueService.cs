@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.League;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.LeagueServiceFolder
 {
     public interface ILeagueService
     {
-        IEnumerable<League> GetAllLeagues();
+        IEnumerable<LeagueReadDTO> GetAllLeagues();
 
-        League GetLeagueById(byte id);
+        LeagueReadDTO GetLeagueById(byte id);
     }
 }

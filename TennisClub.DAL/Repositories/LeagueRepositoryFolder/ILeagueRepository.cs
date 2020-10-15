@@ -1,8 +1,9 @@
-﻿using TennisClub.DAL.Entities;
+﻿using TennisClub.Common.League;
+using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.LeagueRepositoryFolder
 {
-    public interface ILeagueRepository : IRepository<League>
+    public interface ILeagueRepository : IRepository<object, LeagueReadDTO, object>
     {
     }
 }

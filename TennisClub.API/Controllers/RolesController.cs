@@ -13,63 +13,57 @@ namespace TennisClub.API.Controllers
     public class RolesController : Controller
     {
         private readonly IRoleService _service;
-        private readonly IMapper _mapper;
 
-        public RolesController(IRoleService service, IMapper mapper)
+        public RolesController(IRoleService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/roles
         [HttpGet]
         public ActionResult<IEnumerable<RoleReadDTO>> GetAllRoles()
         {
-            IEnumerable<Role> roleItems = _service.GetAllRoles();
+            IEnumerable<RoleReadDTO> roleItems = _service.GetAllRoles();
 
-            return Ok(_mapper.Map<IEnumerable<RoleReadDTO>>(roleItems));
+            return Ok(roleItems);
         }
 
         // GET: api/roles/5
         [HttpGet("{id}", Name = "GetRoleById")]
         public ActionResult<RoleReadDTO> GetRoleById(byte id)
         {
-            Role roleItem = _service.GetRoleById(id);
+            RoleReadDTO roleItem = _service.GetRoleById(id);
 
             if (roleItem == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<RoleReadDTO>(roleItem));
+            return Ok(roleItem);
         }
 
         // POST: api/roles
         [HttpPost]
         public ActionResult<RoleReadDTO> CreateRole(RoleCreateDTO roleCreateDTO)
         {
-            Role roleModel = _mapper.Map<Role>(roleCreateDTO);
+            RoleReadDTO createdRole = _service.CreateRole(roleCreateDTO);
 
-            _service.CreateRole(roleModel);
-
-            RoleReadDTO roleReadDTO = _mapper.Map<RoleReadDTO>(roleModel);
-
-            return CreatedAtRoute(nameof(GetRoleById), new { roleReadDTO.Id }, roleReadDTO);
+            return CreatedAtRoute(nameof(GetRoleById), new { createdRole.Id }, createdRole);
         }
 
 
         // PATCH: api/roles/5 
         [HttpPatch("{id}")]
-        public ActionResult<Role> UpdateRole(byte id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
+        public ActionResult UpdateRole(byte id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
         {
-            Role roleModelFromRepo = _service.GetRoleById(id);
+            RoleReadDTO roleModelFromRepo = _service.GetRoleById(id);
 
             if (roleModelFromRepo == null)
             {
                 return NotFound();
             }
 
-            RoleUpdateDTO roleToPatch = _mapper.Map<RoleUpdateDTO>(roleModelFromRepo);
+            RoleUpdateDTO roleToPatch = _service.GetUpdateDTOByReadDTO(roleModelFromRepo);
             patchDoc.ApplyTo(roleToPatch, ModelState);
 
             if (!TryValidateModel(roleToPatch))
@@ -77,9 +71,7 @@ namespace TennisClub.API.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            _mapper.Map(roleToPatch, roleModelFromRepo);
-
-            _service.UpdateRole(roleModelFromRepo);
+            _service.UpdateRole(roleToPatch, roleModelFromRepo);
 
             return NoContent();
         }

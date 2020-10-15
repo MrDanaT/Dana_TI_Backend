@@ -8,8 +8,8 @@ namespace TennisClub.DAL.MappingProfiles
     {
         public GendersProfile()
         {
-            // Source -> Target
             CreateMap<Gender, GenderReadDTO>();
+            CreateMap<GenderReadDTO, Gender>();
         }
     }
 }

@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.Member;
+using TennisClub.Common.MemberRole;
+using TennisClub.Common.Role;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.MemberRoleServiceFolder
 {
     public interface IMemberRoleService
     {
-        IEnumerable<MemberRole> GetAllMemberRoles();
-        MemberRole GetMemberRoleById(int id);
-        void CreateMemberRole(MemberRole memberRoleCreateDTO);
-        void UpdateMemberRole(MemberRole memberRole);
-        IEnumerable<Role> GetRolesByMemberId(int id);
-        IEnumerable<Member> GetMembersByRoles(List<Role> roleCreateDTOs);
+        IEnumerable<MemberRoleReadDTO> GetAllMemberRoles();
+        MemberRoleReadDTO GetMemberRoleById(int id);
+        MemberRoleReadDTO CreateMemberRole(MemberRoleCreateDTO memberRoleCreateDTO);
+        void UpdateMemberRole(MemberRoleUpdateDTO memberRoleToPatch, MemberRoleReadDTO  memberRoleModelFromRepo);
+        IEnumerable<RoleReadDTO> GetRolesByMemberId(int id);
+        IEnumerable<MemberReadDTO> GetMembersByRoles(List<RoleReadDTO> roleCreateDTOs);
+        MemberRoleUpdateDTO GetUpdateDTOByReadDTO(MemberRoleReadDTO entity);
     }
 }

@@ -17,13 +17,11 @@ namespace TennisClub.API.Controllers
     public class MemberRolesController : Controller
     {
         private readonly IMemberRoleService _service;
-        private readonly IMapper _mapper;
         private readonly IMemberService _memberService;
 
-        public MemberRolesController(IMemberRoleService service, IMapper mapper, IMemberService memberService)
+        public MemberRolesController(IMemberRoleService service, IMemberService memberService)
         {
             _service = service;
-            _mapper = mapper;
             _memberService = memberService;
         }
 
@@ -31,50 +29,46 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MemberRoleReadDTO>> GetAllMemberRoles()
         {
-            IEnumerable<MemberRole> memberRoleItems = _service.GetAllMemberRoles();
+            IEnumerable<MemberRoleReadDTO> memberRoleItems = _service.GetAllMemberRoles();
 
-            return Ok(_mapper.Map<IEnumerable<MemberRoleReadDTO>>(memberRoleItems));
+            return Ok(memberRoleItems);
         }
 
         // GET api/memberroles/5
         [HttpGet("{id}", Name = "GetMemberRoleById")]
         public ActionResult<MemberRoleReadDTO> GetMemberRoleById(int id)
         {
-            MemberRole memberRoleItem = _service.GetMemberRoleById(id);
+            MemberRoleReadDTO memberRoleItem = _service.GetMemberRoleById(id);
 
             if (memberRoleItem == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<MemberRoleReadDTO>(memberRoleItem));
+            return Ok(memberRoleItem);
         }
 
         // POST: api/memberroles
         [HttpPost]
         public ActionResult<MemberRoleReadDTO> CreateMemberRole(MemberRoleCreateDTO memberRoleCreateDTO)
         {
-            MemberRole memberRoleModel = _mapper.Map<MemberRole>(memberRoleCreateDTO);
+            MemberRoleReadDTO createdMemberRole = _service.CreateMemberRole(memberRoleCreateDTO);
 
-            _service.CreateMemberRole(memberRoleModel);
-
-            MemberRoleReadDTO memberRoleReadDTO = _mapper.Map<MemberRoleReadDTO>(memberRoleModel);
-
-            return CreatedAtRoute(nameof(GetMemberRoleById), new { memberRoleReadDTO.Id }, memberRoleReadDTO);
+            return CreatedAtRoute(nameof(GetMemberRoleById), new { createdMemberRole.Id }, createdMemberRole);
         }
 
         // PATCH api/memberroles/5
         [HttpPatch("{id}")]
         public ActionResult UpdateMemberRole(int id, JsonPatchDocument<MemberRoleUpdateDTO> patchDoc)
         {
-            MemberRole memberRoleModelFromRepo = _service.GetMemberRoleById(id);
+            MemberRoleReadDTO memberRoleModelFromRepo = _service.GetMemberRoleById(id);
 
             if (memberRoleModelFromRepo == null)
             {
                 return NotFound();
             }
 
-            MemberRoleUpdateDTO memberRoleToPatch = _mapper.Map<MemberRoleUpdateDTO>(memberRoleModelFromRepo);
+            MemberRoleUpdateDTO memberRoleToPatch = _service.GetUpdateDTOByReadDTO(memberRoleModelFromRepo);
             patchDoc.ApplyTo(memberRoleToPatch, ModelState);
 
             if (!TryValidateModel(memberRoleToPatch))
@@ -82,9 +76,7 @@ namespace TennisClub.API.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            _mapper.Map(memberRoleToPatch, memberRoleModelFromRepo);
-
-            _service.UpdateMemberRole(memberRoleModelFromRepo);
+            _service.UpdateMemberRole(memberRoleToPatch, memberRoleModelFromRepo);
 
             return NoContent();
         }
@@ -94,20 +86,19 @@ namespace TennisClub.API.Controllers
         public ActionResult<IEnumerable<RoleReadDTO>> GetRolesByMemberId(int id)
         {
             // TODO: Dit nakijken samen met repository.
-            IEnumerable<Role> roleItems = _service.GetRolesByMemberId(id).ToList();
+            IEnumerable<RoleReadDTO> roleItems = _service.GetRolesByMemberId(id).ToList();
 
-            return Ok(_mapper.Map<IEnumerable<RoleReadDTO>>(roleItems));
+            return Ok(roleItems);
         }
 
         // GET: api/memberroles/byroles
         [HttpGet("byroles")]
-        public ActionResult<IEnumerable<MemberReadDTO>> GetMembersByRoles(List<RoleReadDTO> roleCreateDTOs)
+        public ActionResult<IEnumerable<MemberReadDTO>> GetMembersByRoles(List<RoleReadDTO> roleReadDTOs)
         {
             // TODO: Dit nakijken samen met repository.
-            List<Role> rolesFromRepo = _mapper.Map<List<Role>>(roleCreateDTOs);
-            IEnumerable<Member> memberItems = _service.GetMembersByRoles(rolesFromRepo);
+            IEnumerable<MemberReadDTO> memberItems = _service.GetMembersByRoles(roleReadDTOs);
 
-            return Ok(_mapper.Map<IEnumerable<MemberReadDTO>>(memberItems));
+            return Ok(memberItems);
         }
     }
 }

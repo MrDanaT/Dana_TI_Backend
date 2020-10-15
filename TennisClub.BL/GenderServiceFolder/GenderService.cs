@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.Gender;
 using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
@@ -13,18 +14,14 @@ namespace TennisClub.BL.GenderServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<Gender> GetAllGenders()
+        public IEnumerable<GenderReadDTO> GetAllGenders()
         {
-            IEnumerable<Gender> genderItems = _unitOfWork.Genders.GetAll();
-
-            return genderItems;
+            return _unitOfWork.Genders.GetAll();
         }
 
-        public Gender GetGenderById(byte id)
+        public GenderReadDTO GetGenderById(byte id)
         {
-            Gender genderFromRepo = _unitOfWork.Genders.GetById(id);
-
-            return genderFromRepo;
+            return _unitOfWork.Genders.GetById(id);
         }
 
     }

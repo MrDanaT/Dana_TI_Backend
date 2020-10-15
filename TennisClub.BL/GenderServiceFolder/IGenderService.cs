@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using TennisClub.DAL.Entities;
+using TennisClub.Common.Gender;
 
 namespace TennisClub.BL.GenderServiceFolder
 {
     public interface IGenderService
     {
-        IEnumerable<Gender> GetAllGenders();
-        Gender GetGenderById(byte id);
+        IEnumerable<GenderReadDTO> GetAllGenders();
+        GenderReadDTO GetGenderById(byte id);
     }
 }

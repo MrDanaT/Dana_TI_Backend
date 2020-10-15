@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
+using TennisClub.Common.Role;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.RoleServiceFolder
 {
     public interface IRoleService
     {
-        IEnumerable<Role> GetAllRoles();
+        IEnumerable<RoleReadDTO> GetAllRoles();
 
-        Role GetRoleById(byte id);
+        RoleReadDTO GetRoleById(byte id);
 
-        void CreateRole(Role role);
+        RoleReadDTO CreateRole(RoleCreateDTO role);
 
-        void UpdateRole(Role role);
+        void UpdateRole(RoleUpdateDTO roleToPatch, RoleReadDTO roleModelFromRepo);
+        RoleUpdateDTO GetUpdateDTOByReadDTO(RoleReadDTO entity);
     }
 }

@@ -4,14 +4,20 @@ using System.Linq.Expressions;
 
 namespace TennisClub.DAL.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO> 
+        where TEntityCreateDTO : class
+        where TEntityReadDTO : class
+        where TEntityUpdateDTO : class
     {
-        void Create(TEntity entity);
-        void Delete(TEntity entity);
-        IEnumerable<TEntity> GetAll();
-        TEntity GetById(int id);
-        TEntity GetById(byte id);
-        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        TEntityReadDTO Create(TEntityCreateDTO entity);
+        void Delete(TEntityReadDTO entity);
+        IEnumerable<TEntityReadDTO> GetAll();
+        TEntityReadDTO GetById(int id);
+        TEntityReadDTO GetById(byte id);
+        IEnumerable<TEntityReadDTO> Find(Expression<Func<TEntityReadDTO, bool>> predicate);
+        TEntityReadDTO SingleOrDefault(Expression<Func<TEntityReadDTO, bool>> predicate);
+        TEntityCreateDTO GetCreateDTOByReadDTO(TEntityReadDTO entity);
+        TEntityUpdateDTO GetUpdateDTOByReadDTO(TEntityReadDTO entity);
+        void MapUpdateDTOToReadDTO(TEntityUpdateDTO memberToPatch, TEntityReadDTO memberModelFromRepo);
     }
 }

@@ -13,62 +13,56 @@ namespace TennisClub.API.Controllers
     public class MemberFinesController : Controller
     {
         private readonly IMemberFineService _service;
-        private readonly IMapper _mapper;
-
-        public MemberFinesController(IMemberFineService service, IMapper mapper)
+        public MemberFinesController(IMemberFineService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         // GET: api/memberfine
         [HttpGet]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetAllMemberFines()
         {
-            IEnumerable<MemberFine> memberFineItems = _service.GetAllMemberFines();
+            IEnumerable<MemberFineReadDTO> memberFineItems = _service.GetAllMemberFines();
 
-            return Ok(_mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems));
+            return Ok(memberFineItems);
         }
 
         // GET: api/memberfine/5
         [HttpGet("{id}", Name = "GetMemberFineById")]
         public ActionResult<MemberFineReadDTO> GetMemberFineById(int id)
         {
-            MemberFine memberFine = _service.GetMemberFineById(id);
+            MemberFineReadDTO memberFine = _service.GetMemberFineById(id);
 
             if (memberFine == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<MemberFineReadDTO>(memberFine));
+            return Ok(memberFine);
         }
 
         // POST: api/memberfine
         [HttpPost]
         public ActionResult<MemberFineReadDTO> CreateMemberFine(MemberFineCreateDTO memberFineCreateDto)
         {
-            MemberFine memberFineModel = _mapper.Map<MemberFine>(memberFineCreateDto);
+            var createdMemberFine =_service.CreateMemberFine(memberFineCreateDto);
 
-            _service.CreateMemberFine(memberFineModel);
 
-            MemberFineReadDTO memberFineReadDto = _mapper.Map<MemberFineReadDTO>(memberFineModel);
-
-            return CreatedAtRoute(nameof(GetMemberFineById), new { memberFineReadDto.Id }, memberFineReadDto);
+            return CreatedAtRoute(nameof(GetMemberFineById), new { createdMemberFine.Id }, createdMemberFine);
         }
 
         // PATCH: api/memberfine/5
         [HttpPatch("{id}")]
         public ActionResult UpdateMemberFine(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
         {
-            MemberFine memberFineModelFromRepo = _service.GetMemberFineById(id);
+            var memberFineModelFromRepo = _service.GetMemberFineById(id);
 
             if (memberFineModelFromRepo == null)
             {
                 return NotFound();
             }
 
-            MemberFineUpdateDTO modelFineToPatch = _mapper.Map<MemberFineUpdateDTO>(memberFineModelFromRepo);
+            MemberFineUpdateDTO modelFineToPatch = _service.GetUpdateDTOByReadDTO(memberFineModelFromRepo); // _mapper.Map<MemberFineUpdateDTO>(memberFineModelFromRepo);
             patchDoc.ApplyTo(modelFineToPatch, ModelState);
 
             if (!TryValidateModel(modelFineToPatch))
@@ -76,9 +70,7 @@ namespace TennisClub.API.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            _mapper.Map(modelFineToPatch, memberFineModelFromRepo);
-
-            _service.UpdateMemberFine(memberFineModelFromRepo);
+            _service.UpdateMemberFine(modelFineToPatch, memberFineModelFromRepo);
 
             return NoContent();
         }
@@ -87,9 +79,9 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetMemberFinesByMemberId(int id)
         {
-            IEnumerable<MemberFine> memberFineItems = _service.GetMemberFinesByMemberId(id);
+            IEnumerable<MemberFineReadDTO> memberFineItems = _service.GetMemberFinesByMemberId(id);
 
-            return Ok(_mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems));
+            return Ok(memberFineItems);
         }
     }
 }
