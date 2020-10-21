@@ -7,7 +7,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
 {
-    public class MemberRepository : Repository<Member, MemberCreateDTO, MemberReadDTO, MemberUpdateDTO>, IMemberRepository
+    public class MemberRepository : Repository<Member, MemberCreateDTO, MemberReadDTO, MemberUpdateDTO, int>, IMemberRepository
     {
         public MemberRepository(TennisClubContext context, IMapper mapper)
            : base(context, mapper)

@@ -5,7 +5,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 {
-    public interface IGameResultRepository : IRepository< GameResultCreateDTO, GameResultReadDTO, GameResultUpdateDTO>
+    public interface IGameResultRepository : IRepository< GameResultCreateDTO, GameResultReadDTO, GameResultUpdateDTO, int>
     {
         IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member);
     }

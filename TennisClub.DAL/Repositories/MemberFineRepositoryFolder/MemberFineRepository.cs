@@ -8,7 +8,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 {
-    public class MemberFineRepository : Repository<MemberFine, MemberFineCreateDTO, MemberFineReadDTO, MemberFineUpdateDTO>, IMemberFineRepository
+    public class MemberFineRepository : Repository<MemberFine, MemberFineCreateDTO, MemberFineReadDTO, MemberFineUpdateDTO, int>, IMemberFineRepository
     {
         public MemberFineRepository(TennisClubContext context, IMapper mapper)
            : base(context, mapper)

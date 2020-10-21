@@ -5,7 +5,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 {
-    public interface IMemberFineRepository : IRepository< MemberFineCreateDTO, MemberFineReadDTO, MemberFineUpdateDTO>
+    public interface IMemberFineRepository : IRepository< MemberFineCreateDTO, MemberFineReadDTO, MemberFineUpdateDTO, int>
     {
         IEnumerable<MemberFineReadDTO> GetMemberFinesByMember(MemberReadDTO member);
     }

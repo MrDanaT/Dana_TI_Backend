@@ -17,6 +17,7 @@ namespace TennisClub.BL.GameServiceFolder
         void UpdateGame(GameUpdateDTO gameToPatch, GameReadDTO gameModelFromRepo);
 
         void DeleteGame(GameReadDTO game);
+
         GameUpdateDTO GetUpdateDTOByReadDTO(GameReadDTO entity);
     }
 }

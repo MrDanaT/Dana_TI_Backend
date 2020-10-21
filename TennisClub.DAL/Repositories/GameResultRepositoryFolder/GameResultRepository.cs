@@ -8,7 +8,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 {
-    public class GameResultRepository : Repository<GameResult, GameResultCreateDTO, GameResultReadDTO, GameResultUpdateDTO>, IGameResultRepository
+    public class GameResultRepository : Repository<GameResult, GameResultCreateDTO, GameResultReadDTO, GameResultUpdateDTO, int>, IGameResultRepository
     {
         public GameResultRepository(TennisClubContext context, IMapper mapper)
           : base(context, mapper)

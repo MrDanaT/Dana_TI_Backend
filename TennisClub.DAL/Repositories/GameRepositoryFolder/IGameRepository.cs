@@ -5,7 +5,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameRepositoryFolder
 {
-    public interface IGameRepository : IRepository< GameCreateDTO, GameReadDTO, GameUpdateDTO>
+    public interface IGameRepository : IRepository< GameCreateDTO, GameReadDTO, GameUpdateDTO, int>
     {
         IEnumerable<GameReadDTO> GetFutureGamesByMember(MemberReadDTO member);
     }

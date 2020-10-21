@@ -9,7 +9,7 @@ using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 {
-    public class MemberRoleRepository : Repository<MemberRole, MemberRoleCreateDTO, MemberRoleReadDTO, MemberRoleUpdateDTO>, IMemberRoleRepository
+    public class MemberRoleRepository : Repository<MemberRole, MemberRoleCreateDTO, MemberRoleReadDTO, MemberRoleUpdateDTO, int>, IMemberRoleRepository
     {
         public MemberRoleRepository(TennisClubContext context, IMapper mapper)
            : base(context, mapper)
