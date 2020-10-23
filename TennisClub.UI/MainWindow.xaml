@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TennisClub.UI"
         mc:Ignorable="d"
-        Title="TennisClub" Height="463" Width="800">
+        Title="TennisClub" Height="463" Width="800" ResizeMode="CanResizeWithGrip">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
