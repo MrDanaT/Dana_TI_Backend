@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.RoleServiceFolder;
 using TennisClub.Common.Role;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.API.Controllers
 {
@@ -30,7 +28,7 @@ namespace TennisClub.API.Controllers
 
         // GET: api/roles/5
         [HttpGet("{id}", Name = "GetRoleById")]
-        public ActionResult<RoleReadDTO> GetRoleById(byte id)
+        public ActionResult<RoleReadDTO> GetRoleById(int id)
         {
             RoleReadDTO roleItem = _service.GetRoleById(id);
 

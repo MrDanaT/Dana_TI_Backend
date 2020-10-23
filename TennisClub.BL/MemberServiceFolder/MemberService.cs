@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TennisClub.Common.Member;
 using TennisClub.DAL.Repositories;
 

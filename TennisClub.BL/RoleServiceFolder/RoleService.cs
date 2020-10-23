@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Role;
-using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.RoleServiceFolder
@@ -21,7 +20,7 @@ namespace TennisClub.BL.RoleServiceFolder
             return roleItems;
         }
 
-        public RoleReadDTO GetRoleById(byte id)
+        public RoleReadDTO GetRoleById(int id)
         {
             RoleReadDTO roleItem = _unitOfWork.Roles.GetById(id);
 
@@ -30,7 +29,7 @@ namespace TennisClub.BL.RoleServiceFolder
 
         public RoleReadDTO CreateRole(RoleCreateDTO role)
         {
-            var createdRole = _unitOfWork.Roles.Create(role);
+            RoleReadDTO createdRole = _unitOfWork.Roles.Create(role);
             _unitOfWork.Commit();
             return createdRole;
         }

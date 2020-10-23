@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Game;
 using TennisClub.Common.Member;
-using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.GameServiceFolder
@@ -34,7 +33,7 @@ namespace TennisClub.BL.GameServiceFolder
 
         public GameReadDTO CreateGame(GameCreateDTO game)
         {
-            var createdGame = _unitOfWork.Games.Create(game);
+            GameReadDTO createdGame = _unitOfWork.Games.Create(game);
             _unitOfWork.Commit();
             return createdGame;
         }

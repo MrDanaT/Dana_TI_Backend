@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.GameResult;
 using TennisClub.Common.Member;
-using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.GameResultServiceFolder

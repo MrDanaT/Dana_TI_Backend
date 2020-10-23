@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Member;
 using TennisClub.Common.MemberFine;
-using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.MemberFineServiceFolder
@@ -31,7 +30,7 @@ namespace TennisClub.BL.MemberFineServiceFolder
 
         public MemberFineReadDTO CreateMemberFine(MemberFineCreateDTO memberFine)
         {
-           var createdMemberFine = _unitOfWork.MemberFines.Create(memberFine);
+            MemberFineReadDTO createdMemberFine = _unitOfWork.MemberFines.Create(memberFine);
             _unitOfWork.Commit();
             return createdMemberFine;
         }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.League;
-using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.LeagueServiceFolder
@@ -21,7 +20,7 @@ namespace TennisClub.BL.LeagueServiceFolder
             return leagueItems;
         }
 
-        public LeagueReadDTO GetLeagueById(byte id)
+        public LeagueReadDTO GetLeagueById(int id)
         {
             LeagueReadDTO leagueFromRepo = _unitOfWork.Leagues.GetById(id);
 

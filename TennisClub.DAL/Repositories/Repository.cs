@@ -7,12 +7,11 @@ using System.Linq.Expressions;
 
 namespace TennisClub.DAL.Repositories
 {
-    public class Repository<TEntity, TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO, NumericType> : IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO, NumericType>
+    public class Repository<TEntity, TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO> : IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO>
         where TEntity : class
         where TEntityCreateDTO : class
         where TEntityReadDTO : class
         where TEntityUpdateDTO : class
-        where NumericType : struct
     {
         protected readonly TennisClubContext Context;
         protected readonly IMapper _mapper;
@@ -61,7 +60,7 @@ namespace TennisClub.DAL.Repositories
 
         }
 
-        public TEntityReadDTO GetById(NumericType id)
+        public TEntityReadDTO GetById(int id)
         {
             TEntity itemFromDB = Context.Set<TEntity>().Find(id);
             return _mapper.Map<TEntityReadDTO>(itemFromDB);

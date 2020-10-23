@@ -6,6 +6,6 @@ namespace TennisClub.BL.GenderServiceFolder
     public interface IGenderService
     {
         IEnumerable<GenderReadDTO> GetAllGenders();
-        GenderReadDTO GetGenderById(byte id);
+        GenderReadDTO GetGenderById(int id);
     }
 }

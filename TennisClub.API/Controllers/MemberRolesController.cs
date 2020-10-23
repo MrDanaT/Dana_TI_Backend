@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,6 @@ using TennisClub.BL.MemberServiceFolder;
 using TennisClub.Common.Member;
 using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.API.Controllers
 {

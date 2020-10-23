@@ -10,14 +10,14 @@ using TennisClub.DAL;
 namespace TennisClub.DAL.Migrations
 {
     [DbContext(typeof(TennisClubContext))]
-    [Migration("20201009184617_Initial")]
-    partial class Initial
+    [Migration("20201023124039_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
+                .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -26,7 +26,6 @@ namespace TennisClub.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasMaxLength(10)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -38,15 +37,16 @@ namespace TennisClub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(10)");
 
-                    b.Property<byte>("LeagueId")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("LeagueId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("MemberId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("GameNumber");
+                    b.HasIndex("GameNumber")
+                        .IsUnique();
 
                     b.HasIndex("LeagueId");
 
@@ -60,7 +60,6 @@ namespace TennisClub.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasMaxLength(10)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -79,17 +78,17 @@ namespace TennisClub.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("GameId", "SetNr");
+                    b.HasIndex("GameId", "SetNr")
+                        .IsUnique();
 
                     b.ToTable("tblGameResults");
                 });
 
             modelBuilder.Entity("TennisClub.DAL.Entities.Gender", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
-                        .HasMaxLength(3)
+                        .HasColumnType("integer")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -100,29 +99,29 @@ namespace TennisClub.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("tblGenders");
 
                     b.HasData(
                         new
                         {
-                            Id = (byte)1,
+                            Id = 1,
                             Name = "Man"
                         },
                         new
                         {
-                            Id = (byte)2,
+                            Id = 2,
                             Name = "Vrouw"
                         });
                 });
 
             modelBuilder.Entity("TennisClub.DAL.Entities.League", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
-                        .HasMaxLength(3)
+                        .HasColumnType("integer")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -133,24 +132,25 @@ namespace TennisClub.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("tblLeagues");
 
                     b.HasData(
                         new
                         {
-                            Id = (byte)1,
+                            Id = 1,
                             Name = "Recreatief"
                         },
                         new
                         {
-                            Id = (byte)2,
+                            Id = 2,
                             Name = "Competitie"
                         },
                         new
                         {
-                            Id = (byte)3,
+                            Id = 3,
                             Name = "Toptennis"
                         });
                 });
@@ -160,7 +160,6 @@ namespace TennisClub.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasMaxLength(10)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -192,8 +191,8 @@ namespace TennisClub.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(25)");
 
-                    b.Property<byte>("GenderId")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("GenderId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -212,7 +211,8 @@ namespace TennisClub.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("FederationNr");
+                    b.HasIndex("FederationNr")
+                        .IsUnique();
 
                     b.HasIndex("GenderId");
 
@@ -224,7 +224,6 @@ namespace TennisClub.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasMaxLength(10)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -246,7 +245,8 @@ namespace TennisClub.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("FineNumber");
+                    b.HasIndex("FineNumber")
+                        .IsUnique();
 
                     b.HasIndex("MemberId");
 
@@ -258,7 +258,6 @@ namespace TennisClub.DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasMaxLength(10)
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -269,27 +268,28 @@ namespace TennisClub.DAL.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("integer");
 
-                    b.Property<byte>("RoleId")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("date");
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("MemberId", "RoleId", "StartDate");
-
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("MemberId", "RoleId", "StartDate", "EndDate")
+                        .IsUnique()
+                        .HasFilter("[EndDate] IS NOT NULL");
 
                     b.ToTable("tblMemberRoles");
                 });
 
             modelBuilder.Entity("TennisClub.DAL.Entities.Role", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
-                        .HasMaxLength(3)
+                        .HasColumnType("integer")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -300,34 +300,35 @@ namespace TennisClub.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("tblRoles");
 
                     b.HasData(
                         new
                         {
-                            Id = (byte)1,
+                            Id = 1,
                             Name = "Voorzitter"
                         },
                         new
                         {
-                            Id = (byte)2,
+                            Id = 2,
                             Name = "Bestuurslid"
                         },
                         new
                         {
-                            Id = (byte)3,
+                            Id = 3,
                             Name = "Secretaris"
                         },
                         new
                         {
-                            Id = (byte)4,
+                            Id = 4,
                             Name = "Penningmeester"
                         },
                         new
                         {
-                            Id = (byte)5,
+                            Id = 5,
                             Name = "Speler"
                         });
                 });

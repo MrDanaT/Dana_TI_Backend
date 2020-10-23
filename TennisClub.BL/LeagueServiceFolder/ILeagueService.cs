@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.League;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.LeagueServiceFolder
 {
@@ -8,6 +7,6 @@ namespace TennisClub.BL.LeagueServiceFolder
     {
         IEnumerable<LeagueReadDTO> GetAllLeagues();
 
-        LeagueReadDTO GetLeagueById(byte id);
+        LeagueReadDTO GetLeagueById(int id);
     }
 }

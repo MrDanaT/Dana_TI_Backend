@@ -2,7 +2,6 @@
 using TennisClub.Common.Member;
 using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
-using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.MemberRoleServiceFolder
@@ -32,7 +31,7 @@ namespace TennisClub.BL.MemberRoleServiceFolder
 
         public MemberRoleReadDTO CreateMemberRole(MemberRoleCreateDTO memberRole)
         {
-            var createdMemberRole = _unitOfWork.MemberRoles.Create(memberRole);
+            MemberRoleReadDTO createdMemberRole = _unitOfWork.MemberRoles.Create(memberRole);
             _unitOfWork.Commit();
             return createdMemberRole;
         }

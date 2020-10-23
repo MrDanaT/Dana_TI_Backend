@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\danai\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\danai\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_TennisClub.-1609877458.00" t="ExcludeRecursive" />
+    <e p="C:\Users\danai\Desktop\Dana\School\AP\3e Bach TI AP\Sem_1\Progr. in .NET\TennisClub" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="TennisClub.API" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="GameResultsController.cs" t="Include" />
+          <e p="GamesController.cs" t="Include" />
+          <e p="GendersController.cs" t="Include" />
+          <e p="LeaguesController.cs" t="Include" />
+          <e p="MemberFinesController.cs" t="Include" />
+          <e p="MemberRolesController.cs" t="Include" />
+          <e p="MembersController.cs" t="Include" />
+          <e p="RolesController.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="TennisClub.API.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="TennisClub.API.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TennisClub.BL" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="GameResultServiceFolder" t="Include">
+          <e p="GameResultService.cs" t="Include" />
+          <e p="IGameResultService.cs" t="Include" />
+        </e>
+        <e p="GameServiceFolder" t="Include">
+          <e p="GameService.cs" t="Include" />
+          <e p="IGameService.cs" t="Include" />
+        </e>
+        <e p="GenderServiceFolder" t="Include">
+          <e p="GenderService.cs" t="Include" />
+          <e p="IGenderService.cs" t="Include" />
+        </e>
+        <e p="LeagueServiceFolder" t="Include">
+          <e p="ILeagueService.cs" t="Include" />
+          <e p="LeagueService.cs" t="Include" />
+        </e>
+        <e p="MemberFineServiceFolder" t="Include">
+          <e p="IMemberFineService.cs" t="Include" />
+          <e p="MemberFineService.cs" t="Include" />
+        </e>
+        <e p="MemberRoleServiceFolder" t="Include">
+          <e p="IMemberRoleService.cs" t="Include" />
+          <e p="MemberRoleService.cs" t="Include" />
+        </e>
+        <e p="MemberServiceFolder" t="Include">
+          <e p="IMemberService.cs" t="Include" />
+          <e p="MemberService.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="TennisClub.BL.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="RoleServiceFolder" t="Include">
+          <e p="IRoleService.cs" t="Include" />
+          <e p="RoleService.cs" t="Include" />
+        </e>
+        <e p="TennisClub.BL.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TennisClub.Common" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Game" t="Include">
+          <e p="GameCreateDTO.cs" t="Include" />
+          <e p="GameReadDTO.cs" t="Include" />
+          <e p="GameUpdateDTO.cs" t="Include" />
+        </e>
+        <e p="GameResult" t="Include">
+          <e p="GameResultCreateDTO.cs" t="Include" />
+          <e p="GameResultReadDTO.cs" t="Include" />
+          <e p="GameResultUpdateDTO.cs" t="Include" />
+        </e>
+        <e p="Gender" t="Include">
+          <e p="GenderReadDTO.cs" t="Include" />
+        </e>
+        <e p="League" t="Include">
+          <e p="LeagueReadDTO.cs" t="Include" />
+        </e>
+        <e p="Member" t="Include">
+          <e p="MemberCreateDTO .cs" t="Include" />
+          <e p="MemberReadDTO.cs" t="Include" />
+          <e p="MemberUpdateDTO.cs" t="Include" />
+        </e>
+        <e p="MemberFine" t="Include">
+          <e p="MemberFineCreateDTO.cs" t="Include" />
+          <e p="MemberFineReadDTO.cs" t="Include" />
+          <e p="MemberFineUpdateDTO.cs" t="Include" />
+        </e>
+        <e p="MemberRole" t="Include">
+          <e p="MemberRoleCreateDTO.cs" t="Include" />
+          <e p="MemberRoleReadDTO.cs" t="Include" />
+          <e p="MemberRoleUpdateDTO.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="TennisClub.Common.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Role" t="Include">
+          <e p="RoleCreateDTO.cs" t="Include" />
+          <e p="RoleReadDTO.cs" t="Include" />
+          <e p="RoleUpdateDTO.cs" t="Include" />
+        </e>
+        <e p="TennisClub.Common.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TennisClub.DAL" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Configurations" t="Include">
+          <e p="GameConfiguration.cs" t="Include" />
+          <e p="GameResultConfiguration.cs" t="Include" />
+          <e p="GenderConfiguration.cs" t="Include" />
+          <e p="LeagueConfiguration.cs" t="Include" />
+          <e p="MemberConfiguration.cs" t="Include" />
+          <e p="MemberFineConfiguration.cs" t="Include" />
+          <e p="MemberRoleConfiguration.cs" t="Include" />
+          <e p="RoleConfiguration.cs" t="Include" />
+        </e>
+        <e p="DesignTimeDbContextFactory.cs" t="Include" />
+        <e p="Entities" t="Include">
+          <e p="Game.cs" t="Include" />
+          <e p="GameResult.cs" t="Include" />
+          <e p="Gender.cs" t="Include" />
+          <e p="League.cs" t="Include" />
+          <e p="Member.cs" t="Include" />
+          <e p="MemberFine.cs" t="Include" />
+          <e p="MemberRole.cs" t="Include" />
+          <e p="Role.cs" t="Include" />
+        </e>
+        <e p="MappingProfiles" t="Include">
+          <e p="GameResultsProfile.cs" t="Include" />
+          <e p="GamesProfile.cs" t="Include" />
+          <e p="GendersProfile.cs" t="Include" />
+          <e p="LeaguesProfile.cs" t="Include" />
+          <e p="MemberFinesProfile.cs" t="Include" />
+          <e p="MemberRolesProfile.cs" t="Include" />
+          <e p="MembersProfile.cs" t="Include" />
+          <e p="RolesProfile.cs" t="Include" />
+        </e>
+        <e p="Migrations" t="Include">
+          <e p="20201009184617_Initial.cs" t="Include" />
+          <e p="20201009184617_Initial.Designer.cs" t="Include" />
+          <e p="TennisClubContextModelSnapshot.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="TennisClub.DAL.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Repositories" t="Include">
+          <e p="GameRepositoryFolder" t="Include">
+            <e p="GameRepository.cs" t="Include" />
+            <e p="IGameRepository.cs" t="Include" />
+          </e>
+          <e p="GameResultRepositoryFolder" t="Include">
+            <e p="GameResultRepository.cs" t="Include" />
+            <e p="IGameResultRepository.cs" t="Include" />
+          </e>
+          <e p="GenderRepositoryFolder" t="Include">
+            <e p="GenderRepository.cs" t="Include" />
+            <e p="IGenderRepository.cs" t="Include" />
+          </e>
+          <e p="IRepository.cs" t="Include" />
+          <e p="IUnitOfWork.cs" t="Include" />
+          <e p="LeagueRepositoryFolder" t="Include">
+            <e p="ILeagueRepository.cs" t="Include" />
+            <e p="LeagueRepository.cs" t="Include" />
+          </e>
+          <e p="MemberFineRepositoryFolder" t="Include">
+            <e p="IMemberFineRepository.cs" t="Include" />
+            <e p="MemberFineRepository.cs" t="Include" />
+          </e>
+          <e p="MemberRepositoryFolder" t="Include">
+            <e p="IMemberRepository.cs" t="Include" />
+            <e p="MemberRepository.cs" t="Include" />
+          </e>
+          <e p="MemberRoleRepositoryFolder" t="Include">
+            <e p="IMemberRoleRepository.cs" t="Include" />
+            <e p="MemberRoleRepository.cs" t="Include" />
+          </e>
+          <e p="Repository.cs" t="Include" />
+          <e p="RoleRepositoryFolder" t="Include">
+            <e p="IRoleRepository.cs" t="Include" />
+            <e p="RoleRepository.cs" t="Include" />
+          </e>
+          <e p="UnitOfWork.cs" t="Include" />
+        </e>
+        <e p="TennisClub.DAL.csproj" t="IncludeRecursive" />
+        <e p="TennisClubContext.cs" t="Include" />
+      </e>
+      <e p="TennisClub.sln" t="IncludeFlat" />
+      <e p="TennisClub.UI" t="IncludeRecursive">
+        <e p="App.xaml" t="Include" />
+        <e p="App.xaml.cs" t="Include" />
+        <e p="AssemblyInfo.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="MainWindow.xaml" t="Include" />
+        <e p="MainWindow.xaml.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="App.g.cs" t="Include" />
+              <e p="MainWindow.g.cs" t="Include" />
+              <e p="TennisClub.UI.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="TennisClub.UI.csproj" t="IncludeRecursive" />
+        <e p="WebAPI.cs" t="Include" />
+      </e>
+    </e>
+  </component>
+</project>

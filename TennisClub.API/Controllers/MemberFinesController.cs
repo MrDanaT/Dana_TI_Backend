@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.MemberFineServiceFolder;
 using TennisClub.Common.MemberFine;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.API.Controllers
 {
@@ -45,7 +43,7 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<MemberFineReadDTO> CreateMemberFine(MemberFineCreateDTO memberFineCreateDto)
         {
-            var createdMemberFine =_service.CreateMemberFine(memberFineCreateDto);
+            MemberFineReadDTO createdMemberFine = _service.CreateMemberFine(memberFineCreateDto);
 
 
             return CreatedAtRoute(nameof(GetMemberFineById), new { createdMemberFine.Id }, createdMemberFine);
@@ -55,7 +53,7 @@ namespace TennisClub.API.Controllers
         [HttpPatch("{id}")]
         public ActionResult UpdateMemberFine(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
         {
-            var memberFineModelFromRepo = _service.GetMemberFineById(id);
+            MemberFineReadDTO memberFineModelFromRepo = _service.GetMemberFineById(id);
 
             if (memberFineModelFromRepo == null)
             {

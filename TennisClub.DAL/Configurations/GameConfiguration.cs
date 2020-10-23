@@ -15,7 +15,7 @@ namespace TennisClub.DAL.Configurations
             builder.Property(i => i.Id).HasColumnType("integer").UseIdentityColumn();
             builder.Property(i => i.GameNumber).HasColumnType("varchar(10)").IsRequired();
             builder.Property(i => i.MemberId).HasColumnType("integer").IsRequired();
-            builder.Property(i => i.LeagueId).HasColumnType("tinyint").IsRequired();
+            builder.Property(i => i.LeagueId).HasColumnType("integer").IsRequired();
             builder.Property(i => i.Date).HasColumnType("date").IsRequired();
 
             builder.HasOne(i => i.LeagueNavigation)

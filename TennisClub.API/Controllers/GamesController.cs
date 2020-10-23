@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.GameServiceFolder;
 using TennisClub.Common.Game;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.API.Controllers
 {

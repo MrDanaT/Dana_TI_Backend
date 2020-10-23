@@ -4,16 +4,15 @@ using System.Linq.Expressions;
 
 namespace TennisClub.DAL.Repositories
 {
-    public interface IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO, NumericType> 
+    public interface IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO>
         where TEntityCreateDTO : class
         where TEntityReadDTO : class
         where TEntityUpdateDTO : class
-        where NumericType : struct
     {
         TEntityReadDTO Create(TEntityCreateDTO entity);
         void Delete(TEntityReadDTO entity);
         IEnumerable<TEntityReadDTO> GetAll();
-        TEntityReadDTO GetById(NumericType id);
+        TEntityReadDTO GetById(int id);
         IEnumerable<TEntityReadDTO> Find(Expression<Func<TEntityReadDTO, bool>> predicate);
         TEntityReadDTO SingleOrDefault(Expression<Func<TEntityReadDTO, bool>> predicate);
         TEntityCreateDTO GetCreateDTOByReadDTO(TEntityReadDTO entity);

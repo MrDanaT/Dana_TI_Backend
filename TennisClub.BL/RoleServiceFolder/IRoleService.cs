@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Role;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.RoleServiceFolder
 {
@@ -8,7 +7,7 @@ namespace TennisClub.BL.RoleServiceFolder
     {
         IEnumerable<RoleReadDTO> GetAllRoles();
 
-        RoleReadDTO GetRoleById(byte id);
+        RoleReadDTO GetRoleById(int id);
 
         RoleReadDTO CreateRole(RoleCreateDTO role);
 

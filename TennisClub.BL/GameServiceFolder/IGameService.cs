@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Game;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.GameServiceFolder
 {

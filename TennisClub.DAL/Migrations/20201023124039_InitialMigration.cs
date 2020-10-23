@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TennisClub.DAL.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,55 +11,52 @@ namespace TennisClub.DAL.Migrations
                 name: "tblGenders",
                 columns: table => new
                 {
-                    Id = table.Column<byte>(type: "tinyint", maxLength: 3, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(10)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblGenders", x => x.Id);
-                    table.UniqueConstraint("AK_tblGenders_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
                 name: "tblLeagues",
                 columns: table => new
                 {
-                    Id = table.Column<byte>(type: "tinyint", maxLength: 3, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblLeagues", x => x.Id);
-                    table.UniqueConstraint("AK_tblLeagues_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
                 name: "tblRoles",
                 columns: table => new
                 {
-                    Id = table.Column<byte>(type: "tinyint", maxLength: 3, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblRoles", x => x.Id);
-                    table.UniqueConstraint("AK_tblRoles_Name", x => x.Name);
                 });
 
             migrationBuilder.CreateTable(
                 name: "tblMembers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", maxLength: 10, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FederationNr = table.Column<string>(type: "varchar(10)", nullable: false),
                     FirstName = table.Column<string>(type: "varchar(25)", nullable: false),
                     LastName = table.Column<string>(type: "varchar(35)", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "date", nullable: false),
-                    GenderId = table.Column<byte>(type: "tinyint", nullable: false),
+                    GenderId = table.Column<int>(type: "integer", nullable: false),
                     Address = table.Column<string>(type: "varchar(70)", nullable: false),
                     Number = table.Column<string>(type: "varchar(6)", nullable: false),
                     Addition = table.Column<string>(type: "varchar(2)", nullable: true),
@@ -71,7 +68,6 @@ namespace TennisClub.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblMembers", x => x.Id);
-                    table.UniqueConstraint("AK_tblMembers_FederationNr", x => x.FederationNr);
                     table.ForeignKey(
                         name: "FK_tblMembers_tblGenders_GenderId",
                         column: x => x.GenderId,
@@ -84,17 +80,16 @@ namespace TennisClub.DAL.Migrations
                 name: "tblGames",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", maxLength: 10, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GameNumber = table.Column<string>(type: "varchar(10)", nullable: false),
                     MemberId = table.Column<int>(type: "integer", nullable: false),
-                    LeagueId = table.Column<byte>(type: "tinyint", nullable: false),
+                    LeagueId = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblGames", x => x.Id);
-                    table.UniqueConstraint("AK_tblGames_GameNumber", x => x.GameNumber);
                     table.ForeignKey(
                         name: "FK_tblGames_tblLeagues_LeagueId",
                         column: x => x.LeagueId,
@@ -113,7 +108,7 @@ namespace TennisClub.DAL.Migrations
                 name: "tblMemberFines",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", maxLength: 10, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FineNumber = table.Column<int>(type: "integer", nullable: false),
                     MemberId = table.Column<int>(type: "integer", nullable: false),
@@ -124,7 +119,6 @@ namespace TennisClub.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblMemberFines", x => x.Id);
-                    table.UniqueConstraint("AK_tblMemberFines_FineNumber", x => x.FineNumber);
                     table.ForeignKey(
                         name: "FK_tblMemberFines_tblMembers_MemberId",
                         column: x => x.MemberId,
@@ -137,17 +131,16 @@ namespace TennisClub.DAL.Migrations
                 name: "tblMemberRoles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", maxLength: 10, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MemberId = table.Column<int>(type: "integer", nullable: false),
-                    RoleId = table.Column<byte>(type: "tinyint", nullable: false),
+                    RoleId = table.Column<int>(type: "integer", nullable: false),
                     StartDate = table.Column<DateTime>(type: "date", nullable: false),
                     EndDate = table.Column<DateTime>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblMemberRoles", x => x.Id);
-                    table.UniqueConstraint("AK_tblMemberRoles_MemberId_RoleId_StartDate", x => new { x.MemberId, x.RoleId, x.StartDate });
                     table.ForeignKey(
                         name: "FK_tblMemberRoles_tblMembers_MemberId",
                         column: x => x.MemberId,
@@ -166,7 +159,7 @@ namespace TennisClub.DAL.Migrations
                 name: "tblGameResults",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", maxLength: 10, nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GameId = table.Column<int>(type: "integer", nullable: false),
                     SetNr = table.Column<byte>(type: "tinyint", nullable: false),
@@ -176,7 +169,6 @@ namespace TennisClub.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblGameResults", x => x.Id);
-                    table.UniqueConstraint("AK_tblGameResults_GameId_SetNr", x => new { x.GameId, x.SetNr });
                     table.ForeignKey(
                         name: "FK_tblGameResults_tblGames_GameId",
                         column: x => x.GameId,
@@ -190,8 +182,8 @@ namespace TennisClub.DAL.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { (byte)1, "Man" },
-                    { (byte)2, "Vrouw" }
+                    { 1, "Man" },
+                    { 2, "Vrouw" }
                 });
 
             migrationBuilder.InsertData(
@@ -199,9 +191,9 @@ namespace TennisClub.DAL.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { (byte)1, "Recreatief" },
-                    { (byte)2, "Competitie" },
-                    { (byte)3, "Toptennis" }
+                    { 1, "Recreatief" },
+                    { 2, "Competitie" },
+                    { 3, "Toptennis" }
                 });
 
             migrationBuilder.InsertData(
@@ -209,12 +201,24 @@ namespace TennisClub.DAL.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { (byte)1, "Voorzitter" },
-                    { (byte)2, "Bestuurslid" },
-                    { (byte)3, "Secretaris" },
-                    { (byte)4, "Penningmeester" },
-                    { (byte)5, "Speler" }
+                    { 1, "Voorzitter" },
+                    { 2, "Bestuurslid" },
+                    { 3, "Secretaris" },
+                    { 4, "Penningmeester" },
+                    { 5, "Speler" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblGameResults_GameId_SetNr",
+                table: "tblGameResults",
+                columns: new[] { "GameId", "SetNr" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblGames_GameNumber",
+                table: "tblGames",
+                column: "GameNumber",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_tblGames_LeagueId",
@@ -227,6 +231,24 @@ namespace TennisClub.DAL.Migrations
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tblGenders_Name",
+                table: "tblGenders",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblLeagues_Name",
+                table: "tblLeagues",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblMemberFines_FineNumber",
+                table: "tblMemberFines",
+                column: "FineNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tblMemberFines_MemberId",
                 table: "tblMemberFines",
                 column: "MemberId");
@@ -237,9 +259,28 @@ namespace TennisClub.DAL.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tblMemberRoles_MemberId_RoleId_StartDate_EndDate",
+                table: "tblMemberRoles",
+                columns: new[] { "MemberId", "RoleId", "StartDate", "EndDate" },
+                unique: true,
+                filter: "[EndDate] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblMembers_FederationNr",
+                table: "tblMembers",
+                column: "FederationNr",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tblMembers_GenderId",
                 table: "tblMembers",
                 column: "GenderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tblRoles_Name",
+                table: "tblRoles",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

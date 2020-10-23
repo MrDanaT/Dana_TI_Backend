@@ -8,7 +8,7 @@ namespace TennisClub.DAL.Entities
         {
             Members = new HashSet<Member>();
         }
-        public byte Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public ICollection<Member> Members { get; set; }

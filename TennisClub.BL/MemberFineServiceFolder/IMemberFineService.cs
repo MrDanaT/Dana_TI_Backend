@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.MemberFine;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.BL.MemberFineServiceFolder
 {

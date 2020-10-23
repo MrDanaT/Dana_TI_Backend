@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Gender;
-using TennisClub.DAL.Entities;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.GenderServiceFolder
@@ -19,7 +18,7 @@ namespace TennisClub.BL.GenderServiceFolder
             return _unitOfWork.Genders.GetAll();
         }
 
-        public GenderReadDTO GetGenderById(byte id)
+        public GenderReadDTO GetGenderById(int id)
         {
             return _unitOfWork.Genders.GetById(id);
         }
