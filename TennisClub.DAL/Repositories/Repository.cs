@@ -31,6 +31,7 @@ namespace TennisClub.DAL.Repositories
 
             TEntity mappedObject = _mapper.Map<TEntity>(entity);
             Context.Set<TEntity>().Add(mappedObject);
+            Context.SaveChanges();
 
             return _mapper.Map<TEntityReadDTO>(mappedObject);
         }
