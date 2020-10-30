@@ -19,6 +19,11 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
             return _mapper.Map<IEnumerable<MemberReadDTO>>(itemsFromDB);
         }
 
+        public override void Delete(MemberReadDTO entity)
+        {
+            entity.Deleted = true;
+        }
+
         private TennisClubContext TennisClubContext => Context;
     }
 }

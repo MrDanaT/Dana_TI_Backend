@@ -36,7 +36,7 @@ namespace TennisClub.DAL.Repositories
             return _mapper.Map<TEntityReadDTO>(mappedObject);
         }
 
-        public void Delete(TEntityReadDTO entity)
+        public virtual void Delete(TEntityReadDTO entity)
         {
             if (entity == null)
             {
