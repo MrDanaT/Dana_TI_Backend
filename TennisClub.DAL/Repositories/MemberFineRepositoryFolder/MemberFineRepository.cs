@@ -37,12 +37,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public override void Delete(int id)
         {
-            MemberFine memberFineFromRepo = Context.MemberFines.Find(id);
-
-            if (memberFineFromRepo != null && memberFineFromRepo.PaymentDate != null)
-            {
-                base.Delete(id);
-            }
+            // Do nothing
         }
 
         private TennisClubContext TennisClubContext => Context;

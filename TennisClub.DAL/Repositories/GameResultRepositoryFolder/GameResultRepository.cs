@@ -20,7 +20,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
             IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
                 .AsNoTracking()
                 .Where(gr => gr.GameNavigation.MemberId == member.Id)
-                .Include(x => x.GameNavigation)
+                .Include(g => g.GameNavigation)
                 .Select(gr => gr);
 
             return _mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems);
