@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using TennisClub.Common.Gender;
 using TennisClub.Common.League;
 using TennisClub.Common.Role;
-using TennisClub.DAL.Entities;
 
 namespace TennisClub.UI
 {
@@ -14,6 +15,7 @@ namespace TennisClub.UI
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -24,21 +26,22 @@ namespace TennisClub.UI
         /*
          * CRUD
          */
-        private void CreateRole(object sender, AddingNewItemEventArgs e)
+        private void CreateRole()
         {
-            DataGrid itemsControl = RoleData;
-
-            RoleCreateDTO newRole = new RoleCreateDTO { Name = "lol" };
+            RoleReadDTO selectedItem = (RoleReadDTO)RoleData.SelectedItem;
+            RoleCreateDTO newRole = new RoleCreateDTO
+            {
+                Name = selectedItem.Name
+            };
             Task<HttpResponseMessage> response = WebAPI.PostCall("roles", newRole);
 
             if (response.Result.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                System.Console.WriteLine("Gelukt");
-                itemsControl.ItemsSource = response.Result.Content.ReadAsAsync<List<object>>().Result;
+                MessageBox.Show($"{newRole.Name} is toegevoegd!");
             }
             else
             {
-                System.Console.WriteLine("Niet gelukt!");
+                MessageBox.Show($"Er is iets foutgelopen.");
             }
         }
 
@@ -53,18 +56,30 @@ namespace TennisClub.UI
             }
             else
             {
-                System.Console.WriteLine("Niet gelukt!");
+                Debug.WriteLine("Niet gelukt!");
             }
         }
 
         private void UpdateRole()
         {
-
+            MessageBox.Show("Updated!");
         }
 
         private void DeleteRole()
         {
+            RoleReadDTO selectedItem = (RoleReadDTO)RoleData.SelectedItem;
+            byte id = selectedItem.Id;
+            Task<HttpResponseMessage> response = WebAPI.DeleteCall($"roles/{id}");
 
+            if (response.Result.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                MessageBox.Show($"{selectedItem.Name} is verwijderd.");
+                ReadRoles();
+            }
+            else
+            {
+                MessageBox.Show($"Er is iets foutgelopen.");
+            }
         }
 
         /*
@@ -73,15 +88,6 @@ namespace TennisClub.UI
         private void GetRolesButton_Click(object sender, RoutedEventArgs e)
         {
             ReadRoles();
-        }
-        private void RoleData_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            DeleteRole();
-        }
-
-        private void RoleData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
-        {
-            UpdateRole();
         }
 
         #endregion
@@ -102,7 +108,7 @@ namespace TennisClub.UI
             }
             else
             {
-                System.Console.WriteLine("Niet gelukt!");
+                Debug.WriteLine("Niet gelukt!");
             }
         }
 
@@ -127,11 +133,11 @@ namespace TennisClub.UI
 
             if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<object>>().Result;
+                itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
             }
             else
             {
-                System.Console.WriteLine("Niet gelukt!");
+                Debug.WriteLine("Niet gelukt!");
             }
         }
 

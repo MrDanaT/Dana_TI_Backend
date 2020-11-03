@@ -39,15 +39,9 @@ namespace TennisClub.BL.GameResultServiceFolder
 
             return gameResultItems;
         }
-
-        public GameResultUpdateDTO GetUpdateDTOByReadDTO(GameResultReadDTO entity)
+        public void UpdateGameResult(int id, GameResultUpdateDTO updateDTO)
         {
-            return _unitOfWork.GameResults.GetUpdateDTOByReadDTO(entity);
-        }
-
-        public void UpdateGameResult(GameResultUpdateDTO gameResultToPatch, GameResultReadDTO gameResultModelFromRepo)
-        {
-            _unitOfWork.GameResults.MapUpdateDTOToReadDTO(gameResultToPatch, gameResultModelFromRepo);
+            _unitOfWork.GameResults.Update(id, updateDTO);
             _unitOfWork.Commit();
         }
     }

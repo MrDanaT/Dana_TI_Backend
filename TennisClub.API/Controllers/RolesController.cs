@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.RoleServiceFolder;
 using TennisClub.Common.Role;
@@ -51,8 +50,8 @@ namespace TennisClub.API.Controllers
 
 
         // PATCH: api/roles/5 
-        [HttpPatch("{id}")]
-        public ActionResult UpdateRole(byte id, JsonPatchDocument<RoleUpdateDTO> patchDoc)
+        [HttpPut("{id}")]
+        public ActionResult UpdateRole(byte id, RoleUpdateDTO updateDTO)
         {
             RoleReadDTO roleModelFromRepo = _service.GetRoleById(id);
 
@@ -61,15 +60,7 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            RoleUpdateDTO roleToPatch = _service.GetUpdateDTOByReadDTO(roleModelFromRepo);
-            patchDoc.ApplyTo(roleToPatch, ModelState);
-
-            if (!TryValidateModel(roleToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _service.UpdateRole(roleToPatch, roleModelFromRepo);
+            _service.UpdateRole(id, updateDTO);
 
             return NoContent();
         }

@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace TennisClub.DAL.Repositories
 {
-    public class Repository<TEntity, TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO> : IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO>
+    public abstract class Repository<TEntity, TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO> : IRepository<TEntityCreateDTO, TEntityReadDTO, TEntityUpdateDTO>
         where TEntity : class
         where TEntityCreateDTO : class
         where TEntityReadDTO : class
@@ -22,7 +22,7 @@ namespace TennisClub.DAL.Repositories
             _mapper = mapper;
         }
 
-        public TEntityReadDTO Create(TEntityCreateDTO entity)
+        public virtual TEntityReadDTO Create(TEntityCreateDTO entity)
         {
             if (entity == null)
             {
@@ -36,15 +36,14 @@ namespace TennisClub.DAL.Repositories
             return _mapper.Map<TEntityReadDTO>(mappedObject);
         }
 
-        public virtual void Delete(TEntityReadDTO entity)
+        public virtual void Delete(int id)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
+            TEntity itemFromDb = Context.Set<TEntity>().Find(id);
 
-            TEntity mappedObject = _mapper.Map<TEntity>(entity);
-            Context.Set<TEntity>().Remove(mappedObject);
+            if (itemFromDb != null)
+            {
+                Context.Set<TEntity>().Remove(itemFromDb);
+            }
         }
 
         public IEnumerable<TEntityReadDTO> Find(Expression<Func<TEntityReadDTO, bool>> predicate)
@@ -54,7 +53,7 @@ namespace TennisClub.DAL.Repositories
             return _mapper.Map<IEnumerable<TEntityReadDTO>>(itemsFromDB);
         }
 
-        public IEnumerable<TEntityReadDTO> GetAll()
+        public virtual IEnumerable<TEntityReadDTO> GetAll()
         {
             List<TEntity> itemsFromDB = Context.Set<TEntity>().AsNoTracking().ToList();
             return _mapper.Map<IEnumerable<TEntityReadDTO>>(itemsFromDB);
@@ -67,25 +66,21 @@ namespace TennisClub.DAL.Repositories
             return _mapper.Map<TEntityReadDTO>(itemFromDB);
         }
 
-        public TEntityCreateDTO GetCreateDTOByReadDTO(TEntityReadDTO entity)
-        {
-            return _mapper.Map<TEntityCreateDTO>(entity);
-        }
-        public TEntityUpdateDTO GetUpdateDTOByReadDTO(TEntityReadDTO entity)
-        {
-            return _mapper.Map<TEntityUpdateDTO>(entity);
-        }
-
-        public void MapUpdateDTOToReadDTO(TEntityUpdateDTO memberToPatch, TEntityReadDTO memberModelFromRepo)
-        {
-            _mapper.Map(memberToPatch, memberModelFromRepo);
-        }
-
         public TEntityReadDTO SingleOrDefault(Expression<Func<TEntityReadDTO, bool>> predicate)
         {
             Expression<Func<TEntity, bool>> predicateToEntity = _mapper.Map<Expression<Func<TEntity, bool>>>(predicate);
             TEntity itemFromDB = Context.Set<TEntity>().SingleOrDefault(predicateToEntity);
             return _mapper.Map<TEntityReadDTO>(itemFromDB);
+        }
+
+        public virtual void Update(int id, TEntityUpdateDTO entity)
+        {
+            TEntity itemFromDb = Context.Set<TEntity>().Find(id);
+
+            if (itemFromDb != null)
+            {
+                _mapper.Map(entity, itemFromDb);
+            }
         }
     }
 }

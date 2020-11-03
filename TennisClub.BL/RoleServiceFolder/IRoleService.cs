@@ -11,7 +11,6 @@ namespace TennisClub.BL.RoleServiceFolder
 
         RoleReadDTO CreateRole(RoleCreateDTO role);
 
-        void UpdateRole(RoleUpdateDTO roleToPatch, RoleReadDTO roleModelFromRepo);
-        RoleUpdateDTO GetUpdateDTOByReadDTO(RoleReadDTO entity);
+        void UpdateRole(int id, RoleUpdateDTO updateDTO);
     }
 }

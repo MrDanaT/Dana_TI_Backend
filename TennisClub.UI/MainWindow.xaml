@@ -25,7 +25,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" Grid.Column="1">Rol management</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">Je kan hier de rollen beheren.</TextBlock>
-                <DataGrid Grid.Row="2" Grid.Column="2" x:Name="RoleData" AutoGenerateColumns="False" CanUserDeleteRows="True" Margin="10,10,10,10" AddingNewItem="CreateRole" KeyDown="RoleData_KeyDown" SelectedCellsChanged="RoleData_SelectedCellsChanged" Grid.ColumnSpan="2">
+                <DataGrid  Grid.Row="2" Grid.Column="2" x:Name="RoleData" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />

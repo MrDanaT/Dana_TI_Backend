@@ -34,14 +34,9 @@ namespace TennisClub.BL.RoleServiceFolder
             return createdRole;
         }
 
-        public RoleUpdateDTO GetUpdateDTOByReadDTO(RoleReadDTO entity)
+        public void UpdateRole(int id, RoleUpdateDTO updateDTO)
         {
-            return _unitOfWork.Roles.GetUpdateDTOByReadDTO(entity);
-        }
-
-        public void UpdateRole(RoleUpdateDTO roleToPatch, RoleReadDTO roleModelFromRepo)
-        {
-            _unitOfWork.Roles.MapUpdateDTOToReadDTO(roleToPatch, roleModelFromRepo);
+            _unitOfWork.Roles.Update(id, updateDTO);
             _unitOfWork.Commit();
         }
     }

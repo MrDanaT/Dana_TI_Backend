@@ -42,15 +42,9 @@ namespace TennisClub.BL.MemberFineServiceFolder
 
             return memberFineItems;
         }
-
-        public MemberFineUpdateDTO GetUpdateDTOByReadDTO(MemberFineReadDTO entity)
+        public void UpdateMemberFine(int id, MemberFineUpdateDTO updateDTO)
         {
-            return _unitOfWork.MemberFines.GetUpdateDTOByReadDTO(entity);
-        }
-
-        public void UpdateMemberFine(MemberFineUpdateDTO modelFineToPatch, MemberFineReadDTO memberFineModelFromRepo)
-        {
-            _unitOfWork.MemberFines.MapUpdateDTOToReadDTO(modelFineToPatch, memberFineModelFromRepo);
+            _unitOfWork.MemberFines.Update(id, updateDTO);
             _unitOfWork.Commit();
         }
     }

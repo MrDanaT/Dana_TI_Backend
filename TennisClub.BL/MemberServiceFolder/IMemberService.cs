@@ -8,9 +8,8 @@ namespace TennisClub.BL.MemberServiceFolder
         IEnumerable<MemberReadDTO> GetAllMembers();
         MemberReadDTO GetMemberById(int id);
         MemberReadDTO CreateMember(MemberCreateDTO member);
-        void UpdateMember(MemberUpdateDTO memberToPatch, MemberReadDTO memberModelFromRepo);
-        void DeleteMember(MemberReadDTO member);
+        void UpdateMember(int id, MemberUpdateDTO memberToPatch);
+        void DeleteMember(int id);
         IEnumerable<MemberReadDTO> GetAllActiveMembers();
-        MemberUpdateDTO GetUpdateDTOByReadDTO(MemberReadDTO entity);
     }
 }

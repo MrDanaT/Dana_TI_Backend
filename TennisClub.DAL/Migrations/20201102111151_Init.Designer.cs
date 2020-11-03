@@ -10,14 +10,14 @@ using TennisClub.DAL;
 namespace TennisClub.DAL.Migrations
 {
     [DbContext(typeof(TennisClubContext))]
-    [Migration("20201023124039_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20201102111151_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 

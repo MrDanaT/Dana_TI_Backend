@@ -10,8 +10,7 @@ namespace TennisClub.BL.MemberFineServiceFolder
 
         MemberFineReadDTO CreateMemberFine(MemberFineCreateDTO memberFineCreateDto);
 
-        void UpdateMemberFine(MemberFineUpdateDTO modelFineToPatch, MemberFineReadDTO memberFineModelFromRepo);
+        void UpdateMemberFine(int id, MemberFineUpdateDTO updateDTO);
         IEnumerable<MemberFineReadDTO> GetMemberFinesByMemberId(int id);
-        MemberFineUpdateDTO GetUpdateDTOByReadDTO(MemberFineReadDTO entity);
     }
 }

@@ -25,6 +25,26 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
             return _mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems);
         }
 
+        public override void Update(int id, MemberFineUpdateDTO entity)
+        {
+            MemberFine memberFineFromRepo = Context.MemberFines.Find(id);
+
+            if (memberFineFromRepo != null && memberFineFromRepo.PaymentDate == null)
+            {
+                base.Update(id, entity);
+            }
+        }
+
+        public override void Delete(int id)
+        {
+            MemberFine memberFineFromRepo = Context.MemberFines.Find(id);
+
+            if (memberFineFromRepo != null && memberFineFromRepo.PaymentDate != null)
+            {
+                base.Delete(id);
+            }
+        }
+
         private TennisClubContext TennisClubContext => Context;
     }
 }

@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using TennisClub.Common.Gender;
 using TennisClub.DAL.Entities;
 
@@ -10,5 +13,10 @@ namespace TennisClub.DAL.Repositories.GenderRepositoryFolder
           : base(context, mapper)
         { }
 
+        public override IEnumerable<GenderReadDTO> GetAll()
+        {
+            List<Gender> gendersFromDb = Context.Genders.FromSqlRaw("SELECT * FROM tblGenders").AsNoTracking().ToList();
+            return _mapper.Map<IEnumerable<GenderReadDTO>>(gendersFromDb);
+        }
     }
 }

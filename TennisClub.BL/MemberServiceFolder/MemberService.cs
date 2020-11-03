@@ -34,9 +34,9 @@ namespace TennisClub.BL.MemberServiceFolder
             return createdMember;
         }
 
-        public void DeleteMember(MemberReadDTO member)
+        public void DeleteMember(int id)
         {
-            _unitOfWork.Members.Delete(member);
+            _unitOfWork.Members.Delete(id);
             _unitOfWork.Commit();
         }
 
@@ -47,14 +47,9 @@ namespace TennisClub.BL.MemberServiceFolder
             return memberItems;
         }
 
-        public MemberUpdateDTO GetUpdateDTOByReadDTO(MemberReadDTO entity)
+        public void UpdateMember(int id, MemberUpdateDTO memberToPatch)
         {
-            return _unitOfWork.Members.GetUpdateDTOByReadDTO(entity);
-        }
-
-        public void UpdateMember(MemberUpdateDTO memberToPatch, MemberReadDTO memberModelFromRepo)
-        {
-            _unitOfWork.Members.MapUpdateDTOToReadDTO(memberToPatch, memberModelFromRepo);
+            _unitOfWork.Members.Update(id, memberToPatch);
             _unitOfWork.Commit();
         }
     }

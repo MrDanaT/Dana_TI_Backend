@@ -8,8 +8,7 @@ namespace TennisClub.BL.GameResultServiceFolder
         IEnumerable<GameResultReadDTO> GetAllGameResults();
         GameResultReadDTO GetGameResultById(int id);
         GameResultReadDTO CreateGameResult(GameResultCreateDTO gameResult);
-        void UpdateGameResult(GameResultUpdateDTO gameResultToPatch, GameResultReadDTO gameResultModelFromRepo);
+        void UpdateGameResult(int id, GameResultUpdateDTO updateDTO);
         IEnumerable<GameResultReadDTO> GetGameResultsByMember(int id);
-        GameResultUpdateDTO GetUpdateDTOByReadDTO(GameResultReadDTO entity);
     }
 }

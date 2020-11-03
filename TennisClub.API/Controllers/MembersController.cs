@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.MemberServiceFolder;
 using TennisClub.Common.Member;
@@ -49,8 +48,8 @@ namespace TennisClub.API.Controllers
             return CreatedAtRoute(nameof(GetMemberById), new { memberReadDTO.Id }, memberReadDTO);
         }
         // PATCH: api/members/5
-        [HttpPatch("{id}")]
-        public ActionResult UpdateMember(int id, JsonPatchDocument<MemberUpdateDTO> patchDoc)
+        [HttpPut("{id}")]
+        public ActionResult UpdateMember(int id, MemberUpdateDTO updateDTO)
         {
             MemberReadDTO memberModelFromRepo = _service.GetMemberById(id);
 
@@ -59,15 +58,7 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            MemberUpdateDTO memberToPatch = _service.GetUpdateDTOByReadDTO(memberModelFromRepo);
-            patchDoc.ApplyTo(memberToPatch, ModelState);
-
-            if (!TryValidateModel(memberModelFromRepo))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _service.UpdateMember(memberToPatch, memberModelFromRepo);
+            _service.UpdateMember(id, updateDTO);
 
             return NoContent();
         }
@@ -82,7 +73,7 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            _service.DeleteMember(memberFromRepo);
+            _service.DeleteMember(id);
 
             return NoContent();
         }

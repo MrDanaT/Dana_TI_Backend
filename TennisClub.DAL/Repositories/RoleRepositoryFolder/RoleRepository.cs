@@ -10,6 +10,9 @@ namespace TennisClub.DAL.Repositories.RoleRepositoryFolder
           : base(context, mapper)
         { }
 
-
+        public override void Delete(int id)
+        {
+            // Do nothing
+        }
     }
 }

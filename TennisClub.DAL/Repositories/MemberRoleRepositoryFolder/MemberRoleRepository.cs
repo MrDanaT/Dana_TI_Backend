@@ -38,6 +38,10 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
             return _mapper.Map<IEnumerable<RoleReadDTO>>(roles);
         }
 
+        public override void Delete(int id)
+        {
+            // Do nothing
+        }
 
         private TennisClubContext TennisClubContext => Context;
     }

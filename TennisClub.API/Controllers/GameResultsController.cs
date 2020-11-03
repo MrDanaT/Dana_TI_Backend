@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.GameResultServiceFolder;
 using TennisClub.Common.GameResult;
@@ -50,8 +49,8 @@ namespace TennisClub.API.Controllers
         }
 
         // PATCH: api/gameresults/5
-        [HttpPatch("{id}")]
-        public ActionResult UpdateGameResult(int id, JsonPatchDocument<GameResultUpdateDTO> patchDoc)
+        [HttpPut("{id}")]
+        public ActionResult UpdateGameResult(int id, GameResultUpdateDTO updateDTO)
         {
             GameResultReadDTO gameResultModelFromRepo = _service.GetGameResultById(id);
 
@@ -60,15 +59,7 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            GameResultUpdateDTO gameResultToPatch = _service.GetUpdateDTOByReadDTO(gameResultModelFromRepo);
-            patchDoc.ApplyTo(gameResultToPatch, ModelState);
-
-            if (!TryValidateModel(gameResultToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _service.UpdateGameResult(gameResultToPatch, gameResultModelFromRepo);
+            _service.UpdateGameResult(id, updateDTO);
 
             return NoContent();
         }

@@ -26,7 +26,7 @@ namespace TennisClub.BL.GameServiceFolder
         public IEnumerable<GameReadDTO> GetAllFutureGamesByMemberId(int id)
         {
             MemberReadDTO memberItem = _unitOfWork.Members.GetById(id);
-            IEnumerable<GameReadDTO> gameItems = _unitOfWork.Games.GetFutureGamesByMember(memberItem);
+            IEnumerable<GameReadDTO> gameItems = _unitOfWork.Games.GetGamesByMember(memberItem);
 
             return gameItems;
         }
@@ -38,20 +38,15 @@ namespace TennisClub.BL.GameServiceFolder
             return createdGame;
         }
 
-        public void DeleteGame(GameReadDTO game)
+        public void DeleteGame(int id)
         {
-            _unitOfWork.Games.Delete(game);
+            _unitOfWork.Games.Delete(id);
             _unitOfWork.Commit();
         }
 
-        public GameUpdateDTO GetUpdateDTOByReadDTO(GameReadDTO entity)
+        public void UpdateGame(int id, GameUpdateDTO updateDTO)
         {
-            return _unitOfWork.Games.GetUpdateDTOByReadDTO(entity);
-        }
-
-        public void UpdateGame(GameUpdateDTO gameToPatch, GameReadDTO gameModelFromRepo)
-        {
-            _unitOfWork.Games.MapUpdateDTOToReadDTO(gameToPatch, gameModelFromRepo);
+            _unitOfWork.Games.Update(id, updateDTO);
             _unitOfWork.Commit();
         }
     }

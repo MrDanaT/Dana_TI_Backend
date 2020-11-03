@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TennisClub.BL.MemberFineServiceFolder;
 using TennisClub.Common.MemberFine;
@@ -50,8 +49,8 @@ namespace TennisClub.API.Controllers
         }
 
         // PATCH: api/memberfine/5
-        [HttpPatch("{id}")]
-        public ActionResult UpdateMemberFine(int id, JsonPatchDocument<MemberFineUpdateDTO> patchDoc)
+        [HttpPut("{id}")]
+        public ActionResult UpdateMemberFine(int id, MemberFineUpdateDTO updateDTO)
         {
             MemberFineReadDTO memberFineModelFromRepo = _service.GetMemberFineById(id);
 
@@ -60,15 +59,7 @@ namespace TennisClub.API.Controllers
                 return NotFound();
             }
 
-            MemberFineUpdateDTO modelFineToPatch = _service.GetUpdateDTOByReadDTO(memberFineModelFromRepo); // _mapper.Map<MemberFineUpdateDTO>(memberFineModelFromRepo);
-            patchDoc.ApplyTo(modelFineToPatch, ModelState);
-
-            if (!TryValidateModel(modelFineToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
-
-            _service.UpdateMemberFine(modelFineToPatch, memberFineModelFromRepo);
+            _service.UpdateMemberFine(id, updateDTO);
 
             return NoContent();
         }

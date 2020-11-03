@@ -26,7 +26,10 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
             return _mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems);
         }
 
-
+        public override void Delete(int id)
+        {
+            // Do nothing
+        }
 
         private TennisClubContext TennisClubContext => Context;
     }
