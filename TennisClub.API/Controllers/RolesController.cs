@@ -51,7 +51,7 @@ namespace TennisClub.API.Controllers
 
         // PATCH: api/roles/5 
         [HttpPut("{id}")]
-        public ActionResult UpdateRole(byte id, RoleUpdateDTO updateDTO)
+        public ActionResult UpdateRole(int id, RoleUpdateDTO updateDTO)
         {
             RoleReadDTO roleModelFromRepo = _service.GetRoleById(id);
 

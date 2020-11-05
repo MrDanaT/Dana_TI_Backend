@@ -68,7 +68,7 @@ namespace TennisClub.UI
         private void DeleteRole()
         {
             RoleReadDTO selectedItem = (RoleReadDTO)RoleData.SelectedItem;
-            byte id = selectedItem.Id;
+            int id = selectedItem.Id;
             Task<HttpResponseMessage> response = WebAPI.DeleteCall($"roles/{id}");
 
             if (response.Result.StatusCode == System.Net.HttpStatusCode.NoContent)
