@@ -8,14 +8,10 @@ namespace TennisClub.DAL.MappingProfiles
     {
         public MemberFinesProfile()
         {
-            CreateMap<MemberFine, MemberFineReadDTO>();
-            CreateMap<MemberFineReadDTO, MemberFine>();
-            CreateMap<MemberFineReadDTO, MemberFineCreateDTO>();
-
             CreateMap<MemberFineCreateDTO, MemberFine>();
-
+            CreateMap<MemberFine, MemberFineReadDTO>();
             CreateMap<MemberFineUpdateDTO, MemberFine>();
-            CreateMap<MemberFine, MemberFineUpdateDTO>();
+            CreateMap<MemberFineReadDTO, MemberFine>();
         }
     }
 }

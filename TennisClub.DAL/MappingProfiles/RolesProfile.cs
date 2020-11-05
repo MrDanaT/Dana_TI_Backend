@@ -8,14 +8,10 @@ namespace TennisClub.DAL.MappingProfiles
     {
         public RolesProfile()
         {
-            CreateMap<Role, RoleReadDTO>();
-            CreateMap<RoleReadDTO, Role>();
-            CreateMap<RoleReadDTO, RoleCreateDTO>();
-
             CreateMap<RoleCreateDTO, Role>();
-
+            CreateMap<Role, RoleReadDTO>();
             CreateMap<RoleUpdateDTO, Role>();
-            CreateMap<Role, RoleUpdateDTO>();
+            CreateMap<RoleReadDTO, Role>();
         }
     }
 }
