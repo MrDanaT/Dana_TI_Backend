@@ -1,6 +1,4 @@
-﻿using TennisClub.Common.Game;
-
-namespace TennisClub.Common.GameResult
+﻿namespace TennisClub.Common.GameResult
 {
     public class GameResultReadDTO
     {
