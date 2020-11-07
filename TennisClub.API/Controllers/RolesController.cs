@@ -49,7 +49,7 @@ namespace TennisClub.API.Controllers
         }
 
 
-        // PATCH: api/roles/5 
+        // PUT: api/roles/5 
         [HttpPut("{id}")]
         public ActionResult UpdateRole(int id, RoleUpdateDTO updateDTO)
         {

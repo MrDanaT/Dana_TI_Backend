@@ -48,7 +48,7 @@ namespace TennisClub.API.Controllers
             return CreatedAtRoute(nameof(GetMemberFineById), new { createdMemberFine.Id }, createdMemberFine);
         }
 
-        // PATCH: api/memberfine/5
+        // PUT: api/memberfine/5
         [HttpPut("{id}")]
         public ActionResult UpdateMemberFine(int id, MemberFineUpdateDTO updateDTO)
         {
