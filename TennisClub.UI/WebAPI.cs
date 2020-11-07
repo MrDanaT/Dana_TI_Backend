@@ -68,7 +68,7 @@ namespace TennisClub.UI
                     client.Timeout = TimeSpan.FromSeconds(900);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    Task<HttpResponseMessage> response = client.PatchAsync(apiUrl, model);
+                    Task<HttpResponseMessage> response = client.PutAsJsonAsync(apiUrl, model);
                     response.Wait();
                     return response;
                 }
