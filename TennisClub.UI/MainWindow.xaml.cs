@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,7 +36,7 @@ namespace TennisClub.UI
             };
             Task<HttpResponseMessage> response = WebAPI.PostCall("roles", newRole);
 
-            if (response.Result.StatusCode == System.Net.HttpStatusCode.Created)
+            if (response.Result.StatusCode == HttpStatusCode.Created)
             {
                 MessageBox.Show($"{newRole.Name} is toegevoegd!");
             }
@@ -50,7 +51,7 @@ namespace TennisClub.UI
             Task<HttpResponseMessage> result = WebAPI.GetCall("roles");
             DataGrid itemsControl = RoleData;
 
-            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
             }
@@ -71,7 +72,7 @@ namespace TennisClub.UI
             int id = selectedItem.Id;
             Task<HttpResponseMessage> response = WebAPI.DeleteCall($"roles/{id}");
 
-            if (response.Result.StatusCode == System.Net.HttpStatusCode.NoContent)
+            if (response.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 MessageBox.Show($"{selectedItem.Name} is verwijderd.");
                 ReadRoles();
@@ -102,7 +103,7 @@ namespace TennisClub.UI
             Task<HttpResponseMessage> result = WebAPI.GetCall("leagues");
             DataGrid itemsControl = LeagueData;
 
-            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
             }
@@ -131,7 +132,7 @@ namespace TennisClub.UI
             Task<HttpResponseMessage> result = WebAPI.GetCall("genders");
             DataGrid itemsControl = GenderData;
 
-            if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
             }
