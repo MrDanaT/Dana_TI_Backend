@@ -128,7 +128,7 @@ namespace TennisClub.UI
          */
         private void ReadGenders()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall("leagues");
+            Task<HttpResponseMessage> result = WebAPI.GetCall("genders");
             DataGrid itemsControl = GenderData;
 
             if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
