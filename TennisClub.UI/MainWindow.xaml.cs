@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
@@ -24,16 +25,18 @@ namespace TennisClub.UI
 
         #region Roles
 
+        private List<RoleReadDTO> originalRoleList = new List<RoleReadDTO>();
+
         /*
          * CRUD
          */
-        private void CreateRole()
+        private void CreateRole(RoleReadDTO item)
         {
-            RoleReadDTO selectedItem = (RoleReadDTO)RoleData.SelectedItem;
-            RoleCreateDTO newRole = new RoleCreateDTO
-            {
-                Name = selectedItem.Name
-            };
+            RoleCreateDTO newRole = (RoleCreateDTO)item;
+            //RoleCreateDTO newRole = new RoleCreateDTO
+            //{
+            //    Name = item.Name
+            //};
             Task<HttpResponseMessage> response = WebAPI.PostCall("roles", newRole);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
@@ -54,6 +57,7 @@ namespace TennisClub.UI
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
+                originalRoleList = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
             }
             else
             {
@@ -61,20 +65,31 @@ namespace TennisClub.UI
             }
         }
 
-        private void UpdateRole()
+        private void UpdateRole(RoleUpdateDTO item)
         {
-            MessageBox.Show("Updated!");
+            Task<HttpResponseMessage> result = WebAPI.PutCall("roles", item);
+            DataGrid itemsControl = RoleData;
+
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
+                originalRoleList = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
+                MessageBox.Show("Updated!");
+            }
+            else
+            {
+                Debug.WriteLine("Niet gelukt!");
+            }
         }
 
-        private void DeleteRole()
+        private void DeleteRole(RoleReadDTO item)
         {
-            RoleReadDTO selectedItem = (RoleReadDTO)RoleData.SelectedItem;
-            int id = selectedItem.Id;
+            int id = item.Id;
             Task<HttpResponseMessage> response = WebAPI.DeleteCall($"roles/{id}");
 
             if (response.Result.StatusCode == HttpStatusCode.NoContent)
             {
-                MessageBox.Show($"{selectedItem.Name} is verwijderd.");
+                MessageBox.Show($"{item.Name} is verwijderd.");
                 ReadRoles();
             }
             else
@@ -89,6 +104,32 @@ namespace TennisClub.UI
         private void GetRolesButton_Click(object sender, RoutedEventArgs e)
         {
             ReadRoles();
+        }
+        private void SyncLeaguesButton_Click(object sender, RoutedEventArgs e)
+        {
+            SynchroniseDatabase();
+        }
+
+        private void SynchroniseDatabase()
+        {
+            foreach (object item in RoleData.Items)
+            {
+                object roleItem = item;
+                RoleReadDTO originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
+
+                if (originalItem == null && roleItem == null)
+                {
+                    CreateRole((RoleReadDTO)roleItem);
+                }
+                else if (!((RoleReadDTO)roleItem).Name.Equals(originalItem.Name))
+                {
+                    UpdateRole((RoleUpdateDTO)roleItem);
+                }
+                else
+                {
+                    DeleteRole(originalItem);
+                }
+            }
         }
 
         #endregion
@@ -151,5 +192,7 @@ namespace TennisClub.UI
         }
 
         #endregion
+
+
     }
 }
