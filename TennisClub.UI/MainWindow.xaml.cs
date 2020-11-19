@@ -60,7 +60,7 @@ namespace TennisClub.UI
                 List<RoleReadDTO> tmp2 = new List<RoleReadDTO>(tmp.Count);
                 tmp.ForEach((item) =>
                 {
-                    tmp2.Add(new RoleReadDTO { Id=item.Id, Name=item.Name});
+                    tmp2.Add(new RoleReadDTO { Id = item.Id, Name = item.Name });
                 });
                 originalRoleList = tmp2;
             }
@@ -119,7 +119,7 @@ namespace TennisClub.UI
         {
             for (int i = 0; i < RoleData.Items.Count - 1; i++)
             {
-                var item = RoleData.Items[i];
+                object item = RoleData.Items[i];
                 RoleReadDTO roleItem = (RoleReadDTO)item;
                 RoleReadDTO originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
 
@@ -129,7 +129,7 @@ namespace TennisClub.UI
                 }
                 else if (!roleItem.Name.Equals(originalItem.Name))
                 {
-                    UpdateRole(roleItem.Id,new RoleUpdateDTO { Name=roleItem.Name});
+                    UpdateRole(roleItem.Id, new RoleUpdateDTO { Name = roleItem.Name });
                 }
                 else if (originalItem != null && roleItem == null)
                 {
