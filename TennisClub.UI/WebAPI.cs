@@ -56,7 +56,7 @@ namespace TennisClub.UI
             }
         }
 
-        public static Task<HttpResponseMessage> PutCall<T>(string url, HttpContent model)
+        public static Task<HttpResponseMessage> PutCall<T>(string url, T model)
         {
             try
             {

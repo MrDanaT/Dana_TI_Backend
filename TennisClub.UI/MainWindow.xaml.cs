@@ -25,27 +25,26 @@ namespace TennisClub.UI
 
         #region Roles
 
-        private List<RoleReadDTO> originalRoleList = new List<RoleReadDTO>();
+        private List<RoleReadDTO> originalRoleList;
 
         /*
          * CRUD
          */
         private void CreateRole(RoleReadDTO item)
         {
-            RoleCreateDTO newRole = (RoleCreateDTO)item;
-            //RoleCreateDTO newRole = new RoleCreateDTO
-            //{
-            //    Name = item.Name
-            //};
+            RoleCreateDTO newRole = new RoleCreateDTO
+            {
+                Name = item.Name
+            };
             Task<HttpResponseMessage> response = WebAPI.PostCall("roles", newRole);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
-                MessageBox.Show($"{newRole.Name} is toegevoegd!");
+                Debug.WriteLine($"{newRole.Name} is toegevoegd!");
             }
             else
             {
-                MessageBox.Show($"Er is iets foutgelopen.");
+                Debug.WriteLine($"Er is iets foutgelopen.");
             }
         }
 
@@ -56,8 +55,14 @@ namespace TennisClub.UI
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
-                originalRoleList = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
+                List<RoleReadDTO> tmp = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result; ;
+                itemsControl.ItemsSource = tmp;
+                List<RoleReadDTO> tmp2 = new List<RoleReadDTO>(tmp.Count);
+                tmp.ForEach((item) =>
+                {
+                    tmp2.Add(new RoleReadDTO { Id=item.Id, Name=item.Name});
+                });
+                originalRoleList = tmp2;
             }
             else
             {
@@ -65,16 +70,16 @@ namespace TennisClub.UI
             }
         }
 
-        private void UpdateRole(RoleUpdateDTO item)
+        private void UpdateRole(int id, RoleUpdateDTO item)
         {
-            Task<HttpResponseMessage> result = WebAPI.PutCall("roles", item);
+            Task<HttpResponseMessage> result = WebAPI.PutCall($"roles/{id}", item);
             DataGrid itemsControl = RoleData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
                 originalRoleList = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
-                MessageBox.Show("Updated!");
+                Debug.WriteLine("Updated!");
             }
             else
             {
@@ -89,12 +94,12 @@ namespace TennisClub.UI
 
             if (response.Result.StatusCode == HttpStatusCode.NoContent)
             {
-                MessageBox.Show($"{item.Name} is verwijderd.");
+                Debug.WriteLine($"{item.Name} is verwijderd.");
                 ReadRoles();
             }
             else
             {
-                MessageBox.Show($"Er is iets foutgelopen.");
+                Debug.WriteLine($"Er is iets foutgelopen.");
             }
         }
 
@@ -112,24 +117,31 @@ namespace TennisClub.UI
 
         private void SynchroniseDatabase()
         {
-            foreach (object item in RoleData.Items)
+            for (int i = 0; i < RoleData.Items.Count - 1; i++)
             {
-                object roleItem = item;
+                var item = RoleData.Items[i];
+                RoleReadDTO roleItem = (RoleReadDTO)item;
                 RoleReadDTO originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
 
-                if (originalItem == null && roleItem == null)
+                if (originalItem == null && roleItem != null)
                 {
-                    CreateRole((RoleReadDTO)roleItem);
+                    CreateRole(roleItem);
                 }
-                else if (!((RoleReadDTO)roleItem).Name.Equals(originalItem.Name))
+                else if (!roleItem.Name.Equals(originalItem.Name))
                 {
-                    UpdateRole((RoleUpdateDTO)roleItem);
+                    UpdateRole(roleItem.Id,new RoleUpdateDTO { Name=roleItem.Name});
                 }
-                else
+                else if (originalItem != null && roleItem == null)
                 {
                     DeleteRole(originalItem);
                 }
+                else
+                {
+                    // Nothing
+                }
             }
+
+            ReadRoles();
         }
 
         #endregion
@@ -191,8 +203,7 @@ namespace TennisClub.UI
             ReadGenders();
         }
 
+
         #endregion
-
-
     }
 }
