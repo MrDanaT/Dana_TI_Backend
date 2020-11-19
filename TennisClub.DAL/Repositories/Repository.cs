@@ -49,7 +49,7 @@ namespace TennisClub.DAL.Repositories
         public IEnumerable<TEntityReadDTO> Find(Expression<Func<TEntityReadDTO, bool>> predicate)
         {
             Expression<Func<TEntity, bool>> predicateToEntity = _mapper.Map<Expression<Func<TEntity, bool>>>(predicate);
-            IQueryable<TEntity> itemsFromDB = Context.Set<TEntity>().Where(predicateToEntity);
+            List<TEntity> itemsFromDB = Context.Set<TEntity>().Where(predicateToEntity).AsNoTracking().ToList();
             return _mapper.Map<IEnumerable<TEntityReadDTO>>(itemsFromDB);
         }
 
