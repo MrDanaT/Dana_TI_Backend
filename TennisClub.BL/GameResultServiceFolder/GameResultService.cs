@@ -8,6 +8,7 @@ namespace TennisClub.BL.GameResultServiceFolder
     public class GameResultService : IGameResultService
     {
         private readonly IUnitOfWork _unitOfWork;
+		
         public GameResultService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
