@@ -25,9 +25,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" Grid.Column="1">Rol management</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">Je kan hier de rollen beheren.</TextBlock>
-                <DataGrid  Grid.Row="2" Grid.Column="2" x:Name="RoleData" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10" Grid.ColumnSpan="2">
+                <DataGrid   x:Name="RoleData" Grid.Row="2" Grid.Column="2" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                     </DataGrid.Columns>
                 </DataGrid>
@@ -53,9 +53,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" Grid.Column="1">League management</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">Je kan hier de leagues beheren.</TextBlock>
-                <DataGrid Grid.Row="2" Grid.Column="2" x:Name="LeagueData" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10">
+                <DataGrid  x:Name="LeagueData" Grid.Row="2" Grid.Column="2" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                     </DataGrid.Columns>
                 </DataGrid>
@@ -82,9 +82,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" Grid.Column="1">Gender management</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">Je kan hier de genders beheren.</TextBlock>
-                <DataGrid Grid.Row="2" Grid.Column="2" x:Name="GenderData" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10">
+                <DataGrid x:Name="GenderData" Grid.Row="2" Grid.Column="2"  AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                     </DataGrid.Columns>
                 </DataGrid>
