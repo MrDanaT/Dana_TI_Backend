@@ -8,6 +8,9 @@ namespace TennisClub.Common.Member
         public string FederationNr { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
+
         public DateTime BirthDate { get; set; }
         public int GenderId { get; set; }
 
