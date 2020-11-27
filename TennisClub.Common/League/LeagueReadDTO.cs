@@ -1,8 +1,7 @@
 ﻿namespace TennisClub.Common.League
 {
-    public class LeagueReadDTO
+    public class LeagueReadDTO : BaseReadDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 ﻿namespace TennisClub.Common.GameResult
 {
-    public class GameResultReadDTO
+    public class GameResultReadDTO : BaseReadDTO
     {
-        public int Id { get; set; }
         public int GameId { get; set; }
         public byte SetNr { get; set; }
         public byte ScoreTeamMember { get; set; }

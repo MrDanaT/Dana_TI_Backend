@@ -2,9 +2,8 @@
 
 namespace TennisClub.Common.MemberFine
 {
-    public class MemberFineReadDTO
+    public class MemberFineReadDTO : BaseReadDTO
     {
-        public int Id { get; set; }
         public int FineNumber { get; set; }
         public int MemberId { get; set; }
         public decimal Amount { get; set; }

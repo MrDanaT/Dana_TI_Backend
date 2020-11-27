@@ -2,9 +2,8 @@
 
 namespace TennisClub.Common.Member
 {
-    public class MemberReadDTO
+    public class MemberReadDTO : BaseReadDTO
     {
-        public int Id { get; set; }
         public string FederationNr { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

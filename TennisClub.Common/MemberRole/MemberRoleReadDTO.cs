@@ -2,9 +2,8 @@
 
 namespace TennisClub.Common.MemberRole
 {
-    public class MemberRoleReadDTO
+    public class MemberRoleReadDTO : BaseReadDTO
     {
-        public int Id { get; set; }
         public int MemberId { get; set; }
         public int RoleId { get; set; }
         public DateTime StartDate { get; set; }
