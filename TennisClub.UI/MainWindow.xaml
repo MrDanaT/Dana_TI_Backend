@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TennisClub.UI"
         mc:Ignorable="d"
-        Title="TennisClub" Height="463" Width="800" ResizeMode="CanResizeWithGrip">
+        Title="TennisClub" 
+        Height="465" Width="820" 
+        MinHeight="465" MinWidth="820"
+        ResizeMode="NoResize">
     <TabControl>
         <TabItem Header="Rollen">
             <Grid>
