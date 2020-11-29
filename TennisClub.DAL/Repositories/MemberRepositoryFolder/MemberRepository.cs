@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,7 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
 
         public override void Delete(int id)
         {
-            Member memberFromRepo = Context.Members.Find(id);
-
-            if (memberFromRepo != null)
-            {
-                memberFromRepo.Deleted = true;
-            }
+            TennisClubContext.Database.ExecuteSqlRaw($"dbo.SoftDeleteMember @pId={id}");
         }
 
         private TennisClubContext TennisClubContext => Context;
