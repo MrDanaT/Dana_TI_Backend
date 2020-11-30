@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TennisClub.Common.GameResult;
 using TennisClub.Common.Member;
 using TennisClub.DAL.Repositories;
@@ -14,9 +16,19 @@ namespace TennisClub.BL.GameResultServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<GameResultReadDTO> GetAllGameResults()
+        public IEnumerable<GameResultReadDTO> GetAllGameResults(int? memberId, DateTime date)
         {
             IEnumerable<GameResultReadDTO> gameResultItems = _unitOfWork.GameResults.GetAll();
+
+            if (memberId != null && memberId > 0)
+            {
+                gameResultItems = gameResultItems.Where(x => x.GameNavigation.MemberId == memberId);
+            }
+
+            if (date != null && date > new DateTime(1899,1,1))
+            {
+                gameResultItems = gameResultItems.Where(x => x.GameNavigation.Date.Equals(date));
+            }
 
             return gameResultItems;
         }
@@ -33,13 +45,6 @@ namespace TennisClub.BL.GameResultServiceFolder
             return _unitOfWork.GameResults.Create(gameResult);
         }
 
-        public IEnumerable<GameResultReadDTO> GetGameResultsByMember(int id)
-        {
-            MemberReadDTO memberItem = _unitOfWork.Members.GetById(id);
-            IEnumerable<GameResultReadDTO> gameResultItems = _unitOfWork.GameResults.GetGameResultsByMember(memberItem);
-
-            return gameResultItems;
-        }
         public void UpdateGameResult(int id, GameResultUpdateDTO updateDTO)
         {
             _unitOfWork.GameResults.Update(id, updateDTO);

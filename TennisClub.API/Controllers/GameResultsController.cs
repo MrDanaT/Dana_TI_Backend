@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using TennisClub.BL.GameResultServiceFolder;
 using TennisClub.Common.GameResult;
@@ -18,9 +19,9 @@ namespace TennisClub.API.Controllers
 
         // GET: api/gameresults
         [HttpGet]
-        public ActionResult<IEnumerable<GameResultReadDTO>> GetAllGameResults()
+        public ActionResult<IEnumerable<GameResultReadDTO>> GetAllGameResults(int? memberId, DateTime date)
         {
-            IEnumerable<GameResultReadDTO> gameResultItems = _service.GetAllGameResults();
+            IEnumerable<GameResultReadDTO> gameResultItems = _service.GetAllGameResults(memberId, date);
 
             return Ok(gameResultItems);
         }
@@ -62,15 +63,6 @@ namespace TennisClub.API.Controllers
             _service.UpdateGameResult(id, updateDTO);
 
             return NoContent();
-        }
-
-        // GET: api/gameresults/bymemberid/5
-        [HttpGet("bymemberid/{id}")]
-        public ActionResult<IEnumerable<GameResultReadDTO>> GetGameResultsByMember(int id)
-        {
-            IEnumerable<GameResultReadDTO> gameResultItems = _service.GetGameResultsByMember(id);
-
-            return Ok(gameResultItems);
         }
     }
 }

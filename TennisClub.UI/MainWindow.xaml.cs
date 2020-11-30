@@ -341,11 +341,11 @@ namespace TennisClub.UI
 
                 if (originalItem == null && gameResultItem != null)
                 {
-                    isSucceeded =  CreateGameResult(gameResultItem);
+                    isSucceeded = CreateGameResult(gameResultItem);
                 }
                 else if (!gameResultItem.ScoreOpponent.Equals(originalItem.ScoreOpponent) || !gameResultItem.ScoreTeamMember.Equals(originalItem.ScoreTeamMember) || !gameResultItem.SetNr.Equals(originalItem.SetNr))
                 {
-                    isSucceeded= UpdateGameResult(gameResultItem.Id, new GameResultUpdateDTO { ScoreOpponent = gameResultItem.ScoreOpponent, SetNr = gameResultItem.SetNr, ScoreTeamMember = gameResultItem.ScoreTeamMember });
+                    isSucceeded = UpdateGameResult(gameResultItem.Id, new GameResultUpdateDTO { ScoreOpponent = gameResultItem.ScoreOpponent, SetNr = gameResultItem.SetNr, ScoreTeamMember = gameResultItem.ScoreTeamMember });
                 }
                 else
                 {
@@ -381,12 +381,14 @@ namespace TennisClub.UI
 
         private void ClearGameResultsFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            gameResultPlayerComboBox.SelectedIndex = 0;
+            gameResultPlayerComboBox.SelectedItem = null;
             GameResultData.ItemsSource = originalGameResultList;
         }
         private void SearchFilteredGameResults_Click(object sender, RoutedEventArgs e)
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall($"gameresults/bymemberid/{gameResultPlayerComboBox.SelectedValue}");
+            string memberIdUrl = $"memberId={gameResultPlayerComboBox.SelectedValue}";
+            string selectedDateUrl = $"date={datePicker.SelectedDate.GetValueOrDefault().ToShortDateString()}";
+            Task<HttpResponseMessage> result = WebAPI.GetCall($"gameresults?{(gameResultPlayerComboBox.SelectedValue != null ? memberIdUrl : "")}&{(datePicker.SelectedDate != null ? selectedDateUrl : "")}");
             DataGrid itemsControl = GameResultData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
@@ -447,6 +449,6 @@ namespace TennisClub.UI
 
         #endregion
 
-     
+
     }
 }

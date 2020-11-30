@@ -38,11 +38,20 @@ namespace TennisClub.DAL.Repositories
 
         public virtual void Delete(int id)
         {
+            if (id < 0)
+            {
+                throw new NullReferenceException("Id is out of range");
+            }
+
             TEntity itemFromDb = Context.Set<TEntity>().Find(id);
 
             if (itemFromDb != null)
             {
                 Context.Set<TEntity>().Remove(itemFromDb);
+            }
+            else
+            {
+                throw new NullReferenceException("Object not found");
             }
         }
 
@@ -57,12 +66,22 @@ namespace TennisClub.DAL.Repositories
         {
             List<TEntity> itemsFromDB = Context.Set<TEntity>().AsNoTracking().ToList();
             return _mapper.Map<IEnumerable<TEntityReadDTO>>(itemsFromDB);
-
         }
 
-        public TEntityReadDTO GetById(int id)
+        public virtual TEntityReadDTO GetById(int id)
         {
+            if (id < 0)
+            {
+                throw new NullReferenceException("Id is out of range");
+            }
+
             TEntity itemFromDB = Context.Set<TEntity>().Find(id);
+
+            if (itemFromDB == null)
+            {
+                throw new NullReferenceException("Object not found");
+            }
+
             return _mapper.Map<TEntityReadDTO>(itemFromDB);
         }
 
@@ -75,11 +94,20 @@ namespace TennisClub.DAL.Repositories
 
         public virtual void Update(int id, TEntityUpdateDTO entity)
         {
+            if (id < 0)
+            {
+                throw new NullReferenceException("Id is out of range");
+            }
+
             TEntity itemFromDb = Context.Set<TEntity>().Find(id);
 
             if (itemFromDb != null)
             {
                 _mapper.Map(entity, itemFromDb);
+            }
+            else
+            {
+                throw new NullReferenceException("Object not found");
             }
         }
     }

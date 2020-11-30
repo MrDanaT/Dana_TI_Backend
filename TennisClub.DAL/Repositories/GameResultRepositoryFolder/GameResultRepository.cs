@@ -14,14 +14,22 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
           : base(context, mapper)
         { }
 
+        public override IEnumerable<GameResultReadDTO> GetAll()
+        {
+            IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
+                .AsNoTracking()
+                .Include(g => g.GameNavigation);
+
+            return _mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems);
+        }
+
         public IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member)
         {
             // TODO: Nakijken
             IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
                 .AsNoTracking()
                 .Where(gr => gr.GameNavigation.MemberId == member.Id)
-                .Include(g => g.GameNavigation)
-                .Select(gr => gr);
+                .Include(g => g.GameNavigation);
 
             return _mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems);
         }
