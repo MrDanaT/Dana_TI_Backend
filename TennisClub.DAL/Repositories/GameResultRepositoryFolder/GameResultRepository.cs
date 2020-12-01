@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TennisClub.Common.GameResult;
@@ -25,6 +26,11 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 
         public IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member)
         {
+            if (member == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             // TODO: Nakijken
             IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
                 .AsNoTracking()

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TennisClub.Common.Member;
@@ -27,9 +28,19 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public override void Update(int id, MemberFineUpdateDTO entity)
         {
+            if (id < 0)
+            {
+                throw new NullReferenceException("Id is out of range");
+            }
+
             MemberFine memberFineFromRepo = Context.MemberFines.Find(id);
 
-            if (memberFineFromRepo != null && memberFineFromRepo.PaymentDate == null)
+            if (memberFineFromRepo == null)
+            {
+                throw new NullReferenceException("Object not found");
+            }
+
+            if (memberFineFromRepo.PaymentDate == null)
             {
                 base.Update(id, entity);
             }

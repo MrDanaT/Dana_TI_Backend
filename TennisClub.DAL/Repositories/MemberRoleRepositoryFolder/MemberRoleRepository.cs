@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TennisClub.Common.Member;
@@ -18,6 +19,11 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public IEnumerable<MemberReadDTO> GetMembersByRoles(List<RoleReadDTO> roles)
         {
+            if (roles == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             IQueryable<Member> members = TennisClubContext.MemberRoles
                 .AsNoTracking()
@@ -29,6 +35,11 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public IEnumerable<RoleReadDTO> GetRolesByMember(MemberReadDTO member)
         {
+            if (member == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             IQueryable<Role> roles = TennisClubContext.MemberRoles
                 .AsNoTracking()

@@ -410,13 +410,13 @@ namespace TennisClub.UI
 
         private bool ReadMembers()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall("members");
-            // DataGrid itemsControl = GameResultData;
+            Task<HttpResponseMessage> result = WebAPI.GetCall("members/active");
+            DataGrid itemsControl = MemberData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 List<MemberReadDTO> tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result; ;
-                // itemsControl.ItemsSource = tmp;
+                itemsControl.ItemsSource = tmp;
                 List<MemberReadDTO> tmp2 = new List<MemberReadDTO>(tmp.Count);
                 tmp.ForEach((item) =>
                 {
@@ -427,7 +427,6 @@ namespace TennisClub.UI
                         Address = item.Address,
                         BirthDate = item.BirthDate,
                         City = item.City,
-                        Deleted = item.Deleted,
                         FederationNr = item.FederationNr,
                         FirstName = item.FirstName,
                         GenderId = item.GenderId,

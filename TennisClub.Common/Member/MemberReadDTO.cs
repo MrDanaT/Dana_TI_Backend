@@ -12,6 +12,7 @@ namespace TennisClub.Common.Member
 
         public DateTime BirthDate { get; set; }
         public int GenderId { get; set; }
+        public string GenderName { get; set; }
 
         public string Address { get; set; }
         public string Number { get; set; }

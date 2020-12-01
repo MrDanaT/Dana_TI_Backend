@@ -108,7 +108,6 @@
                 <Button x:Name="syncLeaguesButton" Grid.Row="3"  Grid.Column="3" Click="SyncLeaguesButton_Click">Sync. aanpassingen met database</Button>
             </Grid>
         </TabItem>
-
         <TabItem Header="Genders">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -136,6 +135,24 @@
                 <Button x:Name="getGendersButton" Grid.Row="3" Grid.Column="1" Click="GetGendersButton_Click">Refresh gegevens</Button>
             </Grid>
         </TabItem>
+        <TabItem Header="Leden">
+            <StackPanel>
+                <DataGrid x:Name="MemberData" Grid.Row="2" Grid.Column="2"  AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="LastName" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="GenderName" Binding="{Binding GenderName, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="Address" Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="Number" Binding="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="Addition" Binding="{Binding Addition, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="Zipcode" Binding="{Binding Zipcode, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="City" Binding="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr, UpdateSourceTrigger=PropertyChanged}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </TabItem>
     </TabControl>
-
 </Window>
