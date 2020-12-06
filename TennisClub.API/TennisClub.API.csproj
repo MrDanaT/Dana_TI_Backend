@@ -24,7 +24,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TennisClub.BL\TennisClub.BL.csproj" />
     <ProjectReference Include="..\TennisClub.Common\TennisClub.Common.csproj" />
-    <ProjectReference Include="..\TennisClub.DAL\TennisClub.DAL.csproj" />
   </ItemGroup>
 
 </Project>
