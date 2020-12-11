@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using TennisClub.Common.GameResult;
 using TennisClub.Common.Gender;
 using TennisClub.Common.League;
@@ -230,7 +232,9 @@ namespace TennisClub.UI
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
+                List<GenderReadDTO> tmp = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
+                itemsControl.ItemsSource = tmp.ToList();
+                memberGender.ItemsSource = tmp.ToList();
                 return true;
             }
             else
@@ -446,8 +450,27 @@ namespace TennisClub.UI
             }
         }
 
+
         #endregion
 
+        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void SearchFilteredMembers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void clearFilterButton_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

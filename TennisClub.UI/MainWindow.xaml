@@ -36,7 +36,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button x:Name="getRolesButton" Grid.Row="3" Grid.Column="1" Click="GetRolesButton_Click" Margin="2" Grid.RowSpan="2">Refresh gegevens</Button>
-                <Button x:Name="syncRolesButton" Grid.Row="3" Grid.Column="4" Click="SyncLeaguesButton_Click" Margin="2" Grid.RowSpan="2">Sync. aanpassingen met database</Button>
+                <Button x:Name="syncRolesButton" Grid.Row="3" Grid.Column="4" Click="SyncLeaguesButton_Click" Margin="2" Grid.RowSpan="2">Sync.</Button>
             </Grid>
         </TabItem>
         <TabItem Header="Wedstrijdresultaten">
@@ -77,7 +77,7 @@
                 </DataGrid>
                 <DatePicker x:Name="datePicker" Grid.Row="3" Grid.Column="4" Margin="3"></DatePicker>
                 <Button x:Name="getGameResultsButton" Grid.Row="5" Grid.Column="1" Click="GetGameResultsButton_Click" Margin="2" Grid.RowSpan="2" Grid.ColumnSpan="2">Refresh gegevens</Button>
-                <Button x:Name="syncGameResulsButton" Grid.Row="5" Grid.Column="6" Click="SyncGameResulsButton_Click" Margin="2" Grid.RowSpan="2">Sync. aanpassingen met database</Button>
+                <Button x:Name="syncGameResulsButton" Grid.Row="5" Grid.Column="6" Click="SyncGameResulsButton_Click" Margin="2" Grid.RowSpan="2">Sync.</Button>
             </Grid>
         </TabItem>
         <TabItem Header="Leagues">
@@ -105,7 +105,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Button x:Name="getLeaguesButton" Grid.Row="3" Grid.Column="1" Click="GetLeaguesButton_Click">Refresh gegevens</Button>
-                <Button x:Name="syncLeaguesButton" Grid.Row="3"  Grid.Column="3" Click="SyncLeaguesButton_Click">Sync. aanpassingen met database</Button>
+                <Button x:Name="syncLeaguesButton" Grid.Row="3"  Grid.Column="3" Click="SyncLeaguesButton_Click">Sync.</Button>
             </Grid>
         </TabItem>
         <TabItem Header="Genders">
@@ -113,7 +113,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="73*"/>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
@@ -124,35 +125,107 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="1" Grid.Column="1">Gender management</TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">Je kan hier de genders beheren.</TextBlock>
-                <DataGrid x:Name="GenderData" Grid.Row="2" Grid.Column="2"  AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10">
+                <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,0,0,335" Grid.RowSpan="2">Gender management</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Margin="184,0,0,335" Grid.RowSpan="2">Je kan hier de genders beheren.</TextBlock>
+                <DataGrid x:Name="GenderData" Grid.Row="2" Grid.Column="2"  AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="getGendersButton" Grid.Row="3" Grid.Column="1" Click="GetGendersButton_Click">Refresh gegevens</Button>
+                <Button x:Name="getGendersButton" Grid.Row="2" Grid.Column="1" Click="GetGendersButton_Click" Margin="0,335,0,0" Grid.RowSpan="2">Refresh gegevens</Button>
             </Grid>
         </TabItem>
         <TabItem Header="Leden">
-            <StackPanel>
-                <DataGrid x:Name="MemberData" Grid.Row="2" Grid.Column="2"  AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="10,10,10,10">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                        <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="LastName" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="GenderName" Binding="{Binding GenderName, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="Address" Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="Number" Binding="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="Addition" Binding="{Binding Addition, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="Zipcode" Binding="{Binding Zipcode, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="City" Binding="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr, UpdateSourceTrigger=PropertyChanged}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <Label>Filteren</Label>
+                    <DockPanel>
+                        <Label Width="60">Bondsnr</Label>
+                        <Label Width="60" Margin="60,0">Voornaam</Label>
+                        <Label Width="60" Margin="60,0">Naam</Label>
+                        <Label Width="90" Margin="60,0">Postcode/stad</Label>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBox Width="60" PreviewTextInput="NumberValidationTextBox"/>
+                        <TextBox Width="60" Margin="60,0"/>
+                        <TextBox Width="60" Margin="60,0"/>
+                        <TextBox Width="60" Margin="60,0"/>
+                    </DockPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <Button HorizontalAlignment="Right" Width="50" x:Name="clearFilterButton" Click="clearFilterButton_Click_1" VerticalAlignment="Top">Clear</Button>
+                    <Button HorizontalAlignment="Right" Width="50" x:Name="filterMembersButton" Click="SearchFilteredMembers_Click" VerticalAlignment="Bottom">Filter</Button>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1">
+                    <DataGrid Height="210" x:Name="MemberData" AutoGenerateColumns="False" Margin="10,10,10,10">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                            <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="LastName" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="BirthDate" Binding="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="GenderName" Binding="{Binding GenderName, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Address" Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Number" Binding="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Addition" Binding="{Binding Addition, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Zipcode" Binding="{Binding Zipcode, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="City" Binding="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="PhoneNr" Binding="{Binding PhoneNr, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                <DockPanel Grid.Row="4" Grid.Column="1">
+                    <Button HorizontalAlignment="Left" Width="80">Refresh Data</Button>
+                    <StackPanel Margin="50,0">
+                        <StackPanel>
+                            <DockPanel >
+                                <Label Margin="5,0" Width="65">Voornaam</Label>
+                                <Label Margin="5,0" Width="75">Achternaam</Label>
+                                <Label Margin="5,0" Width="125">Geboortedatum</Label>
+                                <Label Margin="5,0" Width="75">Gender</Label>
+                                <Label Margin="5,0" Width="125">Adres</Label>
+                            </DockPanel>
+                            <DockPanel>
+                                <TextBox x:Name="memberFirstName" Margin="5,0" Width="65"/>
+                                <TextBox x:Name="memberLastName" Margin="5,0" Width="75"/>
+                                <DatePicker x:Name="memberBirthDate" Margin="5,0" Width="125"/>
+                                <ComboBox x:Name="memberGender" Margin="5,0" Width="75" SelectedValue="{Binding GenderReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id"/>
+                                <TextBox x:Name="memberAddress" Margin="5,0" Width="125"/>
+                            </DockPanel>
+                        </StackPanel>
+                        <StackPanel>
+                            <DockPanel>
+                                <Label Margin="5,0" Width="65">Nummer</Label>
+                                <Label Margin="5,0" Width="75">Additie</Label>
+                                <Label Margin="5,0" Width="125">Postcode</Label>
+                                <Label Margin="5,0" Width="75">Stad</Label>
+                                <Label Margin="5,0" Width="125">Telefoonnr</Label>
+                            </DockPanel>
+                            <DockPanel>
+                                <TextBox x:Name="memberNumber" Margin="5,0" Width="65"/>
+                                <TextBox x:Name="memberAddition" Margin="5,0" Width="75"/>
+                                <TextBox x:Name="memberZipcode" Margin="5,0" Width="125"/>
+                                <TextBox x:Name="memberCity" Margin="5,0" Width="75"/>
+                                <TextBox x:Name="memberPhoneNr" Margin="5,0" Width="125"/>
+                            </DockPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <Button HorizontalAlignment="Right" Width="80">Sync.</Button>
+                </DockPanel>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>
