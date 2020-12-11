@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -48,7 +47,7 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
                 throw new NullReferenceException("Id is out of range");
             }
 
-            var itemFromDB = Context.Members.Find(id);
+            Member itemFromDB = Context.Members.Find(id);
 
             if (itemFromDB == null)
             {

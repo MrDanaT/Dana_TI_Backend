@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TennisClub.Common.GameResult;
-using TennisClub.Common.Member;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.GameResultServiceFolder
@@ -10,7 +9,7 @@ namespace TennisClub.BL.GameResultServiceFolder
     public class GameResultService : IGameResultService
     {
         private readonly IUnitOfWork _unitOfWork;
-		
+
         public GameResultService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -25,7 +24,7 @@ namespace TennisClub.BL.GameResultServiceFolder
                 gameResultItems = gameResultItems.Where(x => x.GameNavigation.MemberId == memberId);
             }
 
-            if (date != null && date > new DateTime(1899,1,1))
+            if (date != null && date > new DateTime(1899, 1, 1))
             {
                 gameResultItems = gameResultItems.Where(x => x.GameNavigation.Date.Equals(date));
             }
