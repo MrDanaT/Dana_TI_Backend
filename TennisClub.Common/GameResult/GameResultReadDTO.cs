@@ -1,4 +1,5 @@
-﻿using TennisClub.Common.Game;
+﻿using System;
+using TennisClub.Common.Game;
 
 namespace TennisClub.Common.GameResult
 {
@@ -9,5 +10,18 @@ namespace TennisClub.Common.GameResult
         public byte ScoreTeamMember { get; set; }
         public byte ScoreOpponent { get; set; }
         public GameReadDTO GameNavigation { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is GameResultReadDTO dTO &&
+                   SetNr == dTO.SetNr &&
+                   ScoreTeamMember == dTO.ScoreTeamMember &&
+                   ScoreOpponent == dTO.ScoreOpponent;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(SetNr, ScoreTeamMember, ScoreOpponent);
+        }
     }
 }

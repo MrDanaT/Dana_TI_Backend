@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TennisClub.Common.Member;
 using TennisClub.DAL.Repositories;
 
@@ -13,9 +14,43 @@ namespace TennisClub.BL.MemberServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<MemberReadDTO> GetAllMembers()
+        public IEnumerable<MemberReadDTO> GetAllMembers(string federationNr, string firstName, string lastName, string location)
         {
             IEnumerable<MemberReadDTO> memberItems = _unitOfWork.Members.GetAll();
+
+            memberItems = GetFilteredMemberItems(memberItems, federationNr, firstName, lastName, location);
+
+            return memberItems;
+        }
+
+        private IEnumerable<MemberReadDTO> GetFilteredMemberItems(IEnumerable<MemberReadDTO> memberItems, string federationNr, string firstName, string lastName, string location)
+        {
+            if (!string.IsNullOrEmpty(federationNr))
+            {
+                memberItems = memberItems.Where(x => x.FederationNr.ToLower().Contains(federationNr.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                memberItems = memberItems.Where(x => x.FirstName.ToLower().Contains(firstName.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                memberItems = memberItems.Where(x => x.LastName.ToLower().Contains(lastName.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(location))
+            {
+                location = location.ToLower();
+                IEnumerable<MemberReadDTO> tmp = memberItems.Where(x => x.City.ToLower().Contains(location));
+                if (tmp.Count() > 0)
+                {
+                    memberItems = tmp;
+                }
+                tmp = memberItems.Where(x => x.Zipcode.ToLower().Contains(location));
+                if (tmp.Count() > 0)
+                {
+                    memberItems = tmp;
+                }
+            }
 
             return memberItems;
         }
@@ -40,9 +75,11 @@ namespace TennisClub.BL.MemberServiceFolder
             _unitOfWork.Commit();
         }
 
-        public IEnumerable<MemberReadDTO> GetAllActiveMembers()
+        public IEnumerable<MemberReadDTO> GetAllActiveMembers(string federationNr, string firstName, string lastName, string location)
         {
             IEnumerable<MemberReadDTO> memberItems = _unitOfWork.Members.GetAllActiveMembers();
+
+            memberItems = GetFilteredMemberItems(memberItems, federationNr, firstName, lastName, location);
 
             return memberItems;
         }

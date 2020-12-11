@@ -18,9 +18,13 @@ namespace TennisClub.API.Controllers
 
         // GET: api/members
         [HttpGet]
-        public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers()
+        public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers(
+            string federationNr,
+            string firstName,
+            string lastName,
+            string location)
         {
-            IEnumerable<MemberReadDTO> memberItems = _service.GetAllMembers();
+            IEnumerable<MemberReadDTO> memberItems = _service.GetAllMembers(federationNr, firstName, lastName, location);
 
             return Ok(memberItems);
         }
@@ -80,9 +84,13 @@ namespace TennisClub.API.Controllers
 
         // GET: api/members/active
         [HttpGet("active")]
-        public ActionResult<IEnumerable<MemberReadDTO>> GetAllActiveMembers()
+        public ActionResult<IEnumerable<MemberReadDTO>> GetAllActiveMembers(
+            string federationNr,
+            string firstName,
+            string lastName,
+            string location)
         {
-            IEnumerable<MemberReadDTO> memberItems = _service.GetAllActiveMembers();
+            IEnumerable<MemberReadDTO> memberItems = _service.GetAllActiveMembers(federationNr, firstName, lastName, location);
 
             return Ok(memberItems);
         }

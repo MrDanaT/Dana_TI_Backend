@@ -143,14 +143,10 @@ namespace TennisClub.UI
                 {
                     isSucceeded = CreateRole(roleItem);
                 }
-                else if (!roleItem.Name.Equals(originalItem.Name))
+                else if (!roleItem.Equals(originalItem))
                 {
                     isSucceeded = UpdateRole(roleItem.Id, new RoleUpdateDTO { Name = roleItem.Name });
                 }
-                //else if (originalItem != null && roleItem == null)
-                //{
-                //    DeleteRole(originalItem);
-                //}
                 else
                 {
                     isSucceeded = true;
@@ -227,12 +223,10 @@ namespace TennisClub.UI
         private bool ReadGenders()
         {
             Task<HttpResponseMessage> result = WebAPI.GetCall("genders");
-            DataGrid itemsControl = GenderData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 List<GenderReadDTO> tmp = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
-                itemsControl.ItemsSource = tmp.ToList();
                 memberGender.ItemsSource = tmp.ToList();
                 return true;
             }
@@ -242,15 +236,6 @@ namespace TennisClub.UI
                 return false;
             }
         }
-
-        /*
-         * Event Handlers
-         */
-        private void GetGendersButton_Click(object sender, RoutedEventArgs e)
-        {
-            ReadGenders();
-        }
-
 
         #endregion
 
@@ -346,7 +331,7 @@ namespace TennisClub.UI
                 {
                     isSucceeded = CreateGameResult(gameResultItem);
                 }
-                else if (!gameResultItem.ScoreOpponent.Equals(originalItem.ScoreOpponent) || !gameResultItem.ScoreTeamMember.Equals(originalItem.ScoreTeamMember) || !gameResultItem.SetNr.Equals(originalItem.SetNr))
+                else if (!gameResultItem.Equals(originalItem))
                 {
                     isSucceeded = UpdateGameResult(gameResultItem.Id, new GameResultUpdateDTO { ScoreOpponent = gameResultItem.ScoreOpponent, SetNr = gameResultItem.SetNr, ScoreTeamMember = gameResultItem.ScoreTeamMember });
                 }
@@ -452,10 +437,6 @@ namespace TennisClub.UI
 
         #endregion
 
-        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
@@ -464,12 +445,61 @@ namespace TennisClub.UI
 
         private void SearchFilteredMembers_Click(object sender, RoutedEventArgs e)
         {
+            string federationNrUrl = $"federationNr={memberFilterFederationNr.Text}";
+            string lastNameUrl = $"lastName={memberFilterLastName.Text}";
+            string firstNameUrl = $"firstName={memberFilterFirstName.Text}";
+            string locationUrl = $"location={memberFilterLocation.Text}";
+            Task<HttpResponseMessage> result = WebAPI.GetCall($"members/active?{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}");
+            DataGrid itemsControl = MemberData;
 
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                List<MemberReadDTO> tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result; ;
+                itemsControl.ItemsSource = tmp;
+            }
+            else
+            {
+                Debug.WriteLine("Niet gelukt!");
+            }
         }
 
-        private void clearFilterButton_Click_1(object sender, RoutedEventArgs e)
+        private void MemberData_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
+            e.Cancel = true;
+        }
 
+        private void MemberData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            MemberReadDTO selectedItem = (MemberReadDTO)MemberData.SelectedItem;
+            memberAddition.Text = selectedItem.Addition;
+            memberAddress.Text = selectedItem.Address;
+            memberBirthDate.SelectedDate = selectedItem.BirthDate;
+            memberCity.Text = selectedItem.City;
+            memberFirstName.Text = selectedItem.FirstName;
+            memberGender.SelectedValue = selectedItem.GenderId;
+            memberLastName.Text = selectedItem.LastName;
+            memberNumber.Text = selectedItem.Number;
+            memberPhoneNr.Text = selectedItem.PhoneNr;
+            memberZipcode.Text = selectedItem.Zipcode;
+            memberFederationNr.Text = selectedItem.FederationNr;
+        }
+
+        private void SyncMembersButton_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void GetMembersButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReadMembers();
+        }
+
+        private void ClearMemberFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            memberFilterFederationNr.Text = "";
+            memberFilterLastName.Text = "";
+            memberFilterFirstName.Text = "";
+            memberFilterLocation.Text = "";
+            ReadMembers();
         }
     }
 }
