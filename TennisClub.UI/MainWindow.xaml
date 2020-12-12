@@ -206,7 +206,10 @@
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
-                    <Button x:Name="syncMembersButton" HorizontalAlignment="Right" Width="80" Height="40" Click="SyncMembersButton_Click">Sync.</Button>
+                    <StackPanel>
+                        <Button x:Name="addMemberButton" Height="40" Width="80" Margin="0,5" Click="AddMemberButton_Click">Voeg toe</Button>
+                        <Button x:Name="syncMembersButton" Width="80" Height="40" Click="SyncMembersButton_Click">Sync.</Button>
+                    </StackPanel>
                 </DockPanel>
             </Grid>
         </TabItem>

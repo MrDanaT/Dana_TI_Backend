@@ -545,8 +545,32 @@ namespace TennisClub.UI
 
         private bool CreateMember(MemberReadDTO memberItem)
         {
-            // throw new NotImplementedException();
-            return true;
+            MemberCreateDTO newMember = new MemberCreateDTO
+            {
+                Addition = memberItem.Addition,
+                Address = memberItem.Address,
+                BirthDate = memberItem.BirthDate,
+                City = memberItem.City,
+                FederationNr= memberItem.FederationNr,
+                FirstName= memberItem.FirstName,
+                GenderId = memberItem.GenderId,
+                LastName = memberItem.LastName,
+                Number = memberItem.Number,
+                PhoneNr = memberItem.PhoneNr,
+                Zipcode = memberItem.Zipcode
+            };
+            Task<HttpResponseMessage> response = WebAPI.PostCall("members", newMember);
+
+            if (response.Result.StatusCode == HttpStatusCode.Created)
+            {
+                Debug.WriteLine($"{newMember.FirstName + " " + newMember.LastName} is toegevoegd!");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine($"Er is iets foutgelopen.");
+                return false;
+            }
         }
 
         private void GetMembersButton_Click(object sender, RoutedEventArgs e)
@@ -719,6 +743,27 @@ namespace TennisClub.UI
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void AddMemberButton_Click(object sender, RoutedEventArgs e)
+        {
+            var newMember = new MemberReadDTO
+            {
+                Addition = memberAddition.Text,
+                Address = memberAddress.Text,
+                BirthDate = memberBirthDate.SelectedDate.Value,
+                City = memberCity.Text,
+                FederationNr = memberFederationNr.Text,
+                FirstName = memberFirstName.Text,
+                GenderId = (int)memberGender.SelectedValue,
+                GenderName = memberGender.Text,
+                LastName = memberLastName.Text,
+                Number = memberNumber.Text,
+                PhoneNr = memberPhoneNr.Text,
+                Zipcode = memberZipcode.Text,
+                Deleted = false,
+            };
+            MemberData.Items.Add(newMember);
         }
     }
 }
