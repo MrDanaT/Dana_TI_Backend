@@ -57,6 +57,22 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
             return _mapper.Map<MemberReadDTO>(itemFromDB);
         }
 
+        public override MemberReadDTO Create(MemberCreateDTO entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            Member mappedObject = _mapper.Map<Member>(entity);
+            mappedObject.Deleted = false;
+            mappedObject.GenderNavigation = TennisClubContext.Genders.Find(mappedObject.GenderId);
+            TennisClubContext.Members.Add(mappedObject);
+            TennisClubContext.SaveChanges();
+
+            return _mapper.Map<MemberReadDTO>(mappedObject);
+        }
+
         private TennisClubContext TennisClubContext => Context;
     }
 }

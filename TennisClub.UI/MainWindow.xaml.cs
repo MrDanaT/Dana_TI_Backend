@@ -35,7 +35,6 @@ namespace TennisClub.UI
             originalGameResultList = new List<GameResultReadDTO>();
             originalMemberList = new List<MemberReadDTO>();
             originalRoleList = new List<RoleReadDTO>();
-            newMemberItems = new List<MemberReadDTO>();
 
             ReadRoles();
             ReadMembers();
@@ -381,7 +380,6 @@ namespace TennisClub.UI
         #region Members
 
         private List<MemberReadDTO> originalMemberList;
-        private List<MemberReadDTO> newMemberItems;
 
         /*
          * CRUD
@@ -484,14 +482,19 @@ namespace TennisClub.UI
         {
             bool isSucceeded = false;
             var datagrid = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
-            for (int i = 0; i < originalMemberList.Count; i++)
+            for (int i = 0; i < MemberData.Items.Count; i++)
             {
-                var originalItem = originalMemberList.ElementAt(i);
-                MemberReadDTO memberItem = datagrid.Find(x => x.Id == originalItem.Id);
+                var item = MemberData.Items[i];
+                var memberItem = (MemberReadDTO)item;
+                MemberReadDTO originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
 
                 if (originalItem != null && memberItem == null)
                 {
                     isSucceeded = DeleteMember(originalItem.Id);
+                }
+                else if (originalItem == null && memberItem != null)
+                {
+                    isSucceeded = CreateMember(memberItem);
                 }
                 else if (!originalItem.Equals(memberItem))
                 {
@@ -508,22 +511,9 @@ namespace TennisClub.UI
                 }
             }
 
-            foreach(var item in newMemberItems)
-            {
-                isSucceeded = CreateMember(item);
-
-
-
-                if (!isSucceeded)
-                {
-                    break;
-                }
-            }
-
             if (isSucceeded)
             {
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
-                newMemberItems.Clear();
                 ReadMembers();
             }
             else
@@ -550,8 +540,18 @@ namespace TennisClub.UI
 
         private bool UpdateMember(int id, MemberUpdateDTO memberUpdateDTO)
         {
-            // throw new NotImplementedException();
-            return true;
+            Task<HttpResponseMessage> result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
+
+            if (result.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine("Updated!");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("Niet gelukt!");
+                return false;
+            }
         }
 
         private bool CreateMember(MemberReadDTO memberItem)
@@ -758,23 +758,33 @@ namespace TennisClub.UI
 
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
-            var newMember = new MemberReadDTO
+            var birthDate = memberBirthDate.SelectedDate;
+
+            if (birthDate != null)
             {
-                Addition = memberAddition.Text,
-                Address = memberAddress.Text,
-                BirthDate = memberBirthDate.SelectedDate.Value,
-                City = memberCity.Text,
-                FederationNr = memberFederationNr.Text,
-                FirstName = memberFirstName.Text,
-                GenderId = (int)memberGender.SelectedValue,
-                GenderName = memberGender.Text,
-                LastName = memberLastName.Text,
-                Number = memberNumber.Text,
-                PhoneNr = memberPhoneNr.Text,
-                Zipcode = memberZipcode.Text,
-                Deleted = false,
-            };
-            MemberData.Items.Add(newMember);
+                var newMember = new MemberReadDTO
+                {
+                    Addition = memberAddition.Text,
+                    Address = memberAddress.Text,
+                    BirthDate = birthDate.Value,
+                    City = memberCity.Text,
+                    FederationNr = memberFederationNr.Text,
+                    FirstName = memberFirstName.Text,
+                    GenderId = (int)memberGender.SelectedValue,
+                    GenderName = memberGender.Text,
+                    LastName = memberLastName.Text,
+                    Number = memberNumber.Text,
+                    PhoneNr = memberPhoneNr.Text,
+                    Zipcode = memberZipcode.Text,
+                    Deleted = false,
+                };
+
+                var newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+                newList.Add(newMember);
+                MemberData.ItemsSource = newList;
+
+                MemberData.Items.Refresh();
+            }
         }
     }
 }

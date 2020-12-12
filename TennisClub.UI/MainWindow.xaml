@@ -180,11 +180,11 @@
                                 <Label Margin="5,0" Width="125">Adres</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox KeyDown="MemberFirstName_KeyDown" x:Name="memberFirstName" Margin="5,0" Width="65"/>
-                                <TextBox KeyDown="MemberLastName_KeyDown" x:Name="memberLastName" Margin="5,0" Width="75"/>
+                                <TextBox MaxLength="25" KeyDown="MemberFirstName_KeyDown" x:Name="memberFirstName" Margin="5,0" Width="65"/>
+                                <TextBox MaxLength="35" KeyDown="MemberLastName_KeyDown" x:Name="memberLastName" Margin="5,0" Width="75"/>
                                 <DatePicker SelectedDateChanged="MemberBirthDate_SelectedDateChanged" x:Name="memberBirthDate" Margin="5,0" Width="125"/>
                                 <ComboBox SelectionChanged="MemberGender_SelectionChanged" x:Name="memberGender" Margin="5,0" Width="75" SelectedValue="{Binding GenderReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id"/>
-                                <TextBox KeyDown="MemberAddress_KeyDown" x:Name="memberAddress" Margin="5,0" Width="125"/>
+                                <TextBox MaxLength="70" KeyDown="MemberAddress_KeyDown" x:Name="memberAddress" Margin="5,0" Width="125"/>
                             </DockPanel>
                         </StackPanel>
                         <StackPanel>
@@ -197,12 +197,12 @@
                                 <Label Margin="5,0">Bondsnr</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox KeyDown="MemberNumber_KeyDown" x:Name="memberNumber" Margin="5,0" Width="65"/>
-                                <TextBox KeyDown="MemberAddition_KeyDown" x:Name="memberAddition" Margin="5,0" Width="75"/>
-                                <TextBox KeyDown="MemberZipcode_KeyDown" x:Name="memberZipcode" Margin="5,0" Width="125"/>
-                                <TextBox KeyDown="MemberCity_KeyDown" x:Name="memberCity" Margin="5,0" Width="75"/>
-                                <TextBox KeyDown="MemberPhoneNr_KeyDown" x:Name="memberPhoneNr" Margin="5,0" Width="60"/>
-                                <TextBox KeyDown="MemberFederationNr_KeyDown" x:Name="memberFederationNr" Margin="5,0" />
+                                <TextBox MaxLength="6" KeyDown="MemberNumber_KeyDown" x:Name="memberNumber" Margin="5,0" Width="65"/>
+                                <TextBox MaxLength="2" KeyDown="MemberAddition_KeyDown" x:Name="memberAddition" Margin="5,0" Width="75"/>
+                                <TextBox MaxLength="6" KeyDown="MemberZipcode_KeyDown" x:Name="memberZipcode" Margin="5,0" Width="125"/>
+                                <TextBox MaxLength="30" KeyDown="MemberCity_KeyDown" x:Name="memberCity" Margin="5,0" Width="75"/>
+                                <TextBox MaxLength="15" KeyDown="MemberPhoneNr_KeyDown" x:Name="memberPhoneNr" Margin="5,0" Width="60"/>
+                                <TextBox MaxLength="10" KeyDown="MemberFederationNr_KeyDown" x:Name="memberFederationNr" Margin="5,0" />
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
