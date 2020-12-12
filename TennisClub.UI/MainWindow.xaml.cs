@@ -42,7 +42,7 @@ namespace TennisClub.UI
             ReadLeagues();
             ReadGameResults();
 
-            gameResultPlayerComboBox.ItemsSource = originalMemberList;
+            gameResultPlayerComboBoxFilter.ItemsSource = originalMemberList;
         }
 
         #region Roles
@@ -101,7 +101,7 @@ namespace TennisClub.UI
         {
             Task<HttpResponseMessage> result = WebAPI.PutCall($"roles/{id}", item);
 
-            if (result.Result.StatusCode == HttpStatusCode.OK)
+            if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 Debug.WriteLine("Updated!");
                 return true;
@@ -109,23 +109,6 @@ namespace TennisClub.UI
             else
             {
                 Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
-        }
-
-        private bool DeleteRole(RoleReadDTO item)
-        {
-            int id = item.Id;
-            Task<HttpResponseMessage> response = WebAPI.DeleteCall($"roles/{id}");
-
-            if (response.Result.StatusCode == HttpStatusCode.NoContent)
-            {
-                Debug.WriteLine($"{item.Name} is verwijderd.");
-                return true;
-            }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
                 return false;
             }
         }
@@ -274,7 +257,7 @@ namespace TennisClub.UI
 
         private bool ReadGameResults()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall("gameresults");
+            Task<HttpResponseMessage> result = WebAPI.GetCall($"gameresults?{GetGameResultFilters()}");
             DataGrid itemsControl = GameResultData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
@@ -307,7 +290,7 @@ namespace TennisClub.UI
         {
             Task<HttpResponseMessage> result = WebAPI.PutCall($"gameresults/{id}", item);
 
-            if (result.Result.StatusCode == HttpStatusCode.OK)
+            if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 Debug.WriteLine("Updated!");
                 return true;
@@ -318,6 +301,10 @@ namespace TennisClub.UI
                 return false;
             }
         }
+
+        /*
+         * Event Handlers
+         */
         private void SynchroniseGameResultTable()
         {
             bool isSucceeded = false;
@@ -370,25 +357,22 @@ namespace TennisClub.UI
 
         private void ClearGameResultsFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            gameResultPlayerComboBox.SelectedItem = null;
-            GameResultData.ItemsSource = originalGameResultList;
+            gameResultPlayerComboBoxFilter.SelectedItem = null;
+            gameResultdatePickerFilter.SelectedDate = null;
+            ReadGameResults();
         }
+
         private void SearchFilteredGameResults_Click(object sender, RoutedEventArgs e)
         {
-            string memberIdUrl = $"memberId={gameResultPlayerComboBox.SelectedValue}";
-            string selectedDateUrl = $"date={datePicker.SelectedDate.GetValueOrDefault().ToShortDateString()}";
-            Task<HttpResponseMessage> result = WebAPI.GetCall($"gameresults?{(gameResultPlayerComboBox.SelectedValue != null ? memberIdUrl : "")}&{(datePicker.SelectedDate != null ? selectedDateUrl : "")}");
-            DataGrid itemsControl = GameResultData;
+            ReadGameResults();
+        }
 
-            if (result.Result.StatusCode == HttpStatusCode.OK)
-            {
-                List<GameResultReadDTO> tmp = result.Result.Content.ReadAsAsync<List<GameResultReadDTO>>().Result; ;
-                itemsControl.ItemsSource = tmp;
-            }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-            }
+        private string GetGameResultFilters()
+        {
+            string memberIdUrl = $"memberId={gameResultPlayerComboBoxFilter.SelectedValue}";
+            string selectedDateUrl = $"date={gameResultdatePickerFilter.SelectedDate.GetValueOrDefault().ToShortDateString()}";
+
+            return $"{(gameResultPlayerComboBoxFilter.SelectedValue != null ? memberIdUrl : "")}&{(gameResultdatePickerFilter.SelectedDate != null ? selectedDateUrl : "")}";
         }
 
         #endregion
@@ -397,9 +381,13 @@ namespace TennisClub.UI
 
         private List<MemberReadDTO> originalMemberList;
 
+        /*
+         * CRUD
+         */
+
         private bool ReadMembers()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall("members/active");
+            Task<HttpResponseMessage> result = WebAPI.GetCall($"members/active?{GetMemberFilters()}");
             DataGrid itemsControl = MemberData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
@@ -435,34 +423,24 @@ namespace TennisClub.UI
             }
         }
 
-
-        #endregion
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        private void SearchFilteredMembers_Click(object sender, RoutedEventArgs e)
+        private string GetMemberFilters()
         {
             string federationNrUrl = $"federationNr={memberFilterFederationNr.Text}";
             string lastNameUrl = $"lastName={memberFilterLastName.Text}";
             string firstNameUrl = $"firstName={memberFilterFirstName.Text}";
             string locationUrl = $"location={memberFilterLocation.Text}";
-            Task<HttpResponseMessage> result = WebAPI.GetCall($"members/active?{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}");
-            DataGrid itemsControl = MemberData;
-
-            if (result.Result.StatusCode == HttpStatusCode.OK)
-            {
-                List<MemberReadDTO> tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result; ;
-                itemsControl.ItemsSource = tmp;
-            }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-            }
+            return $"{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}";
         }
+
+        /*
+         * Event Handlers
+         */
+
+        private void SearchFilteredMembers_Click(object sender, RoutedEventArgs e)
+        {
+            ReadMembers();
+        }
+
 
         private void MemberData_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
@@ -495,6 +473,12 @@ namespace TennisClub.UI
 
         private void SyncMembersButton_Click(object sender, RoutedEventArgs e)
         {
+            SynchroniseMemberTable();
+        }
+
+        private void SynchroniseMemberTable()
+        {
+            throw new NotImplementedException();
         }
 
         private void GetMembersButton_Click(object sender, RoutedEventArgs e)
@@ -511,30 +495,6 @@ namespace TennisClub.UI
             ReadMembers();
         }
 
-        private void MemberLastName_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.LastName = e.Text;
-        }
-
-        private void MemberBirthDate_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.BirthDate = DateTime.Parse(e.Text);
-        }
-
         private void MemberGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MemberReadDTO member = GetSelectedMember();
@@ -548,78 +508,7 @@ namespace TennisClub.UI
             member.GenderId = (int)memberGender.SelectedValue;
         }
 
-        private void MemberAddress_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.Address = e.Text;
-        }
-        private void MemberNumber_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.Number = e.Text;
-        }
-
-        private void MemberAddition_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.Addition = e.Text;
-        }
-
-        private void MemberZipcode_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.Zipcode = e.Text;
-        }
-
-        private void MemberCity_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.City = e.Text;
-        }
-
-        private void MemberFederationNr_TextInput(object sender, TextCompositionEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
-            }
-
-            member.FederationNr = e.Text;
-        }
-
-        private void memberFirstName_KeyDown(object sender, KeyEventArgs e)
+        private void MemberFirstName_KeyDown(object sender, KeyEventArgs e)
         {
             MemberReadDTO member = GetSelectedMember();
 
@@ -629,6 +518,128 @@ namespace TennisClub.UI
             }
 
             member.FirstName = memberFirstName.Text;
+        }
+
+        private void MemberLastName_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.LastName = memberLastName.Text;
+        }
+
+        private void MemberBirthDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+            DateTime? selectedDate = memberBirthDate.SelectedDate;
+
+            if (selectedDate.IsNull())
+            {
+                return;
+            }
+
+            member.BirthDate = selectedDate.Value;
+        }
+
+        private void MemberAddress_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Address = memberAddress.Text;
+        }
+
+        private void MemberNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Number = memberNumber.Text;
+        }
+
+        private void MemberAddition_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Addition = memberAddition.Text;
+        }
+
+        private void MemberZipcode_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Zipcode = memberZipcode.Text;
+        }
+
+        private void MemberCity_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.City = memberCity.Text;
+        }
+
+        private void MemberPhoneNr_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.PhoneNr = memberPhoneNr.Text;
+        }
+
+        private void MemberFederationNr_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.FederationNr = memberFederationNr.Text;
+        }
+
+        #endregion
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

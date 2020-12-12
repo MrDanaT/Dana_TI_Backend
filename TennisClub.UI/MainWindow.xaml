@@ -60,11 +60,11 @@
                     <DockPanel>
                         <DockPanel>
                             <Label>Filter op datum:</Label>
-                            <DatePicker Width="150" x:Name="datePicker" />
+                            <DatePicker Width="150" x:Name="gameResultdatePickerFilter" />
                         </DockPanel>
                         <DockPanel>
                             <Label>Filter op spelernaam:</Label>
-                            <ComboBox Width="150" x:Name="gameResultPlayerComboBox" SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
+                            <ComboBox Width="150" x:Name="gameResultPlayerComboBoxFilter" SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
                         </DockPanel>
                         <Button HorizontalAlignment="Right" Width="100" Height="25" x:Name="searchFilteredGameResults" Click="SearchFilteredGameResults_Click">Filter</Button>
                     </DockPanel>
@@ -151,7 +151,7 @@
                     <Button HorizontalAlignment="Right" Width="50" x:Name="clearMemberFilterButton" Click="ClearMemberFilterButton_Click" VerticalAlignment="Top">Clear</Button>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
-                    <DataGrid Height="210" x:Name="MemberData" CanUserAddRows="False" SelectedCellsChanged="MemberData_SelectedCellsChanged" BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True" AutoGenerateColumns="False" Margin="10,10,10,10">
+                    <DataGrid Height="210" x:Name="MemberData" CanUserAddRows="True" SelectedCellsChanged="MemberData_SelectedCellsChanged" BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True" AutoGenerateColumns="False" Margin="10,10,10,10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Bondsnr" Binding="{Binding FederationNr, UpdateSourceTrigger=PropertyChanged}" />
@@ -180,11 +180,11 @@
                                 <Label Margin="5,0" Width="125">Adres</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox KeyDown="memberFirstName_KeyDown" x:Name="memberFirstName" Margin="5,0" Width="65"/>
-                                <TextBox TextInput="MemberLastName_TextInput" x:Name="memberLastName" Margin="5,0" Width="75"/>
-                                <DatePicker TextInput="MemberBirthDate_TextInput" x:Name="memberBirthDate" Margin="5,0" Width="125"/>
+                                <TextBox KeyDown="MemberFirstName_KeyDown" x:Name="memberFirstName" Margin="5,0" Width="65"/>
+                                <TextBox KeyDown="MemberLastName_KeyDown" x:Name="memberLastName" Margin="5,0" Width="75"/>
+                                <DatePicker SelectedDateChanged="MemberBirthDate_SelectedDateChanged" x:Name="memberBirthDate" Margin="5,0" Width="125"/>
                                 <ComboBox SelectionChanged="MemberGender_SelectionChanged" x:Name="memberGender" Margin="5,0" Width="75" SelectedValue="{Binding GenderReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id"/>
-                                <TextBox TextInput="MemberAddress_TextInput" x:Name="memberAddress" Margin="5,0" Width="125"/>
+                                <TextBox KeyDown="MemberAddress_KeyDown" x:Name="memberAddress" Margin="5,0" Width="125"/>
                             </DockPanel>
                         </StackPanel>
                         <StackPanel>
@@ -197,12 +197,12 @@
                                 <Label Margin="5,0">Bondsnr</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox TextInput="NumberValidationTextBox" x:Name="memberNumber" Margin="5,0" Width="65"/>
-                                <TextBox TextInput="MemberAddition_TextInput" x:Name="memberAddition" Margin="5,0" Width="75"/>
-                                <TextBox TextInput="MemberZipcode_TextInput" x:Name="memberZipcode" Margin="5,0" Width="125"/>
-                                <TextBox TextInput="MemberCity_TextInput" x:Name="memberCity" Margin="5,0" Width="75"/>
-                                <TextBox TextInput="NumberValidationTextBox" x:Name="memberPhoneNr" Margin="5,0" Width="60"/>
-                                <TextBox TextInput="MemberFederationNr_TextInput" x:Name="memberFederationNr" Margin="5,0" />
+                                <TextBox KeyDown="MemberNumber_KeyDown" x:Name="memberNumber" Margin="5,0" Width="65"/>
+                                <TextBox KeyDown="MemberAddition_KeyDown" x:Name="memberAddition" Margin="5,0" Width="75"/>
+                                <TextBox KeyDown="MemberZipcode_KeyDown" x:Name="memberZipcode" Margin="5,0" Width="125"/>
+                                <TextBox KeyDown="MemberCity_KeyDown" x:Name="memberCity" Margin="5,0" Width="75"/>
+                                <TextBox KeyDown="MemberPhoneNr_KeyDown" x:Name="memberPhoneNr" Margin="5,0" Width="60"/>
+                                <TextBox KeyDown="MemberFederationNr_KeyDown" x:Name="memberFederationNr" Margin="5,0" />
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
