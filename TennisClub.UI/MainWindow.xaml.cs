@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -470,18 +471,26 @@ namespace TennisClub.UI
 
         private void MemberData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            MemberReadDTO selectedItem = (MemberReadDTO)MemberData.SelectedItem;
-            memberAddition.Text = selectedItem.Addition;
-            memberAddress.Text = selectedItem.Address;
-            memberBirthDate.SelectedDate = selectedItem.BirthDate;
-            memberCity.Text = selectedItem.City;
-            memberFirstName.Text = selectedItem.FirstName;
-            memberGender.SelectedValue = selectedItem.GenderId;
-            memberLastName.Text = selectedItem.LastName;
-            memberNumber.Text = selectedItem.Number;
-            memberPhoneNr.Text = selectedItem.PhoneNr;
-            memberZipcode.Text = selectedItem.Zipcode;
-            memberFederationNr.Text = selectedItem.FederationNr;
+            MemberReadDTO selectedItem = GetSelectedMember();
+            if (!selectedItem.IsNull())
+            {
+                memberAddition.Text = selectedItem.Addition;
+                memberAddress.Text = selectedItem.Address;
+                memberBirthDate.SelectedDate = selectedItem.BirthDate;
+                memberCity.Text = selectedItem.City;
+                memberFirstName.Text = selectedItem.FirstName;
+                memberGender.SelectedValue = selectedItem.GenderId;
+                memberLastName.Text = selectedItem.LastName;
+                memberNumber.Text = selectedItem.Number;
+                memberPhoneNr.Text = selectedItem.PhoneNr;
+                memberZipcode.Text = selectedItem.Zipcode;
+                memberFederationNr.Text = selectedItem.FederationNr;
+            }
+        }
+
+        private MemberReadDTO GetSelectedMember()
+        {
+            return (MemberReadDTO)MemberData.SelectedItem;
         }
 
         private void SyncMembersButton_Click(object sender, RoutedEventArgs e)
@@ -500,6 +509,126 @@ namespace TennisClub.UI
             memberFilterFirstName.Text = "";
             memberFilterLocation.Text = "";
             ReadMembers();
+        }
+
+        private void MemberLastName_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.LastName = e.Text;
+        }
+
+        private void MemberBirthDate_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.BirthDate = DateTime.Parse(e.Text);
+        }
+
+        private void MemberGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.GenderName = memberGender.Text;
+            member.GenderId = (int)memberGender.SelectedValue;
+        }
+
+        private void MemberAddress_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Address = e.Text;
+        }
+        private void MemberNumber_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Number = e.Text;
+        }
+
+        private void MemberAddition_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Addition = e.Text;
+        }
+
+        private void MemberZipcode_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.Zipcode = e.Text;
+        }
+
+        private void MemberCity_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.City = e.Text;
+        }
+
+        private void MemberFederationNr_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.FederationNr = e.Text;
+        }
+
+        private void memberFirstName_KeyDown(object sender, KeyEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.FirstName = memberFirstName.Text;
         }
     }
 }
