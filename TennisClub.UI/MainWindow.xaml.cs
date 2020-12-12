@@ -35,6 +35,7 @@ namespace TennisClub.UI
             originalGameResultList = new List<GameResultReadDTO>();
             originalMemberList = new List<MemberReadDTO>();
             originalRoleList = new List<RoleReadDTO>();
+            newMemberItems = new List<MemberReadDTO>();
 
             ReadRoles();
             ReadMembers();
@@ -380,6 +381,7 @@ namespace TennisClub.UI
         #region Members
 
         private List<MemberReadDTO> originalMemberList;
+        private List<MemberReadDTO> newMemberItems;
 
         /*
          * CRUD
@@ -487,11 +489,7 @@ namespace TennisClub.UI
                 var originalItem = originalMemberList.ElementAt(i);
                 MemberReadDTO memberItem = datagrid.Find(x => x.Id == originalItem.Id);
 
-                if (originalItem == null && memberItem != null)
-                {
-                    isSucceeded = CreateMember(memberItem);
-                }
-                else if (originalItem != null && memberItem == null)
+                if (originalItem != null && memberItem == null)
                 {
                     isSucceeded = DeleteMember(originalItem.Id);
                 }
@@ -510,9 +508,22 @@ namespace TennisClub.UI
                 }
             }
 
+            foreach(var item in newMemberItems)
+            {
+                isSucceeded = CreateMember(item);
+
+
+
+                if (!isSucceeded)
+                {
+                    break;
+                }
+            }
+
             if (isSucceeded)
             {
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
+                newMemberItems.Clear();
                 ReadMembers();
             }
             else
