@@ -16,6 +16,5 @@ namespace TennisClub.Common.Member
         public string Zipcode { get; set; }
         public string City { get; set; }
         public string PhoneNr { get; set; }
-        public bool Deleted { get; set; }
     }
 }
