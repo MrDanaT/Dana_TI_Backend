@@ -308,12 +308,12 @@ namespace TennisClub.UI
         private void SynchroniseGameResultTable()
         {
             bool isSucceeded = false;
+            var datagrid = GameResultData.Items.OfType<GameResultReadDTO>().ToList();
 
-            for (int i = 0; i < GameResultData.Items.Count - 1; i++)
+            for (int i = 0; i < originalGameResultList.Count; i++)
             {
-                object item = GameResultData.Items[i];
-                GameResultReadDTO gameResultItem = (GameResultReadDTO)item;
-                GameResultReadDTO originalItem = originalGameResultList.Find(x => x.Id == gameResultItem.Id);
+                var originalItem = originalGameResultList.ElementAt(i);
+                GameResultReadDTO gameResultItem = datagrid.Find(x => x.Id == originalItem.Id);
 
                 if (originalItem == null && gameResultItem != null)
                 {
