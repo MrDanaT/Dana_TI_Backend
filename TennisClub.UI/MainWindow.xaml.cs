@@ -468,6 +468,8 @@ namespace TennisClub.UI
 
         private MemberReadDTO GetSelectedMember()
         {
+            if (MemberData.SelectedItem.IsNull()) return null;
+
             return (MemberReadDTO)MemberData.SelectedItem;
         }
 

@@ -151,7 +151,7 @@
                     <Button HorizontalAlignment="Right" Width="50" x:Name="clearMemberFilterButton" Click="ClearMemberFilterButton_Click" VerticalAlignment="Top">Clear</Button>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
-                    <DataGrid Height="210" x:Name="MemberData" CanUserAddRows="True" SelectedCellsChanged="MemberData_SelectedCellsChanged" BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True" AutoGenerateColumns="False" Margin="10,10,10,10">
+                    <DataGrid Height="210" x:Name="MemberData" CanUserAddRows="False" SelectedCellsChanged="MemberData_SelectedCellsChanged" BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True" AutoGenerateColumns="False" Margin="10,10,10,10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                             <DataGridTextColumn Header="Bondsnr" Binding="{Binding FederationNr, UpdateSourceTrigger=PropertyChanged}" />
