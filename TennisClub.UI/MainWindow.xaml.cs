@@ -478,7 +478,73 @@ namespace TennisClub.UI
 
         private void SynchroniseMemberTable()
         {
-            throw new NotImplementedException();
+            bool isSucceeded = false;
+            var datagrid = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+            for (int i = 0; i < originalMemberList.Count; i++)
+            {
+                var originalItem = originalMemberList.ElementAt(i);
+                MemberReadDTO memberItem = datagrid.Find(x => x.Id == originalItem.Id);
+
+                if (originalItem == null && memberItem != null)
+                {
+                    isSucceeded = CreateMember(memberItem);
+                }
+                else if (originalItem != null && memberItem == null)
+                {
+                    isSucceeded = DeleteMember(originalItem.Id);
+                }
+                else if (!originalItem.Equals(memberItem))
+                {
+                    isSucceeded = UpdateMember(originalItem.Id, new MemberUpdateDTO { Addition = memberItem.Addition, Address = memberItem.Address, BirthDate = memberItem.BirthDate, City = memberItem.City, FederationNr = memberItem.FederationNr, FirstName = memberItem.FirstName, GenderId = memberItem.GenderId, LastName = memberItem.LastName, Number = memberItem.Number, PhoneNr = memberItem.PhoneNr, Zipcode = memberItem.Zipcode });
+                }
+                else
+                {
+                    isSucceeded = true;
+                }
+
+                if (!isSucceeded)
+                {
+                    break;
+                }
+            }
+
+            if (isSucceeded)
+            {
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
+                ReadMembers();
+            }
+            else
+            {
+                MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
+            }
+        }
+
+        private bool DeleteMember(int id)
+        {
+            Task<HttpResponseMessage> response = WebAPI.DeleteCall($"members/{id}");
+
+            if (response.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine($"{id} is verwijderd.");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine($"Er is iets foutgelopen.");
+                return false;
+            }
+        }
+
+        private bool UpdateMember(int id, MemberUpdateDTO memberUpdateDTO)
+        {
+            // throw new NotImplementedException();
+            return true;
+        }
+
+        private bool CreateMember(MemberReadDTO memberItem)
+        {
+            // throw new NotImplementedException();
+            return true;
         }
 
         private void GetMembersButton_Click(object sender, RoutedEventArgs e)
@@ -506,6 +572,7 @@ namespace TennisClub.UI
 
             member.GenderName = memberGender.Text;
             member.GenderId = (int)memberGender.SelectedValue;
+            MemberData.Items.Refresh();
         }
 
         private void MemberFirstName_KeyDown(object sender, KeyEventArgs e)
@@ -518,6 +585,7 @@ namespace TennisClub.UI
             }
 
             member.FirstName = memberFirstName.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberLastName_KeyDown(object sender, KeyEventArgs e)
@@ -530,6 +598,7 @@ namespace TennisClub.UI
             }
 
             member.LastName = memberLastName.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberBirthDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -548,6 +617,7 @@ namespace TennisClub.UI
             }
 
             member.BirthDate = selectedDate.Value;
+            MemberData.Items.Refresh();
         }
 
         private void MemberAddress_KeyDown(object sender, KeyEventArgs e)
@@ -560,6 +630,7 @@ namespace TennisClub.UI
             }
 
             member.Address = memberAddress.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberNumber_KeyDown(object sender, KeyEventArgs e)
@@ -572,6 +643,7 @@ namespace TennisClub.UI
             }
 
             member.Number = memberNumber.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberAddition_KeyDown(object sender, KeyEventArgs e)
@@ -584,6 +656,7 @@ namespace TennisClub.UI
             }
 
             member.Addition = memberAddition.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberZipcode_KeyDown(object sender, KeyEventArgs e)
@@ -596,6 +669,7 @@ namespace TennisClub.UI
             }
 
             member.Zipcode = memberZipcode.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberCity_KeyDown(object sender, KeyEventArgs e)
@@ -608,6 +682,7 @@ namespace TennisClub.UI
             }
 
             member.City = memberCity.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberPhoneNr_KeyDown(object sender, KeyEventArgs e)
@@ -620,6 +695,7 @@ namespace TennisClub.UI
             }
 
             member.PhoneNr = memberPhoneNr.Text;
+            MemberData.Items.Refresh();
         }
 
         private void MemberFederationNr_KeyDown(object sender, KeyEventArgs e)
@@ -632,6 +708,7 @@ namespace TennisClub.UI
             }
 
             member.FederationNr = memberFederationNr.Text;
+            MemberData.Items.Refresh();
         }
 
         #endregion
