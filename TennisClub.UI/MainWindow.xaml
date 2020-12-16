@@ -243,12 +243,12 @@
                     <DockPanel>
                         <Label>Rollen</Label>
                         <Label Margin="300,0">Lid</Label>
-                        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" x:Name="clearMemberRoleFilterButton" Click="clearMemberRoleFilterButton_Click">Clear</Button>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" x:Name="clearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">Clear</Button>
                     </DockPanel>
                     <DockPanel>
                         <ListBox x:Name="memberRoleRolesFilter" Width="75" SelectionMode="Multiple" />
                         <ComboBox Width="75" Margin="270,0" x:Name="memberRoleMemberFilter" />
-                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMemberRolesButton" Click="filterMemberRolesButton_Click_1" >Filter</Button>
+                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMemberRolesButton" Click="filterMemberRolesButton_Click" >Filter</Button>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
@@ -265,10 +265,10 @@
                     </DockPanel>
                     <DockPanel>
                         <DockPanel>
-                            <Button x:Name="getMemberRolesButton" Width="80" Height="40" Click="getMemberRolesButton_Click"></Button>
+                            <Button x:Name="getMemberRolesButton" Width="80" Height="35" Click="GetMemberRolesButton_Click">Refresh Data</Button>
                         </DockPanel>
                         <DockPanel Margin="10,0">
-                            <DockPanel>
+                            <DockPanel Width="610">
                                 <StackPanel>
                                     <Label>Lid</Label>
                                     <ComboBox x:Name="memberRoleMember" Width="125"/>
@@ -289,10 +289,10 @@
                         </DockPanel>
                         <StackPanel>
                             <DockPanel>
-                                <Button x:Name="addMemberRoleButton" Width="80" Height="40" Margin="0,5" Click="addMemberRoleButton_Click">Voeg toe</Button>
+                                <Button x:Name="addMemberRoleButton" Width="80" Height="35" Margin="0,5" Click="addMemberRoleButton_Click">Voeg toe</Button>
                             </DockPanel>
                             <DockPanel>
-                                <Button x:Name="syncMemberRolesButton" Width="80" Height="40" Click="syncMemberRolesButton_Click">Sync.</Button>
+                                <Button x:Name="syncMemberRolesButton" Width="80" Height="35" Click="syncMemberRolesButton_Click">Sync.</Button>
                             </DockPanel>
                         </StackPanel>
                     </DockPanel>

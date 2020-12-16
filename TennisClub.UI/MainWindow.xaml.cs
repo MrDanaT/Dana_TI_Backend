@@ -468,7 +468,10 @@ namespace TennisClub.UI
 
         private MemberReadDTO GetSelectedMember()
         {
-            if (MemberData.SelectedItem.IsNull()) return null;
+            if (MemberData.SelectedItem.IsNull())
+            {
+                return null;
+            }
 
             return (MemberReadDTO)MemberData.SelectedItem;
         }
@@ -481,11 +484,11 @@ namespace TennisClub.UI
         private void SynchroniseMemberTable()
         {
             bool isSucceeded = false;
-            var datagrid = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+            List<MemberReadDTO> datagrid = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
             for (int i = 0; i < MemberData.Items.Count; i++)
             {
-                var item = MemberData.Items[i];
-                var memberItem = (MemberReadDTO)item;
+                object item = MemberData.Items[i];
+                MemberReadDTO memberItem = (MemberReadDTO)item;
                 MemberReadDTO originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
 
                 if (originalItem != null && memberItem == null)
@@ -562,8 +565,8 @@ namespace TennisClub.UI
                 Address = memberItem.Address,
                 BirthDate = memberItem.BirthDate,
                 City = memberItem.City,
-                FederationNr= memberItem.FederationNr,
-                FirstName= memberItem.FirstName,
+                FederationNr = memberItem.FederationNr,
+                FirstName = memberItem.FirstName,
                 GenderId = memberItem.GenderId,
                 LastName = memberItem.LastName,
                 Number = memberItem.Number,
@@ -748,21 +751,14 @@ namespace TennisClub.UI
             MemberData.Items.Refresh();
         }
 
-        #endregion
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
 
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
-            var birthDate = memberBirthDate.SelectedDate;
+            DateTime? birthDate = memberBirthDate.SelectedDate;
 
             if (birthDate != null)
             {
-                var newMember = new MemberReadDTO
+                MemberReadDTO newMember = new MemberReadDTO
                 {
                     Addition = memberAddition.Text,
                     Address = memberAddress.Text,
@@ -779,7 +775,7 @@ namespace TennisClub.UI
                     Deleted = false,
                 };
 
-                var newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+                List<MemberReadDTO> newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
                 newList.Add(newMember);
                 MemberData.ItemsSource = newList;
 
@@ -787,9 +783,47 @@ namespace TennisClub.UI
             }
         }
 
-        private void filterMemberRolesButton_Click()
+        #endregion
+
+        #region MemberRoles
+        private void ReadMemberRoles()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ClearMemberRoleFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            memberRoleMemberFilter.SelectedItem = null;
+            memberRoleRolesFilter.SelectedItems.Clear();
+            ReadMemberRoles();
+        }
+
+        private void GetMemberRolesButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void syncMemberRolesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addMemberRoleButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void filterMemberRolesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
