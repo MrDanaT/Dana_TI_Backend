@@ -13,7 +13,6 @@ using TennisClub.Common.GameResult;
 using TennisClub.Common.Gender;
 using TennisClub.Common.League;
 using TennisClub.Common.Member;
-using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
 
 namespace TennisClub.UI
