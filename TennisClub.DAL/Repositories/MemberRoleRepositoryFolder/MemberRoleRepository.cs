@@ -17,6 +17,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
         { }
 
 
+
         public IEnumerable<MemberReadDTO> GetMembersByRoles(List<RoleReadDTO> roles)
         {
             if (roles == null)
@@ -52,6 +53,21 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
         public override void Delete(int id)
         {
             // Do nothing
+        }
+
+        public override IEnumerable<MemberRoleReadDTO> GetAll()
+        {
+            List<MemberRole> itemsFromDB = TennisClubContext.MemberRoles.AsNoTracking()
+                  .Include(x => x.MemberNavigation)
+                  .Include(x => x.RoleNavigation)
+                  .ToList();
+
+            return _mapper.Map<IEnumerable<MemberRoleReadDTO>>(itemsFromDB);
+        }
+
+        public override MemberRoleReadDTO GetById(int id)
+        {
+            return base.GetById(id);
         }
 
         private TennisClubContext TennisClubContext => Context;
