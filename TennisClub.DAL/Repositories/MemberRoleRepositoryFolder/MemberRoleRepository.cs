@@ -65,11 +65,6 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
             return _mapper.Map<IEnumerable<MemberRoleReadDTO>>(itemsFromDB);
         }
 
-        public override MemberRoleReadDTO GetById(int id)
-        {
-            return base.GetById(id);
-        }
-
         private TennisClubContext TennisClubContext => Context;
     }
 }
