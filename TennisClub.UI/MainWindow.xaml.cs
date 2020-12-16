@@ -13,6 +13,7 @@ using TennisClub.Common.GameResult;
 using TennisClub.Common.Gender;
 using TennisClub.Common.League;
 using TennisClub.Common.Member;
+using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
 
 namespace TennisClub.UI
@@ -795,10 +796,52 @@ namespace TennisClub.UI
 
         #region MemberRoles
 
+        private List<MemberRoleReadDTO> originalMemberRoleList;
+
         /*
          * CRUD
          */
+        private bool CreateMemberRole(MemberRoleReadDTO memberRoleItem)
+        {
+            throw new NotImplementedException();
+        }
         private void ReadMemberRoles()
+        {
+            Task<HttpResponseMessage> result = WebAPI.GetCall($"memberroles?{GetMemberRoleFilters()}");
+            DataGrid itemsControl = GameResultData;
+
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                List<GameResultReadDTO> tmp = result.Result.Content.ReadAsAsync<List<GameResultReadDTO>>().Result; ;
+                itemsControl.ItemsSource = tmp;
+                List<GameResultReadDTO> tmp2 = new List<GameResultReadDTO>(tmp.Count);
+                tmp.ForEach((item) =>
+                {
+                    tmp2.Add(new GameResultReadDTO
+                    {
+                        Id = item.Id,
+                        GameId = item.GameId,
+                        ScoreOpponent = item.ScoreOpponent,
+                        ScoreTeamMember = item.ScoreTeamMember,
+                        SetNr = item.SetNr
+                    });
+                });
+                originalGameResultList = tmp2;
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("Niet gelukt!");
+                return false;
+            }
+        }
+
+        private bool UpdateMemberRole(int id, MemberRoleUpdateDTO memberRoleUpdateDTO)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool DeleteMemberRole(int id)
         {
             throw new NotImplementedException();
         }
@@ -840,23 +883,23 @@ namespace TennisClub.UI
         {
             bool isSucceeded = false;
 
-            for (int i = 0; i < MemberData.Items.Count; i++)
+            for (int i = 0; i < MemberRoleData.Items.Count; i++)
             {
-                object item = MemberData.Items[i];
-                MemberReadDTO memberItem = (MemberReadDTO)item;
-                MemberReadDTO originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
+                object item = MemberRoleData.Items[i];
+                MemberRoleReadDTO memberRoleItem = (MemberRoleReadDTO)item;
+                MemberRoleReadDTO originalItem = originalMemberRoleList.Find(x => x.Id == memberRoleItem.Id);
 
-                if (originalItem != null && memberItem == null)
+                if (originalItem != null && memberRoleItem == null)
                 {
-                    isSucceeded = DeleteMember(originalItem.Id);
+                    isSucceeded = DeleteMemberRole(originalItem.Id);
                 }
-                else if (originalItem == null && memberItem != null)
+                else if (originalItem == null && memberRoleItem != null)
                 {
-                    isSucceeded = CreateMember(memberItem);
+                    isSucceeded = CreateMemberRole(memberRoleItem);
                 }
-                else if (!originalItem.Equals(memberItem))
+                else if (!originalItem.Equals(memberRoleItem))
                 {
-                    isSucceeded = UpdateMember(originalItem.Id, new MemberUpdateDTO { Addition = memberItem.Addition, Address = memberItem.Address, BirthDate = memberItem.BirthDate, City = memberItem.City, FederationNr = memberItem.FederationNr, FirstName = memberItem.FirstName, GenderId = memberItem.GenderId, LastName = memberItem.LastName, Number = memberItem.Number, PhoneNr = memberItem.PhoneNr, Zipcode = memberItem.Zipcode });
+                    isSucceeded = UpdateMemberRole(originalItem.Id, new MemberRoleUpdateDTO { });
                 }
                 else
                 {
@@ -878,6 +921,11 @@ namespace TennisClub.UI
             {
                 MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
             }
+        }
+
+        private string GetMemberRoleFilters()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

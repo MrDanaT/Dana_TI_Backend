@@ -271,20 +271,20 @@
                         <DockPanel Margin="10,0">
                             <DockPanel Width="610">
                                 <StackPanel>
-                                    <Label>Lid</Label>
+                                    <Label Width="125">Lid</Label>
                                     <ComboBox x:Name="memberRoleMember" Width="125"/>
                                 </StackPanel>
-                                <StackPanel Margin="5,0">
+                                <StackPanel Width="100" Margin="5,0">
                                     <Label>Rol</Label>
                                     <ComboBox x:Name="memberRoleRoles" Width="100"/>
                                 </StackPanel>
                                 <StackPanel Margin="5,0">
-                                    <Label >Startdatum</Label>
+                                    <Label Width="125">Startdatum</Label>
                                     <DatePicker x:Name="memberRoleStartDate" Width="125" />
                                 </StackPanel>
                                 <StackPanel Margin="5,0">
-                                    <Label>Einddatum</Label>
-                                    <DatePicker x:Name="memberRoleEndDate" Width="125"/>
+                                    <Label HorizontalAlignment="Left" Width="125">Einddatum</Label>
+                                    <DatePicker HorizontalAlignment="Left" x:Name="memberRoleEndDate" Width="125"/>
                                 </StackPanel>
                             </DockPanel>
                         </DockPanel>
