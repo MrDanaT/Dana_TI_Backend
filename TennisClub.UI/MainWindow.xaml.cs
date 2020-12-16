@@ -13,6 +13,7 @@ using TennisClub.Common.GameResult;
 using TennisClub.Common.Gender;
 using TennisClub.Common.League;
 using TennisClub.Common.Member;
+using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
 
 namespace TennisClub.UI
@@ -113,6 +114,23 @@ namespace TennisClub.UI
             }
         }
 
+        /*
+         * Event Handlers
+         */
+        private void GetRolesButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReadRoles();
+        }
+
+        private void SyncLeaguesButton_Click(object sender, RoutedEventArgs e)
+        {
+            SynchroniseRoleTable();
+        }
+
+        /*
+         * Methods
+         */
+
         private void SynchroniseRoleTable()
         {
             bool isSucceeded = false;
@@ -153,19 +171,6 @@ namespace TennisClub.UI
             }
         }
 
-        /*
-         * Event Handlers
-         */
-        private void GetRolesButton_Click(object sender, RoutedEventArgs e)
-        {
-            ReadRoles();
-        }
-        private void SyncLeaguesButton_Click(object sender, RoutedEventArgs e)
-        {
-            SynchroniseRoleTable();
-        }
-
-
         #endregion
 
         #region Leagues
@@ -201,6 +206,7 @@ namespace TennisClub.UI
         #endregion
 
         #region Genders
+
         /*
          * CRUD
          */
@@ -254,7 +260,6 @@ namespace TennisClub.UI
             }
         }
 
-
         private bool ReadGameResults()
         {
             Task<HttpResponseMessage> result = WebAPI.GetCall($"gameresults?{GetGameResultFilters()}");
@@ -305,6 +310,33 @@ namespace TennisClub.UI
         /*
          * Event Handlers
          */
+
+        private void GetGameResultsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReadGameResults();
+        }
+
+        private void SyncGameResulsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SynchroniseGameResultTable();
+        }
+
+        private void ClearGameResultsFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            gameResultPlayerComboBoxFilter.SelectedItem = null;
+            gameResultdatePickerFilter.SelectedDate = null;
+            ReadGameResults();
+        }
+
+        private void SearchFilteredGameResults_Click(object sender, RoutedEventArgs e)
+        {
+            ReadGameResults();
+        }
+
+        /*
+         * Methods
+         */
+
         private void SynchroniseGameResultTable()
         {
             bool isSucceeded = false;
@@ -344,29 +376,6 @@ namespace TennisClub.UI
                 MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
             }
         }
-
-        private void GetGameResultsButton_Click(object sender, RoutedEventArgs e)
-        {
-            ReadGameResults();
-        }
-
-        private void SyncGameResulsButton_Click(object sender, RoutedEventArgs e)
-        {
-            SynchroniseGameResultTable();
-        }
-
-        private void ClearGameResultsFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            gameResultPlayerComboBoxFilter.SelectedItem = null;
-            gameResultdatePickerFilter.SelectedDate = null;
-            ReadGameResults();
-        }
-
-        private void SearchFilteredGameResults_Click(object sender, RoutedEventArgs e)
-        {
-            ReadGameResults();
-        }
-
         private string GetGameResultFilters()
         {
             string memberIdUrl = $"memberId={gameResultPlayerComboBoxFilter.SelectedValue}";
@@ -384,6 +393,35 @@ namespace TennisClub.UI
         /*
          * CRUD
          */
+        private bool CreateMember(MemberReadDTO memberItem)
+        {
+            MemberCreateDTO newMember = new MemberCreateDTO
+            {
+                Addition = memberItem.Addition,
+                Address = memberItem.Address,
+                BirthDate = memberItem.BirthDate,
+                City = memberItem.City,
+                FederationNr = memberItem.FederationNr,
+                FirstName = memberItem.FirstName,
+                GenderId = memberItem.GenderId,
+                LastName = memberItem.LastName,
+                Number = memberItem.Number,
+                PhoneNr = memberItem.PhoneNr,
+                Zipcode = memberItem.Zipcode
+            };
+            Task<HttpResponseMessage> response = WebAPI.PostCall("members", newMember);
+
+            if (response.Result.StatusCode == HttpStatusCode.Created)
+            {
+                Debug.WriteLine($"{newMember.FirstName + " " + newMember.LastName} is toegevoegd!");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine($"Er is iets foutgelopen.");
+                return false;
+            }
+        }
 
         private bool ReadMembers()
         {
@@ -423,24 +461,45 @@ namespace TennisClub.UI
             }
         }
 
-        private string GetMemberFilters()
+        private bool UpdateMember(int id, MemberUpdateDTO memberUpdateDTO)
         {
-            string federationNrUrl = $"federationNr={memberFilterFederationNr.Text}";
-            string lastNameUrl = $"lastName={memberFilterLastName.Text}";
-            string firstNameUrl = $"firstName={memberFilterFirstName.Text}";
-            string locationUrl = $"location={memberFilterLocation.Text}";
-            return $"{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}";
+            Task<HttpResponseMessage> result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
+
+            if (result.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine("Updated!");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("Niet gelukt!");
+                return false;
+            }
+        }
+
+        private bool DeleteMember(int id)
+        {
+            Task<HttpResponseMessage> response = WebAPI.DeleteCall($"members/{id}");
+
+            if (response.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine($"{id} is verwijderd.");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine($"Er is iets foutgelopen.");
+                return false;
+            }
         }
 
         /*
          * Event Handlers
          */
-
         private void SearchFilteredMembers_Click(object sender, RoutedEventArgs e)
         {
             ReadMembers();
         }
-
 
         private void MemberData_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
@@ -466,25 +525,46 @@ namespace TennisClub.UI
             }
         }
 
-        private MemberReadDTO GetSelectedMember()
-        {
-            if (MemberData.SelectedItem.IsNull())
-            {
-                return null;
-            }
-
-            return (MemberReadDTO)MemberData.SelectedItem;
-        }
-
         private void SyncMembersButton_Click(object sender, RoutedEventArgs e)
         {
             SynchroniseMemberTable();
         }
 
+        private void GetMembersButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReadMembers();
+        }
+
+        private void ClearMemberFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            memberFilterFederationNr.Text = "";
+            memberFilterLastName.Text = "";
+            memberFilterFirstName.Text = "";
+            memberFilterLocation.Text = "";
+            ReadMembers();
+        }
+
+        private void MemberGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MemberReadDTO member = GetSelectedMember();
+
+            if (member.IsNull())
+            {
+                return;
+            }
+
+            member.GenderName = memberGender.Text;
+            member.GenderId = (int)memberGender.SelectedValue;
+            MemberData.Items.Refresh();
+        }
+
+        /*
+         * Methods
+         */
         private void SynchroniseMemberTable()
         {
             bool isSucceeded = false;
-            List<MemberReadDTO> datagrid = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+
             for (int i = 0; i < MemberData.Items.Count; i++)
             {
                 object item = MemberData.Items[i];
@@ -525,94 +605,23 @@ namespace TennisClub.UI
             }
         }
 
-        private bool DeleteMember(int id)
+        private string GetMemberFilters()
         {
-            Task<HttpResponseMessage> response = WebAPI.DeleteCall($"members/{id}");
-
-            if (response.Result.StatusCode == HttpStatusCode.NoContent)
-            {
-                Debug.WriteLine($"{id} is verwijderd.");
-                return true;
-            }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
-                return false;
-            }
+            string federationNrUrl = $"federationNr={memberFilterFederationNr.Text}";
+            string lastNameUrl = $"lastName={memberFilterLastName.Text}";
+            string firstNameUrl = $"firstName={memberFilterFirstName.Text}";
+            string locationUrl = $"location={memberFilterLocation.Text}";
+            return $"{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}";
         }
 
-        private bool UpdateMember(int id, MemberUpdateDTO memberUpdateDTO)
+        private MemberReadDTO GetSelectedMember()
         {
-            Task<HttpResponseMessage> result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
-
-            if (result.Result.StatusCode == HttpStatusCode.NoContent)
+            if (MemberData.SelectedItem.IsNull())
             {
-                Debug.WriteLine("Updated!");
-                return true;
-            }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
-        }
-
-        private bool CreateMember(MemberReadDTO memberItem)
-        {
-            MemberCreateDTO newMember = new MemberCreateDTO
-            {
-                Addition = memberItem.Addition,
-                Address = memberItem.Address,
-                BirthDate = memberItem.BirthDate,
-                City = memberItem.City,
-                FederationNr = memberItem.FederationNr,
-                FirstName = memberItem.FirstName,
-                GenderId = memberItem.GenderId,
-                LastName = memberItem.LastName,
-                Number = memberItem.Number,
-                PhoneNr = memberItem.PhoneNr,
-                Zipcode = memberItem.Zipcode
-            };
-            Task<HttpResponseMessage> response = WebAPI.PostCall("members", newMember);
-
-            if (response.Result.StatusCode == HttpStatusCode.Created)
-            {
-                Debug.WriteLine($"{newMember.FirstName + " " + newMember.LastName} is toegevoegd!");
-                return true;
-            }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
-                return false;
-            }
-        }
-
-        private void GetMembersButton_Click(object sender, RoutedEventArgs e)
-        {
-            ReadMembers();
-        }
-
-        private void ClearMemberFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            memberFilterFederationNr.Text = "";
-            memberFilterLastName.Text = "";
-            memberFilterFirstName.Text = "";
-            memberFilterLocation.Text = "";
-            ReadMembers();
-        }
-
-        private void MemberGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MemberReadDTO member = GetSelectedMember();
-
-            if (member.IsNull())
-            {
-                return;
+                return null;
             }
 
-            member.GenderName = memberGender.Text;
-            member.GenderId = (int)memberGender.SelectedValue;
-            MemberData.Items.Refresh();
+            return (MemberReadDTO)MemberData.SelectedItem;
         }
 
         private void MemberFirstName_KeyDown(object sender, KeyEventArgs e)
@@ -786,11 +795,18 @@ namespace TennisClub.UI
         #endregion
 
         #region MemberRoles
+
+        /*
+         * CRUD
+         */
         private void ReadMemberRoles()
         {
             throw new NotImplementedException();
         }
 
+        /*
+         * Event Handlers
+         */
         private void ClearMemberRoleFilterButton_Click(object sender, RoutedEventArgs e)
         {
             memberRoleMemberFilter.SelectedItem = null;
@@ -800,22 +816,69 @@ namespace TennisClub.UI
 
         private void GetMemberRolesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ReadMemberRoles();
         }
 
-        private void syncMemberRolesButton_Click(object sender, RoutedEventArgs e)
+        private void SyncMemberRolesButton_Click(object sender, RoutedEventArgs e)
+        {
+            SynchroniseMemberRoleTable();
+        }
+
+        private void AddMemberRoleButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void addMemberRoleButton_Click(object sender, RoutedEventArgs e)
+        private void FilterMemberRolesButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void filterMemberRolesButton_Click(object sender, RoutedEventArgs e)
+        /*
+         * Methods
+         */
+        private void SynchroniseMemberRoleTable()
         {
+            bool isSucceeded = false;
 
+            for (int i = 0; i < MemberData.Items.Count; i++)
+            {
+                object item = MemberData.Items[i];
+                MemberReadDTO memberItem = (MemberReadDTO)item;
+                MemberReadDTO originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
+
+                if (originalItem != null && memberItem == null)
+                {
+                    isSucceeded = DeleteMember(originalItem.Id);
+                }
+                else if (originalItem == null && memberItem != null)
+                {
+                    isSucceeded = CreateMember(memberItem);
+                }
+                else if (!originalItem.Equals(memberItem))
+                {
+                    isSucceeded = UpdateMember(originalItem.Id, new MemberUpdateDTO { Addition = memberItem.Addition, Address = memberItem.Address, BirthDate = memberItem.BirthDate, City = memberItem.City, FederationNr = memberItem.FederationNr, FirstName = memberItem.FirstName, GenderId = memberItem.GenderId, LastName = memberItem.LastName, Number = memberItem.Number, PhoneNr = memberItem.PhoneNr, Zipcode = memberItem.Zipcode });
+                }
+                else
+                {
+                    isSucceeded = true;
+                }
+
+                if (!isSucceeded)
+                {
+                    break;
+                }
+            }
+
+            if (isSucceeded)
+            {
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
+                ReadMembers();
+            }
+            else
+            {
+                MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
+            }
         }
 
         #endregion

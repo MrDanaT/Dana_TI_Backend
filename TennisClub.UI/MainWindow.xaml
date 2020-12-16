@@ -247,8 +247,9 @@
                     </DockPanel>
                     <DockPanel>
                         <ListBox x:Name="memberRoleRolesFilter" Width="75" SelectionMode="Multiple" />
-                        <ComboBox Width="75" Margin="270,0" x:Name="memberRoleMemberFilter" />
-                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMemberRolesButton" Click="filterMemberRolesButton_Click" >Filter</Button>
+                        <Label Margin="125,0">Of</Label>
+                        <ComboBox Width="75" x:Name="memberRoleMemberFilter" />
+                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMemberRolesButton" Click="FilterMemberRolesButton_Click" >Filter</Button>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
@@ -279,20 +280,20 @@
                                 </StackPanel>
                                 <StackPanel Margin="5,0">
                                     <Label >Startdatum</Label>
-                                    <DatePicker x:Name="memberRoleStartDate"/>
+                                    <DatePicker x:Name="memberRoleStartDate" Width="125" />
                                 </StackPanel>
                                 <StackPanel Margin="5,0">
                                     <Label>Einddatum</Label>
-                                    <DatePicker HorizontalAlignment="Left" Width="100" x:Name="memberRoleEndDate"/>
+                                    <DatePicker x:Name="memberRoleEndDate" Width="125"/>
                                 </StackPanel>
                             </DockPanel>
                         </DockPanel>
                         <StackPanel>
                             <DockPanel>
-                                <Button x:Name="addMemberRoleButton" Width="80" Height="35" Margin="0,5" Click="addMemberRoleButton_Click">Voeg toe</Button>
+                                <Button x:Name="addMemberRoleButton" Width="80" Height="35" Margin="0,5" Click="AddMemberRoleButton_Click">Voeg toe</Button>
                             </DockPanel>
                             <DockPanel>
-                                <Button x:Name="syncMemberRolesButton" Width="80" Height="35" Click="syncMemberRolesButton_Click">Sync.</Button>
+                                <Button x:Name="syncMemberRolesButton" Width="80" Height="35" Click="SyncMemberRolesButton_Click">Sync.</Button>
                             </DockPanel>
                         </StackPanel>
                     </DockPanel>
