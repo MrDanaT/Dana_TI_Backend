@@ -786,5 +786,10 @@ namespace TennisClub.UI
                 MemberData.Items.Refresh();
             }
         }
+
+        private void filterMemberRolesButton_Click()
+        {
+
+        }
     }
 }
