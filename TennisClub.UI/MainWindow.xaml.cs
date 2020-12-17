@@ -805,7 +805,8 @@ namespace TennisClub.UI
         {
             throw new NotImplementedException();
         }
-        private void ReadMemberRoles()
+
+        private bool ReadMemberRoles()
         {
             Task<HttpResponseMessage> result = WebAPI.GetCall($"memberroles?{GetMemberRoleFilters()}");
             DataGrid itemsControl = GameResultData;
