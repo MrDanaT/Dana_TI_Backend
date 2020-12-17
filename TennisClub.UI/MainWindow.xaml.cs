@@ -88,6 +88,7 @@ namespace TennisClub.UI
                     tmp2.Add(new RoleReadDTO { Id = item.Id, Name = item.Name });
                 });
                 originalRoleList = tmp2;
+                memberRoleRolesFilter.ItemsSource = tmp2;
 
                 return true;
             }
@@ -452,6 +453,7 @@ namespace TennisClub.UI
                     });
                 });
                 originalMemberList = tmp2;
+                memberRoleMemberFilter.ItemsSource = tmp2;
                 return true;
             }
             else
@@ -803,12 +805,29 @@ namespace TennisClub.UI
          */
         private bool CreateMemberRole(MemberRoleReadDTO memberRoleItem)
         {
-            throw new NotImplementedException();
+            MemberRoleCreateDTO newMemberRole = new MemberRoleCreateDTO
+            {
+                MemberId = memberRoleItem.MemberId,
+                RoleId = memberRoleItem.RoleId,
+                StartDate = memberRoleItem.StartDate
+            };
+            Task<HttpResponseMessage> response = WebAPI.PostCall("memberroles", newMemberRole);
+
+            if (response.Result.StatusCode == HttpStatusCode.Created)
+            {
+                Debug.WriteLine($"({newMemberRole.MemberId}-{newMemberRole.RoleId}) is toegevoegd!");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine($"Er is iets foutgelopen.");
+                return false;
+            }
         }
 
         private bool ReadMemberRoles()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall($"memberroles?{GetMemberRoleFilters()}");
+            Task<HttpResponseMessage> result = WebAPI.GetCall($"memberroles{GetMemberRoleFilters()}");
             DataGrid itemsControl = GameResultData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
@@ -839,12 +858,18 @@ namespace TennisClub.UI
 
         private bool UpdateMemberRole(int id, MemberRoleUpdateDTO memberRoleUpdateDTO)
         {
-            throw new NotImplementedException();
-        }
+            Task<HttpResponseMessage> result = WebAPI.PutCall($"memberroles/{id}", memberRoleUpdateDTO);
 
-        private bool DeleteMemberRole(int id)
-        {
-            throw new NotImplementedException();
+            if (result.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine("Updated!");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("Niet gelukt!");
+                return false;
+            }
         }
 
         /*
@@ -877,6 +902,16 @@ namespace TennisClub.UI
 
         }
 
+        private void memberRoleMemberFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            memberRoleRolesFilter.Items.Clear();
+        }
+
+        private void memberRoleRolesFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            memberRoleMemberFilter.SelectedItem = null;
+        }
+
         /*
          * Methods
          */
@@ -892,7 +927,7 @@ namespace TennisClub.UI
 
                 if (originalItem != null && memberRoleItem == null)
                 {
-                    isSucceeded = DeleteMemberRole(originalItem.Id);
+                    //
                 }
                 else if (originalItem == null && memberRoleItem != null)
                 {

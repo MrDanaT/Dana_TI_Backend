@@ -236,25 +236,26 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="1" Grid.Column="1">
+                <DockPanel Grid.Row="1" Grid.Column="1">
                     <DockPanel>
                         <Label>Filteren</Label>
                     </DockPanel>
-                    <DockPanel>
-                        <Label>Rollen</Label>
-                        <Label Margin="300,0">Lid</Label>
-                        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" x:Name="clearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">Clear</Button>
-                    </DockPanel>
-                    <DockPanel>
-                        <ListBox x:Name="memberRoleRolesFilter" Width="75" SelectionMode="Multiple" />
-                        <Label Margin="125,0">Of</Label>
-                        <ComboBox Width="75" x:Name="memberRoleMemberFilter" />
-                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMemberRolesButton" Click="FilterMemberRolesButton_Click" >Filter</Button>
-                    </DockPanel>
-                </StackPanel>
+                    <StackPanel Margin="300,0,0,0">
+                        <Label Width="125" >Lid</Label>
+                        <ComboBox  Width="125"  SelectionChanged="memberRoleMemberFilter_SelectionChanged" x:Name="memberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="clearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">Clear</Button>
+                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="filterMemberRolesButton" Click="FilterMemberRolesButton_Click" >Filter</Button>
+                    </StackPanel>
+                </DockPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
-                    <DockPanel>
-                        <DataGrid Margin="0,10" Height="210" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="True" AutoGenerateColumns="False">
+                    <DockPanel Height="255">
+                        <StackPanel Margin="5,0">
+                            <Label Width="125" VerticalAlignment="Top">Rollen</Label>
+                            <ListBox Width="125" Height="250" SelectionChanged="memberRoleRolesFilter_SelectionChanged" x:Name="memberRoleRolesFilter" SelectionMode="Multiple" SelectedValue="{Binding RoleReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                        </StackPanel>
+                        <DataGrid Height="255" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                                 <DataGridTextColumn Header="Lid" Binding="{Binding MemberFullName, UpdateSourceTrigger=PropertyChanged}" />
@@ -270,19 +271,19 @@
                         </DockPanel>
                         <DockPanel Margin="10,0">
                             <DockPanel Width="610">
-                                <StackPanel>
+                                <StackPanel VerticalAlignment="Center">
                                     <Label Width="125">Lid</Label>
                                     <ComboBox x:Name="memberRoleMember" Width="125"/>
                                 </StackPanel>
-                                <StackPanel Width="100" Margin="5,0">
+                                <StackPanel Width="100" Margin="5,0" VerticalAlignment="Center">
                                     <Label>Rol</Label>
                                     <ComboBox x:Name="memberRoleRoles" Width="100"/>
                                 </StackPanel>
-                                <StackPanel Margin="5,0">
+                                <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label Width="125">Startdatum</Label>
                                     <DatePicker x:Name="memberRoleStartDate" Width="125" />
                                 </StackPanel>
-                                <StackPanel Margin="5,0">
+                                <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label HorizontalAlignment="Left" Width="125">Einddatum</Label>
                                     <DatePicker HorizontalAlignment="Left" x:Name="memberRoleEndDate" Width="125"/>
                                 </StackPanel>
