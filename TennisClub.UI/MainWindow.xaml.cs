@@ -42,6 +42,7 @@ namespace TennisClub.UI
             ReadGenders();
             ReadLeagues();
             ReadGameResults();
+            ReadMemberRoles();
 
             gameResultPlayerComboBoxFilter.ItemsSource = originalMemberList;
         }
@@ -828,25 +829,27 @@ namespace TennisClub.UI
         private bool ReadMemberRoles()
         {
             Task<HttpResponseMessage> result = WebAPI.GetCall($"memberroles{GetMemberRoleFilters()}");
-            DataGrid itemsControl = GameResultData;
+            DataGrid itemsControl = MemberRoleData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<GameResultReadDTO> tmp = result.Result.Content.ReadAsAsync<List<GameResultReadDTO>>().Result; ;
+                List<MemberRoleReadDTO> tmp = result.Result.Content.ReadAsAsync<List<MemberRoleReadDTO>>().Result; ;
                 itemsControl.ItemsSource = tmp;
-                List<GameResultReadDTO> tmp2 = new List<GameResultReadDTO>(tmp.Count);
+                List<MemberRoleReadDTO> tmp2 = new List<MemberRoleReadDTO>(tmp.Count);
                 tmp.ForEach((item) =>
                 {
-                    tmp2.Add(new GameResultReadDTO
+                    tmp2.Add(new MemberRoleReadDTO
                     {
                         Id = item.Id,
-                        GameId = item.GameId,
-                        ScoreOpponent = item.ScoreOpponent,
-                        ScoreTeamMember = item.ScoreTeamMember,
-                        SetNr = item.SetNr
+                        EndDate = item.EndDate,
+                        MemberFullName = item.MemberFullName,
+                        MemberId = item.MemberId,
+                        RoleId = item.RoleId,
+                        RoleName = item.RoleName,
+                        StartDate = item.StartDate
                     });
                 });
-                originalGameResultList = tmp2;
+                originalMemberRoleList = tmp2;
                 return true;
             }
             else
@@ -878,7 +881,7 @@ namespace TennisClub.UI
         private void ClearMemberRoleFilterButton_Click(object sender, RoutedEventArgs e)
         {
             memberRoleMemberFilter.SelectedItem = null;
-            memberRoleRolesFilter.SelectedItems.Clear();
+            memberRoleRolesFilter.UnselectAll();
             ReadMemberRoles();
         }
 
@@ -899,15 +902,15 @@ namespace TennisClub.UI
 
         private void FilterMemberRolesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ReadMemberRoles();
         }
 
-        private void memberRoleMemberFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MemberRoleMemberFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            memberRoleRolesFilter.Items.Clear();
+            memberRoleRolesFilter.UnselectAll();
         }
 
-        private void memberRoleRolesFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MemberRoleRolesFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             memberRoleMemberFilter.SelectedItem = null;
         }
@@ -961,7 +964,14 @@ namespace TennisClub.UI
 
         private string GetMemberRoleFilters()
         {
-            throw new NotImplementedException();
+            var result = "";
+
+            if (memberRoleMemberFilter.SelectedItem != null)
+            {
+                result += $"/bymemberid/{memberRoleMemberFilter.SelectedValue}";
+            }
+
+            return result;
         }
 
         #endregion

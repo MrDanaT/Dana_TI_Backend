@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TennisClub" 
-        Height="465" Width="820" 
-        MinHeight="465" MinWidth="820"
+        Height="475" Width="835" 
+        MinHeight="475" MinWidth="835"
         ResizeMode="NoResize">
     <TabControl>
         <TabItem Header="Rollen">
@@ -242,7 +242,7 @@
                     </DockPanel>
                     <StackPanel Margin="300,0,0,0">
                         <Label Width="125" >Lid</Label>
-                        <ComboBox  Width="125"  SelectionChanged="memberRoleMemberFilter_SelectionChanged" x:Name="memberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
+                        <ComboBox  Width="125"  SelectionChanged="MemberRoleMemberFilter_SelectionChanged" x:Name="memberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
                     </StackPanel>
                     <StackPanel>
                         <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="clearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">Clear</Button>
@@ -250,12 +250,12 @@
                     </StackPanel>
                 </DockPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
-                    <DockPanel Height="255">
+                    <DockPanel Height="225">
                         <StackPanel Margin="5,0">
                             <Label Width="125" VerticalAlignment="Top">Rollen</Label>
-                            <ListBox Width="125" Height="250" SelectionChanged="memberRoleRolesFilter_SelectionChanged" x:Name="memberRoleRolesFilter" SelectionMode="Multiple" SelectedValue="{Binding RoleReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                            <ListBox Width="125" Height="200" SelectionChanged="MemberRoleRolesFilter_SelectionChanged" x:Name="memberRoleRolesFilter" SelectionMode="Multiple" SelectedValue="{Binding RoleReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
                         </StackPanel>
-                        <DataGrid Height="255" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                        <DataGrid Height="225" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                                 <DataGridTextColumn Header="Lid" Binding="{Binding MemberFullName, UpdateSourceTrigger=PropertyChanged}" />
@@ -265,7 +265,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
-                    <DockPanel>
+                    <DockPanel Margin="0,20">
                         <DockPanel>
                             <Button x:Name="getMemberRolesButton" Width="80" Height="35" Click="GetMemberRolesButton_Click">Refresh Data</Button>
                         </DockPanel>
@@ -289,13 +289,9 @@
                                 </StackPanel>
                             </DockPanel>
                         </DockPanel>
-                        <StackPanel>
-                            <DockPanel>
-                                <Button x:Name="addMemberRoleButton" Width="80" Height="35" Margin="0,5" Click="AddMemberRoleButton_Click">Voeg toe</Button>
-                            </DockPanel>
-                            <DockPanel>
-                                <Button x:Name="syncMemberRolesButton" Width="80" Height="35" Click="SyncMemberRolesButton_Click">Sync.</Button>
-                            </DockPanel>
+                        <StackPanel Margin="0,5">
+                            <Button HorizontalAlignment="Right" x:Name="addMemberRoleButton" Width="80" Height="35" Margin="0,2.5" Click="AddMemberRoleButton_Click">Voeg toe</Button>
+                            <Button HorizontalAlignment="Right" x:Name="syncMemberRolesButton" Width="80" Height="35" Margin="0,2.5"  Click="SyncMemberRolesButton_Click">Sync.</Button>
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>
