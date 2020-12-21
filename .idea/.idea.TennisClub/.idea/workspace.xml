@@ -5,7 +5,9 @@
     <projectFile>TennisClub.UI/TennisClub.UI.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="" />
+    <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,7 +30,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="settings.editor.selected.configurable" value="RiderNuGetOptionsPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected=".NET Project.TennisClub.UI">
@@ -90,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603296486124</updated>
       <workItem from="1603296505935" duration="218000" />
-      <workItem from="1608562309002" duration="700000" />
+      <workItem from="1608562309002" duration="1227000" />
     </task>
     <servers />
   </component>
