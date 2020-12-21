@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TennisClub.API;
 using TennisClub.BL;
 using TennisClub.DAL;
 
-namespace TennisClub
+namespace TennisClub.API
 {
     public class Startup
     {

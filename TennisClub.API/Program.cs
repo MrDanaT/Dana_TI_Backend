@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using TennisClub.DAL;
 
-namespace TennisClub
+namespace TennisClub.API
 {
     public class Program
     {
