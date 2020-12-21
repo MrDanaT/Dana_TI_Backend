@@ -12,7 +12,7 @@ namespace TennisClub.BL
 {
     public static class BLExtension
     {
-        public static IServiceCollection AddServices(this IServiceCollection services)
+        public static void AddServices(this IServiceCollection services)
         {
             services.AddTransient<IGameResultService, GameResultService>();
             services.AddTransient<IGameService, GameService>();
@@ -22,7 +22,6 @@ namespace TennisClub.BL
             services.AddTransient<IMemberRoleService, MemberRoleService>();
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<IRoleService, RoleService>();
-            return services;
         }
     }
 }

@@ -5,14 +5,12 @@ namespace TennisClub.API
 {
     public static class APIExtension
     {
-        public static IServiceCollection AddAPIControllers(this IServiceCollection services)
+        public static void AddAPIControllers(this IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
-
-            return services;
         }
     }
 }

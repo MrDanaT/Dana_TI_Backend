@@ -8,22 +8,19 @@ namespace TennisClub.DAL
 {
     public static class DALExtension
     {
-        public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
+        public static void AddUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            return services;
         }
 
-        public static IServiceCollection RegisterContext(this IServiceCollection services, string connectionString)
+        public static void RegisterContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<TennisClubContext>(opt => opt.UseSqlServer(connectionString));
-            return services;
         }
 
-        public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
+        public static void RegisterAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            return services;
         }
     }
 }

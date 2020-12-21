@@ -5,108 +5,7 @@
     <projectFile>TennisClub.UI/TennisClub.UI.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/contentModel.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/APIExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/APIExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/GameResultsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/GameResultsController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/GamesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/GamesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/GendersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/GendersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/LeaguesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/LeaguesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/MemberFinesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/MemberFinesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/MemberRolesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/MemberRolesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/MembersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/MembersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Controllers/RolesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Controllers/RolesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.API/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.API/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/BLExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/BLExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/GameResultServiceFolder/GameResultService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/GameResultServiceFolder/GameResultService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/GameResultServiceFolder/IGameResultService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/GameResultServiceFolder/IGameResultService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/GameServiceFolder/GameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/GameServiceFolder/GameService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/GameServiceFolder/IGameService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/GameServiceFolder/IGameService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/GenderServiceFolder/GenderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/GenderServiceFolder/GenderService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/GenderServiceFolder/IGenderService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/GenderServiceFolder/IGenderService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/LeagueServiceFolder/ILeagueService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/LeagueServiceFolder/ILeagueService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/LeagueServiceFolder/LeagueService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/LeagueServiceFolder/LeagueService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberFineServiceFolder/IMemberFineService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberFineServiceFolder/IMemberFineService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberFineServiceFolder/MemberFineService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberFineServiceFolder/MemberFineService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/IMemberRoleService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/IMemberRoleService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/MemberRoleService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/MemberRoleService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberServiceFolder/IMemberService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberServiceFolder/IMemberService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberServiceFolder/MemberService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberServiceFolder/MemberService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/RoleServiceFolder/IRoleService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/RoleServiceFolder/IRoleService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/RoleServiceFolder/RoleService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/RoleServiceFolder/RoleService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/BaseReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/BaseReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Game/GameCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Game/GameCreateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Game/GameReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Game/GameReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Game/GameUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Game/GameUpdateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultCreateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultUpdateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Gender/GenderReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Gender/GenderReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/League/LeagueReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/League/LeagueReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Member/MemberCreateDTO .cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Member/MemberCreateDTO .cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Member/MemberReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Member/MemberReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Member/MemberUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Member/MemberUpdateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/MemberFine/MemberFineCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/MemberFine/MemberFineCreateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/MemberFine/MemberFineReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/MemberFine/MemberFineReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/MemberFine/MemberFineUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/MemberFine/MemberFineUpdateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleCreateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleUpdateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Role/RoleCreateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Role/RoleCreateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Role/RoleReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Role/RoleReadDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Role/RoleUpdateDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Role/RoleUpdateDTO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/GameConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/GameConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/GameResultConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/GameResultConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/GenderConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/GenderConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/LeagueConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/LeagueConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/MemberConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/MemberConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/MemberFineConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/MemberFineConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/MemberRoleConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/MemberRoleConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Configurations/RoleConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Configurations/RoleConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/DALExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/DALExtension.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/DesignTimeDbContextFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/DesignTimeDbContextFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Entities/GameResult.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Entities/GameResult.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Entities/Gender.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Entities/Gender.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Entities/Member.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Entities/Member.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Entities/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Entities/Role.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GameResultsProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GameResultsProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GamesProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GamesProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GendersProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GendersProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/LeaguesProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/LeaguesProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MemberFinesProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MemberFinesProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MemberRolesProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MemberRolesProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MembersProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MembersProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/RolesProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/RolesProfile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Migrations/20201102111151_Init.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Migrations/20201102111151_Init.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Migrations/TennisClubContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Migrations/TennisClubContextModelSnapshot.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GameRepositoryFolder/GameRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GameRepositoryFolder/GameRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GameResultRepositoryFolder/GameResultRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GameResultRepositoryFolder/GameResultRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GenderRepositoryFolder/GenderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GenderRepositoryFolder/GenderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GenderRepositoryFolder/IGenderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/GenderRepositoryFolder/IGenderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/IRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/IUnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/IUnitOfWork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/LeagueRepositoryFolder/LeagueRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/LeagueRepositoryFolder/LeagueRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberFineRepositoryFolder/IMemberFineRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberFineRepositoryFolder/IMemberFineRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberFineRepositoryFolder/MemberFineRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberFineRepositoryFolder/MemberFineRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRepositoryFolder/IMemberRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRepositoryFolder/IMemberRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRepositoryFolder/MemberRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRepositoryFolder/MemberRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRoleRepositoryFolder/IMemberRoleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRoleRepositoryFolder/IMemberRoleRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRoleRepositoryFolder/MemberRoleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/MemberRoleRepositoryFolder/MemberRoleRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/Repository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/Repository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/RoleRepositoryFolder/IRoleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/RoleRepositoryFolder/IRoleRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/RoleRepositoryFolder/RoleRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/RoleRepositoryFolder/RoleRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/Repositories/UnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/Repositories/UnitOfWork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/TennisClubContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/TennisClubContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/App.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/Validations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/Validations.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/WebAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/WebAPI.cs" afterDir="false" />
-    </list>
+    <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,7 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603296486124</updated>
       <workItem from="1603296505935" duration="218000" />
-      <workItem from="1608562309002" duration="302000" />
+      <workItem from="1608562309002" duration="700000" />
     </task>
     <servers />
   </component>
@@ -202,11 +101,5 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="363" y="105" key="SettingsEditor" timestamp="1603296544431">
-      <screen x="0" y="0" width="1707" height="920" />
-    </state>
-    <state x="363" y="105" key="SettingsEditor/0.0.1707.920@0.0.1707.920" timestamp="1603296544431" />
   </component>
 </project>
