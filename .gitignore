@@ -353,4 +353,4 @@ MigrationBackup/
 .ionide/
 
 # IntelliJ UI's
-.idea
+.idea/
