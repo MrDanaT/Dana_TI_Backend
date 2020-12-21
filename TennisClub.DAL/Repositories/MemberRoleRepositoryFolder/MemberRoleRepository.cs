@@ -21,16 +21,16 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
         private TennisClubContext TennisClubContext => Context;
 
 
-        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoles(List<RoleReadDTO> roles)
+        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(int[] roleIds)
         {
-            if (roles == null) throw new ArgumentNullException();
+            if (roleIds == null) throw new ArgumentNullException();
 
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             var itemsFromDB = TennisClubContext.MemberRoles
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
-                .Where(mr => roles.Any(r => r.Id == mr.MemberId));
+                .Where(mr => roleIds.Any(r => r == mr.MemberId));
 
             return _mapper.Map<IEnumerable<MemberRoleReadDTO>>(itemsFromDB);
         }

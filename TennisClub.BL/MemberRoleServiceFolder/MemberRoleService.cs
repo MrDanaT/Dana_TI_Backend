@@ -44,10 +44,10 @@ namespace TennisClub.BL.MemberRoleServiceFolder
             return roleItems;
         }
 
-        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoles(List<RoleReadDTO> roles)
+        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(int[] roleIds)
         {
             // TODO: Dit nakijken samen met repository.
-            var memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoles(roles);
+            var memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoleIds(roleIds);
 
             return memberItems;
         }

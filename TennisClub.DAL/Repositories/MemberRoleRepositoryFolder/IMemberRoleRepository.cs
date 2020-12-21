@@ -7,7 +7,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 {
     public interface IMemberRoleRepository : IRepository<MemberRoleCreateDTO, MemberRoleReadDTO, MemberRoleUpdateDTO>
     {
-        IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoles(List<RoleReadDTO> roles);
+        IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(int[] roleIds);
         IEnumerable<MemberRoleReadDTO> GetMemberRolesByMember(MemberReadDTO member);
     }
 }
