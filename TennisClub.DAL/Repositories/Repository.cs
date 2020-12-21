@@ -18,7 +18,7 @@ namespace TennisClub.DAL.Repositories
         protected readonly IMapper _mapper;
         protected readonly TennisClubContext Context;
 
-        public Repository(TennisClubContext context, IMapper mapper)
+        protected Repository(TennisClubContext context, IMapper mapper)
         {
             Context = context;
             _mapper = mapper;
