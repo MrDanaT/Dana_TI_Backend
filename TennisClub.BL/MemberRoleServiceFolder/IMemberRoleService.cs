@@ -11,7 +11,7 @@ namespace TennisClub.BL.MemberRoleServiceFolder
         MemberRoleReadDTO GetMemberRoleById(int id);
         MemberRoleReadDTO CreateMemberRole(MemberRoleCreateDTO memberRoleCreateDTO);
         void UpdateMemberRole(int id, MemberRoleUpdateDTO updateDTO);
-        IEnumerable<RoleReadDTO> GetRolesByMemberId(int id);
-        IEnumerable<MemberReadDTO> GetMembersByRoles(List<RoleReadDTO> roleCreateDTOs);
+        IEnumerable<MemberRoleReadDTO> GetMemberRolesByMemberId(int id);
+        IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoles(List<RoleReadDTO> roleCreateDTOs);
     }
 }

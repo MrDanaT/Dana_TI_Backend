@@ -18,7 +18,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
 
 
-        public IEnumerable<MemberReadDTO> GetMembersByRoles(List<RoleReadDTO> roles)
+        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoles(List<RoleReadDTO> roles)
         {
             if (roles == null)
             {
@@ -26,15 +26,16 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
             }
 
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            IQueryable<Member> members = TennisClubContext.MemberRoles
-                .AsNoTracking()
-                .Where(mr => roles.Any(r => r.Id == mr.MemberId))
-                .Select(mr => mr.MemberNavigation);
+            IQueryable<MemberRole> itemsFromDB = TennisClubContext.MemberRoles
+                    .AsNoTracking()
+                    .Include(x => x.MemberNavigation)
+                    .Include(x => x.RoleNavigation)
+                    .Where(mr => roles.Any(r => r.Id == mr.MemberId));
 
-            return _mapper.Map<IEnumerable<MemberReadDTO>>(members);
+            return _mapper.Map<IEnumerable<MemberRoleReadDTO>>(itemsFromDB);
         }
 
-        public IEnumerable<RoleReadDTO> GetRolesByMember(MemberReadDTO member)
+        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByMember(MemberReadDTO member)
         {
             if (member == null)
             {
@@ -42,12 +43,13 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
             }
 
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            IQueryable<Role> roles = TennisClubContext.MemberRoles
-                .AsNoTracking()
-                .Where(mr => mr.MemberId == member.Id)
-                .Select(mr => mr.RoleNavigation);
+            IQueryable<MemberRole> itemsFromDB = TennisClubContext.MemberRoles
+                    .AsNoTracking()
+                    .Include(x => x.MemberNavigation)
+                    .Include(x => x.RoleNavigation)
+                    .Where(mr => mr.MemberId == member.Id);
 
-            return _mapper.Map<IEnumerable<RoleReadDTO>>(roles);
+            return _mapper.Map<IEnumerable<MemberRoleReadDTO>>(itemsFromDB);
         }
 
         public override void Delete(int id)
@@ -57,7 +59,8 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public override IEnumerable<MemberRoleReadDTO> GetAll()
         {
-            List<MemberRole> itemsFromDB = TennisClubContext.MemberRoles.AsNoTracking()
+            List<MemberRole> itemsFromDB = TennisClubContext.MemberRoles
+                  .AsNoTracking()
                   .Include(x => x.MemberNavigation)
                   .Include(x => x.RoleNavigation)
                   .ToList();

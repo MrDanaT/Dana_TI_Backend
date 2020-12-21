@@ -36,19 +36,19 @@ namespace TennisClub.BL.MemberRoleServiceFolder
             return createdMemberRole;
         }
 
-        public IEnumerable<RoleReadDTO> GetRolesByMemberId(int id)
+        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByMemberId(int id)
         {
             // TODO: Dit nakijken samen met repository.
             MemberReadDTO memberFromRepo = _unitOfWork.Members.GetById(id);
-            IEnumerable<RoleReadDTO> roleItems = _unitOfWork.MemberRoles.GetRolesByMember(memberFromRepo);
+            IEnumerable<MemberRoleReadDTO> roleItems = _unitOfWork.MemberRoles.GetMemberRolesByMember(memberFromRepo);
 
             return roleItems;
         }
 
-        public IEnumerable<MemberReadDTO> GetMembersByRoles(List<RoleReadDTO> roles)
+        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoles(List<RoleReadDTO> roles)
         {
             // TODO: Dit nakijken samen met repository.
-            IEnumerable<MemberReadDTO> memberItems = _unitOfWork.MemberRoles.GetMembersByRoles(roles);
+            IEnumerable<MemberRoleReadDTO> memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoles(roles);
 
             return memberItems;
         }
