@@ -41,7 +41,7 @@ namespace TennisClub.UI
             ReadGameResults();
             ReadMemberRoles();
 
-            gameResultPlayerComboBoxFilter.ItemsSource = originalMemberList;
+            GameResultPlayerComboBoxFilter.ItemsSource = originalMemberList;
         }
 
         #region Genders
@@ -56,7 +56,7 @@ namespace TennisClub.UI
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 var tmp = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
-                memberGender.ItemsSource = tmp.ToList();
+                MemberGender.ItemsSource = tmp.ToList();
                 return true;
             }
 
@@ -110,7 +110,7 @@ namespace TennisClub.UI
                 var tmp2 = new List<RoleReadDTO>(tmp.Count);
                 tmp.ForEach(item => { tmp2.Add(new RoleReadDTO {Id = item.Id, Name = item.Name}); });
                 originalRoleList = tmp2;
-                memberRoleRolesFilter.ItemsSource = tmp2;
+                MemberRoleRolesFilter.ItemsSource = tmp2;
 
                 return true;
             }
@@ -302,8 +302,8 @@ namespace TennisClub.UI
 
         private void ClearGameResultsFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            gameResultPlayerComboBoxFilter.SelectedItem = null;
-            gameResultdatePickerFilter.SelectedDate = null;
+            GameResultPlayerComboBoxFilter.SelectedItem = null;
+            GameResultdatePickerFilter.SelectedDate = null;
             ReadGameResults();
         }
 
@@ -354,12 +354,12 @@ namespace TennisClub.UI
 
         private string GetGameResultFilters()
         {
-            var memberIdUrl = $"memberId={gameResultPlayerComboBoxFilter.SelectedValue}";
+            var memberIdUrl = $"memberId={GameResultPlayerComboBoxFilter.SelectedValue}";
             var selectedDateUrl =
-                $"date={gameResultdatePickerFilter.SelectedDate.GetValueOrDefault().ToShortDateString()}";
+                $"date={GameResultdatePickerFilter.SelectedDate.GetValueOrDefault().ToShortDateString()}";
 
             return
-                $"{(gameResultPlayerComboBoxFilter.SelectedValue != null ? memberIdUrl : "")}&{(gameResultdatePickerFilter.SelectedDate != null ? selectedDateUrl : "")}";
+                $"{(GameResultPlayerComboBoxFilter.SelectedValue != null ? memberIdUrl : "")}&{(GameResultdatePickerFilter.SelectedDate != null ? selectedDateUrl : "")}";
         }
 
         #endregion
@@ -429,7 +429,7 @@ namespace TennisClub.UI
                     });
                 });
                 originalMemberList = tmp2;
-                memberRoleMemberFilter.ItemsSource = tmp2;
+                MemberRoleMemberFilter.ItemsSource = tmp2;
                 return true;
             }
 
@@ -483,17 +483,17 @@ namespace TennisClub.UI
             var selectedItem = GetSelectedMember();
             if (!selectedItem.IsNull())
             {
-                memberAddition.Text = selectedItem.Addition;
-                memberAddress.Text = selectedItem.Address;
-                memberBirthDate.SelectedDate = selectedItem.BirthDate;
-                memberCity.Text = selectedItem.City;
-                memberFirstName.Text = selectedItem.FirstName;
-                memberGender.SelectedValue = selectedItem.GenderId;
-                memberLastName.Text = selectedItem.LastName;
-                memberNumber.Text = selectedItem.Number;
-                memberPhoneNr.Text = selectedItem.PhoneNr;
-                memberZipcode.Text = selectedItem.Zipcode;
-                memberFederationNr.Text = selectedItem.FederationNr;
+                MemberAddition.Text = selectedItem.Addition;
+                MemberAddress.Text = selectedItem.Address;
+                MemberBirthDate.SelectedDate = selectedItem.BirthDate;
+                MemberCity.Text = selectedItem.City;
+                MemberFirstName.Text = selectedItem.FirstName;
+                MemberGender.SelectedValue = selectedItem.GenderId;
+                MemberLastName.Text = selectedItem.LastName;
+                MemberNumber.Text = selectedItem.Number;
+                MemberPhoneNr.Text = selectedItem.PhoneNr;
+                MemberZipcode.Text = selectedItem.Zipcode;
+                MemberFederationNr.Text = selectedItem.FederationNr;
             }
         }
 
@@ -509,10 +509,10 @@ namespace TennisClub.UI
 
         private void ClearMemberFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            memberFilterFederationNr.Text = "";
-            memberFilterLastName.Text = "";
-            memberFilterFirstName.Text = "";
-            memberFilterLocation.Text = "";
+            MemberFilterFederationNr.Text = "";
+            MemberFilterLastName.Text = "";
+            MemberFilterFirstName.Text = "";
+            MemberFilterLocation.Text = "";
             ReadMembers();
         }
 
@@ -522,8 +522,8 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.GenderName = memberGender.Text;
-            member.GenderId = (int) memberGender.SelectedValue;
+            member.GenderName = MemberGender.Text;
+            member.GenderId = (int) MemberGender.SelectedValue;
             MemberData.Items.Refresh();
         }
 
@@ -573,12 +573,12 @@ namespace TennisClub.UI
 
         private string GetMemberFilters()
         {
-            var federationNrUrl = $"federationNr={memberFilterFederationNr.Text}";
-            var lastNameUrl = $"lastName={memberFilterLastName.Text}";
-            var firstNameUrl = $"firstName={memberFilterFirstName.Text}";
-            var locationUrl = $"location={memberFilterLocation.Text}";
+            var federationNrUrl = $"federationNr={MemberFilterFederationNr.Text}";
+            var lastNameUrl = $"lastName={MemberFilterLastName.Text}";
+            var firstNameUrl = $"firstName={MemberFilterFirstName.Text}";
+            var locationUrl = $"location={MemberFilterLocation.Text}";
             return
-                $"{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}";
+                $"{(string.IsNullOrEmpty(MemberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(MemberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(MemberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(MemberFilterLocation.Text) ? "" : locationUrl)}";
         }
 
         private MemberReadDTO GetSelectedMember()
@@ -594,7 +594,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.FirstName = memberFirstName.Text;
+            member.FirstName = MemberFirstName.Text;
             MemberData.Items.Refresh();
         }
 
@@ -604,7 +604,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.LastName = memberLastName.Text;
+            member.LastName = MemberLastName.Text;
             MemberData.Items.Refresh();
         }
 
@@ -613,7 +613,7 @@ namespace TennisClub.UI
             var member = GetSelectedMember();
 
             if (member.IsNull()) return;
-            var selectedDate = memberBirthDate.SelectedDate;
+            var selectedDate = MemberBirthDate.SelectedDate;
 
             if (selectedDate.IsNull()) return;
 
@@ -627,7 +627,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.Address = memberAddress.Text;
+            member.Address = MemberAddress.Text;
             MemberData.Items.Refresh();
         }
 
@@ -637,7 +637,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.Number = memberNumber.Text;
+            member.Number = MemberNumber.Text;
             MemberData.Items.Refresh();
         }
 
@@ -647,7 +647,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.Addition = memberAddition.Text;
+            member.Addition = MemberAddition.Text;
             MemberData.Items.Refresh();
         }
 
@@ -657,7 +657,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.Zipcode = memberZipcode.Text;
+            member.Zipcode = MemberZipcode.Text;
             MemberData.Items.Refresh();
         }
 
@@ -667,7 +667,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.City = memberCity.Text;
+            member.City = MemberCity.Text;
             MemberData.Items.Refresh();
         }
 
@@ -677,7 +677,7 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.PhoneNr = memberPhoneNr.Text;
+            member.PhoneNr = MemberPhoneNr.Text;
             MemberData.Items.Refresh();
         }
 
@@ -687,31 +687,31 @@ namespace TennisClub.UI
 
             if (member.IsNull()) return;
 
-            member.FederationNr = memberFederationNr.Text;
+            member.FederationNr = MemberFederationNr.Text;
             MemberData.Items.Refresh();
         }
 
 
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
-            var birthDate = memberBirthDate.SelectedDate;
+            var birthDate = MemberBirthDate.SelectedDate;
 
             if (birthDate != null)
             {
                 var newMember = new MemberReadDTO
                 {
-                    Addition = memberAddition.Text,
-                    Address = memberAddress.Text,
+                    Addition = MemberAddition.Text,
+                    Address = MemberAddress.Text,
                     BirthDate = birthDate.Value,
-                    City = memberCity.Text,
-                    FederationNr = memberFederationNr.Text,
-                    FirstName = memberFirstName.Text,
-                    GenderId = (int) memberGender.SelectedValue,
-                    GenderName = memberGender.Text,
-                    LastName = memberLastName.Text,
-                    Number = memberNumber.Text,
-                    PhoneNr = memberPhoneNr.Text,
-                    Zipcode = memberZipcode.Text,
+                    City = MemberCity.Text,
+                    FederationNr = MemberFederationNr.Text,
+                    FirstName = MemberFirstName.Text,
+                    GenderId = (int) MemberGender.SelectedValue,
+                    GenderName = MemberGender.Text,
+                    LastName = MemberLastName.Text,
+                    Number = MemberNumber.Text,
+                    PhoneNr = MemberPhoneNr.Text,
+                    Zipcode = MemberZipcode.Text,
                     Deleted = false
                 };
 
@@ -803,8 +803,8 @@ namespace TennisClub.UI
          */
         private void ClearMemberRoleFilterButton_Click(object sender, RoutedEventArgs e)
         {
-            memberRoleMemberFilter.SelectedItem = null;
-            memberRoleRolesFilter.UnselectAll();
+            MemberRoleMemberFilter.SelectedItem = null;
+            MemberRoleRolesFilter.UnselectAll();
             ReadMemberRoles();
         }
 
@@ -829,12 +829,12 @@ namespace TennisClub.UI
 
         private void MemberRoleMemberFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            memberRoleRolesFilter.UnselectAll();
+            MemberRoleRolesFilter.UnselectAll();
         }
 
         private void MemberRoleRolesFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            memberRoleMemberFilter.SelectedItem = null;
+            MemberRoleMemberFilter.SelectedItem = null;
         }
 
         /*
@@ -885,8 +885,8 @@ namespace TennisClub.UI
         {
             var result = "";
 
-            if (memberRoleMemberFilter.SelectedItem != null)
-                result += $"/bymemberid/{memberRoleMemberFilter.SelectedValue}";
+            if (MemberRoleMemberFilter.SelectedItem != null)
+                result += $"/bymemberid/{MemberRoleMemberFilter.SelectedValue}";
 
             return result;
         }

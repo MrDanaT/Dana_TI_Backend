@@ -37,11 +37,11 @@
                         <DataGridTextColumn Header="Naam" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="getRolesButton" Grid.Row="3" Grid.Column="1" Click="GetRolesButton_Click" Margin="2"
+                <Button x:Name="GetRolesButton" Grid.Row="3" Grid.Column="1" Click="GetRolesButton_Click" Margin="2"
                         Grid.RowSpan="2" Height="40" Width="100">
                     Refresh gegevens
                 </Button>
-                <Button x:Name="syncRolesButton" Grid.Row="3" Grid.Column="4" Click="SyncLeaguesButton_Click"
+                <Button x:Name="SyncRolesButton" Grid.Row="3" Grid.Column="4" Click="SyncLeaguesButton_Click"
                         Margin="2" Grid.RowSpan="2" Height="40" Width="100">
                     Sync.
                 </Button>
@@ -63,22 +63,22 @@
                     <DockPanel>
                         <Label>Je kan hier de wedstrijdresultaten beheren.</Label>
                         <Button Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                x:Name="clearGameResultsFilterButton" Click="ClearGameResultsFilterButton_Click">
+                                x:Name="ClearGameResultsFilterButton" Click="ClearGameResultsFilterButton_Click">
                             Clear filter
                         </Button>
                     </DockPanel>
                     <DockPanel>
                         <DockPanel>
                             <Label>Filter op datum:</Label>
-                            <DatePicker Width="150" x:Name="gameResultdatePickerFilter" />
+                            <DatePicker Width="150" x:Name="GameResultdatePickerFilter" />
                         </DockPanel>
                         <DockPanel>
                             <Label>Filter op spelernaam:</Label>
-                            <ComboBox Width="150" x:Name="gameResultPlayerComboBoxFilter"
+                            <ComboBox Width="150" x:Name="GameResultPlayerComboBoxFilter"
                                       SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName"
                                       SelectedValuePath="Id" />
                         </DockPanel>
-                        <Button HorizontalAlignment="Right" Width="100" Height="25" x:Name="searchFilteredGameResults"
+                        <Button HorizontalAlignment="Right" Width="100" Height="25" x:Name="SearchFilteredGameResults"
                                 Click="SearchFilteredGameResults_Click">
                             Filter
                         </Button>
@@ -102,11 +102,11 @@
                         </DataGrid>
                     </DockPanel>
                     <DockPanel>
-                        <Button HorizontalAlignment="Left" x:Name="getGameResultsButton"
+                        <Button HorizontalAlignment="Left" x:Name="GetGameResultsButton"
                                 Click="GetGameResultsButton_Click" Height="40" Width="100" Margin="0,5">
                             Refresh gegevens
                         </Button>
-                        <Button HorizontalAlignment="Right" x:Name="syncGameResulsButton"
+                        <Button HorizontalAlignment="Right" x:Name="SyncGameResulsButton"
                                 Click="SyncGameResulsButton_Click" Height="40" Width="100" Margin="0,5">
                             Sync.
                         </Button>
@@ -144,11 +144,11 @@
                         </DataGrid>
                     </DockPanel>
                     <DockPanel>
-                        <Button HorizontalAlignment="Left" Height="40" x:Name="getLeaguesButton"
+                        <Button HorizontalAlignment="Left" Height="40" x:Name="GetLeaguesButton"
                                 Click="GetLeaguesButton_Click" Width="100">
                             Refresh gegevens
                         </Button>
-                        <Button HorizontalAlignment="Right" x:Name="syncLeaguesButton"
+                        <Button HorizontalAlignment="Right" x:Name="SyncLeaguesButton"
                                 Click="SyncLeaguesButton_Click" Width="100">
                             Sync.
                         </Button>
@@ -181,16 +181,16 @@
                         <Label Width="75" Margin="60,0">Achternaam</Label>
                         <Label Width="90" HorizontalAlignment="Left" Margin="50,0">Postcode/stad</Label>
                         <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="50"
-                                x:Name="clearMemberFilterButton" Click="ClearMemberFilterButton_Click">
+                                x:Name="ClearMemberFilterButton" Click="ClearMemberFilterButton_Click">
                             Clear
                         </Button>
                     </DockPanel>
                     <DockPanel>
-                        <TextBox x:Name="memberFilterFederationNr" Width="60" />
-                        <TextBox x:Name="memberFilterFirstName" Width="60" Margin="60,0" />
-                        <TextBox x:Name="memberFilterLastName" Width="60" Margin="60,0" />
-                        <TextBox x:Name="memberFilterLocation" Width="60" Margin="60,0" />
-                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMembersButton"
+                        <TextBox x:Name="MemberFilterFederationNr" Width="60" />
+                        <TextBox x:Name="MemberFilterFirstName" Width="60" Margin="60,0" />
+                        <TextBox x:Name="MemberFilterLastName" Width="60" Margin="60,0" />
+                        <TextBox x:Name="MemberFilterLocation" Width="60" Margin="60,0" />
+                        <Button HorizontalAlignment="Right" Width="50" x:Name="FilterMembersButton"
                                 Click="SearchFilteredMembers_Click">
                             Filter
                         </Button>
@@ -234,7 +234,7 @@
                 </StackPanel>
                 <DockPanel Grid.Row="4" Grid.Column="1">
                     <DockPanel>
-                        <Button x:Name="getMembersButton" HorizontalAlignment="Left" Width="80" Height="40"
+                        <Button x:Name="GetMembersButton" HorizontalAlignment="Left" Width="80" Height="40"
                                 Click="GetMembersButton_Click">
                             Refresh Data
                         </Button>
@@ -249,16 +249,16 @@
                                 <Label Margin="5,0" Width="125">Adres</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox MaxLength="25" KeyDown="MemberFirstName_KeyDown" x:Name="memberFirstName"
+                                <TextBox MaxLength="25" KeyDown="MemberFirstName_KeyDown" x:Name="MemberFirstName"
                                          Margin="5,0" Width="65" />
-                                <TextBox MaxLength="35" KeyDown="MemberLastName_KeyDown" x:Name="memberLastName"
+                                <TextBox MaxLength="35" KeyDown="MemberLastName_KeyDown" x:Name="MemberLastName"
                                          Margin="5,0" Width="75" />
                                 <DatePicker SelectedDateChanged="MemberBirthDate_SelectedDateChanged"
-                                            x:Name="memberBirthDate" Margin="5,0" Width="125" />
-                                <ComboBox SelectionChanged="MemberGender_SelectionChanged" x:Name="memberGender"
+                                            x:Name="MemberBirthDate" Margin="5,0" Width="125" />
+                                <ComboBox SelectionChanged="MemberGender_SelectionChanged" x:Name="MemberGender"
                                           Margin="5,0" Width="75" SelectedValue="{Binding GenderReadDTO.Id}"
                                           DisplayMemberPath="Name" SelectedValuePath="Id" />
-                                <TextBox MaxLength="70" KeyDown="MemberAddress_KeyDown" x:Name="memberAddress"
+                                <TextBox MaxLength="70" KeyDown="MemberAddress_KeyDown" x:Name="MemberAddress"
                                          Margin="5,0" Width="125" />
                             </DockPanel>
                         </StackPanel>
@@ -272,30 +272,30 @@
                                 <Label Margin="5,0">Bondsnr</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox MaxLength="6" KeyDown="MemberNumber_KeyDown" x:Name="memberNumber"
+                                <TextBox MaxLength="6" KeyDown="MemberNumber_KeyDown" x:Name="MemberNumber"
                                          Margin="5,0" Width="65" />
-                                <TextBox MaxLength="2" KeyDown="MemberAddition_KeyDown" x:Name="memberAddition"
+                                <TextBox MaxLength="2" KeyDown="MemberAddition_KeyDown" x:Name="MemberAddition"
                                          Margin="5,0" Width="75" />
-                                <TextBox MaxLength="6" KeyDown="MemberZipcode_KeyDown" x:Name="memberZipcode"
+                                <TextBox MaxLength="6" KeyDown="MemberZipcode_KeyDown" x:Name="MemberZipcode"
                                          Margin="5,0" Width="125" />
-                                <TextBox MaxLength="30" KeyDown="MemberCity_KeyDown" x:Name="memberCity" Margin="5,0"
+                                <TextBox MaxLength="30" KeyDown="MemberCity_KeyDown" x:Name="MemberCity" Margin="5,0"
                                          Width="75" />
-                                <TextBox MaxLength="15" KeyDown="MemberPhoneNr_KeyDown" x:Name="memberPhoneNr"
+                                <TextBox MaxLength="15" KeyDown="MemberPhoneNr_KeyDown" x:Name="MemberPhoneNr"
                                          Margin="5,0" Width="60" />
                                 <TextBox MaxLength="10" KeyDown="MemberFederationNr_KeyDown"
-                                         x:Name="memberFederationNr" Margin="5,0" />
+                                         x:Name="MemberFederationNr" Margin="5,0" />
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel>
                         <DockPanel>
-                            <Button x:Name="addMemberButton" Width="80" Height="40" Margin="0,5"
+                            <Button x:Name="AddMemberButton" Width="80" Height="40" Margin="0,5"
                                     Click="AddMemberButton_Click">
                                 Voeg toe
                             </Button>
                         </DockPanel>
                         <DockPanel>
-                            <Button x:Name="syncMembersButton" Width="80" Height="40" Click="SyncMembersButton_Click">Sync.</Button>
+                            <Button x:Name="SyncMembersButton" Width="80" Height="40" Click="SyncMembersButton_Click">Sync.</Button>
                         </DockPanel>
                     </StackPanel>
                 </DockPanel>
@@ -323,15 +323,15 @@
                     <StackPanel Margin="300,0,0,0">
                         <Label Width="125">Lid</Label>
                         <ComboBox Width="125" SelectionChanged="MemberRoleMemberFilter_SelectionChanged"
-                                  x:Name="memberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
+                                  x:Name="MemberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
                                   DisplayMemberPath="FullName" SelectedValuePath="Id" />
                     </StackPanel>
                     <StackPanel>
                         <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50"
-                                x:Name="clearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">
+                                x:Name="ClearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">
                             Clear
                         </Button>
-                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="filterMemberRolesButton"
+                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="FilterMemberRolesButton"
                                 Click="FilterMemberRolesButton_Click">
                             Filter
                         </Button>
@@ -342,7 +342,7 @@
                         <StackPanel Margin="5,0">
                             <Label Width="125" VerticalAlignment="Top">Rollen</Label>
                             <ListBox Width="125" Height="200" SelectionChanged="MemberRoleRolesFilter_SelectionChanged"
-                                     x:Name="memberRoleRolesFilter" SelectionMode="Multiple"
+                                     x:Name="MemberRoleRolesFilter" SelectionMode="Multiple"
                                      SelectedValue="{Binding RoleReadDTO.Id}" DisplayMemberPath="Name"
                                      SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible" />
                         </StackPanel>
@@ -365,7 +365,7 @@
                     </DockPanel>
                     <DockPanel Margin="0,20">
                         <DockPanel>
-                            <Button x:Name="getMemberRolesButton" Width="80" Height="35"
+                            <Button x:Name="GetMemberRolesButton" Width="80" Height="35"
                                     Click="GetMemberRolesButton_Click">
                                 Refresh Data
                             </Button>
@@ -374,28 +374,28 @@
                             <DockPanel Width="610">
                                 <StackPanel VerticalAlignment="Center">
                                     <Label Width="125">Lid</Label>
-                                    <ComboBox x:Name="memberRoleMember" Width="125" />
+                                    <ComboBox x:Name="MemberRoleMember" Width="125" />
                                 </StackPanel>
                                 <StackPanel Width="100" Margin="5,0" VerticalAlignment="Center">
                                     <Label>Rol</Label>
-                                    <ComboBox x:Name="memberRoleRoles" Width="100" />
+                                    <ComboBox x:Name="MemberRoleRoles" Width="100" />
                                 </StackPanel>
                                 <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label Width="125">Startdatum</Label>
-                                    <DatePicker x:Name="memberRoleStartDate" Width="125" />
+                                    <DatePicker x:Name="MemberRoleStartDate" Width="125" />
                                 </StackPanel>
                                 <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label HorizontalAlignment="Left" Width="125">Einddatum</Label>
-                                    <DatePicker HorizontalAlignment="Left" x:Name="memberRoleEndDate" Width="125" />
+                                    <DatePicker HorizontalAlignment="Left" x:Name="MemberRoleEndDate" Width="125" />
                                 </StackPanel>
                             </DockPanel>
                         </DockPanel>
                         <StackPanel Margin="0,5">
-                            <Button HorizontalAlignment="Right" x:Name="addMemberRoleButton" Width="80" Height="35"
+                            <Button HorizontalAlignment="Right" x:Name="AddMemberRoleButton" Width="80" Height="35"
                                     Margin="0,2.5" Click="AddMemberRoleButton_Click">
                                 Voeg toe
                             </Button>
-                            <Button HorizontalAlignment="Right" x:Name="syncMemberRolesButton" Width="80" Height="35"
+                            <Button HorizontalAlignment="Right" x:Name="SyncMemberRolesButton" Width="80" Height="35"
                                     Margin="0,2.5" Click="SyncMemberRolesButton_Click">
                                 Sync.
                             </Button>
