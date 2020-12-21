@@ -8,6 +8,7 @@ namespace TennisClub.DAL.Entities
         {
             MemberRoles = new HashSet<MemberRole>();
         }
+
         public int Id { get; set; }
         public string Name { get; set; }
 

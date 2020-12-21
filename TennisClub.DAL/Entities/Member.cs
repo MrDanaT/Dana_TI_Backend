@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace TennisClub.DAL.Entities
@@ -32,6 +31,5 @@ namespace TennisClub.DAL.Entities
         public ICollection<MemberFine> MemberFines { get; set; }
         public ICollection<Game> Games { get; set; }
         public Gender GenderNavigation { get; set; }
-
     }
 }

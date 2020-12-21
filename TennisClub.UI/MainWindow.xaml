@@ -4,56 +4,68 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TennisClub" 
-        Height="475" Width="835" 
+        Title="TennisClub"
+        Height="475" Width="835"
         MinHeight="475" MinWidth="835"
         ResizeMode="NoResize">
     <TabControl>
         <TabItem Header="Rollen">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1" Grid.Column="1">Rol management</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">Je kan hier de rollen beheren.</TextBlock>
-                <DataGrid x:Name="RoleData" Grid.Row="2" Grid.Column="2" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="0,10" Grid.ColumnSpan="2">
+                <DataGrid x:Name="RoleData" Grid.Row="2" Grid.Column="2" AutoGenerateColumns="False"
+                          CanUserDeleteRows="False" Margin="0,10" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
+                        <DataGridTextColumn Visibility="Hidden" Header="Id"
+                                            Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
+                                            IsReadOnly="True" />
                         <DataGridTextColumn Header="Naam" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                     </DataGrid.Columns>
                 </DataGrid>
-                <Button x:Name="getRolesButton" Grid.Row="3" Grid.Column="1" Click="GetRolesButton_Click" Margin="2" Grid.RowSpan="2" Height="40" Width="100">Refresh gegevens</Button>
-                <Button x:Name="syncRolesButton" Grid.Row="3" Grid.Column="4" Click="SyncLeaguesButton_Click" Margin="2" Grid.RowSpan="2" Height="40"  Width="100">Sync.</Button>
+                <Button x:Name="getRolesButton" Grid.Row="3" Grid.Column="1" Click="GetRolesButton_Click" Margin="2"
+                        Grid.RowSpan="2" Height="40" Width="100">
+                    Refresh gegevens
+                </Button>
+                <Button x:Name="syncRolesButton" Grid.Row="3" Grid.Column="4" Click="SyncLeaguesButton_Click"
+                        Margin="2" Grid.RowSpan="2" Height="40" Width="100">
+                    Sync.
+                </Button>
             </Grid>
         </TabItem>
         <TabItem Header="Wedstrijdresultaten">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="445"/>
-                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="445" />
+                    <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <DockPanel>
                         <Label>Je kan hier de wedstrijdresultaten beheren.</Label>
-                        <Button  Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="clearGameResultsFilterButton" Click="ClearGameResultsFilterButton_Click">Clear filter</Button>
+                        <Button Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                x:Name="clearGameResultsFilterButton" Click="ClearGameResultsFilterButton_Click">
+                            Clear filter
+                        </Button>
                     </DockPanel>
                     <DockPanel>
                         <DockPanel>
@@ -62,24 +74,42 @@
                         </DockPanel>
                         <DockPanel>
                             <Label>Filter op spelernaam:</Label>
-                            <ComboBox Width="150" x:Name="gameResultPlayerComboBoxFilter" SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
+                            <ComboBox Width="150" x:Name="gameResultPlayerComboBoxFilter"
+                                      SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName"
+                                      SelectedValuePath="Id" />
                         </DockPanel>
-                        <Button HorizontalAlignment="Right" Width="100" Height="25" x:Name="searchFilteredGameResults" Click="SearchFilteredGameResults_Click">Filter</Button>
+                        <Button HorizontalAlignment="Right" Width="100" Height="25" x:Name="searchFilteredGameResults"
+                                Click="SearchFilteredGameResults_Click">
+                            Filter
+                        </Button>
                     </DockPanel>
                     <DockPanel>
-                        <DataGrid Height="300" x:Name="GameResultData" AutoGenerateColumns="False" CanUserDeleteRows="False">
+                        <DataGrid Height="300" x:Name="GameResultData" AutoGenerateColumns="False"
+                                  CanUserDeleteRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                                <DataGridTextColumn Header="Game id" Binding="{Binding GameId, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Set nr" Binding="{Binding SetNr, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Score teamlid" Binding="{Binding ScoreTeamMember, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Score tegenstander" Binding="{Binding ScoreOpponent, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Visibility="Hidden" Header="Id"
+                                                    Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Header="Game id"
+                                                    Binding="{Binding GameId, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Set nr"
+                                                    Binding="{Binding SetNr, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Score teamlid"
+                                                    Binding="{Binding ScoreTeamMember, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Score tegenstander"
+                                                    Binding="{Binding ScoreOpponent, UpdateSourceTrigger=PropertyChanged}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
                     <DockPanel>
-                        <Button HorizontalAlignment="Left" x:Name="getGameResultsButton" Click="GetGameResultsButton_Click"  Height="40" Width="100" Margin="0,5">Refresh gegevens</Button>
-                        <Button HorizontalAlignment="Right" x:Name="syncGameResulsButton" Click="SyncGameResulsButton_Click"  Height="40" Width="100" Margin="0,5">Sync.</Button>
+                        <Button HorizontalAlignment="Left" x:Name="getGameResultsButton"
+                                Click="GetGameResultsButton_Click" Height="40" Width="100" Margin="0,5">
+                            Refresh gegevens
+                        </Button>
+                        <Button HorizontalAlignment="Right" x:Name="syncGameResulsButton"
+                                Click="SyncGameResulsButton_Click" Height="40" Width="100" Margin="0,5">
+                            Sync.
+                        </Button>
                     </DockPanel>
                 </StackPanel>
             </Grid>
@@ -87,31 +117,41 @@
         <TabItem Header="Leagues">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <DockPanel>
                         <TextBlock>League management</TextBlock>
-                        <TextBlock HorizontalAlignment="Center" >Je kan hier de leagues beheren.</TextBlock>
+                        <TextBlock HorizontalAlignment="Center">Je kan hier de leagues beheren.</TextBlock>
                     </DockPanel>
                     <DockPanel>
-                        <DataGrid Height="320" x:Name="LeagueData" AutoGenerateColumns="False" CanUserDeleteRows="False" Margin="0,10">
+                        <DataGrid Height="320" x:Name="LeagueData" AutoGenerateColumns="False"
+                                  CanUserDeleteRows="False" Margin="0,10">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                                <DataGridTextColumn Header="Naam" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Visibility="Hidden" Header="Id"
+                                                    Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Header="Naam"
+                                                    Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
                     <DockPanel>
-                        <Button HorizontalAlignment="Left" Height="40" x:Name="getLeaguesButton" Grid.Row="3" Grid.Column="1" Click="GetLeaguesButton_Click" Width="100">Refresh gegevens</Button>
-                        <Button HorizontalAlignment="Right" x:Name="syncLeaguesButton" Grid.Row="3"  Grid.Column="3" Click="SyncLeaguesButton_Click" Width="100">Sync.</Button>
+                        <Button HorizontalAlignment="Left" Height="40" x:Name="getLeaguesButton"
+                                Click="GetLeaguesButton_Click" Width="100">
+                            Refresh gegevens
+                        </Button>
+                        <Button HorizontalAlignment="Right" x:Name="syncLeaguesButton"
+                                Click="SyncLeaguesButton_Click" Width="100">
+                            Sync.
+                        </Button>
                     </DockPanel>
                 </StackPanel>
             </Grid>
@@ -119,17 +159,17 @@
         <TabItem Header="Leden">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <DockPanel>
@@ -140,43 +180,68 @@
                         <Label Width="65" Margin="55,0">Voornaam</Label>
                         <Label Width="75" Margin="60,0">Achternaam</Label>
                         <Label Width="90" HorizontalAlignment="Left" Margin="50,0">Postcode/stad</Label>
-                        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" x:Name="clearMemberFilterButton" Click="ClearMemberFilterButton_Click" >Clear</Button>
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="50"
+                                x:Name="clearMemberFilterButton" Click="ClearMemberFilterButton_Click">
+                            Clear
+                        </Button>
                     </DockPanel>
                     <DockPanel>
-                        <TextBox x:Name="memberFilterFederationNr" Width="60"/>
-                        <TextBox x:Name="memberFilterFirstName" Width="60" Margin="60,0"/>
-                        <TextBox x:Name="memberFilterLastName" Width="60" Margin="60,0"/>
-                        <TextBox x:Name="memberFilterLocation" Width="60" Margin="60,0"/>
-                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMembersButton" Click="SearchFilteredMembers_Click" >Filter</Button>
+                        <TextBox x:Name="memberFilterFederationNr" Width="60" />
+                        <TextBox x:Name="memberFilterFirstName" Width="60" Margin="60,0" />
+                        <TextBox x:Name="memberFilterLastName" Width="60" Margin="60,0" />
+                        <TextBox x:Name="memberFilterLocation" Width="60" Margin="60,0" />
+                        <Button HorizontalAlignment="Right" Width="50" x:Name="filterMembersButton"
+                                Click="SearchFilteredMembers_Click">
+                            Filter
+                        </Button>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
                     <DockPanel>
-                        <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False" SelectedCellsChanged="MemberData_SelectedCellsChanged" BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True" AutoGenerateColumns="False">
+                        <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False"
+                                  SelectedCellsChanged="MemberData_SelectedCellsChanged"
+                                  BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True"
+                                  AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                                <DataGridTextColumn Header="Bondsnr" Binding="{Binding FederationNr, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Voornaam" Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Achternaam" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Geboortedatum" Binding="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Gender" Binding="{Binding GenderName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Adres" Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Nummer" Binding="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Addities" Binding="{Binding Addition, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Postcode" Binding="{Binding Zipcode, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Stad" Binding="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Telefoonnr" Binding="{Binding PhoneNr, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Visibility="Hidden" Header="Id"
+                                                    Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Header="Bondsnr"
+                                                    Binding="{Binding FederationNr, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Voornaam"
+                                                    Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Achternaam"
+                                                    Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Geboortedatum"
+                                                    Binding="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Gender"
+                                                    Binding="{Binding GenderName, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Adres"
+                                                    Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Nummer"
+                                                    Binding="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Addities"
+                                                    Binding="{Binding Addition, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Postcode"
+                                                    Binding="{Binding Zipcode, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Stad"
+                                                    Binding="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Telefoonnr"
+                                                    Binding="{Binding PhoneNr, UpdateSourceTrigger=PropertyChanged}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
                 </StackPanel>
                 <DockPanel Grid.Row="4" Grid.Column="1">
                     <DockPanel>
-                        <Button x:Name="getMembersButton" HorizontalAlignment="Left" Width="80" Height="40" Click="GetMembersButton_Click">Refresh Data</Button>
+                        <Button x:Name="getMembersButton" HorizontalAlignment="Left" Width="80" Height="40"
+                                Click="GetMembersButton_Click">
+                            Refresh Data
+                        </Button>
                     </DockPanel>
                     <StackPanel Margin="50,0">
                         <StackPanel>
-                            <DockPanel >
+                            <DockPanel>
                                 <Label Margin="5,0" Width="65">Voornaam</Label>
                                 <Label Margin="5,0" Width="75">Achternaam</Label>
                                 <Label Margin="5,0" Width="125">Geboortedatum</Label>
@@ -184,11 +249,17 @@
                                 <Label Margin="5,0" Width="125">Adres</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox MaxLength="25" KeyDown="MemberFirstName_KeyDown" x:Name="memberFirstName" Margin="5,0" Width="65"/>
-                                <TextBox MaxLength="35" KeyDown="MemberLastName_KeyDown" x:Name="memberLastName" Margin="5,0" Width="75"/>
-                                <DatePicker SelectedDateChanged="MemberBirthDate_SelectedDateChanged" x:Name="memberBirthDate" Margin="5,0" Width="125"/>
-                                <ComboBox SelectionChanged="MemberGender_SelectionChanged" x:Name="memberGender" Margin="5,0" Width="75" SelectedValue="{Binding GenderReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id"/>
-                                <TextBox MaxLength="70" KeyDown="MemberAddress_KeyDown" x:Name="memberAddress" Margin="5,0" Width="125"/>
+                                <TextBox MaxLength="25" KeyDown="MemberFirstName_KeyDown" x:Name="memberFirstName"
+                                         Margin="5,0" Width="65" />
+                                <TextBox MaxLength="35" KeyDown="MemberLastName_KeyDown" x:Name="memberLastName"
+                                         Margin="5,0" Width="75" />
+                                <DatePicker SelectedDateChanged="MemberBirthDate_SelectedDateChanged"
+                                            x:Name="memberBirthDate" Margin="5,0" Width="125" />
+                                <ComboBox SelectionChanged="MemberGender_SelectionChanged" x:Name="memberGender"
+                                          Margin="5,0" Width="75" SelectedValue="{Binding GenderReadDTO.Id}"
+                                          DisplayMemberPath="Name" SelectedValuePath="Id" />
+                                <TextBox MaxLength="70" KeyDown="MemberAddress_KeyDown" x:Name="memberAddress"
+                                         Margin="5,0" Width="125" />
                             </DockPanel>
                         </StackPanel>
                         <StackPanel>
@@ -201,83 +272,113 @@
                                 <Label Margin="5,0">Bondsnr</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox MaxLength="6" KeyDown="MemberNumber_KeyDown" x:Name="memberNumber" Margin="5,0" Width="65"/>
-                                <TextBox MaxLength="2" KeyDown="MemberAddition_KeyDown" x:Name="memberAddition" Margin="5,0" Width="75"/>
-                                <TextBox MaxLength="6" KeyDown="MemberZipcode_KeyDown" x:Name="memberZipcode" Margin="5,0" Width="125"/>
-                                <TextBox MaxLength="30" KeyDown="MemberCity_KeyDown" x:Name="memberCity" Margin="5,0" Width="75"/>
-                                <TextBox MaxLength="15" KeyDown="MemberPhoneNr_KeyDown" x:Name="memberPhoneNr" Margin="5,0" Width="60"/>
-                                <TextBox MaxLength="10" KeyDown="MemberFederationNr_KeyDown" x:Name="memberFederationNr" Margin="5,0" />
+                                <TextBox MaxLength="6" KeyDown="MemberNumber_KeyDown" x:Name="memberNumber"
+                                         Margin="5,0" Width="65" />
+                                <TextBox MaxLength="2" KeyDown="MemberAddition_KeyDown" x:Name="memberAddition"
+                                         Margin="5,0" Width="75" />
+                                <TextBox MaxLength="6" KeyDown="MemberZipcode_KeyDown" x:Name="memberZipcode"
+                                         Margin="5,0" Width="125" />
+                                <TextBox MaxLength="30" KeyDown="MemberCity_KeyDown" x:Name="memberCity" Margin="5,0"
+                                         Width="75" />
+                                <TextBox MaxLength="15" KeyDown="MemberPhoneNr_KeyDown" x:Name="memberPhoneNr"
+                                         Margin="5,0" Width="60" />
+                                <TextBox MaxLength="10" KeyDown="MemberFederationNr_KeyDown"
+                                         x:Name="memberFederationNr" Margin="5,0" />
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel>
                         <DockPanel>
-                            <Button x:Name="addMemberButton" Width="80" Height="40" Margin="0,5" Click="AddMemberButton_Click">Voeg toe</Button>
+                            <Button x:Name="addMemberButton" Width="80" Height="40" Margin="0,5"
+                                    Click="AddMemberButton_Click">
+                                Voeg toe
+                            </Button>
                         </DockPanel>
                         <DockPanel>
                             <Button x:Name="syncMembersButton" Width="80" Height="40" Click="SyncMembersButton_Click">Sync.</Button>
                         </DockPanel>
-                      </StackPanel>
+                    </StackPanel>
                 </DockPanel>
             </Grid>
         </TabItem>
         <TabItem Header="Ledenrollen">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="1" Grid.Column="1">
                     <DockPanel>
                         <Label>Filteren</Label>
                     </DockPanel>
                     <StackPanel Margin="300,0,0,0">
-                        <Label Width="125" >Lid</Label>
-                        <ComboBox  Width="125"  SelectionChanged="MemberRoleMemberFilter_SelectionChanged" x:Name="memberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName" SelectedValuePath="Id"/>
+                        <Label Width="125">Lid</Label>
+                        <ComboBox Width="125" SelectionChanged="MemberRoleMemberFilter_SelectionChanged"
+                                  x:Name="memberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
+                                  DisplayMemberPath="FullName" SelectedValuePath="Id" />
                     </StackPanel>
                     <StackPanel>
-                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="clearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">Clear</Button>
-                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="filterMemberRolesButton" Click="FilterMemberRolesButton_Click" >Filter</Button>
+                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50"
+                                x:Name="clearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">
+                            Clear
+                        </Button>
+                        <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="filterMemberRolesButton"
+                                Click="FilterMemberRolesButton_Click">
+                            Filter
+                        </Button>
                     </StackPanel>
                 </DockPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
                     <DockPanel Height="225">
                         <StackPanel Margin="5,0">
                             <Label Width="125" VerticalAlignment="Top">Rollen</Label>
-                            <ListBox Width="125" Height="200" SelectionChanged="MemberRoleRolesFilter_SelectionChanged" x:Name="memberRoleRolesFilter" SelectionMode="Multiple" SelectedValue="{Binding RoleReadDTO.Id}" DisplayMemberPath="Name" SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
+                            <ListBox Width="125" Height="200" SelectionChanged="MemberRoleRolesFilter_SelectionChanged"
+                                     x:Name="memberRoleRolesFilter" SelectionMode="Multiple"
+                                     SelectedValue="{Binding RoleReadDTO.Id}" DisplayMemberPath="Name"
+                                     SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible" />
                         </StackPanel>
-                        <DataGrid Height="225" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+                        <DataGrid Height="225" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False"
+                                  AutoGenerateColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                                <DataGridTextColumn Header="Lid" Binding="{Binding MemberFullName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Rol" Binding="{Binding RoleName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Startdatum" Binding="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Einddatum" Binding="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Visibility="Hidden" Header="Id"
+                                                    Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
+                                                    IsReadOnly="True" />
+                                <DataGridTextColumn Header="Lid"
+                                                    Binding="{Binding MemberFullName, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Rol"
+                                                    Binding="{Binding RoleName, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Startdatum"
+                                                    Binding="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}" />
+                                <DataGridTextColumn Header="Einddatum"
+                                                    Binding="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
                     <DockPanel Margin="0,20">
                         <DockPanel>
-                            <Button x:Name="getMemberRolesButton" Width="80" Height="35" Click="GetMemberRolesButton_Click">Refresh Data</Button>
+                            <Button x:Name="getMemberRolesButton" Width="80" Height="35"
+                                    Click="GetMemberRolesButton_Click">
+                                Refresh Data
+                            </Button>
                         </DockPanel>
                         <DockPanel Margin="10,0">
                             <DockPanel Width="610">
                                 <StackPanel VerticalAlignment="Center">
                                     <Label Width="125">Lid</Label>
-                                    <ComboBox x:Name="memberRoleMember" Width="125"/>
+                                    <ComboBox x:Name="memberRoleMember" Width="125" />
                                 </StackPanel>
                                 <StackPanel Width="100" Margin="5,0" VerticalAlignment="Center">
                                     <Label>Rol</Label>
-                                    <ComboBox x:Name="memberRoleRoles" Width="100"/>
+                                    <ComboBox x:Name="memberRoleRoles" Width="100" />
                                 </StackPanel>
                                 <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label Width="125">Startdatum</Label>
@@ -285,13 +386,19 @@
                                 </StackPanel>
                                 <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label HorizontalAlignment="Left" Width="125">Einddatum</Label>
-                                    <DatePicker HorizontalAlignment="Left" x:Name="memberRoleEndDate" Width="125"/>
+                                    <DatePicker HorizontalAlignment="Left" x:Name="memberRoleEndDate" Width="125" />
                                 </StackPanel>
                             </DockPanel>
                         </DockPanel>
                         <StackPanel Margin="0,5">
-                            <Button HorizontalAlignment="Right" x:Name="addMemberRoleButton" Width="80" Height="35" Margin="0,2.5" Click="AddMemberRoleButton_Click">Voeg toe</Button>
-                            <Button HorizontalAlignment="Right" x:Name="syncMemberRolesButton" Width="80" Height="35" Margin="0,2.5"  Click="SyncMemberRolesButton_Click">Sync.</Button>
+                            <Button HorizontalAlignment="Right" x:Name="addMemberRoleButton" Width="80" Height="35"
+                                    Margin="0,2.5" Click="AddMemberRoleButton_Click">
+                                Voeg toe
+                            </Button>
+                            <Button HorizontalAlignment="Right" x:Name="syncMemberRolesButton" Width="80" Height="35"
+                                    Margin="0,2.5" Click="SyncMemberRolesButton_Click">
+                                Sync.
+                            </Button>
                         </StackPanel>
                     </DockPanel>
                 </StackPanel>

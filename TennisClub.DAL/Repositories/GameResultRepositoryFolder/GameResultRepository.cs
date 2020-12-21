@@ -1,19 +1,23 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TennisClub.Common.GameResult;
 using TennisClub.Common.Member;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 {
-    public class GameResultRepository : Repository<GameResult, GameResultCreateDTO, GameResultReadDTO, GameResultUpdateDTO>, IGameResultRepository
+    public class GameResultRepository :
+        Repository<GameResult, GameResultCreateDTO, GameResultReadDTO, GameResultUpdateDTO>, IGameResultRepository
     {
         public GameResultRepository(TennisClubContext context, IMapper mapper)
-          : base(context, mapper)
-        { }
+            : base(context, mapper)
+        {
+        }
+
+        private TennisClubContext TennisClubContext => Context;
 
         public override IEnumerable<GameResultReadDTO> GetAll()
         {
@@ -26,10 +30,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 
         public IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member)
         {
-            if (member == null)
-            {
-                throw new ArgumentNullException();
-            }
+            if (member == null) throw new ArgumentNullException();
 
             // TODO: Nakijken
             IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
@@ -44,8 +45,5 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
         {
             // Do nothing
         }
-
-        private TennisClubContext TennisClubContext => Context;
     }
 }
-

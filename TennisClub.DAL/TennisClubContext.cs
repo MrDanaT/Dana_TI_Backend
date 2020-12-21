@@ -32,6 +32,5 @@ namespace TennisClub.DAL
 
             base.OnModelCreating(modelBuilder);
         }
-
     }
 }

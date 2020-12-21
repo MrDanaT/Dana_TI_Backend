@@ -14,57 +14,26 @@ namespace TennisClub.BL.MemberServiceFolder
             _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<MemberReadDTO> GetAllMembers(string federationNr, string firstName, string lastName, string location)
+        public IEnumerable<MemberReadDTO> GetAllMembers(string federationNr, string firstName, string lastName,
+            string location)
         {
-            IEnumerable<MemberReadDTO> memberItems = _unitOfWork.Members.GetAll();
+            var memberItems = _unitOfWork.Members.GetAll();
 
             memberItems = GetFilteredMemberItems(memberItems, federationNr, firstName, lastName, location);
 
             return memberItems;
         }
 
-        private IEnumerable<MemberReadDTO> GetFilteredMemberItems(IEnumerable<MemberReadDTO> memberItems, string federationNr, string firstName, string lastName, string location)
-        {
-            if (!string.IsNullOrEmpty(federationNr))
-            {
-                memberItems = memberItems.Where(x => x.FederationNr.ToLower().Contains(federationNr.ToLower()));
-            }
-            if (!string.IsNullOrEmpty(firstName))
-            {
-                memberItems = memberItems.Where(x => x.FirstName.ToLower().Contains(firstName.ToLower()));
-            }
-            if (!string.IsNullOrEmpty(lastName))
-            {
-                memberItems = memberItems.Where(x => x.LastName.ToLower().Contains(lastName.ToLower()));
-            }
-            if (!string.IsNullOrEmpty(location))
-            {
-                location = location.ToLower();
-                IEnumerable<MemberReadDTO> tmp = memberItems.Where(x => x.City.ToLower().Contains(location));
-                if (tmp.Count() > 0)
-                {
-                    memberItems = tmp;
-                }
-                tmp = memberItems.Where(x => x.Zipcode.ToLower().Contains(location));
-                if (tmp.Count() > 0)
-                {
-                    memberItems = tmp;
-                }
-            }
-
-            return memberItems;
-        }
-
         public MemberReadDTO GetMemberById(int id)
         {
-            MemberReadDTO memberFromRepo = _unitOfWork.Members.GetById(id);
+            var memberFromRepo = _unitOfWork.Members.GetById(id);
 
             return memberFromRepo;
         }
 
         public MemberReadDTO CreateMember(MemberCreateDTO member)
         {
-            MemberReadDTO createdMember = _unitOfWork.Members.Create(member);
+            var createdMember = _unitOfWork.Members.Create(member);
             _unitOfWork.Commit();
             return createdMember;
         }
@@ -75,9 +44,10 @@ namespace TennisClub.BL.MemberServiceFolder
             _unitOfWork.Commit();
         }
 
-        public IEnumerable<MemberReadDTO> GetAllActiveMembers(string federationNr, string firstName, string lastName, string location)
+        public IEnumerable<MemberReadDTO> GetAllActiveMembers(string federationNr, string firstName, string lastName,
+            string location)
         {
-            IEnumerable<MemberReadDTO> memberItems = _unitOfWork.Members.GetAllActiveMembers();
+            var memberItems = _unitOfWork.Members.GetAllActiveMembers();
 
             memberItems = GetFilteredMemberItems(memberItems, federationNr, firstName, lastName, location);
 
@@ -88,6 +58,27 @@ namespace TennisClub.BL.MemberServiceFolder
         {
             _unitOfWork.Members.Update(id, memberToPatch);
             _unitOfWork.Commit();
+        }
+
+        private IEnumerable<MemberReadDTO> GetFilteredMemberItems(IEnumerable<MemberReadDTO> memberItems,
+            string federationNr, string firstName, string lastName, string location)
+        {
+            if (!string.IsNullOrEmpty(federationNr))
+                memberItems = memberItems.Where(x => x.FederationNr.ToLower().Contains(federationNr.ToLower()));
+            if (!string.IsNullOrEmpty(firstName))
+                memberItems = memberItems.Where(x => x.FirstName.ToLower().Contains(firstName.ToLower()));
+            if (!string.IsNullOrEmpty(lastName))
+                memberItems = memberItems.Where(x => x.LastName.ToLower().Contains(lastName.ToLower()));
+            if (!string.IsNullOrEmpty(location))
+            {
+                location = location.ToLower();
+                var tmp = memberItems.Where(x => x.City.ToLower().Contains(location));
+                if (tmp.Count() > 0) memberItems = tmp;
+                tmp = memberItems.Where(x => x.Zipcode.ToLower().Contains(location));
+                if (tmp.Count() > 0) memberItems = tmp;
+            }
+
+            return memberItems;
         }
     }
 }

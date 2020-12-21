@@ -1,24 +1,28 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TennisClub.Common.Member;
 using TennisClub.Common.MemberFine;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 {
-    public class MemberFineRepository : Repository<MemberFine, MemberFineCreateDTO, MemberFineReadDTO, MemberFineUpdateDTO>, IMemberFineRepository
+    public class MemberFineRepository :
+        Repository<MemberFine, MemberFineCreateDTO, MemberFineReadDTO, MemberFineUpdateDTO>, IMemberFineRepository
     {
         public MemberFineRepository(TennisClubContext context, IMapper mapper)
-           : base(context, mapper)
-        { }
+            : base(context, mapper)
+        {
+        }
+
+        private TennisClubContext TennisClubContext => Context;
 
         public IEnumerable<MemberFineReadDTO> GetMemberFinesByMember(MemberReadDTO member)
         {
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            IQueryable<MemberFine> memberFineItems = TennisClubContext.MemberFines
+            var memberFineItems = TennisClubContext.MemberFines
                 .AsNoTracking()
                 .Where(mf => mf.MemberId == member.Id)
                 .Select(mf => mf);
@@ -28,29 +32,18 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public override void Update(int id, MemberFineUpdateDTO entity)
         {
-            if (id < 0)
-            {
-                throw new NullReferenceException("Id is out of range");
-            }
+            if (id < 0) throw new NullReferenceException("Id is out of range");
 
-            MemberFine memberFineFromRepo = Context.MemberFines.Find(id);
+            var memberFineFromRepo = Context.MemberFines.Find(id);
 
-            if (memberFineFromRepo == null)
-            {
-                throw new NullReferenceException("Object not found");
-            }
+            if (memberFineFromRepo == null) throw new NullReferenceException("Object not found");
 
-            if (memberFineFromRepo.PaymentDate == null)
-            {
-                base.Update(id, entity);
-            }
+            if (memberFineFromRepo.PaymentDate == null) base.Update(id, entity);
         }
 
         public override void Delete(int id)
         {
             // Do nothing
         }
-
-        private TennisClubContext TennisClubContext => Context;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Game;
-using TennisClub.Common.Member;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.BL.GameServiceFolder
@@ -8,6 +7,7 @@ namespace TennisClub.BL.GameServiceFolder
     public class GameService : IGameService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public GameService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -25,15 +25,15 @@ namespace TennisClub.BL.GameServiceFolder
 
         public IEnumerable<GameReadDTO> GetAllFutureGamesByMemberId(int id)
         {
-            MemberReadDTO memberItem = _unitOfWork.Members.GetById(id);
-            IEnumerable<GameReadDTO> gameItems = _unitOfWork.Games.GetGamesByMember(memberItem);
+            var memberItem = _unitOfWork.Members.GetById(id);
+            var gameItems = _unitOfWork.Games.GetGamesByMember(memberItem);
 
             return gameItems;
         }
 
         public GameReadDTO CreateGame(GameCreateDTO game)
         {
-            GameReadDTO createdGame = _unitOfWork.Games.Create(game);
+            var createdGame = _unitOfWork.Games.Create(game);
             _unitOfWork.Commit();
             return createdGame;
         }

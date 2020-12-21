@@ -1,8 +1,7 @@
+using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
 using TennisClub.DAL;
 
 namespace TennisClub
@@ -11,14 +10,14 @@ namespace TennisClub
     {
         public static void Main(string[] args)
         {
-            IWebHost host = CreateWebHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
-            using (IServiceScope scope = host.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
-                IServiceProvider services = scope.ServiceProvider;
+                var services = scope.ServiceProvider;
                 try
                 {
-                    TennisClubContext context = services.GetRequiredService<TennisClubContext>();
+                    var context = services.GetRequiredService<TennisClubContext>();
                     // DataSeeder.Initialize(context);
                 }
                 catch (Exception)
@@ -26,6 +25,7 @@ namespace TennisClub
                     Console.WriteLine("An error occurred while seeding the database.");
                 }
             }
+
             host.Run();
         }
 

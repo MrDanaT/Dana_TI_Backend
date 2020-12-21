@@ -12,93 +12,65 @@ namespace TennisClub.UI
 
         public static Task<HttpResponseMessage> GetCall(string url)
         {
-            try
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = BASE_API_URL + url;
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(apiUrl);
-                    client.Timeout = TimeSpan.FromSeconds(900);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    Task<HttpResponseMessage> response = client.GetAsync(apiUrl);
-                    response.Wait();
-                    return response;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                client.BaseAddress = new Uri(apiUrl);
+                client.Timeout = TimeSpan.FromSeconds(900);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.GetAsync(apiUrl);
+                response.Wait();
+                return response;
             }
         }
 
         public static Task<HttpResponseMessage> PostCall<T>(string url, T model) where T : class
         {
-            try
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = BASE_API_URL + url;
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(apiUrl);
-                    client.Timeout = TimeSpan.FromSeconds(900);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    Task<HttpResponseMessage> response = client.PostAsJsonAsync(apiUrl, model);
-                    response.Wait();
-                    return response;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                client.BaseAddress = new Uri(apiUrl);
+                client.Timeout = TimeSpan.FromSeconds(900);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.PostAsJsonAsync(apiUrl, model);
+                response.Wait();
+                return response;
             }
         }
 
         public static Task<HttpResponseMessage> PutCall<T>(string url, T model)
         {
-            try
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = BASE_API_URL + url;
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(apiUrl);
-                    client.Timeout = TimeSpan.FromSeconds(900);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    Task<HttpResponseMessage> response = client.PutAsJsonAsync(apiUrl, model);
-                    response.Wait();
-                    return response;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                client.BaseAddress = new Uri(apiUrl);
+                client.Timeout = TimeSpan.FromSeconds(900);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.PutAsJsonAsync(apiUrl, model);
+                response.Wait();
+                return response;
             }
         }
 
         public static Task<HttpResponseMessage> DeleteCall(string url)
         {
-            try
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                string apiUrl = BASE_API_URL + url;
-                using (HttpClient client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(apiUrl);
-                    client.Timeout = TimeSpan.FromSeconds(900);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    Task<HttpResponseMessage> response = client.DeleteAsync(apiUrl);
-                    response.Wait();
-                    return response;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
+                client.BaseAddress = new Uri(apiUrl);
+                client.Timeout = TimeSpan.FromSeconds(900);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var response = client.DeleteAsync(apiUrl);
+                response.Wait();
+                return response;
             }
         }
     }

@@ -40,7 +40,7 @@ namespace TennisClub.Common.Member
 
         public override int GetHashCode()
         {
-            HashCode hash = new HashCode();
+            var hash = new HashCode();
             hash.Add(FederationNr);
             hash.Add(FirstName);
             hash.Add(LastName);

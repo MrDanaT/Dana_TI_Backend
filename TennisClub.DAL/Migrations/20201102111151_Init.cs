@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TennisClub.DAL.Migrations
 {
@@ -8,306 +8,297 @@ namespace TennisClub.DAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "tblGenders",
-                columns: table => new
+                "tblGenders",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(10)", nullable: false)
+                    Name = table.Column<string>("varchar(10)", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tblGenders", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_tblGenders", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "tblLeagues",
-                columns: table => new
+                "tblLeagues",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(20)", nullable: false)
+                    Name = table.Column<string>("varchar(20)", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tblLeagues", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_tblLeagues", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "tblRoles",
-                columns: table => new
+                "tblRoles",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "varchar(20)", nullable: false)
+                    Name = table.Column<string>("varchar(20)", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tblRoles", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_tblRoles", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "tblMembers",
-                columns: table => new
+                "tblMembers",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FederationNr = table.Column<string>(type: "varchar(10)", nullable: false),
-                    FirstName = table.Column<string>(type: "varchar(25)", nullable: false),
-                    LastName = table.Column<string>(type: "varchar(35)", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "date", nullable: false),
-                    GenderId = table.Column<int>(type: "integer", nullable: false),
-                    Address = table.Column<string>(type: "varchar(70)", nullable: false),
-                    Number = table.Column<string>(type: "varchar(6)", nullable: false),
-                    Addition = table.Column<string>(type: "varchar(2)", nullable: true),
-                    Zipcode = table.Column<string>(type: "varchar(6)", nullable: false),
-                    City = table.Column<string>(type: "varchar(30)", nullable: false),
-                    PhoneNr = table.Column<string>(type: "varchar(15)", nullable: true),
-                    Deleted = table.Column<bool>(type: "bit", nullable: true, defaultValue: false)
+                    FederationNr = table.Column<string>("varchar(10)", nullable: false),
+                    FirstName = table.Column<string>("varchar(25)", nullable: false),
+                    LastName = table.Column<string>("varchar(35)", nullable: false),
+                    BirthDate = table.Column<DateTime>("date", nullable: false),
+                    GenderId = table.Column<int>("integer", nullable: false),
+                    Address = table.Column<string>("varchar(70)", nullable: false),
+                    Number = table.Column<string>("varchar(6)", nullable: false),
+                    Addition = table.Column<string>("varchar(2)", nullable: true),
+                    Zipcode = table.Column<string>("varchar(6)", nullable: false),
+                    City = table.Column<string>("varchar(30)", nullable: false),
+                    PhoneNr = table.Column<string>("varchar(15)", nullable: true),
+                    Deleted = table.Column<bool>("bit", nullable: true, defaultValue: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblMembers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tblMembers_tblGenders_GenderId",
-                        column: x => x.GenderId,
-                        principalTable: "tblGenders",
-                        principalColumn: "Id",
+                        "FK_tblMembers_tblGenders_GenderId",
+                        x => x.GenderId,
+                        "tblGenders",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblGames",
-                columns: table => new
+                "tblGames",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GameNumber = table.Column<string>(type: "varchar(10)", nullable: false),
-                    MemberId = table.Column<int>(type: "integer", nullable: false),
-                    LeagueId = table.Column<int>(type: "integer", nullable: false),
-                    Date = table.Column<DateTime>(type: "date", nullable: false)
+                    GameNumber = table.Column<string>("varchar(10)", nullable: false),
+                    MemberId = table.Column<int>("integer", nullable: false),
+                    LeagueId = table.Column<int>("integer", nullable: false),
+                    Date = table.Column<DateTime>("date", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblGames", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tblGames_tblLeagues_LeagueId",
-                        column: x => x.LeagueId,
-                        principalTable: "tblLeagues",
-                        principalColumn: "Id",
+                        "FK_tblGames_tblLeagues_LeagueId",
+                        x => x.LeagueId,
+                        "tblLeagues",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_tblGames_tblMembers_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "tblMembers",
-                        principalColumn: "Id",
+                        "FK_tblGames_tblMembers_MemberId",
+                        x => x.MemberId,
+                        "tblMembers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblMemberFines",
-                columns: table => new
+                "tblMemberFines",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FineNumber = table.Column<int>(type: "integer", nullable: false),
-                    MemberId = table.Column<int>(type: "integer", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(7, 2)", nullable: false),
-                    HandoutDate = table.Column<DateTime>(type: "date", nullable: false),
-                    PaymentDate = table.Column<DateTime>(type: "date", nullable: true)
+                    FineNumber = table.Column<int>("integer", nullable: false),
+                    MemberId = table.Column<int>("integer", nullable: false),
+                    Amount = table.Column<decimal>("decimal(7, 2)", nullable: false),
+                    HandoutDate = table.Column<DateTime>("date", nullable: false),
+                    PaymentDate = table.Column<DateTime>("date", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblMemberFines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tblMemberFines_tblMembers_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "tblMembers",
-                        principalColumn: "Id",
+                        "FK_tblMemberFines_tblMembers_MemberId",
+                        x => x.MemberId,
+                        "tblMembers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblMemberRoles",
-                columns: table => new
+                "tblMemberRoles",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MemberId = table.Column<int>(type: "integer", nullable: false),
-                    RoleId = table.Column<int>(type: "integer", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "date", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "date", nullable: true)
+                    MemberId = table.Column<int>("integer", nullable: false),
+                    RoleId = table.Column<int>("integer", nullable: false),
+                    StartDate = table.Column<DateTime>("date", nullable: false),
+                    EndDate = table.Column<DateTime>("date", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblMemberRoles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tblMemberRoles_tblMembers_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "tblMembers",
-                        principalColumn: "Id",
+                        "FK_tblMemberRoles_tblMembers_MemberId",
+                        x => x.MemberId,
+                        "tblMembers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_tblMemberRoles_tblRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "tblRoles",
-                        principalColumn: "Id",
+                        "FK_tblMemberRoles_tblRoles_RoleId",
+                        x => x.RoleId,
+                        "tblRoles",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "tblGameResults",
-                columns: table => new
+                "tblGameResults",
+                table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>("integer", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GameId = table.Column<int>(type: "integer", nullable: false),
-                    SetNr = table.Column<byte>(type: "tinyint", nullable: false),
-                    ScoreTeamMember = table.Column<byte>(type: "tinyint", nullable: false),
-                    ScoreOpponent = table.Column<byte>(type: "tinyint", nullable: false)
+                    GameId = table.Column<int>("integer", nullable: false),
+                    SetNr = table.Column<byte>("tinyint", nullable: false),
+                    ScoreTeamMember = table.Column<byte>("tinyint", nullable: false),
+                    ScoreOpponent = table.Column<byte>("tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tblGameResults", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tblGameResults_tblGames_GameId",
-                        column: x => x.GameId,
-                        principalTable: "tblGames",
-                        principalColumn: "Id",
+                        "FK_tblGameResults_tblGames_GameId",
+                        x => x.GameId,
+                        "tblGames",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "tblGenders",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+                "tblGenders",
+                new[] {"Id", "Name"},
+                new object[,]
                 {
-                    { 1, "Man" },
-                    { 2, "Vrouw" }
+                    {1, "Man"},
+                    {2, "Vrouw"}
                 });
 
             migrationBuilder.InsertData(
-                table: "tblLeagues",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+                "tblLeagues",
+                new[] {"Id", "Name"},
+                new object[,]
                 {
-                    { 1, "Recreatief" },
-                    { 2, "Competitie" },
-                    { 3, "Toptennis" }
+                    {1, "Recreatief"},
+                    {2, "Competitie"},
+                    {3, "Toptennis"}
                 });
 
             migrationBuilder.InsertData(
-                table: "tblRoles",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+                "tblRoles",
+                new[] {"Id", "Name"},
+                new object[,]
                 {
-                    { 1, "Voorzitter" },
-                    { 2, "Bestuurslid" },
-                    { 3, "Secretaris" },
-                    { 4, "Penningmeester" },
-                    { 5, "Speler" }
+                    {1, "Voorzitter"},
+                    {2, "Bestuurslid"},
+                    {3, "Secretaris"},
+                    {4, "Penningmeester"},
+                    {5, "Speler"}
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblGameResults_GameId_SetNr",
-                table: "tblGameResults",
-                columns: new[] { "GameId", "SetNr" },
+                "IX_tblGameResults_GameId_SetNr",
+                "tblGameResults",
+                new[] {"GameId", "SetNr"},
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblGames_GameNumber",
-                table: "tblGames",
-                column: "GameNumber",
+                "IX_tblGames_GameNumber",
+                "tblGames",
+                "GameNumber",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblGames_LeagueId",
-                table: "tblGames",
-                column: "LeagueId");
+                "IX_tblGames_LeagueId",
+                "tblGames",
+                "LeagueId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblGames_MemberId",
-                table: "tblGames",
-                column: "MemberId");
+                "IX_tblGames_MemberId",
+                "tblGames",
+                "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblGenders_Name",
-                table: "tblGenders",
-                column: "Name",
+                "IX_tblGenders_Name",
+                "tblGenders",
+                "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblLeagues_Name",
-                table: "tblLeagues",
-                column: "Name",
+                "IX_tblLeagues_Name",
+                "tblLeagues",
+                "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblMemberFines_FineNumber",
-                table: "tblMemberFines",
-                column: "FineNumber",
+                "IX_tblMemberFines_FineNumber",
+                "tblMemberFines",
+                "FineNumber",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblMemberFines_MemberId",
-                table: "tblMemberFines",
-                column: "MemberId");
+                "IX_tblMemberFines_MemberId",
+                "tblMemberFines",
+                "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblMemberRoles_RoleId",
-                table: "tblMemberRoles",
-                column: "RoleId");
+                "IX_tblMemberRoles_RoleId",
+                "tblMemberRoles",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblMemberRoles_MemberId_RoleId_StartDate_EndDate",
-                table: "tblMemberRoles",
-                columns: new[] { "MemberId", "RoleId", "StartDate", "EndDate" },
+                "IX_tblMemberRoles_MemberId_RoleId_StartDate_EndDate",
+                "tblMemberRoles",
+                new[] {"MemberId", "RoleId", "StartDate", "EndDate"},
                 unique: true,
                 filter: "[EndDate] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblMembers_FederationNr",
-                table: "tblMembers",
-                column: "FederationNr",
+                "IX_tblMembers_FederationNr",
+                "tblMembers",
+                "FederationNr",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblMembers_GenderId",
-                table: "tblMembers",
-                column: "GenderId");
+                "IX_tblMembers_GenderId",
+                "tblMembers",
+                "GenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tblRoles_Name",
-                table: "tblRoles",
-                column: "Name",
+                "IX_tblRoles_Name",
+                "tblRoles",
+                "Name",
                 unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "tblGameResults");
+                "tblGameResults");
 
             migrationBuilder.DropTable(
-                name: "tblMemberFines");
+                "tblMemberFines");
 
             migrationBuilder.DropTable(
-                name: "tblMemberRoles");
+                "tblMemberRoles");
 
             migrationBuilder.DropTable(
-                name: "tblGames");
+                "tblGames");
 
             migrationBuilder.DropTable(
-                name: "tblRoles");
+                "tblRoles");
 
             migrationBuilder.DropTable(
-                name: "tblLeagues");
+                "tblLeagues");
 
             migrationBuilder.DropTable(
-                name: "tblMembers");
+                "tblMembers");
 
             migrationBuilder.DropTable(
-                name: "tblGenders");
+                "tblGenders");
         }
     }
 }

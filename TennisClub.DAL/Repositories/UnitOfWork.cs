@@ -28,19 +28,23 @@ namespace TennisClub.DAL.Repositories
             _context = context;
             _mapper = mapper;
         }
+
         public IGameRepository Games => _gameRepository ??= new GameRepository(_context, _mapper);
 
-        public IGameResultRepository GameResults => _gameResultRepository ??= new GameResultRepository(_context, _mapper);
+        public IGameResultRepository GameResults =>
+            _gameResultRepository ??= new GameResultRepository(_context, _mapper);
 
         public IGenderRepository Genders => _genderRepository ??= new GenderRepository(_context, _mapper);
 
         public ILeagueRepository Leagues => _leagueRepository ??= new LeagueRepository(_context, _mapper);
 
-        public IMemberFineRepository MemberFines => _memberFineRepository ??= new MemberFineRepository(_context, _mapper);
+        public IMemberFineRepository MemberFines =>
+            _memberFineRepository ??= new MemberFineRepository(_context, _mapper);
 
         public IMemberRepository Members => _memberRepository ??= new MemberRepository(_context, _mapper);
 
-        public IMemberRoleRepository MemberRoles => _memberRoleRepository ??= new MemberRoleRepository(_context, _mapper);
+        public IMemberRoleRepository MemberRoles =>
+            _memberRoleRepository ??= new MemberRoleRepository(_context, _mapper);
 
         public IRoleRepository Roles => _roleRepository ??= new RoleRepository(_context, _mapper);
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TennisClub.Common.Member;
 using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
 using TennisClub.DAL.Repositories;
@@ -17,21 +16,21 @@ namespace TennisClub.BL.MemberRoleServiceFolder
 
         public IEnumerable<MemberRoleReadDTO> GetAllMemberRoles()
         {
-            IEnumerable<MemberRoleReadDTO> memberRoleItems = _unitOfWork.MemberRoles.GetAll();
+            var memberRoleItems = _unitOfWork.MemberRoles.GetAll();
 
             return memberRoleItems;
         }
 
         public MemberRoleReadDTO GetMemberRoleById(int id)
         {
-            MemberRoleReadDTO memberRoleItem = _unitOfWork.MemberRoles.GetById(id);
+            var memberRoleItem = _unitOfWork.MemberRoles.GetById(id);
 
             return memberRoleItem;
         }
 
         public MemberRoleReadDTO CreateMemberRole(MemberRoleCreateDTO memberRole)
         {
-            MemberRoleReadDTO createdMemberRole = _unitOfWork.MemberRoles.Create(memberRole);
+            var createdMemberRole = _unitOfWork.MemberRoles.Create(memberRole);
             _unitOfWork.Commit();
             return createdMemberRole;
         }
@@ -39,8 +38,8 @@ namespace TennisClub.BL.MemberRoleServiceFolder
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByMemberId(int id)
         {
             // TODO: Dit nakijken samen met repository.
-            MemberReadDTO memberFromRepo = _unitOfWork.Members.GetById(id);
-            IEnumerable<MemberRoleReadDTO> roleItems = _unitOfWork.MemberRoles.GetMemberRolesByMember(memberFromRepo);
+            var memberFromRepo = _unitOfWork.Members.GetById(id);
+            var roleItems = _unitOfWork.MemberRoles.GetMemberRolesByMember(memberFromRepo);
 
             return roleItems;
         }
@@ -48,7 +47,7 @@ namespace TennisClub.BL.MemberRoleServiceFolder
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoles(List<RoleReadDTO> roles)
         {
             // TODO: Dit nakijken samen met repository.
-            IEnumerable<MemberRoleReadDTO> memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoles(roles);
+            var memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoles(roles);
 
             return memberItems;
         }

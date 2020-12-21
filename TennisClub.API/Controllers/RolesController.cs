@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using TennisClub.BL.RoleServiceFolder;
 using TennisClub.Common.Role;
 
@@ -20,7 +20,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<RoleReadDTO>> GetAllRoles()
         {
-            IEnumerable<RoleReadDTO> roleItems = _service.GetAllRoles();
+            var roleItems = _service.GetAllRoles();
 
             return Ok(roleItems);
         }
@@ -29,12 +29,9 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetRoleById")]
         public ActionResult<RoleReadDTO> GetRoleById(int id)
         {
-            RoleReadDTO roleItem = _service.GetRoleById(id);
+            var roleItem = _service.GetRoleById(id);
 
-            if (roleItem == null)
-            {
-                return NotFound();
-            }
+            if (roleItem == null) return NotFound();
 
             return Ok(roleItem);
         }
@@ -43,9 +40,9 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<RoleReadDTO> CreateRole(RoleCreateDTO roleCreateDTO)
         {
-            RoleReadDTO createdRole = _service.CreateRole(roleCreateDTO);
+            var createdRole = _service.CreateRole(roleCreateDTO);
 
-            return CreatedAtRoute(nameof(GetRoleById), new { createdRole.Id }, createdRole);
+            return CreatedAtRoute(nameof(GetRoleById), new {createdRole.Id}, createdRole);
         }
 
 
@@ -53,12 +50,9 @@ namespace TennisClub.API.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateRole(int id, RoleUpdateDTO updateDTO)
         {
-            RoleReadDTO roleModelFromRepo = _service.GetRoleById(id);
+            var roleModelFromRepo = _service.GetRoleById(id);
 
-            if (roleModelFromRepo == null)
-            {
-                return NotFound();
-            }
+            if (roleModelFromRepo == null) return NotFound();
 
             _service.UpdateRole(id, updateDTO);
 

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using TennisClub.BL.GameResultServiceFolder;
 using TennisClub.Common.GameResult;
 
@@ -21,7 +21,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<GameResultReadDTO>> GetAllGameResults(int? memberId, DateTime date)
         {
-            IEnumerable<GameResultReadDTO> gameResultItems = _service.GetAllGameResults(memberId, date);
+            var gameResultItems = _service.GetAllGameResults(memberId, date);
 
             return Ok(gameResultItems);
         }
@@ -30,12 +30,9 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetGameResultById")]
         public ActionResult<GameResultReadDTO> GetGameResultById(int id)
         {
-            GameResultReadDTO gameResultItem = _service.GetGameResultById(id);
+            var gameResultItem = _service.GetGameResultById(id);
 
-            if (gameResultItem == null)
-            {
-                return NotFound();
-            }
+            if (gameResultItem == null) return NotFound();
 
             return Ok(gameResultItem);
         }
@@ -44,21 +41,18 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<GameResultReadDTO> CreateGameResult(GameResultCreateDTO gameResultCreateDto)
         {
-            GameResultReadDTO createdGameResult = _service.CreateGameResult(gameResultCreateDto);
+            var createdGameResult = _service.CreateGameResult(gameResultCreateDto);
 
-            return CreatedAtRoute(nameof(GetGameResultById), new { createdGameResult.Id }, createdGameResult);
+            return CreatedAtRoute(nameof(GetGameResultById), new {createdGameResult.Id}, createdGameResult);
         }
 
         // PUT: api/gameresults/5
         [HttpPut("{id}")]
         public ActionResult UpdateGameResult(int id, GameResultUpdateDTO updateDTO)
         {
-            GameResultReadDTO gameResultModelFromRepo = _service.GetGameResultById(id);
+            var gameResultModelFromRepo = _service.GetGameResultById(id);
 
-            if (gameResultModelFromRepo == null)
-            {
-                return NotFound();
-            }
+            if (gameResultModelFromRepo == null) return NotFound();
 
             _service.UpdateGameResult(id, updateDTO);
 

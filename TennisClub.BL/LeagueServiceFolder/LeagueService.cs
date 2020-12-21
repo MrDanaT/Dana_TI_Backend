@@ -15,14 +15,14 @@ namespace TennisClub.BL.LeagueServiceFolder
 
         public IEnumerable<LeagueReadDTO> GetAllLeagues()
         {
-            IEnumerable<LeagueReadDTO> leagueItems = _unitOfWork.Leagues.GetAll();
+            var leagueItems = _unitOfWork.Leagues.GetAll();
 
             return leagueItems;
         }
 
         public LeagueReadDTO GetLeagueById(int id)
         {
-            LeagueReadDTO leagueFromRepo = _unitOfWork.Leagues.GetById(id);
+            var leagueFromRepo = _unitOfWork.Leagues.GetById(id);
 
             return leagueFromRepo;
         }

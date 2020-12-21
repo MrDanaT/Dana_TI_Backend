@@ -22,6 +22,5 @@ namespace TennisClub.BL.GenderServiceFolder
         {
             return _unitOfWork.Genders.GetById(id);
         }
-
     }
 }

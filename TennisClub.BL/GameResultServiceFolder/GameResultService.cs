@@ -17,24 +17,20 @@ namespace TennisClub.BL.GameResultServiceFolder
 
         public IEnumerable<GameResultReadDTO> GetAllGameResults(int? memberId, DateTime date)
         {
-            IEnumerable<GameResultReadDTO> gameResultItems = _unitOfWork.GameResults.GetAll();
+            var gameResultItems = _unitOfWork.GameResults.GetAll();
 
             if (memberId != null && memberId > 0)
-            {
                 gameResultItems = gameResultItems.Where(x => x.GameNavigation.MemberId == memberId);
-            }
 
             if (date != null && date > new DateTime(1899, 1, 1))
-            {
                 gameResultItems = gameResultItems.Where(x => x.GameNavigation.Date.Equals(date));
-            }
 
             return gameResultItems;
         }
 
         public GameResultReadDTO GetGameResultById(int id)
         {
-            GameResultReadDTO gameResultItem = _unitOfWork.GameResults.GetById(id);
+            var gameResultItem = _unitOfWork.GameResults.GetById(id);
 
             return gameResultItem;
         }

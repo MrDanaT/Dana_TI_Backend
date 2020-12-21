@@ -11,7 +11,9 @@ namespace TennisClub.DAL.MappingProfiles
             CreateMap<MemberRoleCreateDTO, MemberRole>();
             CreateMap<MemberRole, MemberRoleReadDTO>()
                 .ForMember(self => self.RoleName, conf => conf.MapFrom(dest => dest.RoleNavigation.Name))
-                .ForMember(self => self.MemberFullName, conf => conf.MapFrom(dest => $"{dest.MemberNavigation.FirstName} {dest.MemberNavigation.LastName}"));
+                .ForMember(self => self.MemberFullName,
+                    conf => conf.MapFrom(dest =>
+                        $"{dest.MemberNavigation.FirstName} {dest.MemberNavigation.LastName}"));
             CreateMap<MemberRoleUpdateDTO, MemberRole>();
             CreateMap<MemberRoleReadDTO, MemberRole>();
         }

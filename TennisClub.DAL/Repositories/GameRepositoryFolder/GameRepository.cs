@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TennisClub.Common.Game;
 using TennisClub.Common.Member;
 using TennisClub.DAL.Entities;
@@ -11,13 +11,16 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
     public class GameRepository : Repository<Game, GameCreateDTO, GameReadDTO, GameUpdateDTO>, IGameRepository
     {
         public GameRepository(TennisClubContext context, IMapper mapper)
-          : base(context, mapper)
-        { }
+            : base(context, mapper)
+        {
+        }
+
+        private TennisClubContext TennisClubContext => Context;
 
         public IEnumerable<GameReadDTO> GetGamesByMember(MemberReadDTO memberParam)
         {
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            List<Game> gameItems = TennisClubContext.Games
+            var gameItems = TennisClubContext.Games
                 .AsNoTracking()
                 .Where(g => g.MemberId == memberParam.Id)
                 .Select(g => g)
@@ -30,13 +33,13 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
 
         public override GameReadDTO Create(GameCreateDTO entity)
         {
-            Member memberFromRepo = Context.Members.Find(entity.MemberId);
-            bool isMember = false;
+            var memberFromRepo = Context.Members.Find(entity.MemberId);
+            var isMember = false;
 
-            foreach (MemberRole memberRole in memberFromRepo.MemberRoles)
+            foreach (var memberRole in memberFromRepo.MemberRoles)
             {
-                bool hasSpelerRole = memberRole.RoleNavigation.Name.Equals("Speler");
-                bool isStillASpeler = memberRole.EndDate != null;
+                var hasSpelerRole = memberRole.RoleNavigation.Name.Equals("Speler");
+                var isStillASpeler = memberRole.EndDate != null;
                 if (hasSpelerRole && isStillASpeler)
                 {
                     isMember = true;
@@ -45,15 +48,8 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
             }
 
             if (isMember)
-            {
                 return base.Create(entity);
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
-
-        private TennisClubContext TennisClubContext => Context;
     }
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -19,11 +17,10 @@ using TennisClub.Common.Role;
 namespace TennisClub.UI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +44,34 @@ namespace TennisClub.UI
             gameResultPlayerComboBoxFilter.ItemsSource = originalMemberList;
         }
 
+        #region Genders
+
+        /*
+         * CRUD
+         */
+        private bool ReadGenders()
+        {
+            var result = WebAPI.GetCall("genders");
+
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                var tmp = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
+                memberGender.ItemsSource = tmp.ToList();
+                return true;
+            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
+        }
+
+        #endregion
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
         #region Roles
 
         private List<RoleReadDTO> originalRoleList;
@@ -56,64 +81,56 @@ namespace TennisClub.UI
          */
         private bool CreateRole(RoleReadDTO item)
         {
-            RoleCreateDTO newRole = new RoleCreateDTO
+            var newRole = new RoleCreateDTO
             {
                 Name = item.Name
             };
-            Task<HttpResponseMessage> response = WebAPI.PostCall("roles", newRole);
+            var response = WebAPI.PostCall("roles", newRole);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
                 Debug.WriteLine($"{newRole.Name} is toegevoegd!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
-                return false;
-            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
         }
 
         private bool ReadRoles()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall("roles");
-            DataGrid itemsControl = RoleData;
+            var result = WebAPI.GetCall("roles");
+            var itemsControl = RoleData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<RoleReadDTO> tmp = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result; ;
+                var tmp = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
+                ;
                 itemsControl.ItemsSource = tmp;
-                List<RoleReadDTO> tmp2 = new List<RoleReadDTO>(tmp.Count);
-                tmp.ForEach((item) =>
-                {
-                    tmp2.Add(new RoleReadDTO { Id = item.Id, Name = item.Name });
-                });
+                var tmp2 = new List<RoleReadDTO>(tmp.Count);
+                tmp.ForEach(item => { tmp2.Add(new RoleReadDTO {Id = item.Id, Name = item.Name}); });
                 originalRoleList = tmp2;
                 memberRoleRolesFilter.ItemsSource = tmp2;
 
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         private bool UpdateRole(int id, RoleUpdateDTO item)
         {
-            Task<HttpResponseMessage> result = WebAPI.PutCall($"roles/{id}", item);
+            var result = WebAPI.PutCall($"roles/{id}", item);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 Debug.WriteLine("Updated!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         /*
@@ -135,31 +152,22 @@ namespace TennisClub.UI
 
         private void SynchroniseRoleTable()
         {
-            bool isSucceeded = false;
+            var isSucceeded = false;
 
-            for (int i = 0; i < RoleData.Items.Count - 1; i++)
+            for (var i = 0; i < RoleData.Items.Count - 1; i++)
             {
-                object item = RoleData.Items[i];
-                RoleReadDTO roleItem = (RoleReadDTO)item;
-                RoleReadDTO originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
+                var item = RoleData.Items[i];
+                var roleItem = (RoleReadDTO) item;
+                var originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
 
                 if (originalItem == null && roleItem != null)
-                {
                     isSucceeded = CreateRole(roleItem);
-                }
                 else if (!roleItem.Equals(originalItem))
-                {
-                    isSucceeded = UpdateRole(roleItem.Id, new RoleUpdateDTO { Name = roleItem.Name });
-                }
+                    isSucceeded = UpdateRole(roleItem.Id, new RoleUpdateDTO {Name = roleItem.Name});
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
@@ -182,19 +190,17 @@ namespace TennisClub.UI
          */
         private bool ReadLeagues()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall("leagues");
-            DataGrid itemsControl = LeagueData;
+            var result = WebAPI.GetCall("leagues");
+            var itemsControl = LeagueData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         /*
@@ -203,30 +209,6 @@ namespace TennisClub.UI
         private void GetLeaguesButton_Click(object sender, RoutedEventArgs e)
         {
             ReadLeagues();
-        }
-
-        #endregion
-
-        #region Genders
-
-        /*
-         * CRUD
-         */
-        private bool ReadGenders()
-        {
-            Task<HttpResponseMessage> result = WebAPI.GetCall("genders");
-
-            if (result.Result.StatusCode == HttpStatusCode.OK)
-            {
-                List<GenderReadDTO> tmp = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
-                memberGender.ItemsSource = tmp.ToList();
-                return true;
-            }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
         }
 
         #endregion
@@ -241,38 +223,37 @@ namespace TennisClub.UI
 
         private bool CreateGameResult(GameResultReadDTO item)
         {
-            GameResultCreateDTO newGameResult = new GameResultCreateDTO
+            var newGameResult = new GameResultCreateDTO
             {
                 GameId = item.GameId,
                 ScoreOpponent = item.ScoreOpponent,
                 ScoreTeamMember = item.ScoreTeamMember,
                 SetNr = item.SetNr
             };
-            Task<HttpResponseMessage> response = WebAPI.PostCall("gameresults", newGameResult);
+            var response = WebAPI.PostCall("gameresults", newGameResult);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
                 Debug.WriteLine($"{newGameResult.GameId} is toegevoegd!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
-                return false;
-            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
         }
 
         private bool ReadGameResults()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall($"gameresults?{GetGameResultFilters()}");
-            DataGrid itemsControl = GameResultData;
+            var result = WebAPI.GetCall($"gameresults?{GetGameResultFilters()}");
+            var itemsControl = GameResultData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<GameResultReadDTO> tmp = result.Result.Content.ReadAsAsync<List<GameResultReadDTO>>().Result; ;
+                var tmp = result.Result.Content.ReadAsAsync<List<GameResultReadDTO>>().Result;
+                ;
                 itemsControl.ItemsSource = tmp;
-                List<GameResultReadDTO> tmp2 = new List<GameResultReadDTO>(tmp.Count);
-                tmp.ForEach((item) =>
+                var tmp2 = new List<GameResultReadDTO>(tmp.Count);
+                tmp.ForEach(item =>
                 {
                     tmp2.Add(new GameResultReadDTO
                     {
@@ -286,27 +267,23 @@ namespace TennisClub.UI
                 originalGameResultList = tmp2;
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         private bool UpdateGameResult(int id, GameResultUpdateDTO item)
         {
-            Task<HttpResponseMessage> result = WebAPI.PutCall($"gameresults/{id}", item);
+            var result = WebAPI.PutCall($"gameresults/{id}", item);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 Debug.WriteLine("Updated!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         /*
@@ -341,31 +318,27 @@ namespace TennisClub.UI
 
         private void SynchroniseGameResultTable()
         {
-            bool isSucceeded = false;
+            var isSucceeded = false;
 
-            for (int i = 0; i < GameResultData.Items.Count - 1; i++)
+            for (var i = 0; i < GameResultData.Items.Count - 1; i++)
             {
-                object item = GameResultData.Items[i];
-                GameResultReadDTO gameResultItem = (GameResultReadDTO)item;
-                GameResultReadDTO originalItem = originalGameResultList.Find(x => x.Id == gameResultItem.Id);
+                var item = GameResultData.Items[i];
+                var gameResultItem = (GameResultReadDTO) item;
+                var originalItem = originalGameResultList.Find(x => x.Id == gameResultItem.Id);
 
                 if (originalItem == null && gameResultItem != null)
-                {
                     isSucceeded = CreateGameResult(gameResultItem);
-                }
                 else if (!gameResultItem.Equals(originalItem))
-                {
-                    isSucceeded = UpdateGameResult(gameResultItem.Id, new GameResultUpdateDTO { ScoreOpponent = gameResultItem.ScoreOpponent, SetNr = gameResultItem.SetNr, ScoreTeamMember = gameResultItem.ScoreTeamMember });
-                }
+                    isSucceeded = UpdateGameResult(gameResultItem.Id,
+                        new GameResultUpdateDTO
+                        {
+                            ScoreOpponent = gameResultItem.ScoreOpponent, SetNr = gameResultItem.SetNr,
+                            ScoreTeamMember = gameResultItem.ScoreTeamMember
+                        });
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
@@ -378,12 +351,15 @@ namespace TennisClub.UI
                 MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
             }
         }
+
         private string GetGameResultFilters()
         {
-            string memberIdUrl = $"memberId={gameResultPlayerComboBoxFilter.SelectedValue}";
-            string selectedDateUrl = $"date={gameResultdatePickerFilter.SelectedDate.GetValueOrDefault().ToShortDateString()}";
+            var memberIdUrl = $"memberId={gameResultPlayerComboBoxFilter.SelectedValue}";
+            var selectedDateUrl =
+                $"date={gameResultdatePickerFilter.SelectedDate.GetValueOrDefault().ToShortDateString()}";
 
-            return $"{(gameResultPlayerComboBoxFilter.SelectedValue != null ? memberIdUrl : "")}&{(gameResultdatePickerFilter.SelectedDate != null ? selectedDateUrl : "")}";
+            return
+                $"{(gameResultPlayerComboBoxFilter.SelectedValue != null ? memberIdUrl : "")}&{(gameResultdatePickerFilter.SelectedDate != null ? selectedDateUrl : "")}";
         }
 
         #endregion
@@ -397,7 +373,7 @@ namespace TennisClub.UI
          */
         private bool CreateMember(MemberReadDTO memberItem)
         {
-            MemberCreateDTO newMember = new MemberCreateDTO
+            var newMember = new MemberCreateDTO
             {
                 Addition = memberItem.Addition,
                 Address = memberItem.Address,
@@ -411,31 +387,30 @@ namespace TennisClub.UI
                 PhoneNr = memberItem.PhoneNr,
                 Zipcode = memberItem.Zipcode
             };
-            Task<HttpResponseMessage> response = WebAPI.PostCall("members", newMember);
+            var response = WebAPI.PostCall("members", newMember);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
                 Debug.WriteLine($"{newMember.FirstName + " " + newMember.LastName} is toegevoegd!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
-                return false;
-            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
         }
 
         private bool ReadMembers()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall($"members/active?{GetMemberFilters()}");
-            DataGrid itemsControl = MemberData;
+            var result = WebAPI.GetCall($"members/active?{GetMemberFilters()}");
+            var itemsControl = MemberData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<MemberReadDTO> tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result; ;
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
+                ;
                 itemsControl.ItemsSource = tmp;
-                List<MemberReadDTO> tmp2 = new List<MemberReadDTO>(tmp.Count);
-                tmp.ForEach((item) =>
+                var tmp2 = new List<MemberReadDTO>(tmp.Count);
+                tmp.ForEach(item =>
                 {
                     tmp2.Add(new MemberReadDTO
                     {
@@ -457,43 +432,37 @@ namespace TennisClub.UI
                 memberRoleMemberFilter.ItemsSource = tmp2;
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         private bool UpdateMember(int id, MemberUpdateDTO memberUpdateDTO)
         {
-            Task<HttpResponseMessage> result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
+            var result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 Debug.WriteLine("Updated!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         private bool DeleteMember(int id)
         {
-            Task<HttpResponseMessage> response = WebAPI.DeleteCall($"members/{id}");
+            var response = WebAPI.DeleteCall($"members/{id}");
 
             if (response.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 Debug.WriteLine($"{id} is verwijderd.");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
-                return false;
-            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
         }
 
         /*
@@ -511,7 +480,7 @@ namespace TennisClub.UI
 
         private void MemberData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            MemberReadDTO selectedItem = GetSelectedMember();
+            var selectedItem = GetSelectedMember();
             if (!selectedItem.IsNull())
             {
                 memberAddition.Text = selectedItem.Addition;
@@ -549,15 +518,12 @@ namespace TennisClub.UI
 
         private void MemberGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.GenderName = memberGender.Text;
-            member.GenderId = (int)memberGender.SelectedValue;
+            member.GenderId = (int) memberGender.SelectedValue;
             MemberData.Items.Refresh();
         }
 
@@ -566,35 +532,32 @@ namespace TennisClub.UI
          */
         private void SynchroniseMemberTable()
         {
-            bool isSucceeded = false;
+            var isSucceeded = false;
 
-            for (int i = 0; i < MemberData.Items.Count; i++)
+            for (var i = 0; i < MemberData.Items.Count; i++)
             {
-                object item = MemberData.Items[i];
-                MemberReadDTO memberItem = (MemberReadDTO)item;
-                MemberReadDTO originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
+                var item = MemberData.Items[i];
+                var memberItem = (MemberReadDTO) item;
+                var originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
 
                 if (originalItem != null && memberItem == null)
-                {
                     isSucceeded = DeleteMember(originalItem.Id);
-                }
                 else if (originalItem == null && memberItem != null)
-                {
                     isSucceeded = CreateMember(memberItem);
-                }
                 else if (!originalItem.Equals(memberItem))
-                {
-                    isSucceeded = UpdateMember(originalItem.Id, new MemberUpdateDTO { Addition = memberItem.Addition, Address = memberItem.Address, BirthDate = memberItem.BirthDate, City = memberItem.City, FederationNr = memberItem.FederationNr, FirstName = memberItem.FirstName, GenderId = memberItem.GenderId, LastName = memberItem.LastName, Number = memberItem.Number, PhoneNr = memberItem.PhoneNr, Zipcode = memberItem.Zipcode });
-                }
+                    isSucceeded = UpdateMember(originalItem.Id,
+                        new MemberUpdateDTO
+                        {
+                            Addition = memberItem.Addition, Address = memberItem.Address,
+                            BirthDate = memberItem.BirthDate, City = memberItem.City,
+                            FederationNr = memberItem.FederationNr, FirstName = memberItem.FirstName,
+                            GenderId = memberItem.GenderId, LastName = memberItem.LastName, Number = memberItem.Number,
+                            PhoneNr = memberItem.PhoneNr, Zipcode = memberItem.Zipcode
+                        });
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
@@ -610,31 +573,26 @@ namespace TennisClub.UI
 
         private string GetMemberFilters()
         {
-            string federationNrUrl = $"federationNr={memberFilterFederationNr.Text}";
-            string lastNameUrl = $"lastName={memberFilterLastName.Text}";
-            string firstNameUrl = $"firstName={memberFilterFirstName.Text}";
-            string locationUrl = $"location={memberFilterLocation.Text}";
-            return $"{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}";
+            var federationNrUrl = $"federationNr={memberFilterFederationNr.Text}";
+            var lastNameUrl = $"lastName={memberFilterLastName.Text}";
+            var firstNameUrl = $"firstName={memberFilterFirstName.Text}";
+            var locationUrl = $"location={memberFilterLocation.Text}";
+            return
+                $"{(string.IsNullOrEmpty(memberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(memberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(memberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(memberFilterLocation.Text) ? "" : locationUrl)}";
         }
 
         private MemberReadDTO GetSelectedMember()
         {
-            if (MemberData.SelectedItem.IsNull())
-            {
-                return null;
-            }
+            if (MemberData.SelectedItem.IsNull()) return null;
 
-            return (MemberReadDTO)MemberData.SelectedItem;
+            return (MemberReadDTO) MemberData.SelectedItem;
         }
 
         private void MemberFirstName_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.FirstName = memberFirstName.Text;
             MemberData.Items.Refresh();
@@ -642,12 +600,9 @@ namespace TennisClub.UI
 
         private void MemberLastName_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.LastName = memberLastName.Text;
             MemberData.Items.Refresh();
@@ -655,18 +610,12 @@ namespace TennisClub.UI
 
         private void MemberBirthDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
-            DateTime? selectedDate = memberBirthDate.SelectedDate;
+            if (member.IsNull()) return;
+            var selectedDate = memberBirthDate.SelectedDate;
 
-            if (selectedDate.IsNull())
-            {
-                return;
-            }
+            if (selectedDate.IsNull()) return;
 
             member.BirthDate = selectedDate.Value;
             MemberData.Items.Refresh();
@@ -674,12 +623,9 @@ namespace TennisClub.UI
 
         private void MemberAddress_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Address = memberAddress.Text;
             MemberData.Items.Refresh();
@@ -687,12 +633,9 @@ namespace TennisClub.UI
 
         private void MemberNumber_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Number = memberNumber.Text;
             MemberData.Items.Refresh();
@@ -700,12 +643,9 @@ namespace TennisClub.UI
 
         private void MemberAddition_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Addition = memberAddition.Text;
             MemberData.Items.Refresh();
@@ -713,12 +653,9 @@ namespace TennisClub.UI
 
         private void MemberZipcode_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Zipcode = memberZipcode.Text;
             MemberData.Items.Refresh();
@@ -726,12 +663,9 @@ namespace TennisClub.UI
 
         private void MemberCity_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.City = memberCity.Text;
             MemberData.Items.Refresh();
@@ -739,12 +673,9 @@ namespace TennisClub.UI
 
         private void MemberPhoneNr_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.PhoneNr = memberPhoneNr.Text;
             MemberData.Items.Refresh();
@@ -752,12 +683,9 @@ namespace TennisClub.UI
 
         private void MemberFederationNr_KeyDown(object sender, KeyEventArgs e)
         {
-            MemberReadDTO member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.FederationNr = memberFederationNr.Text;
             MemberData.Items.Refresh();
@@ -766,11 +694,11 @@ namespace TennisClub.UI
 
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
-            DateTime? birthDate = memberBirthDate.SelectedDate;
+            var birthDate = memberBirthDate.SelectedDate;
 
             if (birthDate != null)
             {
-                MemberReadDTO newMember = new MemberReadDTO
+                var newMember = new MemberReadDTO
                 {
                     Addition = memberAddition.Text,
                     Address = memberAddress.Text,
@@ -778,16 +706,16 @@ namespace TennisClub.UI
                     City = memberCity.Text,
                     FederationNr = memberFederationNr.Text,
                     FirstName = memberFirstName.Text,
-                    GenderId = (int)memberGender.SelectedValue,
+                    GenderId = (int) memberGender.SelectedValue,
                     GenderName = memberGender.Text,
                     LastName = memberLastName.Text,
                     Number = memberNumber.Text,
                     PhoneNr = memberPhoneNr.Text,
                     Zipcode = memberZipcode.Text,
-                    Deleted = false,
+                    Deleted = false
                 };
 
-                List<MemberReadDTO> newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+                var newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
                 newList.Add(newMember);
                 MemberData.ItemsSource = newList;
 
@@ -806,37 +734,36 @@ namespace TennisClub.UI
          */
         private bool CreateMemberRole(MemberRoleReadDTO memberRoleItem)
         {
-            MemberRoleCreateDTO newMemberRole = new MemberRoleCreateDTO
+            var newMemberRole = new MemberRoleCreateDTO
             {
                 MemberId = memberRoleItem.MemberId,
                 RoleId = memberRoleItem.RoleId,
                 StartDate = memberRoleItem.StartDate
             };
-            Task<HttpResponseMessage> response = WebAPI.PostCall("memberroles", newMemberRole);
+            var response = WebAPI.PostCall("memberroles", newMemberRole);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
                 Debug.WriteLine($"({newMemberRole.MemberId}-{newMemberRole.RoleId}) is toegevoegd!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine($"Er is iets foutgelopen.");
-                return false;
-            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
         }
 
         private bool ReadMemberRoles()
         {
-            Task<HttpResponseMessage> result = WebAPI.GetCall($"memberroles{GetMemberRoleFilters()}");
-            DataGrid itemsControl = MemberRoleData;
+            var result = WebAPI.GetCall($"memberroles{GetMemberRoleFilters()}");
+            var itemsControl = MemberRoleData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<MemberRoleReadDTO> tmp = result.Result.Content.ReadAsAsync<List<MemberRoleReadDTO>>().Result; ;
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberRoleReadDTO>>().Result;
+                ;
                 itemsControl.ItemsSource = tmp;
-                List<MemberRoleReadDTO> tmp2 = new List<MemberRoleReadDTO>(tmp.Count);
-                tmp.ForEach((item) =>
+                var tmp2 = new List<MemberRoleReadDTO>(tmp.Count);
+                tmp.ForEach(item =>
                 {
                     tmp2.Add(new MemberRoleReadDTO
                     {
@@ -852,27 +779,23 @@ namespace TennisClub.UI
                 originalMemberRoleList = tmp2;
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         private bool UpdateMemberRole(int id, MemberRoleUpdateDTO memberRoleUpdateDTO)
         {
-            Task<HttpResponseMessage> result = WebAPI.PutCall($"memberroles/{id}", memberRoleUpdateDTO);
+            var result = WebAPI.PutCall($"memberroles/{id}", memberRoleUpdateDTO);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
                 Debug.WriteLine("Updated!");
                 return true;
             }
-            else
-            {
-                Debug.WriteLine("Niet gelukt!");
-                return false;
-            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
         }
 
         /*
@@ -897,7 +820,6 @@ namespace TennisClub.UI
 
         private void AddMemberRoleButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void FilterMemberRolesButton_Click(object sender, RoutedEventArgs e)
@@ -920,13 +842,13 @@ namespace TennisClub.UI
          */
         private void SynchroniseMemberRoleTable()
         {
-            bool isSucceeded = false;
+            var isSucceeded = false;
 
-            for (int i = 0; i < MemberRoleData.Items.Count; i++)
+            for (var i = 0; i < MemberRoleData.Items.Count; i++)
             {
-                object item = MemberRoleData.Items[i];
-                MemberRoleReadDTO memberRoleItem = (MemberRoleReadDTO)item;
-                MemberRoleReadDTO originalItem = originalMemberRoleList.Find(x => x.Id == memberRoleItem.Id);
+                var item = MemberRoleData.Items[i];
+                var memberRoleItem = (MemberRoleReadDTO) item;
+                var originalItem = originalMemberRoleList.Find(x => x.Id == memberRoleItem.Id);
 
                 if (originalItem != null && memberRoleItem == null)
                 {
@@ -938,17 +860,14 @@ namespace TennisClub.UI
                 }
                 else if (!originalItem.Equals(memberRoleItem))
                 {
-                    isSucceeded = UpdateMemberRole(originalItem.Id, new MemberRoleUpdateDTO { });
+                    isSucceeded = UpdateMemberRole(originalItem.Id, new MemberRoleUpdateDTO());
                 }
                 else
                 {
                     isSucceeded = true;
                 }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
@@ -967,19 +886,11 @@ namespace TennisClub.UI
             var result = "";
 
             if (memberRoleMemberFilter.SelectedItem != null)
-            {
                 result += $"/bymemberid/{memberRoleMemberFilter.SelectedValue}";
-            }
 
             return result;
         }
 
         #endregion
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
     }
 }

@@ -9,17 +9,17 @@ namespace TennisClub.DAL.Configurations
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(i => i.Id);
-            builder.HasIndex(i => i.Name).IsUnique(true);
+            builder.HasIndex(i => i.Name).IsUnique();
 
             builder.Property(i => i.Id).HasColumnType("integer").UseIdentityColumn();
             builder.Property(i => i.Name).HasColumnType("varchar(20)").IsRequired();
 
             builder.HasData(
-                new Role { Id = 1, Name = "Voorzitter" },
-                new Role { Id = 2, Name = "Bestuurslid" },
-                new Role { Id = 3, Name = "Secretaris" },
-                new Role { Id = 4, Name = "Penningmeester" },
-                new Role { Id = 5, Name = "Speler" }
+                new Role {Id = 1, Name = "Voorzitter"},
+                new Role {Id = 2, Name = "Bestuurslid"},
+                new Role {Id = 3, Name = "Secretaris"},
+                new Role {Id = 4, Name = "Penningmeester"},
+                new Role {Id = 5, Name = "Speler"}
             );
 
             builder.ToTable("tblRoles");

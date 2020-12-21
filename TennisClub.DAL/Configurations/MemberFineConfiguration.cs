@@ -10,7 +10,7 @@ namespace TennisClub.DAL.Configurations
         {
             builder.HasKey(i => i.Id);
 
-            builder.HasIndex(i => i.FineNumber).IsUnique(true);
+            builder.HasIndex(i => i.FineNumber).IsUnique();
 
             builder.Property(i => i.Id).HasColumnType("integer").UseIdentityColumn();
             builder.Property(i => i.FineNumber).HasColumnType("integer").IsRequired();
