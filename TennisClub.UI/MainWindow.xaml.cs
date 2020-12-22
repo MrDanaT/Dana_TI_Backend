@@ -1086,15 +1086,7 @@ namespace TennisClub.UI
         /*
          * Methods
          */
-
-        #endregion
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
+        
         private void GameMemberFilter_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             throw new System.NotImplementedException();
@@ -1112,12 +1104,19 @@ namespace TennisClub.UI
 
         private void GetGamesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            ReadGames();
         }
 
         private void ClearGameSelectionButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+                GameData.UnselectAll();
+
+                GameLeague.SelectedValue = null;
+                GameMember.SelectedValue = null;
+                GameNumber.Text = "";
+                GameDate.SelectedDate = null;
+
+                SetMemberRoleBoxEnable(true);
         }
 
         private void AddGameButton_OnClick(object sender, RoutedEventArgs e)
@@ -1128,6 +1127,14 @@ namespace TennisClub.UI
         private void SyncGamesButton_OnClick(object sender, RoutedEventArgs e)
         {
             throw new System.NotImplementedException();
+        }
+        
+        #endregion
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
