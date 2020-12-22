@@ -347,7 +347,7 @@
                                      SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible" />
                         </StackPanel>
                         <DataGrid Height="225" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False"
-                                  AutoGenerateColumns="False">
+                                  AutoGenerateColumns="False" SelectionChanged="MemberRoleData_OnSelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -374,19 +374,21 @@
                             <DockPanel Width="610">
                                 <StackPanel VerticalAlignment="Center">
                                     <Label Width="125">Lid</Label>
-                                    <ComboBox x:Name="MemberRoleMember" Width="125" />
+                                    <ComboBox x:Name="MemberRoleMember" SelectionChanged="MemberRoleMember_OnSelectionChanged" Width="125" SelectedValue="{Binding MemberReadDTO.Id}"
+                                              DisplayMemberPath="FullName" SelectedValuePath="Id"/>
                                 </StackPanel>
                                 <StackPanel Width="100" Margin="5,0" VerticalAlignment="Center">
                                     <Label>Rol</Label>
-                                    <ComboBox x:Name="MemberRoleRoles" Width="100" />
+                                    <ComboBox x:Name="MemberRoleRole" SelectionChanged="MemberRoleRole_OnSelectionChanged" Width="100" SelectedValue="{Binding RoleReadDTO.Id}" DisplayMemberPath="Name"
+                                              SelectedValuePath="Id"/>
                                 </StackPanel>
                                 <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label Width="125">Startdatum</Label>
-                                    <DatePicker x:Name="MemberRoleStartDate" Width="125" />
+                                    <DatePicker x:Name="MemberRoleStartDate" SelectedDateChanged="MemberRoleStartDate_OnSelectedDateChanged" Width="125" />
                                 </StackPanel>
                                 <StackPanel Margin="5,0" VerticalAlignment="Center">
                                     <Label HorizontalAlignment="Left" Width="125">Einddatum</Label>
-                                    <DatePicker HorizontalAlignment="Left" x:Name="MemberRoleEndDate" Width="125" />
+                                    <DatePicker x:Name="MemberRoleEndDate" SelectedDateChanged="MemberRoleEndDate_OnSelectedDateChanged" HorizontalAlignment="Left" Width="125" />
                                 </StackPanel>
                             </DockPanel>
                         </DockPanel>

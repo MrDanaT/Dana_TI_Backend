@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -111,7 +112,7 @@ namespace TennisClub.UI
                 tmp.ForEach(item => { tmp2.Add(new RoleReadDTO {Id = item.Id, Name = item.Name}); });
                 originalRoleList = tmp2;
                 MemberRoleRolesFilter.ItemsSource = tmp2;
-
+                MemberRoleRole.ItemsSource = tmp2;
                 return true;
             }
 
@@ -160,7 +161,7 @@ namespace TennisClub.UI
                 var roleItem = (RoleReadDTO) item;
                 var originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
 
-                if (originalItem == null && roleItem != null)
+                if (originalItem.IsNull() && !roleItem.IsNull())
                     isSucceeded = CreateRole(roleItem);
                 else if (!roleItem.Equals(originalItem))
                     isSucceeded = UpdateRole(roleItem.Id, new RoleUpdateDTO {Name = roleItem.Name});
@@ -326,7 +327,7 @@ namespace TennisClub.UI
                 var gameResultItem = (GameResultReadDTO) item;
                 var originalItem = originalGameResultList.Find(x => x.Id == gameResultItem.Id);
 
-                if (originalItem == null && gameResultItem != null)
+                if (originalItem.IsNull() && !gameResultItem.IsNull())
                     isSucceeded = CreateGameResult(gameResultItem);
                 else if (!gameResultItem.Equals(originalItem))
                     isSucceeded = UpdateGameResult(gameResultItem.Id,
@@ -430,6 +431,7 @@ namespace TennisClub.UI
                 });
                 originalMemberList = tmp2;
                 MemberRoleMemberFilter.ItemsSource = tmp2;
+                MemberRoleMember.ItemsSource = tmp2;
                 return true;
             }
 
@@ -540,9 +542,9 @@ namespace TennisClub.UI
                 var memberItem = (MemberReadDTO) item;
                 var originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
 
-                if (originalItem != null && memberItem == null)
+                if (!originalItem.IsNull() && memberItem.IsNull())
                     isSucceeded = DeleteMember(originalItem.Id);
-                else if (originalItem == null && memberItem != null)
+                else if (originalItem.IsNull() && !memberItem.IsNull())
                     isSucceeded = CreateMember(memberItem);
                 else if (!originalItem.Equals(memberItem))
                     isSucceeded = UpdateMember(originalItem.Id,
@@ -820,6 +822,34 @@ namespace TennisClub.UI
 
         private void AddMemberRoleButton_Click(object sender, RoutedEventArgs e)
         {
+            var startDate = MemberRoleStartDate.SelectedDate;
+            var endDate = MemberRoleEndDate.SelectedDate;
+            var member = (MemberReadDTO) MemberRoleMember.SelectedItem;
+            var role = (RoleReadDTO) MemberRoleRole.SelectedItem;
+
+            if (!startDate.IsNull() && !member.IsNull() && !role.IsNull())
+            {
+                var newMemberRole = new MemberRoleReadDTO
+                {
+                    Id = 0,
+                    StartDate = startDate.Value,
+                    MemberId = member.Id,
+                    RoleId = role.Id,
+                    MemberFullName = member.FullName,
+                    RoleName =  role.Name
+                };
+
+                if (endDate != null)
+                {
+                    newMemberRole.EndDate = endDate.Value;
+                }
+                
+                var newList = MemberRoleData.ItemsSource.OfType<MemberRoleReadDTO>().ToList();
+                newList.Add(newMemberRole);
+                MemberRoleData.ItemsSource = newList;
+
+                MemberRoleData.Items.Refresh();
+            }
         }
 
         private void FilterMemberRolesButton_Click(object sender, RoutedEventArgs e)
@@ -850,11 +880,11 @@ namespace TennisClub.UI
                 var memberRoleItem = (MemberRoleReadDTO) item;
                 var originalItem = originalMemberRoleList.Find(x => x.Id == memberRoleItem.Id);
 
-                if (originalItem != null && memberRoleItem == null)
+                if (!originalItem.IsNull() && memberRoleItem.IsNull())
                 {
                     //
                 }
-                else if (originalItem == null && memberRoleItem != null)
+                else if (originalItem.IsNull() && !memberRoleItem.IsNull())
                 {
                     isSucceeded = CreateMemberRole(memberRoleItem);
                 }
@@ -886,11 +916,94 @@ namespace TennisClub.UI
             var result = "";
 
             if (MemberRoleMemberFilter.SelectedItem != null)
+            {
                 result += $"/bymemberid/{MemberRoleMemberFilter.SelectedValue}";
+            }
+            else if (MemberRoleRolesFilter.SelectedItems.Count>0)
+            {
+                result += $"/byroleids/";
+                foreach (var item in MemberRoleRolesFilter.SelectedItems)
+                {
+                    var role = (RoleReadDTO)item;
+                    if (role != null)
+                    {
+                        result += role.Id + ",";
+                    }
+                }
+            }
 
             return result;
         }
+        
+        private MemberRoleReadDTO GetSelectedMemberRole()
+        {
+            if (MemberRoleData.SelectedItem.IsNull()) return null;
+
+            return (MemberRoleReadDTO)MemberRoleData.SelectedItem;
+        }
 
         #endregion
+
+        private void MemberRoleMember_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            if (MemberRoleMember.SelectedItem.IsNull()) return;
+
+            memberRole.MemberId = (int)MemberRoleMember.SelectedValue;
+            memberRole.MemberFullName = ((MemberReadDTO)MemberRoleMember.SelectedItem).FullName;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleRole_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            if (MemberRoleRole.SelectedItem.IsNull()) return;
+
+            memberRole.RoleId = (int)MemberRoleRole.SelectedValue;
+            memberRole.RoleName = ((RoleReadDTO) MemberRoleRole.SelectedItem).Name;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleStartDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            if (!MemberRoleStartDate.SelectedDate.HasValue) return;
+
+            memberRole.EndDate = MemberRoleStartDate.SelectedDate.Value;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleEndDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            if (!MemberRoleEndDate.SelectedDate.HasValue) return;
+            
+            memberRole.EndDate = MemberRoleEndDate.SelectedDate.Value;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleData_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            MemberRoleMember.SelectedValue = memberRole.MemberId;
+            MemberRoleRole.SelectedValue = memberRole.RoleId;
+            MemberRoleStartDate.SelectedDate = memberRole.StartDate;
+            MemberRoleEndDate.SelectedDate = memberRole.EndDate;
+        }
     }
 }

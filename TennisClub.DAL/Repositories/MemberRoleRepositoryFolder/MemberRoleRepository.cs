@@ -64,5 +64,33 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
             return _mapper.Map<IEnumerable<MemberRoleReadDTO>>(itemsFromDB);
         }
+
+        public override MemberRoleReadDTO Create(MemberRoleCreateDTO entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            var mappedObject = _mapper.Map<MemberRole>(entity);
+            mappedObject.MemberNavigation = TennisClubContext.Members.Find(mappedObject.MemberId);
+            mappedObject.RoleNavigation = TennisClubContext.Roles.Find(mappedObject.RoleId);
+            TennisClubContext.MemberRoles.Add(mappedObject);
+            TennisClubContext.SaveChanges();
+
+            return _mapper.Map<MemberRoleReadDTO>(mappedObject);
+        }
+
+        public MemberRoleReadDTO GetById(int id)
+        {
+            if (id < 0) throw new NullReferenceException("Id is out of range");
+
+            var itemFromDB = TennisClubContext.MemberRoles.Find(id);
+
+            if (itemFromDB == null) throw new NullReferenceException("Object not found");
+
+            itemFromDB.MemberNavigation = TennisClubContext.Members.Find(itemFromDB.MemberId);
+            itemFromDB.RoleNavigation = TennisClubContext.Roles.Find(itemFromDB.RoleId);
+
+            return _mapper.Map<MemberRoleReadDTO>(itemFromDB);
+
+        }
     }
 }

@@ -47,9 +47,7 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
                 }
             }
 
-            if (isMember)
-                return base.Create(entity);
-            return null;
+            return isMember ? base.Create(entity) : null;
         }
     }
 }

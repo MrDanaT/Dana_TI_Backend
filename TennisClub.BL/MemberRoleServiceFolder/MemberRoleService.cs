@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
 using TennisClub.DAL.Repositories;
@@ -44,10 +45,10 @@ namespace TennisClub.BL.MemberRoleServiceFolder
             return roleItems;
         }
 
-        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(int[] roleIds)
+        public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(string roleIds)
         {
-            // TODO: Dit nakijken samen met repository.
-            var memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoleIds(roleIds);
+            var intIds = roleIds.Split(',').Where(x => !string.IsNullOrEmpty(x)).Select(int.Parse).ToArray();
+            var memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoleIds(intIds);
 
             return memberItems;
         }

@@ -76,8 +76,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("byroleids/{ids}")]
         public ActionResult<IEnumerable<MemberRoleReadDTO>> GetMembersByRoleIds(string ids)
         {
-            var intIds = ids.Split(',').Select(int.Parse).ToArray();
-            var memberItems = _service.GetMemberRolesByRoleIds(intIds);
+            if (string.IsNullOrEmpty(ids))
+            {
+                return BadRequest();
+            }
+            
+            var memberItems = _service.GetMemberRolesByRoleIds(ids);
 
             return Ok(memberItems);
         }
