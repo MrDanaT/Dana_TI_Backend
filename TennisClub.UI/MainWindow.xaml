@@ -371,7 +371,7 @@
                             </Button>
                         </DockPanel>
                         <DockPanel Margin="10,0">
-                            <DockPanel Width="610">
+                            <DockPanel Width="500">
                                 <StackPanel VerticalAlignment="Center">
                                     <Label Width="125">Lid</Label>
                                     <ComboBox x:Name="MemberRoleMember" SelectionChanged="MemberRoleMember_OnSelectionChanged" Width="125" SelectedValue="{Binding MemberReadDTO.Id}"
@@ -386,22 +386,28 @@
                                     <Label Width="125">Startdatum</Label>
                                     <DatePicker x:Name="MemberRoleStartDate" SelectedDateChanged="MemberRoleStartDate_OnSelectedDateChanged" Width="125" />
                                 </StackPanel>
-                                <StackPanel Margin="5,0" VerticalAlignment="Center">
+                                <StackPanel Width="125" HorizontalAlignment="Left" VerticalAlignment="Center">
                                     <Label HorizontalAlignment="Left" Width="125">Einddatum</Label>
                                     <DatePicker x:Name="MemberRoleEndDate" SelectedDateChanged="MemberRoleEndDate_OnSelectedDateChanged" HorizontalAlignment="Left" Width="125" />
                                 </StackPanel>
                             </DockPanel>
                         </DockPanel>
-                        <StackPanel Margin="0,5">
-                            <Button HorizontalAlignment="Right" x:Name="AddMemberRoleButton" Width="80" Height="35"
-                                    Margin="0,2.5" Click="AddMemberRoleButton_Click">
-                                Voeg toe
-                            </Button>
-                            <Button HorizontalAlignment="Right" x:Name="SyncMemberRolesButton" Width="80" Height="35"
-                                    Margin="0,2.5" Click="SyncMemberRolesButton_Click">
-                                Sync.
-                            </Button>
-                        </StackPanel>
+                        <DockPanel Margin="0,5">
+                            <StackPanel>
+                                <Button HorizontalAlignment="Left" x:Name="ClearMemberRoleSelectionButton" Width="100" Height="35"
+                                        Margin="0,2.5" Click="ClearMemberRoleSelectionButton_OnClick">Verwijder selectie</Button>
+                            </StackPanel>
+                            <StackPanel>
+                                <Button HorizontalAlignment="Right" x:Name="AddMemberRoleButton" Width="80" Height="35"
+                                        Margin="0,2.5" Click="AddMemberRoleButton_Click">
+                                    Voeg toe
+                                </Button>
+                                <Button HorizontalAlignment="Right" x:Name="SyncMemberRolesButton" Width="80" Height="35"
+                                        Margin="0,2.5" Click="SyncMemberRolesButton_Click">
+                                    Sync.
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
                     </DockPanel>
                 </StackPanel>
             </Grid>
