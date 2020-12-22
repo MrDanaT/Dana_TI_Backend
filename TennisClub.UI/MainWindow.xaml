@@ -201,7 +201,7 @@
                         <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False"
                                   SelectedCellsChanged="MemberData_SelectedCellsChanged"
                                   BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True"
-                                  AutoGenerateColumns="False">
+                                  AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -347,7 +347,8 @@
                                      SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible" />
                         </StackPanel>
                         <DataGrid Height="225" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False"
-                                  AutoGenerateColumns="False" SelectionChanged="MemberRoleData_OnSelectionChanged">
+                                  AutoGenerateColumns="False" SelectionChanged="MemberRoleData_OnSelectionChanged"
+                                  IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -461,7 +462,7 @@
                     </DockPanel>
                     <DockPanel>
                         <DataGrid Height="250" x:Name="GameData" AutoGenerateColumns="False"
-                                  CanUserDeleteRows="True" Margin="0,10">
+                                  CanUserDeleteRows="True" Margin="0,10" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
