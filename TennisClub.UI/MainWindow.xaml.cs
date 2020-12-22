@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TennisClub.Common.Game;
 using TennisClub.Common.GameResult;
 using TennisClub.Common.Gender;
 using TennisClub.Common.League;
@@ -40,9 +41,8 @@ namespace TennisClub.UI
             ReadLeagues();
             ReadGameResults();
             ReadMemberRoles();
-            ReadMemberRolesMembers();
-
-            GameResultPlayerComboBoxFilter.ItemsSource = originalMemberList;
+            ReadAllMembers();
+            ReadGames();
         }
 
         #region Genders
@@ -190,7 +190,18 @@ namespace TennisClub.UI
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                itemsControl.ItemsSource = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
+                itemsControl.ItemsSource = tmp; 
+                var tmp2 = new List<LeagueReadDTO>(tmp.Count);
+                tmp.ForEach(item =>
+                {
+                    tmp2.Add(new LeagueReadDTO
+                    {
+                        Id = item.Id,
+                        Name = item.Name
+                    });
+                });
+                GameLeague.ItemsSource = tmp2;
                 return true;
             }
 
@@ -394,7 +405,7 @@ namespace TennisClub.UI
             return false;
         }
 
-        private bool ReadMemberRolesMembers()
+        private void ReadAllMembers()
         {
             var result = WebAPI.GetCall("members");
 
@@ -403,11 +414,15 @@ namespace TennisClub.UI
                 var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
                 MemberRoleMember.ItemsSource = tmp;
                 MemberRoleMemberFilter.ItemsSource = tmp;
-                return true;
+                GameMemberFilter.ItemsSource = tmp;
+                GameResultPlayerComboBoxFilter.ItemsSource = tmp;
+                GameMember.ItemsSource = tmp;
             }
+            else {
 
-            Debug.WriteLine("Niet gelukt!");
-            return false;
+
+                Debug.WriteLine("Niet gelukt!");
+            }
         }
 
         private bool ReadMembers()
@@ -1036,11 +1051,83 @@ namespace TennisClub.UI
         }
 
         #endregion
+
+        #region Games
+
+        private List<GameReadDTO> originalGameList;
+
+        /*
+         * CRUD
+         */
+        private bool ReadGames()
+        {
+            var result = WebAPI.GetCall("games");
+            var itemsControl = GameData;
+
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                var tmp = result.Result.Content.ReadAsAsync<List<GameReadDTO>>().Result;
+                itemsControl.ItemsSource = tmp;
+                var tmp2 = new List<GameReadDTO>(tmp.Count);
+                tmp.ForEach(item => { tmp2.Add(new GameReadDTO { Id = item.Id, MemberId = item.MemberId, LeagueId = item.LeagueId, MemberFullName = item.MemberFullName, LeagueName =  item.LeagueName, Date = item.Date, GameNumber = item.GameNumber}); });
+                originalGameList = tmp2;
+                return true;
+            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
+        }
+
         
+        /*
+         * Event Handlers
+         */
+
+        /*
+         * Methods
+         */
+
+        #endregion
+
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void GameMemberFilter_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void ClearGameFilterButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void FilterGamesButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void GetGamesButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void ClearGameSelectionButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void AddGameButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void SyncGamesButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -19,24 +19,13 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 
         private TennisClubContext TennisClubContext => Context;
 
-        public override IEnumerable<GameResultReadDTO> GetAll()
-        {
-            IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
-                .AsNoTracking()
-                .Include(g => g.GameNavigation);
-
-            return _mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems);
-        }
-
         public IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member)
         {
             if (member == null) throw new ArgumentNullException();
-
-            // TODO: Nakijken
+            
             IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
                 .AsNoTracking()
-                .Where(gr => gr.GameNavigation.MemberId == member.Id)
-                .Include(g => g.GameNavigation);
+                .Where(gr => gr.GameNavigation.MemberId == member.Id);
 
             return _mapper.Map<IEnumerable<GameResultReadDTO>>(gameResultItems);
         }

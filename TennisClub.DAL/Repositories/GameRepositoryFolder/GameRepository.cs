@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TennisClub.Common.Game;
 using TennisClub.Common.Member;
+using TennisClub.Common.MemberRole;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameRepositoryFolder
@@ -17,9 +19,32 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
 
         private TennisClubContext TennisClubContext => Context;
 
+        public override IEnumerable<GameReadDTO> GetAll()
+        {
+            var itemsFromDB = TennisClubContext.Games
+                .AsNoTracking()
+                .Include(g => g.LeagueNavigation)
+                .Include(g => g.MemberNavigation);
+
+            return _mapper.Map<IEnumerable<GameReadDTO>>(itemsFromDB);
+        }
+
+        public override GameReadDTO GetById(int id)
+        {
+            if (id < 0) throw new NullReferenceException("Id is out of range");
+
+            var itemFromDB = TennisClubContext.Games.Find(id);
+
+            if (itemFromDB == null) throw new NullReferenceException("Object not found");
+
+            itemFromDB.MemberNavigation = TennisClubContext.Members.Find(itemFromDB.MemberId);
+            itemFromDB.LeagueNavigation = TennisClubContext.Leagues.Find(itemFromDB.LeagueId);
+
+            return _mapper.Map<GameReadDTO>(itemFromDB);
+        }
+
         public IEnumerable<GameReadDTO> GetGamesByMember(MemberReadDTO memberParam)
         {
-            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             var gameItems = TennisClubContext.Games
                 .AsNoTracking()
                 .Where(g => g.MemberId == memberParam.Id)
