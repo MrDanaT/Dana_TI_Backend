@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.Member;
 using TennisClub.Common.MemberRole;
-using TennisClub.Common.Role;
 
 namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 {

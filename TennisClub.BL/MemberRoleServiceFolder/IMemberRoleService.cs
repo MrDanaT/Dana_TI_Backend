@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using TennisClub.Common.MemberRole;
-using TennisClub.Common.Role;
 
 namespace TennisClub.BL.MemberRoleServiceFolder
 {

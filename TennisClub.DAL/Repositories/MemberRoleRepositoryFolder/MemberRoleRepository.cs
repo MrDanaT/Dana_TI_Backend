@@ -5,7 +5,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TennisClub.Common.Member;
 using TennisClub.Common.MemberRole;
-using TennisClub.Common.Role;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
@@ -90,7 +89,6 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
             itemFromDB.RoleNavigation = TennisClubContext.Roles.Find(itemFromDB.RoleId);
 
             return _mapper.Map<MemberRoleReadDTO>(itemFromDB);
-
         }
     }
 }

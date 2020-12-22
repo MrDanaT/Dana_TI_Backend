@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -72,6 +71,88 @@ namespace TennisClub.UI
         {
             var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void MemberRoleMember_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            memberRole.MemberId = (int) MemberRoleMember.SelectedValue;
+            memberRole.MemberFullName = ((MemberReadDTO) MemberRoleMember.SelectedItem).FullName;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleRole_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            if (MemberRoleRole.SelectedItem.IsNull()) return;
+
+            memberRole.RoleId = (int) MemberRoleRole.SelectedValue;
+            memberRole.RoleName = ((RoleReadDTO) MemberRoleRole.SelectedItem).Name;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleStartDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            if (!MemberRoleStartDate.SelectedDate.HasValue) return;
+
+            memberRole.StartDate = MemberRoleStartDate.SelectedDate.Value;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleEndDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            if (!MemberRoleEndDate.SelectedDate.HasValue) return;
+
+            memberRole.EndDate = MemberRoleEndDate.SelectedDate.Value;
+            MemberRoleData.Items.Refresh();
+        }
+
+        private void MemberRoleData_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberRole = GetSelectedMemberRole();
+
+            if (memberRole.IsNull()) return;
+
+            MemberRoleMember.SelectedValue = memberRole.MemberId;
+            MemberRoleRole.SelectedValue = memberRole.RoleId;
+            MemberRoleStartDate.SelectedDate = memberRole.StartDate;
+            MemberRoleEndDate.SelectedDate = memberRole.EndDate;
+
+            var isNewMember = originalMemberRoleList.Contains(memberRole);
+
+            SetMemberRoleBoxEnable(isNewMember);
+        }
+
+        private void ClearMemberRoleSelectionButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            MemberRoleData.SelectedValue = null;
+            MemberRoleMember.SelectedValue = null;
+            MemberRoleRole.SelectedValue = null;
+            MemberRoleStartDate.SelectedDate = null;
+            MemberRoleEndDate.SelectedDate = null;
+
+            SetMemberRoleBoxEnable(true);
+        }
+
+        private void SetMemberRoleBoxEnable(bool isEnabled)
+        {
+            MemberRoleRole.IsEnabled = isEnabled;
+            MemberRoleMember.IsEnabled = isEnabled;
+            MemberRoleStartDate.IsEnabled = isEnabled;
         }
 
         #region Roles
@@ -403,7 +484,7 @@ namespace TennisClub.UI
 
         private bool ReadMemberRolesMembers()
         {
-            var result = WebAPI.GetCall($"members");
+            var result = WebAPI.GetCall("members");
             var itemsControl = MemberData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
@@ -417,7 +498,7 @@ namespace TennisClub.UI
             Debug.WriteLine("Niet gelukt!");
             return false;
         }
-        
+
         private bool ReadMembers()
         {
             var result = WebAPI.GetCall($"members/active?{GetMemberFilters()}");
@@ -456,7 +537,7 @@ namespace TennisClub.UI
             Debug.WriteLine("Niet gelukt!");
             return false;
         }
-        
+
         private bool UpdateMember(int id, MemberUpdateDTO memberUpdateDTO)
         {
             var result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
@@ -857,10 +938,7 @@ namespace TennisClub.UI
                     RoleName = role.Name
                 };
 
-                if (endDate != null)
-                {
-                    newMemberRole.EndDate = endDate.Value;
-                }
+                if (endDate != null) newMemberRole.EndDate = endDate.Value;
 
                 var newList = MemberRoleData.ItemsSource.OfType<MemberRoleReadDTO>().ToList();
                 newList.Add(newMemberRole);
@@ -939,14 +1017,11 @@ namespace TennisClub.UI
             }
             else if (MemberRoleRolesFilter.SelectedItems.Count > 0)
             {
-                result += $"/byroleids/";
+                result += "/byroleids/";
                 foreach (var item in MemberRoleRolesFilter.SelectedItems)
                 {
                     var role = (RoleReadDTO) item;
-                    if (role != null)
-                    {
-                        result += role.Id + ",";
-                    }
+                    if (role != null) result += role.Id + ",";
                 }
             }
 
@@ -961,87 +1036,5 @@ namespace TennisClub.UI
         }
 
         #endregion
-
-        private void MemberRoleMember_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var memberRole = GetSelectedMemberRole();
-
-            if (memberRole.IsNull()) return;
-
-            memberRole.MemberId = (int) MemberRoleMember.SelectedValue;
-            memberRole.MemberFullName = ((MemberReadDTO) MemberRoleMember.SelectedItem).FullName;
-            MemberRoleData.Items.Refresh();
-        }
-
-        private void MemberRoleRole_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var memberRole = GetSelectedMemberRole();
-
-            if (memberRole.IsNull()) return;
-
-            if (MemberRoleRole.SelectedItem.IsNull()) return;
-
-            memberRole.RoleId = (int) MemberRoleRole.SelectedValue;
-            memberRole.RoleName = ((RoleReadDTO) MemberRoleRole.SelectedItem).Name;
-            MemberRoleData.Items.Refresh();
-        }
-
-        private void MemberRoleStartDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            var memberRole = GetSelectedMemberRole();
-
-            if (memberRole.IsNull()) return;
-
-            if (!MemberRoleStartDate.SelectedDate.HasValue) return;
-
-            memberRole.StartDate = MemberRoleStartDate.SelectedDate.Value;
-            MemberRoleData.Items.Refresh();
-        }
-
-        private void MemberRoleEndDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            var memberRole = GetSelectedMemberRole();
-
-            if (memberRole.IsNull()) return;
-
-            if (!MemberRoleEndDate.SelectedDate.HasValue) return;
-
-            memberRole.EndDate = MemberRoleEndDate.SelectedDate.Value;
-            MemberRoleData.Items.Refresh();
-        }
-
-        private void MemberRoleData_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var memberRole = GetSelectedMemberRole();
-
-            if (memberRole.IsNull()) return;
-
-            MemberRoleMember.SelectedValue = memberRole.MemberId;
-            MemberRoleRole.SelectedValue = memberRole.RoleId;
-            MemberRoleStartDate.SelectedDate = memberRole.StartDate;
-            MemberRoleEndDate.SelectedDate = memberRole.EndDate;
-            
-            var isNewMember = originalMemberRoleList.Contains(memberRole);
-
-            SetMemberRoleBoxEnable(isNewMember);
-        }
-
-        private void ClearMemberRoleSelectionButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            MemberRoleData.SelectedValue = null;
-            MemberRoleMember.SelectedValue = null;
-            MemberRoleRole.SelectedValue = null;
-            MemberRoleStartDate.SelectedDate = null;
-            MemberRoleEndDate.SelectedDate = null;
-            
-            SetMemberRoleBoxEnable(true);
-        }
-
-        private void SetMemberRoleBoxEnable(bool isEnabled)
-        {
-            MemberRoleRole.IsEnabled = isEnabled;
-            MemberRoleMember.IsEnabled = isEnabled;
-            MemberRoleStartDate.IsEnabled = isEnabled;
-        }
     }
 }
