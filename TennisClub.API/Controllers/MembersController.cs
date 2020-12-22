@@ -19,10 +19,10 @@ namespace TennisClub.API.Controllers
         // GET: api/members
         [HttpGet]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers(
-            string federationNr,
-            string firstName,
-            string lastName,
-            string location)
+            string? federationNr="",
+            string? firstName = "",
+            string? lastName = "",
+            string? location = "")
         {
             var memberItems = _service.GetAllMembers(federationNr, firstName, lastName, location);
 

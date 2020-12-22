@@ -98,7 +98,7 @@
           <e p="LeagueReadDTO.cs" t="Include" />
         </e>
         <e p="Member" t="Include">
-          <e p="MemberCreateDTO .cs" t="Include" />
+          <e p="MemberCreateDTO.cs" t="Include" />
           <e p="MemberReadDTO.cs" t="Include" />
           <e p="MemberUpdateDTO.cs" t="Include" />
         </e>
