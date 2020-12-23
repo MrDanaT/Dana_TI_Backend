@@ -23,7 +23,7 @@ namespace TennisClub.BL.GameServiceFolder
             return _unitOfWork.Games.GetById(id);
         }
 
-        public IEnumerable<GameReadDTO> GetAllFutureGamesByMemberId(int id)
+        public IEnumerable<GameReadDTO> GetGamesByMemberId(int id)
         {
             var memberItem = _unitOfWork.Members.GetById(id);
             var gameItems = _unitOfWork.Games.GetGamesByMember(memberItem);

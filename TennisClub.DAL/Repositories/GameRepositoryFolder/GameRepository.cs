@@ -48,9 +48,11 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
                 .AsNoTracking()
                 .Where(g => g.MemberId == memberParam.Id)
                 .Select(g => g)
+                .Include(g => g.LeagueNavigation)
+                .Include(g => g.MemberNavigation)
                 .ToList();
 
-            gameItems.Sort();
+            gameItems.Sort((game, game1) => game.Date.CompareTo(game1.Date));
 
             return _mapper.Map<IEnumerable<GameReadDTO>>(gameItems.ToList());
         }

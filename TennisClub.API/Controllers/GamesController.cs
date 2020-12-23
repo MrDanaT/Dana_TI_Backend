@@ -36,11 +36,11 @@ namespace TennisClub.API.Controllers
             return Ok(gameItem);
         }
 
-        // GET: api/games/futurebymemberid/5
-        [HttpGet("futurebymemberid/{id}")]
-        public ActionResult<IEnumerable<GameReadDTO>> GetAllFutureGamesByMemberId(int id)
+        // GET: api/games/bymemberid/5
+        [HttpGet("bymemberid/{id}")]
+        public ActionResult<IEnumerable<GameReadDTO>> GetGamesByMemberId(int id)
         {
-            var gameItems = _service.GetAllFutureGamesByMemberId(id);
+            var gameItems = _service.GetGamesByMemberId(id);
 
             return Ok(gameItems);
         }

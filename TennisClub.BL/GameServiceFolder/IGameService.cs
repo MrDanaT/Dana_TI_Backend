@@ -9,7 +9,7 @@ namespace TennisClub.BL.GameServiceFolder
 
         GameReadDTO GetGameById(int id);
 
-        IEnumerable<GameReadDTO> GetAllFutureGamesByMemberId(int id);
+        IEnumerable<GameReadDTO> GetGamesByMemberId(int id);
 
         GameReadDTO CreateGame(GameCreateDTO game);
 
