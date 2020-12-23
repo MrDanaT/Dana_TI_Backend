@@ -37,12 +37,13 @@ namespace TennisClub.UI
             originalRoleList = new List<RoleReadDTO>();
 
             ReadRoles();
+            ReadAllMembers();
             ReadActiveMembers();
+            ReadAllActiveSpelerMembers();
             ReadGenders();
             ReadLeagues();
             ReadGameResults();
             ReadMemberRoles();
-            ReadAllMembers();
             ReadGames();
         }
 
@@ -67,12 +68,6 @@ namespace TennisClub.UI
         }
 
         #endregion
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
 
         #region Roles
 
@@ -423,6 +418,20 @@ namespace TennisClub.UI
                 MemberRoleMemberFilter.ItemsSource = tmp;
                 GameMemberFilter.ItemsSource = tmp;
                 GameResultPlayerComboBoxFilter.ItemsSource = tmp;
+            }
+            else
+            {
+                Debug.WriteLine("Niet gelukt!");
+            }
+        }
+
+        private void ReadAllActiveSpelerMembers()
+        {
+            var result = WebAPI.GetCall("members/active/speler");
+
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
                 GameMember.ItemsSource = tmp;
             }
             else
@@ -566,12 +575,12 @@ namespace TennisClub.UI
         private void SynchroniseMemberTable()
         {
             var isSucceeded = false;
+            var memberData = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
 
-            for (var i = 0; i < MemberData.Items.Count; i++)
+            for (var i = 0; i < originalMemberList.Count; i++)
             {
-                var item = MemberData.Items[i];
-                var memberItem = (MemberReadDTO) item;
-                var originalItem = originalMemberList.Find(x => x.Id == memberItem.Id);
+                var originalItem = originalMemberList.ElementAt(i); ;
+                var memberItem = memberData.Find(x => x.Id == originalItem.Id);
 
                 if (!originalItem.IsNull() && memberItem.IsNull())
                     isSucceeded = DeleteMember(originalItem.Id);
@@ -1075,9 +1084,30 @@ namespace TennisClub.UI
         /*
          * CRUD
          */
+        private bool CreateGame(GameReadDTO gameReadDto)
+        {
+            var newGame = new GameCreateDTO()
+            {
+                Date = gameReadDto.Date,
+                GameNumber = gameReadDto.GameNumber,
+                LeagueId = gameReadDto.LeagueId,
+                MemberId = gameReadDto.MemberId
+            };
+            var response = WebAPI.PostCall("games", newGame);
+
+            if (response.Result.StatusCode == HttpStatusCode.Created)
+            {
+                Debug.WriteLine($"({newGame.GameNumber}) is toegevoegd!");
+                return true;
+            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
+        }
+        
         private bool ReadGames()
         {
-            var result = WebAPI.GetCall("games");
+            var result = WebAPI.GetCall($"games{GetGamesFilter()}");
             var itemsControl = GameData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
@@ -1102,24 +1132,47 @@ namespace TennisClub.UI
             return false;
         }
 
+        private bool UpdateGame(int id, GameUpdateDTO gameUpdateDto)
+        {
+            var result = WebAPI.PutCall($"games/{id}", gameUpdateDto);
+
+            if (result.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine("Updated!");
+                return true;
+            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
+        }
+
+        private bool DeleteGame(int id)
+        {
+            var response = WebAPI.DeleteCall($"games/{id}");
+
+            if (response.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine($"{id} is verwijderd.");
+                return true;
+            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
+        }
 
         /*
          * Event Handlers
          */
 
-        private void GameMemberFilter_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void ClearGameFilterButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            GameMemberFilter.SelectedItem = null;
+            ReadGames();
         }
 
         private void FilterGamesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            ReadGames();
         }
 
         private void GetGamesButton_OnClick(object sender, RoutedEventArgs e)
@@ -1184,9 +1237,78 @@ namespace TennisClub.UI
          */
         private void SynchroniseGameTable()
         {
-            throw new NotImplementedException();
+            var isSucceeded = false;
+
+            for (var i = 0; i < GameData.Items.Count; i++)
+            {
+                var item = GameData.Items[i];
+                var gameReadDto = (GameReadDTO) item;
+                var originalItem = originalGameList.Find(x => x.Id == gameReadDto.Id);
+
+                if (!originalItem.IsNull() && gameReadDto.IsNull())
+                    isSucceeded = DeleteGame(originalItem.Id);
+                else if (originalItem.IsNull() && !gameReadDto.IsNull())
+                    isSucceeded = CreateGame(gameReadDto);
+                else if (!originalItem.Equals(gameReadDto))
+                    isSucceeded = UpdateGame(originalItem.Id,
+                        new GameUpdateDTO
+                        {
+                            Date = gameReadDto.Date, GameNumber = gameReadDto.GameNumber, LeagueId = gameReadDto.LeagueId, MemberId = gameReadDto.MemberId
+                        });
+                else
+                    isSucceeded = true;
+
+                if (!isSucceeded) break;
+            }
+
+            if (isSucceeded)
+            {
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
+                ReadActiveMembers();
+            }
+            else
+            {
+                MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
+            }
+        }
+
+        private string GetGamesFilter()
+        {
+            var result = "";
+
+            if (!GameMemberFilter.SelectedItem.IsNull())
+                result += "/bymemberid/" + ((MemberReadDTO)GameMemberFilter.SelectedItem).Id;
+
+            return result;
         }
 
         #endregion
+        
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void GameData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var game = GetSelectedGame();
+
+            if (game.IsNull()) return;
+
+            GameDate.SelectedDate = game.Date;
+            GameMember.SelectedValue = game.MemberId;
+            GameLeague.SelectedValue = game.LeagueId;
+            GameNumber.Text = game.GameNumber;
+        }
+
+        private GameReadDTO GetSelectedGame()
+        {
+            if (GameData.SelectedItem.IsNull()) return null;
+
+            var game = (GameReadDTO)GameData.SelectedItem;
+
+            return game;
+        }
     }
 }

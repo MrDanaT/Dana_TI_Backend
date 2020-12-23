@@ -29,7 +29,7 @@
                 <TextBlock Grid.Row="1" Grid.Column="1">Rol management</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">Je kan hier de rollen beheren.</TextBlock>
                 <DataGrid x:Name="RoleData" Grid.Row="2" Grid.Column="2" AutoGenerateColumns="False"
-                          CanUserDeleteRows="False" Margin="0,10" Grid.ColumnSpan="2">
+                          CanUserDeleteRows="True" Margin="0,10" Grid.ColumnSpan="2">
                     <DataGrid.Columns>
                         <DataGridTextColumn Visibility="Hidden" Header="Id"
                                             Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -201,32 +201,32 @@
                         <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False"
                                   SelectedCellsChanged="MemberData_SelectedCellsChanged"
                                   BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True"
-                                  AutoGenerateColumns="False" IsReadOnly="True">
+                                  AutoGenerateColumns="False" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
                                                     IsReadOnly="True" />
-                                <DataGridTextColumn Header="Bondsnr"
+                                <DataGridTextColumn Header="Bondsnr" IsReadOnly="True"
                                                     Binding="{Binding FederationNr, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Voornaam"
+                                <DataGridTextColumn Header="Voornaam" IsReadOnly="True"
                                                     Binding="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Achternaam"
+                                <DataGridTextColumn Header="Achternaam" IsReadOnly="True"
                                                     Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Geboortedatum"
+                                <DataGridTextColumn Header="Geboortedatum" IsReadOnly="True"
                                                     Binding="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Gender"
+                                <DataGridTextColumn Header="Gender" IsReadOnly="True"
                                                     Binding="{Binding GenderName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Adres"
+                                <DataGridTextColumn Header="Adres" IsReadOnly="True"
                                                     Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Nummer"
+                                <DataGridTextColumn Header="Nummer" IsReadOnly="True"
                                                     Binding="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Addities"
+                                <DataGridTextColumn Header="Addities" IsReadOnly="True"
                                                     Binding="{Binding Addition, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Postcode"
+                                <DataGridTextColumn Header="Postcode" IsReadOnly="True"
                                                     Binding="{Binding Zipcode, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Stad"
+                                <DataGridTextColumn Header="Stad" IsReadOnly="True"
                                                     Binding="{Binding City, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Telefoonnr"
+                                <DataGridTextColumn Header="Telefoonnr" IsReadOnly="True"
                                                     Binding="{Binding PhoneNr, UpdateSourceTrigger=PropertyChanged}" />
                             </DataGrid.Columns>
                         </DataGrid>
@@ -445,8 +445,7 @@
                         </StackPanel>
                         <StackPanel Width="500">
                             <Label Width="125">Lid</Label>
-                            <ComboBox Width="125" SelectionChanged="GameMemberFilter_OnSelectionChanged"
-                                      x:Name="GameMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
+                            <ComboBox Width="125" x:Name="GameMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
                                       DisplayMemberPath="FullName" SelectedValuePath="Id" />
                         </StackPanel>
                         <StackPanel>
@@ -462,18 +461,18 @@
                     </DockPanel>
                     <DockPanel>
                         <DataGrid Height="250" x:Name="GameData" AutoGenerateColumns="False"
-                                  CanUserDeleteRows="True" Margin="0,10" IsReadOnly="True">
+                                  CanUserDeleteRows="True" CanUserAddRows="False" Margin="0,10" SelectionChanged="GameData_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
                                                     IsReadOnly="True" />
-                                <DataGridTextColumn Header="Game nummer"
+                                <DataGridTextColumn Header="Game nummer" IsReadOnly="True"
                                                     Binding="{Binding GameNumber, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Competite type"
+                                <DataGridTextColumn Header="Competite type" IsReadOnly="True"
                                                     Binding="{Binding LeagueName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Speler"
+                                <DataGridTextColumn Header="Speler" IsReadOnly="True"
                                                     Binding="{Binding MemberFullName, UpdateSourceTrigger=PropertyChanged}" />
-                                <DataGridTextColumn Header="Datum"
+                                <DataGridTextColumn Header="Datum" IsReadOnly="True"
                                                     Binding="{Binding Date, UpdateSourceTrigger=PropertyChanged}" />
                             </DataGrid.Columns>
                         </DataGrid>
