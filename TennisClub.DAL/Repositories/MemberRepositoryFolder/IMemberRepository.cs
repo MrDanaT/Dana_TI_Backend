@@ -6,5 +6,6 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
     public interface IMemberRepository : IRepository<MemberCreateDTO, MemberReadDTO, MemberUpdateDTO>
     {
         IEnumerable<MemberReadDTO> GetAllActiveMembers();
+        IEnumerable<MemberReadDTO> GetAllActiveSpelerMembers();
     }
 }

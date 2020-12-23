@@ -51,6 +51,8 @@ namespace TennisClub.API.Controllers
         {
             var createdGame = _service.CreateGame(gameCreateDTO);
 
+            if (createdGame == null)
+                return BadRequest();
 
             return CreatedAtRoute(nameof(GetGameById), new {createdGame.Id}, createdGame);
         }

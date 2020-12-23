@@ -8,6 +8,8 @@ namespace TennisClub.BL.MemberServiceFolder
         IEnumerable<MemberReadDTO> GetAllMembers(string federationNr, string firstName, string lastName,
             string location);
 
+        IEnumerable<MemberReadDTO> GetAllActiveSpelerMembers();
+
         MemberReadDTO GetMemberById(int id);
         MemberReadDTO CreateMember(MemberCreateDTO member);
         void UpdateMember(int id, MemberUpdateDTO memberToPatch);

@@ -80,5 +80,11 @@ namespace TennisClub.BL.MemberServiceFolder
 
             return memberItems;
         }
+
+        public IEnumerable<MemberReadDTO> GetAllActiveSpelerMembers()
+        {
+            var memberItems = _unitOfWork.Members.GetAllActiveSpelerMembers();
+            return memberItems;
+        }
     }
 }

@@ -59,21 +59,21 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
 
         public override GameReadDTO Create(GameCreateDTO entity)
         {
-            var memberFromRepo = Context.Members.Find(entity.MemberId);
-            var isMember = false;
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            foreach (var memberRole in memberFromRepo.MemberRoles)
-            {
-                var hasSpelerRole = memberRole.RoleNavigation.Name.Equals("Speler");
-                var isStillASpeler = memberRole.EndDate != null;
-                if (hasSpelerRole && isStillASpeler)
-                {
-                    isMember = true;
-                    break;
-                }
-            }
+            var memberRoles = TennisClubContext.MemberRoles.Include(x => x.MemberNavigation).Include(x => x.RoleNavigation).Where(x => x.RoleNavigation.Name.Equals("Speler") && x.MemberId == entity.MemberId);
 
-            return isMember ? base.Create(entity) : null;
+            var mappedObject = _mapper.Map<Game>(entity);
+
+            if (memberRoles.Count() == 0)
+                return null;
+
+            mappedObject.LeagueNavigation = TennisClubContext.Leagues.Find(mappedObject.LeagueId);
+            mappedObject.MemberNavigation = TennisClubContext.Members.Find(mappedObject.MemberId);
+            TennisClubContext.Games.Add(mappedObject);
+            TennisClubContext.SaveChanges();
+
+            return _mapper.Map<GameReadDTO>(mappedObject);
         }
     }
 }
