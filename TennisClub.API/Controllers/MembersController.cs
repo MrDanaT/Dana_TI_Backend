@@ -19,7 +19,7 @@ namespace TennisClub.API.Controllers
         // GET: api/members
         [HttpGet]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllMembers(
-            string? federationNr="",
+            string? federationNr = "",
             string? firstName = "",
             string? lastName = "",
             string? location = "")
@@ -81,7 +81,7 @@ namespace TennisClub.API.Controllers
             string? federationNr = "",
             string? firstName = "",
             string? lastName = "",
-            string? location="")
+            string? location = "")
         {
             var memberItems = _service.GetAllActiveMembers(federationNr, firstName, lastName, location);
 

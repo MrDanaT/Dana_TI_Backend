@@ -5,7 +5,6 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TennisClub.Common.Game;
 using TennisClub.Common.Member;
-using TennisClub.Common.MemberRole;
 using TennisClub.DAL.Entities;
 
 namespace TennisClub.DAL.Repositories.GameRepositoryFolder

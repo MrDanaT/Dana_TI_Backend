@@ -479,7 +479,7 @@
                         </DataGrid>
                     </DockPanel>
                     <DockPanel Margin="0,1">
-                        <StackPanel >
+                        <StackPanel>
                             <Button x:Name="GetGamesButton" Width="80" Height="35"
                                     Margin="0,2.5"
                                     Click="GetGamesButton_OnClick">
@@ -489,21 +489,21 @@
                         <DockPanel Margin="30,0,0,0">
                             <StackPanel Margin="5,0">
                                 <Label Width="100">Game nummer</Label>
-                                <TextBox x:Name="GameNumber" MaxLength="10" Width="100" Height="22"/>
+                                <TextBox x:Name="GameNumber" MaxLength="10" Width="100" Height="22" />
                             </StackPanel>
                             <StackPanel Margin="5,0">
                                 <Label Width="100">Competitie type</Label>
                                 <ComboBox x:Name="GameLeague" Width="100" SelectedValue="{Binding LeagueReadDTO.Id}"
-                                          DisplayMemberPath="Name" SelectedValuePath="Id"/>
+                                          DisplayMemberPath="Name" SelectedValuePath="Id" />
                             </StackPanel>
                             <StackPanel Margin="5,0">
                                 <Label Width="100">Speler</Label>
                                 <ComboBox x:Name="GameMember" Width="100" SelectedValue="{Binding MemberReadDTO.Id}"
-                                          DisplayMemberPath="FullName" SelectedValuePath="Id"/>
+                                          DisplayMemberPath="FullName" SelectedValuePath="Id" />
                             </StackPanel>
                             <StackPanel Margin="5,0">
                                 <Label Width="125">Datum</Label>
-                                <DatePicker x:Name="GameDate" Width="125"/>
+                                <DatePicker x:Name="GameDate" Width="125" />
                             </StackPanel>
                         </DockPanel>
                         <DockPanel>

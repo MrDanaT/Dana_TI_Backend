@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -66,7 +67,13 @@ namespace TennisClub.UI
         }
 
         #endregion
-        
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
         #region Roles
 
         private List<RoleReadDTO> originalRoleList;
@@ -191,7 +198,7 @@ namespace TennisClub.UI
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 var tmp = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
-                itemsControl.ItemsSource = tmp; 
+                itemsControl.ItemsSource = tmp;
                 var tmp2 = new List<LeagueReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
                 {
@@ -418,9 +425,8 @@ namespace TennisClub.UI
                 GameResultPlayerComboBoxFilter.ItemsSource = tmp;
                 GameMember.ItemsSource = tmp;
             }
-            else {
-
-
+            else
+            {
                 Debug.WriteLine("Niet gelukt!");
             }
         }
@@ -864,7 +870,7 @@ namespace TennisClub.UI
                     RoleName = role.Name
                 };
 
-                if (!endDate.IsNull()) 
+                if (!endDate.IsNull())
                     newMemberRole.EndDate = endDate.Value;
 
                 var newList = MemberRoleData.ItemsSource.OfType<MemberRoleReadDTO>().ToList();
@@ -963,7 +969,7 @@ namespace TennisClub.UI
         private void ClearMemberRoleSelectionButton_OnClick(object sender, RoutedEventArgs e)
         {
             MemberRoleData.UnselectAll();
-            
+
             MemberRoleMember.SelectedValue = null;
             MemberRoleRole.SelectedValue = null;
             MemberRoleStartDate.SelectedDate = null;
@@ -971,7 +977,7 @@ namespace TennisClub.UI
 
             SetMemberRoleBoxEnable(true);
         }
-        
+
         /*
          * Methods
          */
@@ -993,7 +999,10 @@ namespace TennisClub.UI
                 {
                     isSucceeded = CreateMemberRole(memberRoleItem);
                 }
-                else if (originalItem.MemberId == memberRoleItem.MemberId && originalItem.RoleId == memberRoleItem.RoleId && originalItem.StartDate.Equals(memberRoleItem.StartDate) && !originalItem.EndDate.Equals(memberRoleItem.EndDate))
+                else if (originalItem.MemberId == memberRoleItem.MemberId &&
+                         originalItem.RoleId == memberRoleItem.RoleId &&
+                         originalItem.StartDate.Equals(memberRoleItem.StartDate) &&
+                         !originalItem.EndDate.Equals(memberRoleItem.EndDate))
                 {
                     isSucceeded = UpdateMemberRole(originalItem.Id, new MemberRoleUpdateDTO
                     {
@@ -1025,7 +1034,7 @@ namespace TennisClub.UI
             MemberRoleMember.IsEnabled = isEnabled;
             MemberRoleStartDate.IsEnabled = isEnabled;
         }
-        
+
         private string GetMemberRoleFilters()
         {
             var result = "";
@@ -1040,7 +1049,7 @@ namespace TennisClub.UI
                 foreach (var item in MemberRoleRolesFilter.SelectedItems)
                 {
                     var role = (RoleReadDTO) item;
-                    if (!role.IsNull()) 
+                    if (!role.IsNull())
                         result += role.Id + ",";
                 }
             }
@@ -1052,8 +1061,8 @@ namespace TennisClub.UI
         {
             if (MemberRoleData.SelectedItem.IsNull()) return null;
 
-            var memberRole= (MemberRoleReadDTO) MemberRoleData.SelectedItem;
-            
+            var memberRole = (MemberRoleReadDTO) MemberRoleData.SelectedItem;
+
             return memberRole;
         }
 
@@ -1076,7 +1085,15 @@ namespace TennisClub.UI
                 var tmp = result.Result.Content.ReadAsAsync<List<GameReadDTO>>().Result;
                 itemsControl.ItemsSource = tmp;
                 var tmp2 = new List<GameReadDTO>(tmp.Count);
-                tmp.ForEach(item => { tmp2.Add(new GameReadDTO { Id = item.Id, MemberId = item.MemberId, LeagueId = item.LeagueId, MemberFullName = item.MemberFullName, LeagueName =  item.LeagueName, Date = item.Date, GameNumber = item.GameNumber}); });
+                tmp.ForEach(item =>
+                {
+                    tmp2.Add(new GameReadDTO
+                    {
+                        Id = item.Id, MemberId = item.MemberId, LeagueId = item.LeagueId,
+                        MemberFullName = item.MemberFullName, LeagueName = item.LeagueName, Date = item.Date,
+                        GameNumber = item.GameNumber
+                    });
+                });
                 originalGameList = tmp2;
                 return true;
             }
@@ -1092,17 +1109,17 @@ namespace TennisClub.UI
 
         private void GameMemberFilter_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void ClearGameFilterButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void FilterGamesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void GetGamesButton_OnClick(object sender, RoutedEventArgs e)
@@ -1128,11 +1145,11 @@ namespace TennisClub.UI
 
             if (!date.IsNull())
             {
-                var newGame = new GameReadDTO()
+                var newGame = new GameReadDTO
                 {
                     Id = 0,
                     GameNumber = GameNumber.Text,
-                    Date = date.Value,
+                    Date = date.Value
                 };
 
                 if (!GameMember.SelectedItem.IsNull() && !GameMember.SelectedValue.IsNull())
@@ -1141,6 +1158,7 @@ namespace TennisClub.UI
                     newGame.MemberFullName = member.FullName;
                     newGame.MemberId = member.Id;
                 }
+
                 if (!GameLeague.SelectedItem.IsNull() && !GameLeague.SelectedValue.IsNull())
                 {
                     var league = (LeagueReadDTO) GameLeague.SelectedItem;
@@ -1160,21 +1178,15 @@ namespace TennisClub.UI
         {
             SynchroniseGameTable();
         }
-        
+
         /*
          * Methods
          */
         private void SynchroniseGameTable()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
     }
 }

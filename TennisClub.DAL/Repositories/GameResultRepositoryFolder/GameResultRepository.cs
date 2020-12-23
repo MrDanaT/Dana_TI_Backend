@@ -22,7 +22,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
         public IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member)
         {
             if (member == null) throw new ArgumentNullException();
-            
+
             IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
                 .AsNoTracking()
                 .Where(gr => gr.GameNavigation.MemberId == member.Id)
@@ -48,7 +48,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
             {
                 var anderLijst = itemsFromDB.ToList();
             }
-            
+
             return _mapper.Map<IEnumerable<GameResultReadDTO>>(itemsFromDB);
         }
     }
