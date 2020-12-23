@@ -7,6 +7,8 @@
   <component name="ChangeListManager">
     <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

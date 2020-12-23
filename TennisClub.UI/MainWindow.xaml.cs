@@ -36,7 +36,7 @@ namespace TennisClub.UI
             originalRoleList = new List<RoleReadDTO>();
 
             ReadRoles();
-            ReadMembers();
+            ReadActiveMembers();
             ReadGenders();
             ReadLeagues();
             ReadGameResults();
@@ -425,7 +425,7 @@ namespace TennisClub.UI
             }
         }
 
-        private bool ReadMembers()
+        private bool ReadActiveMembers()
         {
             var result = WebAPI.GetCall($"members/active?{GetMemberFilters()}");
             var itemsControl = MemberData;
@@ -456,7 +456,6 @@ namespace TennisClub.UI
                 });
                 originalMemberList = tmp2;
                 MemberRoleMemberFilter.ItemsSource = tmp2;
-                MemberRoleMember.ItemsSource = tmp2;
                 return true;
             }
 
@@ -497,7 +496,7 @@ namespace TennisClub.UI
          */
         private void SearchFilteredMembers_Click(object sender, RoutedEventArgs e)
         {
-            ReadMembers();
+            ReadActiveMembers();
         }
 
         private void MemberData_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
@@ -531,7 +530,7 @@ namespace TennisClub.UI
 
         private void GetMembersButton_Click(object sender, RoutedEventArgs e)
         {
-            ReadMembers();
+            ReadActiveMembers();
         }
 
         private void ClearMemberFilterButton_Click(object sender, RoutedEventArgs e)
@@ -540,7 +539,7 @@ namespace TennisClub.UI
             MemberFilterLastName.Text = "";
             MemberFilterFirstName.Text = "";
             MemberFilterLocation.Text = "";
-            ReadMembers();
+            ReadActiveMembers();
         }
 
         private void MemberGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -591,7 +590,7 @@ namespace TennisClub.UI
             if (isSucceeded)
             {
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
-                ReadMembers();
+                ReadActiveMembers();
             }
             else
             {
@@ -1012,7 +1011,7 @@ namespace TennisClub.UI
             if (isSucceeded)
             {
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
-                ReadMembers();
+                ReadActiveMembers();
             }
             else
             {
