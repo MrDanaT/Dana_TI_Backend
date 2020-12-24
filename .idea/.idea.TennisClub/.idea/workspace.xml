@@ -23,6 +23,8 @@
       <option value="$PROJECT_DIR$/TennisClub.DAL/DesignTimeDbContextFactory.cs" />
       <option value="$PROJECT_DIR$/TennisClub.DAL/DALExtension.cs" />
       <option value="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleReadDTO.cs" />
+      <option value="$PROJECT_DIR$/TennisClub.Common/Game/GameReadDTO.cs" />
+      <option value="$PROJECT_DIR$/TennisClub.DAL/Repositories/GameRepositoryFolder/GameRepository.cs" />
       <option value="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" />
     </changedPaths>
   </component>
@@ -98,6 +100,8 @@
       <workItem from="1603296505935" duration="218000" />
       <workItem from="1608562309002" duration="1227000" />
       <workItem from="1608653329952" duration="1383000" />
+      <workItem from="1608734388325" duration="6725000" />
+      <workItem from="1608828006754" duration="1325000" />
     </task>
     <servers />
   </component>

@@ -12,6 +12,7 @@ using TennisClub.Common.GameResult;
 using TennisClub.Common.Gender;
 using TennisClub.Common.League;
 using TennisClub.Common.Member;
+using TennisClub.Common.MemberFine;
 using TennisClub.Common.MemberRole;
 using TennisClub.Common.Role;
 
@@ -34,6 +35,9 @@ namespace TennisClub.UI
             originalGameResultList = new List<GameResultReadDTO>();
             originalMemberList = new List<MemberReadDTO>();
             originalRoleList = new List<RoleReadDTO>();
+            createMemberlist = new List<MemberReadDTO>();
+            createGameList = new List<GameReadDTO>();
+            originalMemberFineList = new List<MemberFineReadDTO>();
 
             ReadRoles();
             ReadAllMembers();
@@ -44,6 +48,7 @@ namespace TennisClub.UI
             ReadGameResults();
             ReadMemberRoles();
             ReadGames();
+            ReadMemberFines();
         }
 
         #region Genders
@@ -380,6 +385,7 @@ namespace TennisClub.UI
         #region Members
 
         private List<MemberReadDTO> originalMemberList;
+        private List<MemberReadDTO> createMemberlist;
 
         /*
          * CRUD
@@ -423,6 +429,7 @@ namespace TennisClub.UI
                 MemberRoleMemberFilter.ItemsSource = tmp;
                 GameMemberFilter.ItemsSource = tmp;
                 GameResultPlayerComboBoxFilter.ItemsSource = tmp;
+                MemberFineMemberFilter.ItemsSource = tmp;
             }
             else
             {
@@ -591,16 +598,22 @@ namespace TennisClub.UI
                 if (!originalItem.IsNull() && memberItem.IsNull())
                     isSucceeded = DeleteMember(originalItem.Id);
                 else if (originalItem.IsNull() && !memberItem.IsNull())
-                    isSucceeded = CreateMember(memberItem);
+                    continue;
                 else if (!originalItem.Equals(memberItem))
                     isSucceeded = UpdateMember(originalItem.Id,
                         new MemberUpdateDTO
                         {
-                            Addition = memberItem.Addition, Address = memberItem.Address,
-                            BirthDate = memberItem.BirthDate, City = memberItem.City,
-                            FederationNr = memberItem.FederationNr, FirstName = memberItem.FirstName,
-                            GenderId = memberItem.GenderId, LastName = memberItem.LastName, Number = memberItem.Number,
-                            PhoneNr = memberItem.PhoneNr, Zipcode = memberItem.Zipcode
+                            Addition = memberItem.Addition,
+                            Address = memberItem.Address,
+                            BirthDate = memberItem.BirthDate,
+                            City = memberItem.City,
+                            FederationNr = memberItem.FederationNr,
+                            FirstName = memberItem.FirstName,
+                            GenderId = memberItem.GenderId,
+                            LastName = memberItem.LastName,
+                            Number = memberItem.Number,
+                            PhoneNr = memberItem.PhoneNr,
+                            Zipcode = memberItem.Zipcode
                         });
                 else
                     isSucceeded = true;
@@ -609,7 +622,17 @@ namespace TennisClub.UI
             }
 
             if (isSucceeded)
+                foreach (var x in createMemberlist)
+                {
+                    isSucceeded = CreateMember(x);
+
+                    if (!isSucceeded)
+                        break;
+                }
+
+            if (isSucceeded)
             {
+                createMemberlist.Clear();
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
                 ReadActiveMembers();
             }
@@ -765,6 +788,7 @@ namespace TennisClub.UI
 
                 var newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
                 newList.Add(newMember);
+                createMemberlist.Add(newMember);
                 MemberData.ItemsSource = newList;
 
                 MemberData.Items.Refresh();
@@ -1084,6 +1108,7 @@ namespace TennisClub.UI
         #region Games
 
         private List<GameReadDTO> originalGameList;
+        private List<GameReadDTO> createGameList;
 
         /*
          * CRUD
@@ -1278,6 +1303,7 @@ namespace TennisClub.UI
 
                 var newList = GameData.ItemsSource.OfType<GameReadDTO>().ToList();
                 newList.Add(newGame);
+                createGameList.Add(newGame);
                 GameData.ItemsSource = newList;
 
                 GameData.Items.Refresh();
@@ -1306,12 +1332,14 @@ namespace TennisClub.UI
                 if (!originalItem.IsNull() && gameItem.IsNull())
                     isSucceeded = DeleteGame(originalItem.Id);
                 else if (originalItem.IsNull() && !gameItem.IsNull())
-                    isSucceeded = CreateGame(gameItem);
+                    continue;
                 else if (!originalItem.Equals(gameItem))
                     isSucceeded = UpdateGame(originalItem.Id,
                         new GameUpdateDTO
                         {
-                            Date = gameItem.Date, GameNumber = gameItem.GameNumber, LeagueId = gameItem.LeagueId,
+                            Date = gameItem.Date,
+                            GameNumber = gameItem.GameNumber,
+                            LeagueId = gameItem.LeagueId,
                             MemberId = gameItem.MemberId
                         });
                 else
@@ -1321,7 +1349,17 @@ namespace TennisClub.UI
             }
 
             if (isSucceeded)
+                foreach (var x in createGameList)
+                {
+                    isSucceeded = CreateGame(x);
+
+                    if (!isSucceeded)
+                        break;
+                }
+
+            if (isSucceeded)
             {
+                createGameList.Clear();
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
                 ReadActiveMembers();
             }
@@ -1360,6 +1398,115 @@ namespace TennisClub.UI
 
             game.GameNumber = GameNumber.Text;
             GameData.Items.Refresh();
+        }
+
+        #endregion
+
+        #region MemberFines
+
+        private List<MemberFineReadDTO> originalMemberFineList;
+
+        /*
+         * CRUD
+         */
+        private bool CreateMemberFine(MemberFineReadDTO item)
+        {
+            var newMemberFine = new MemberFineCreateDTO
+            {
+                Amount = item.Amount,
+                FineNumber = item.FineNumber,
+                HandoutDate = item.HandoutDate,
+                MemberId = item.MemberId,
+                PaymentDate = item.PaymentDate
+            };
+            var response = WebAPI.PostCall("memberfines", newMemberFine);
+
+            if (response.Result.StatusCode == HttpStatusCode.Created)
+            {
+                Debug.WriteLine($"{newMemberFine.FineNumber} is toegevoegd!");
+                return true;
+            }
+
+            Debug.WriteLine("Er is iets foutgelopen.");
+            return false;
+        }
+
+        private bool ReadMemberFines()
+        {
+            var result = WebAPI.GetCall($"memberfines{GetMemberFineFilters()}");
+            var itemsControl = MemberFineData;
+
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberFineReadDTO>>().Result;
+                itemsControl.ItemsSource = tmp;
+                var tmp2 = new List<MemberFineReadDTO>(tmp.Count);
+                tmp.ForEach(item =>
+                {
+                    tmp2.Add(new MemberFineReadDTO
+                    {
+                        Id = item.Id,
+                        Amount = item.Amount,
+                        FineNumber = item.FineNumber,
+                        HandoutDate = item.HandoutDate,
+                        MemberId = item.MemberId,
+                        PaymentDate = item.PaymentDate
+                    });
+                });
+                originalMemberFineList = tmp2;
+                return true;
+            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
+        }
+
+        private bool UpdateMemberFine(int id, MemberFineUpdateDTO item)
+        {
+            var result = WebAPI.PutCall($"memberfines/{id}", item);
+
+            if (result.Result.StatusCode == HttpStatusCode.NoContent)
+            {
+                Debug.WriteLine("Updated!");
+                return true;
+            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
+        }
+        
+        /*
+         * Event handlers
+         */
+
+        private void GetMemberFinesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SyncMemberFinesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClearMemberFineFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FilterMemberFinesButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /*
+         * Methods
+         */
+        private string GetMemberFineFilters()
+        {
+            var result = "";
+
+            return result;
         }
 
         #endregion

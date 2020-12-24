@@ -19,11 +19,20 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         private TennisClubContext TennisClubContext => Context;
 
-        public IEnumerable<MemberFineReadDTO> GetMemberFinesByMember(MemberReadDTO member)
+        public override IEnumerable<MemberFineReadDTO> GetAll()
         {
-            // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
             var memberFineItems = TennisClubContext.MemberFines
                 .AsNoTracking()
+                .Include(x => x.MemberNavigation);
+
+            return _mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems);
+        }
+
+        public IEnumerable<MemberFineReadDTO> GetMemberFinesByMember(MemberReadDTO member)
+        {
+            var memberFineItems = TennisClubContext.MemberFines
+                .AsNoTracking()
+                .Include(x => x.MemberNavigation)
                 .Where(mf => mf.MemberId == member.Id)
                 .Select(mf => mf);
 
