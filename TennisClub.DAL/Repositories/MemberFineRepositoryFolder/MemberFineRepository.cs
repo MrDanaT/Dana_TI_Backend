@@ -28,6 +28,30 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
             return _mapper.Map<IEnumerable<MemberFineReadDTO>>(memberFineItems);
         }
 
+        public override MemberFineReadDTO Create(MemberFineCreateDTO entity)
+        {
+            if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+            var mappedObject = _mapper.Map<MemberFine>(entity);
+            mappedObject.MemberNavigation = TennisClubContext.Members.Find(mappedObject.MemberId);
+            TennisClubContext.MemberFines.Add(mappedObject);
+            TennisClubContext.SaveChanges();
+
+            return _mapper.Map<MemberFineReadDTO>(mappedObject);
+        }
+
+        public override MemberFineReadDTO GetById(int id)
+        {
+            if (id < 0) throw new NullReferenceException("Id is out of range");
+
+            var itemFromDB = Context.MemberFines.Find(id);
+            if (itemFromDB == null) throw new NullReferenceException("Object not found");
+
+            itemFromDB.MemberNavigation = TennisClubContext.Members.Find(itemFromDB.MemberId);
+
+            return _mapper.Map<MemberFineReadDTO>(itemFromDB);
+        }
+
         public IEnumerable<MemberFineReadDTO> GetMemberFinesByMember(MemberReadDTO member)
         {
             var memberFineItems = TennisClubContext.MemberFines

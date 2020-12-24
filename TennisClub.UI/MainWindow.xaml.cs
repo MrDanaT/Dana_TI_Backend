@@ -587,7 +587,6 @@ namespace TennisClub.UI
             for (var i = 0; i < originalMemberList.Count; i++)
             {
                 var originalItem = originalMemberList.ElementAt(i);
-                ;
                 var memberItem = memberData.Find(x => x.Id == originalItem.Id);
 
                 if (!originalItem.IsNull() && memberItem.IsNull())
@@ -1489,12 +1488,12 @@ namespace TennisClub.UI
 
         private void GetMemberFinesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ReadMemberFines();
         }
 
         private void SyncMemberFinesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SynchroniseMemberFineTable();
         }
 
         private void ClearMemberFineFilterButton_Click(object sender, RoutedEventArgs e)
@@ -1513,6 +1512,42 @@ namespace TennisClub.UI
         /*
          * Methods
          */
+
+        private void SynchroniseMemberFineTable()
+        {
+            var isSucceeded = false;
+
+            for (var i = 0; i < MemberFineData.Items.Count; i++)
+            {
+                var item = MemberFineData.Items[i];
+                var memberFineItem = (MemberFineReadDTO)item;
+                var originalItem = originalMemberFineList.Find(x => x.Id == memberFineItem.Id);
+
+                if (originalItem.IsNull() && !memberFineItem.IsNull())
+                    isSucceeded = CreateMemberFine(memberFineItem);
+                else if (!memberFineItem.PaymentDate.Equals(originalItem.PaymentDate))
+                    isSucceeded = UpdateMemberFine(memberFineItem.Id,
+                        new MemberFineUpdateDTO
+                        {
+                            PaymentDate = memberFineItem.PaymentDate
+                        });
+                else
+                    isSucceeded = true;
+
+                if (!isSucceeded) break;
+            }
+
+            if (isSucceeded)
+            {
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
+                ReadGameResults();
+            }
+            else
+            {
+                MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
+            }
+        }
+
         private string GetMemberFineFilters()
         {
             var result = "";
@@ -1590,19 +1625,6 @@ namespace TennisClub.UI
             }
         }
 
-        private void PaymentDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var memberFine = GetSelectedMemberFine();
-
-            if (memberFine.IsNull()) return;
-            var selectedDate = MemberFinePaymentDate.SelectedDate;
-
-            if (selectedDate.IsNull()) return;
-
-            memberFine.PaymentDate = selectedDate.Value;
-            MemberFineData.Items.Refresh();
-        }
-
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             var regex = new Regex("[^0-9]+");
@@ -1638,6 +1660,19 @@ namespace TennisClub.UI
         {
             var regex = new Regex(@"^\d*\.?\d?$");
             e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void MemberFinePaymentDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberFine = GetSelectedMemberFine();
+
+            if (memberFine.IsNull()) return;
+            var selectedDate = MemberFinePaymentDate.SelectedDate;
+
+            if (selectedDate.IsNull()) return;
+
+            memberFine.PaymentDate = selectedDate.Value;
+            MemberFineData.Items.Refresh();
         }
     }
 }
