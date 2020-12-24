@@ -32,9 +32,12 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
         {
             var members = TennisClubContext.Members;
 
-            var memberRoles = TennisClubContext.MemberRoles.Where(mr => members.Contains(mr.MemberNavigation) && (mr.EndDate.Equals(new DateTime()) || mr.EndDate == null) && mr.RoleId == 5).Select(x => x.MemberId);
+            var memberRoles = TennisClubContext.MemberRoles.Where(mr =>
+                members.Contains(mr.MemberNavigation) && (mr.EndDate.Equals(new DateTime()) || mr.EndDate == null) &&
+                mr.RoleId == 5).Select(x => x.MemberId);
 
-            var itemsFromDB = members.Where(x => memberRoles.Contains(x.Id)).AsNoTracking().Include(x=>x.GenderNavigation);
+            var itemsFromDB = members.Where(x => memberRoles.Contains(x.Id)).AsNoTracking()
+                .Include(x => x.GenderNavigation);
 
             return _mapper.Map<IEnumerable<MemberReadDTO>>(itemsFromDB);
         }

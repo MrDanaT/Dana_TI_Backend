@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -68,6 +67,12 @@ namespace TennisClub.UI
         }
 
         #endregion
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
         #region Roles
 
@@ -579,7 +584,8 @@ namespace TennisClub.UI
 
             for (var i = 0; i < originalMemberList.Count; i++)
             {
-                var originalItem = originalMemberList.ElementAt(i); ;
+                var originalItem = originalMemberList.ElementAt(i);
+                ;
                 var memberItem = memberData.Find(x => x.Id == originalItem.Id);
 
                 if (!originalItem.IsNull() && memberItem.IsNull())
@@ -630,7 +636,7 @@ namespace TennisClub.UI
             return (MemberReadDTO) MemberData.SelectedItem;
         }
 
-        private void MemberFirstName_KeyDown(object sender, KeyEventArgs e)
+        private void MemberFirstName_TextChanged(object sender, TextChangedEventArgs e)
         {
             var member = GetSelectedMember();
 
@@ -640,13 +646,83 @@ namespace TennisClub.UI
             MemberData.Items.Refresh();
         }
 
-        private void MemberLastName_KeyDown(object sender, KeyEventArgs e)
+        private void MemberLastName_TextChanged(object sender, TextChangedEventArgs e)
         {
             var member = GetSelectedMember();
 
             if (member.IsNull()) return;
 
             member.LastName = MemberLastName.Text;
+            MemberData.Items.Refresh();
+        }
+
+        private void MemberAddress_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var member = GetSelectedMember();
+
+            if (member.IsNull()) return;
+
+            member.Address = MemberAddress.Text;
+            MemberData.Items.Refresh();
+        }
+
+        private void MemberNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var member = GetSelectedMember();
+
+            if (member.IsNull()) return;
+
+            member.Number = MemberNumber.Text;
+            MemberData.Items.Refresh();
+        }
+
+        private void MemberAddition_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var member = GetSelectedMember();
+
+            if (member.IsNull()) return;
+
+            member.Addition = MemberAddition.Text;
+            MemberData.Items.Refresh();
+        }
+
+        private void MemberZipcode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var member = GetSelectedMember();
+
+            if (member.IsNull()) return;
+
+            member.Zipcode = MemberZipcode.Text;
+            MemberData.Items.Refresh();
+        }
+
+        private void MemberCity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var member = GetSelectedMember();
+
+            if (member.IsNull()) return;
+
+            member.City = MemberCity.Text;
+            MemberData.Items.Refresh();
+        }
+
+        private void MemberPhoneNr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var member = GetSelectedMember();
+
+            if (member.IsNull()) return;
+
+            member.PhoneNr = MemberPhoneNr.Text;
+            MemberData.Items.Refresh();
+        }
+
+        private void MemberFederationNr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var member = GetSelectedMember();
+
+            if (member.IsNull()) return;
+
+            member.FederationNr = MemberFederationNr.Text;
             MemberData.Items.Refresh();
         }
 
@@ -662,77 +738,6 @@ namespace TennisClub.UI
             member.BirthDate = selectedDate.Value;
             MemberData.Items.Refresh();
         }
-
-        private void MemberAddress_KeyDown(object sender, KeyEventArgs e)
-        {
-            var member = GetSelectedMember();
-
-            if (member.IsNull()) return;
-
-            member.Address = MemberAddress.Text;
-            MemberData.Items.Refresh();
-        }
-
-        private void MemberNumber_KeyDown(object sender, KeyEventArgs e)
-        {
-            var member = GetSelectedMember();
-
-            if (member.IsNull()) return;
-
-            member.Number = MemberNumber.Text;
-            MemberData.Items.Refresh();
-        }
-
-        private void MemberAddition_KeyDown(object sender, KeyEventArgs e)
-        {
-            var member = GetSelectedMember();
-
-            if (member.IsNull()) return;
-
-            member.Addition = MemberAddition.Text;
-            MemberData.Items.Refresh();
-        }
-
-        private void MemberZipcode_KeyDown(object sender, KeyEventArgs e)
-        {
-            var member = GetSelectedMember();
-
-            if (member.IsNull()) return;
-
-            member.Zipcode = MemberZipcode.Text;
-            MemberData.Items.Refresh();
-        }
-
-        private void MemberCity_KeyDown(object sender, KeyEventArgs e)
-        {
-            var member = GetSelectedMember();
-
-            if (member.IsNull()) return;
-
-            member.City = MemberCity.Text;
-            MemberData.Items.Refresh();
-        }
-
-        private void MemberPhoneNr_KeyDown(object sender, KeyEventArgs e)
-        {
-            var member = GetSelectedMember();
-
-            if (member.IsNull()) return;
-
-            member.PhoneNr = MemberPhoneNr.Text;
-            MemberData.Items.Refresh();
-        }
-
-        private void MemberFederationNr_KeyDown(object sender, KeyEventArgs e)
-        {
-            var member = GetSelectedMember();
-
-            if (member.IsNull()) return;
-
-            member.FederationNr = MemberFederationNr.Text;
-            MemberData.Items.Refresh();
-        }
-
 
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
@@ -911,12 +916,11 @@ namespace TennisClub.UI
 
             if (memberRole.IsNull()) return;
 
-            if (!MemberRoleMember.SelectedItem.IsNull())
-            {
-                var member = (MemberReadDTO) MemberRoleMember.SelectedItem;
-                memberRole.MemberId = member.Id;
-                memberRole.MemberFullName = member.FullName;
-            }
+            if (MemberRoleMember.SelectedItem.IsNull()) return;
+
+            var member = (MemberReadDTO) MemberRoleMember.SelectedItem;
+            memberRole.MemberId = member.Id;
+            memberRole.MemberFullName = member.FullName;
 
             MemberRoleData.Items.Refresh();
         }
@@ -1086,7 +1090,7 @@ namespace TennisClub.UI
          */
         private bool CreateGame(GameReadDTO gameReadDto)
         {
-            var newGame = new GameCreateDTO()
+            var newGame = new GameCreateDTO
             {
                 Date = gameReadDto.Date,
                 GameNumber = gameReadDto.GameNumber,
@@ -1104,7 +1108,7 @@ namespace TennisClub.UI
             Debug.WriteLine("Er is iets foutgelopen.");
             return false;
         }
-        
+
         private bool ReadGames()
         {
             var result = WebAPI.GetCall($"games{GetGamesFilter()}");
@@ -1163,6 +1167,59 @@ namespace TennisClub.UI
         /*
          * Event Handlers
          */
+
+
+        private void GameData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var game = GetSelectedGame();
+
+            if (game.IsNull()) return;
+
+            GameDate.SelectedDate = game.Date;
+            GameMember.SelectedValue = game.MemberId;
+            GameLeague.SelectedValue = game.LeagueId;
+            GameNumber.Text = game.GameNumber;
+        }
+
+        private void GameLeague_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var game = GetSelectedGame();
+
+            if (game.IsNull()) return;
+
+            if (GameMember.SelectedItem.IsNull()) return;
+
+            LeagueReadDTO member = (LeagueReadDTO) GameLeague.SelectedItem;
+            game.LeagueName = member.Name;
+            game.LeagueId = member.Id;
+            GameData.Items.Refresh();
+        }
+
+        private void GameMember_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var game = GetSelectedGame();
+
+            if (game.IsNull()) return;
+
+            if (GameMember.SelectedItem.IsNull()) return;
+
+            MemberReadDTO member = (MemberReadDTO) GameMember.SelectedItem;
+            game.MemberFullName = member.FullName;
+            game.MemberId = member.Id;
+            GameData.Items.Refresh();
+        }
+
+        private void GameDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var game = GetSelectedGame();
+
+            if (game.IsNull()) return;
+
+            if (!GameDate.SelectedDate.HasValue) return;
+
+            game.Date = GameDate.SelectedDate.Value;
+            GameData.Items.Refresh();
+        }
 
         private void ClearGameFilterButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -1238,22 +1295,24 @@ namespace TennisClub.UI
         private void SynchroniseGameTable()
         {
             var isSucceeded = false;
+            var gameData = GameData.ItemsSource.OfType<GameReadDTO>().ToList();
 
-            for (var i = 0; i < GameData.Items.Count; i++)
+            for (var i = 0; i < originalGameList.Count; i++)
             {
-                var item = GameData.Items[i];
-                var gameReadDto = (GameReadDTO) item;
-                var originalItem = originalGameList.Find(x => x.Id == gameReadDto.Id);
+                var originalItem = originalGameList.ElementAt(i);
+                ;
+                var gameItem = gameData.Find(x => x.Id == originalItem.Id);
 
-                if (!originalItem.IsNull() && gameReadDto.IsNull())
+                if (!originalItem.IsNull() && gameItem.IsNull())
                     isSucceeded = DeleteGame(originalItem.Id);
-                else if (originalItem.IsNull() && !gameReadDto.IsNull())
-                    isSucceeded = CreateGame(gameReadDto);
-                else if (!originalItem.Equals(gameReadDto))
+                else if (originalItem.IsNull() && !gameItem.IsNull())
+                    isSucceeded = CreateGame(gameItem);
+                else if (!originalItem.Equals(gameItem))
                     isSucceeded = UpdateGame(originalItem.Id,
                         new GameUpdateDTO
                         {
-                            Date = gameReadDto.Date, GameNumber = gameReadDto.GameNumber, LeagueId = gameReadDto.LeagueId, MemberId = gameReadDto.MemberId
+                            Date = gameItem.Date, GameNumber = gameItem.GameNumber, LeagueId = gameItem.LeagueId,
+                            MemberId = gameItem.MemberId
                         });
                 else
                     isSucceeded = true;
@@ -1277,38 +1336,32 @@ namespace TennisClub.UI
             var result = "";
 
             if (!GameMemberFilter.SelectedItem.IsNull())
-                result += "/bymemberid/" + ((MemberReadDTO)GameMemberFilter.SelectedItem).Id;
+                result += "/bymemberid/" + ((MemberReadDTO) GameMemberFilter.SelectedItem).Id;
 
             return result;
-        }
-
-        #endregion
-        
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        private void GameData_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var game = GetSelectedGame();
-
-            if (game.IsNull()) return;
-
-            GameDate.SelectedDate = game.Date;
-            GameMember.SelectedValue = game.MemberId;
-            GameLeague.SelectedValue = game.LeagueId;
-            GameNumber.Text = game.GameNumber;
         }
 
         private GameReadDTO GetSelectedGame()
         {
             if (GameData.SelectedItem.IsNull()) return null;
 
-            var game = (GameReadDTO)GameData.SelectedItem;
+            var game = (GameReadDTO) GameData.SelectedItem;
 
             return game;
         }
+
+        private void GameNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var game = GetSelectedGame();
+
+            if (game.IsNull()) return;
+
+            if (GameMember.SelectedItem.IsNull()) return;
+
+            game.GameNumber = GameNumber.Text;
+            GameData.Items.Refresh();
+        }
+
+        #endregion
     }
 }

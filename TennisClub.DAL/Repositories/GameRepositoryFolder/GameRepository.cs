@@ -61,7 +61,9 @@ namespace TennisClub.DAL.Repositories.GameRepositoryFolder
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
-            var memberRoles = TennisClubContext.MemberRoles.Include(x => x.MemberNavigation).Include(x => x.RoleNavigation).Where(x => x.RoleNavigation.Name.Equals("Speler") && x.MemberId == entity.MemberId);
+            var memberRoles = TennisClubContext.MemberRoles.Include(x => x.MemberNavigation)
+                .Include(x => x.RoleNavigation).Where(x =>
+                    x.RoleNavigation.Name.Equals("Speler") && x.MemberId == entity.MemberId);
 
             var mappedObject = _mapper.Map<Game>(entity);
 

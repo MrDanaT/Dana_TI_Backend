@@ -60,6 +60,12 @@ namespace TennisClub.BL.MemberServiceFolder
             _unitOfWork.Commit();
         }
 
+        public IEnumerable<MemberReadDTO> GetAllActiveSpelerMembers()
+        {
+            var memberItems = _unitOfWork.Members.GetAllActiveSpelerMembers();
+            return memberItems;
+        }
+
         private IEnumerable<MemberReadDTO> GetFilteredMemberItems(IEnumerable<MemberReadDTO> memberItems,
             string federationNr, string firstName, string lastName, string location)
         {
@@ -78,12 +84,6 @@ namespace TennisClub.BL.MemberServiceFolder
                 if (tmp.Count() > 0) memberItems = tmp;
             }
 
-            return memberItems;
-        }
-
-        public IEnumerable<MemberReadDTO> GetAllActiveSpelerMembers()
-        {
-            var memberItems = _unitOfWork.Members.GetAllActiveSpelerMembers();
             return memberItems;
         }
     }

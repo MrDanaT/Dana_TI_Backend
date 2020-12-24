@@ -201,7 +201,7 @@
                         <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False"
                                   SelectedCellsChanged="MemberData_SelectedCellsChanged"
                                   BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True"
-                                  AutoGenerateColumns="False" >
+                                  AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -249,16 +249,18 @@
                                 <Label Margin="5,0" Width="125">Adres</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox MaxLength="25" KeyDown="MemberFirstName_KeyDown" x:Name="MemberFirstName"
+                                <TextBox MaxLength="25" TextChanged="MemberFirstName_TextChanged"
+                                         x:Name="MemberFirstName"
                                          Margin="5,0" Width="65" />
-                                <TextBox MaxLength="35" KeyDown="MemberLastName_KeyDown" x:Name="MemberLastName"
+                                <TextBox MaxLength="35" TextChanged="MemberLastName_TextChanged"
+                                         x:Name="MemberLastName"
                                          Margin="5,0" Width="75" />
                                 <DatePicker SelectedDateChanged="MemberBirthDate_SelectedDateChanged"
                                             x:Name="MemberBirthDate" Margin="5,0" Width="125" />
                                 <ComboBox SelectionChanged="MemberGender_SelectionChanged" x:Name="MemberGender"
                                           Margin="5,0" Width="75" SelectedValue="{Binding GenderReadDTO.Id}"
                                           DisplayMemberPath="Name" SelectedValuePath="Id" />
-                                <TextBox MaxLength="70" KeyDown="MemberAddress_KeyDown" x:Name="MemberAddress"
+                                <TextBox MaxLength="70" TextChanged="MemberAddress_TextChanged" x:Name="MemberAddress"
                                          Margin="5,0" Width="125" />
                             </DockPanel>
                         </StackPanel>
@@ -272,18 +274,20 @@
                                 <Label Margin="5,0">Bondsnr</Label>
                             </DockPanel>
                             <DockPanel>
-                                <TextBox MaxLength="6" KeyDown="MemberNumber_KeyDown" x:Name="MemberNumber"
+                                <TextBox MaxLength="6" TextChanged="MemberNumber_TextChanged" x:Name="MemberNumber"
                                          Margin="5,0" Width="65" />
-                                <TextBox MaxLength="2" KeyDown="MemberAddition_KeyDown" x:Name="MemberAddition"
+                                <TextBox MaxLength="2" TextChanged="MemberAddition_TextChanged" x:Name="MemberAddition"
                                          Margin="5,0" Width="75" />
-                                <TextBox MaxLength="6" KeyDown="MemberZipcode_KeyDown" x:Name="MemberZipcode"
+                                <TextBox MaxLength="6" TextChanged="MemberZipcode_TextChanged" x:Name="MemberZipcode"
                                          Margin="5,0" Width="125" />
-                                <TextBox MaxLength="30" KeyDown="MemberCity_KeyDown" x:Name="MemberCity" Margin="5,0"
+                                <TextBox MaxLength="30" TextChanged="MemberCity_TextChanged" x:Name="MemberCity"
+                                         Margin="5,0"
                                          Width="75" />
-                                <TextBox MaxLength="15" KeyDown="MemberPhoneNr_KeyDown" x:Name="MemberPhoneNr"
+                                <TextBox MaxLength="15" TextChanged="MemberPhoneNr_TextChanged" x:Name="MemberPhoneNr"
                                          Margin="5,0" Width="60" />
-                                <TextBox MaxLength="10" KeyDown="MemberFederationNr_KeyDown"
-                                         x:Name="MemberFederationNr" Margin="5,0" />
+                                <TextBox MaxLength="10" TextChanged="MemberFederationNr_TextChanged"
+                                         x:Name="MemberFederationNr"
+                                         Margin="5,0" />
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
@@ -461,7 +465,8 @@
                     </DockPanel>
                     <DockPanel>
                         <DataGrid Height="250" x:Name="GameData" AutoGenerateColumns="False"
-                                  CanUserDeleteRows="True" CanUserAddRows="False" Margin="0,10" SelectionChanged="GameData_SelectionChanged">
+                                  CanUserDeleteRows="True" CanUserAddRows="False" Margin="0,10"
+                                  SelectionChanged="GameData_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -488,21 +493,25 @@
                         <DockPanel Margin="30,0,0,0">
                             <StackPanel Margin="5,0">
                                 <Label Width="100">Game nummer</Label>
-                                <TextBox x:Name="GameNumber" MaxLength="10" Width="100" Height="22" />
+                                <TextBox x:Name="GameNumber" MaxLength="10" Width="100" Height="22"
+                                         TextChanged="GameNumber_TextChanged" />
                             </StackPanel>
                             <StackPanel Margin="5,0">
                                 <Label Width="100">Competitie type</Label>
                                 <ComboBox x:Name="GameLeague" Width="100" SelectedValue="{Binding LeagueReadDTO.Id}"
-                                          DisplayMemberPath="Name" SelectedValuePath="Id" />
+                                          DisplayMemberPath="Name" SelectedValuePath="Id"
+                                          SelectionChanged="GameLeague_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Margin="5,0">
                                 <Label Width="100">Speler</Label>
                                 <ComboBox x:Name="GameMember" Width="100" SelectedValue="{Binding MemberReadDTO.Id}"
-                                          DisplayMemberPath="FullName" SelectedValuePath="Id" />
+                                          DisplayMemberPath="FullName" SelectedValuePath="Id"
+                                          SelectionChanged="GameMember_SelectionChanged" />
                             </StackPanel>
                             <StackPanel Margin="5,0">
                                 <Label Width="125">Datum</Label>
-                                <DatePicker x:Name="GameDate" Width="125" />
+                                <DatePicker x:Name="GameDate" Width="125"
+                                            SelectedDateChanged="GameDate_SelectedDateChanged" />
                             </StackPanel>
                         </DockPanel>
                         <DockPanel>
