@@ -1439,6 +1439,19 @@ namespace TennisClub.UI
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 var tmp = result.Result.Content.ReadAsAsync<List<MemberFineReadDTO>>().Result;
+
+                if (!MemberFineHandoutDateFilter.SelectedDate.IsNull())
+                {
+                    var date = MemberFineHandoutDateFilter.SelectedDate.Value.Date;
+                    tmp = tmp.Where(x => x.HandoutDate.Date.Equals(date)).ToList();
+                }
+
+                if (!MemberFinePaymentDateFilter.SelectedDate.IsNull())
+                {
+                    var date = MemberFinePaymentDateFilter.SelectedDate.Value.Date;
+                    tmp = tmp.Where(x => x.PaymentDate.Equals(date)).ToList();
+                }
+
                 itemsControl.ItemsSource = tmp;
                 var tmp2 = new List<MemberFineReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
@@ -1491,12 +1504,15 @@ namespace TennisClub.UI
 
         private void ClearMemberFineFilterButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MemberFineHandoutDateFilter.SelectedDate = null;
+            MemberFinePaymentDateFilter.SelectedDate = null;
+            MemberFineMemberFilter.SelectedItem = null;
+            ReadMemberFines();
         }
 
         private void FilterMemberFinesButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ReadMemberFines();
         }
 
         /*
@@ -1505,6 +1521,9 @@ namespace TennisClub.UI
         private string GetMemberFineFilters()
         {
             var result = "";
+
+            if (!MemberFineMemberFilter.SelectedValue.IsNull())
+                result += "/bymemberid/" + MemberFineMemberFilter.SelectedValue;
 
             return result;
         }
