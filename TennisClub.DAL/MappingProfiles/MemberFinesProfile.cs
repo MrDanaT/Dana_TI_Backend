@@ -10,7 +10,10 @@ namespace TennisClub.DAL.MappingProfiles
         {
             CreateMap<MemberFineCreateDTO, MemberFine>();
             CreateMap<MemberFine, MemberFineReadDTO>()
-                .ForMember(self => self.MemberFullName, conf => conf.MapFrom(dest => $"{dest.MemberNavigation.FirstName} {dest.MemberNavigation.LastName}")); ;
+                .ForMember(self => self.MemberFullName,
+                    conf => conf.MapFrom(dest =>
+                        $"{dest.MemberNavigation.FirstName} {dest.MemberNavigation.LastName}"));
+            ;
             CreateMap<MemberFineUpdateDTO, MemberFine>();
             CreateMap<MemberFineReadDTO, MemberFine>();
         }

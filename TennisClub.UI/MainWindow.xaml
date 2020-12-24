@@ -558,7 +558,8 @@
                         </StackPanel>
                         <StackPanel Width="175">
                             <Label Width="125">Lid</Label>
-                            <ComboBox Width="125" x:Name="MemberFineMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
+                            <ComboBox Width="125" x:Name="MemberFineMemberFilter"
+                                      SelectedValue="{Binding MemberReadDTO.Id}"
                                       DisplayMemberPath="FullName" SelectedValuePath="Id" />
                         </StackPanel>
                         <StackPanel Width="175">
@@ -574,7 +575,8 @@
                                     x:Name="ClearMemberFineFilterButton" Click="ClearMemberFineFilterButton_Click">
                                 Clear
                             </Button>
-                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50" x:Name="FilterMemberFinesButton"
+                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="50"
+                                    x:Name="FilterMemberFinesButton"
                                     Click="FilterMemberFinesButton_Click">
                                 Filter
                             </Button>
@@ -582,7 +584,8 @@
                     </DockPanel>
                     <DockPanel>
                         <DataGrid Height="225" x:Name="MemberFineData" AutoGenerateColumns="False"
-                                  CanUserDeleteRows="False" IsReadOnly="True" SelectionChanged="MemberFineData_SelectionChanged">
+                                  CanUserDeleteRows="False" IsReadOnly="True"
+                                  SelectionChanged="MemberFineData_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -603,7 +606,7 @@
                     <DockPanel Margin="0,5">
                         <StackPanel>
                             <Button HorizontalAlignment="Left" x:Name="GetMemberFinesButton"
-                                Click="GetMemberFinesButton_Click" Height="40" Width="100" Margin="0,5">
+                                    Click="GetMemberFinesButton_Click" Height="40" Width="100" Margin="0,5">
                                 Refresh gegevens
                             </Button>
                         </StackPanel>
@@ -611,27 +614,30 @@
                             <DockPanel>
                                 <StackPanel Width="90" Margin="15,0">
                                     <Label>Boete nummer</Label>
-                                    <TextBox x:Name="MemberFineFineNumber" PreviewTextInput="NumberValidationTextBox" 
-                                        Height="20" />
+                                    <TextBox x:Name="MemberFineFineNumber" PreviewTextInput="NumberValidationTextBox"
+                                             Height="20" />
                                 </StackPanel>
                                 <StackPanel Margin="15,0" Width="125">
                                     <Label>Lid</Label>
-                                    <ComboBox Width="125" x:Name="MemberFineMember" SelectedValue="{Binding MemberReadDTO.Id}"
-                                      DisplayMemberPath="FullName" SelectedValuePath="Id" />
+                                    <ComboBox Width="125" x:Name="MemberFineMember"
+                                              SelectedValue="{Binding MemberReadDTO.Id}"
+                                              DisplayMemberPath="FullName" SelectedValuePath="Id" />
                                 </StackPanel>
                                 <StackPanel Margin="15,0">
                                     <Label>Uitschrijvingsdatum</Label>
-                                    <DatePicker Width="125" x:Name="MemberFineHandoutDate"/>
+                                    <DatePicker Width="125" x:Name="MemberFineHandoutDate" />
                                 </StackPanel>
                             </DockPanel>
                             <DockPanel>
                                 <StackPanel Margin="15,0">
                                     <Label>Bedrag (EUR)</Label>
-                                    <TextBox x:Name="MemberFineAmount" PreviewTextInput="FloatNumberValidation_PreviewTextInput"/>
+                                    <TextBox x:Name="MemberFineAmount"
+                                             PreviewTextInput="FloatNumberValidation_PreviewTextInput" />
                                 </StackPanel>
                                 <StackPanel HorizontalAlignment="Right" Margin="0,0,15,0" Width="125">
                                     <Label>Betalingsdatum</Label>
-                                    <DatePicker x:Name="MemberFinePaymentDate" SelectedDateChanged="MemberFinePaymentDate_SelectedDateChanged"/>
+                                    <DatePicker x:Name="MemberFinePaymentDate"
+                                                SelectedDateChanged="MemberFinePaymentDate_SelectedDateChanged" />
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>
@@ -649,7 +655,7 @@
                                     Voeg toe
                                 </Button>
                                 <Button HorizontalAlignment="Right" x:Name="SyncMemberFinesButton"
-                                Click="SyncMemberFinesButton_Click" Height="35" Width="80" Margin="0,2.5">
+                                        Click="SyncMemberFinesButton_Click" Height="35" Width="80" Margin="0,2.5">
                                     Sync.
                                 </Button>
                             </StackPanel>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -72,6 +73,122 @@ namespace TennisClub.UI
         }
 
         #endregion
+
+        private void ClearMemberFineSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            MemberFineData.UnselectAll();
+
+            MemberFineFineNumber.Text = "";
+            MemberFineAmount.Text = "";
+            MemberFineMember.SelectedValue = null;
+            MemberFineHandoutDate.SelectedDate = null;
+            MemberFinePaymentDate.SelectedDate = null;
+
+            SetMemberFineBoxEnable(true);
+        }
+
+        private void SetMemberFineBoxEnable(bool isEnabled)
+        {
+            MemberFineAmount.IsEnabled = isEnabled;
+            MemberFineFineNumber.IsEnabled = isEnabled;
+            MemberFineMember.IsEnabled = isEnabled;
+            MemberFineHandoutDate.IsEnabled = isEnabled;
+
+            var memberFine = GetSelectedMemberFine();
+
+            if (memberFine.IsNull()) return;
+
+            MemberFinePaymentDate.IsEnabled =
+                memberFine.PaymentDate == null || memberFine.PaymentDate.Date.Equals(new DateTime());
+        }
+
+        private void AddMemberFineButton_Click(object sender, RoutedEventArgs e)
+        {
+            var fineNumber = MemberFineFineNumber.Text;
+            var amount = MemberFineAmount.Text;
+            var member = MemberFineMember.SelectedItem;
+            var handoutDate = MemberFineHandoutDate.SelectedDate;
+            var paymentDate = MemberFinePaymentDate.SelectedDate;
+
+            if (!fineNumber.Equals("") && !member.IsNull() && handoutDate != null)
+            {
+                var newMemberFine = new MemberFineReadDTO
+                {
+                    Id = 0,
+                    FineNumber = int.Parse(fineNumber),
+                    Amount = decimal.Parse(amount),
+                    HandoutDate = handoutDate.Value
+                };
+
+                if (paymentDate.IsNull())
+                    newMemberFine.PaymentDate = new DateTime();
+                else
+                    newMemberFine.PaymentDate = paymentDate.Value;
+
+                var actualMember = (MemberReadDTO) member;
+                if (!actualMember.IsNull())
+                {
+                    newMemberFine.MemberFullName = actualMember.FullName;
+                    newMemberFine.MemberId = actualMember.Id;
+                }
+
+                var newList = MemberFineData.ItemsSource.OfType<MemberFineReadDTO>().ToList();
+                newList.Add(newMemberFine);
+                MemberFineData.ItemsSource = newList;
+
+                MemberFineData.Items.Refresh();
+            }
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+
+        private void MemberFineData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberFine = GetSelectedMemberFine();
+
+            if (memberFine.IsNull()) return;
+
+            MemberFineFineNumber.Text = memberFine.FineNumber.ToString();
+            MemberFineAmount.Text = memberFine.Amount.ToString();
+            MemberFineMember.SelectedValue = memberFine.MemberId;
+            MemberFineHandoutDate.SelectedDate = memberFine.HandoutDate;
+            MemberFinePaymentDate.SelectedDate = memberFine.PaymentDate;
+
+            var isNewMemberFine = originalMemberFineList.Contains(memberFine);
+
+            SetMemberFineBoxEnable(isNewMemberFine);
+        }
+
+        private MemberFineReadDTO GetSelectedMemberFine()
+        {
+            if (MemberFineData.SelectedItem.IsNull()) return null;
+
+            return (MemberFineReadDTO) MemberFineData.SelectedItem;
+        }
+
+        private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex(@"^\d*\.?\d?$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void MemberFinePaymentDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var memberFine = GetSelectedMemberFine();
+
+            if (memberFine.IsNull()) return;
+            var selectedDate = MemberFinePaymentDate.SelectedDate;
+
+            if (selectedDate.IsNull()) return;
+
+            memberFine.PaymentDate = selectedDate.Value;
+            MemberFineData.Items.Refresh();
+        }
 
         #region Roles
 
@@ -1481,7 +1598,7 @@ namespace TennisClub.UI
             Debug.WriteLine("Niet gelukt!");
             return false;
         }
-        
+
         /*
          * Event handlers
          */
@@ -1520,7 +1637,7 @@ namespace TennisClub.UI
             for (var i = 0; i < MemberFineData.Items.Count; i++)
             {
                 var item = MemberFineData.Items[i];
-                var memberFineItem = (MemberFineReadDTO)item;
+                var memberFineItem = (MemberFineReadDTO) item;
                 var originalItem = originalMemberFineList.Find(x => x.Id == memberFineItem.Id);
 
                 if (originalItem.IsNull() && !memberFineItem.IsNull())
@@ -1559,120 +1676,5 @@ namespace TennisClub.UI
         }
 
         #endregion
-
-        private void ClearMemberFineSelectionButton_Click(object sender, RoutedEventArgs e)
-        {
-            MemberFineData.UnselectAll();
-
-            MemberFineFineNumber.Text = "";
-            MemberFineAmount.Text = "";
-            MemberFineMember.SelectedValue = null;
-            MemberFineHandoutDate.SelectedDate = null;
-            MemberFinePaymentDate.SelectedDate = null;
-
-            SetMemberFineBoxEnable(true);
-        }
-
-        private void SetMemberFineBoxEnable(bool isEnabled)
-        {
-            MemberFineAmount.IsEnabled = isEnabled;
-            MemberFineFineNumber.IsEnabled = isEnabled;
-            MemberFineMember.IsEnabled = isEnabled;
-            MemberFineHandoutDate.IsEnabled = isEnabled;
-
-            var memberFine = GetSelectedMemberFine();
-
-            if (memberFine.IsNull()) return;
-
-             MemberFinePaymentDate.IsEnabled = memberFine.PaymentDate == null || memberFine.PaymentDate.Date.Equals(new System.DateTime());
-        }
-
-        private void AddMemberFineButton_Click(object sender, RoutedEventArgs e)
-        {
-            var fineNumber = MemberFineFineNumber.Text;
-            var amount = MemberFineAmount.Text;
-            var member = MemberFineMember.SelectedItem;
-            var handoutDate = MemberFineHandoutDate.SelectedDate;
-            var paymentDate = MemberFinePaymentDate.SelectedDate;
-
-            if (!fineNumber.Equals("") && !member.IsNull() && handoutDate != null)
-            {
-                var newMemberFine = new MemberFineReadDTO
-                {
-                    Id = 0,
-                    FineNumber = int.Parse(fineNumber),
-                    Amount = decimal.Parse(amount),
-                    HandoutDate = handoutDate.Value
-                };
-
-                if (paymentDate.IsNull())
-                    newMemberFine.PaymentDate = new System.DateTime();
-                else
-                    newMemberFine.PaymentDate = paymentDate.Value;
-
-                var actualMember = (MemberReadDTO)member;
-                if (!actualMember.IsNull())
-                {
-                    newMemberFine.MemberFullName = actualMember.FullName;
-                    newMemberFine.MemberId = actualMember.Id;
-                }
-
-                var newList = MemberFineData.ItemsSource.OfType<MemberFineReadDTO>().ToList();
-                newList.Add(newMemberFine);
-                MemberFineData.ItemsSource = newList;
-
-                MemberFineData.Items.Refresh();
-            }
-        }
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-
-        private void MemberFineData_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var memberFine = GetSelectedMemberFine();
-
-            if (memberFine.IsNull()) return;
-
-            MemberFineFineNumber.Text = memberFine.FineNumber.ToString();
-            MemberFineAmount.Text = memberFine.Amount.ToString();
-            MemberFineMember.SelectedValue = memberFine.MemberId;
-            MemberFineHandoutDate.SelectedDate = memberFine.HandoutDate;
-            MemberFinePaymentDate.SelectedDate = memberFine.PaymentDate;
-
-            var isNewMemberFine = originalMemberFineList.Contains(memberFine);
-
-            SetMemberFineBoxEnable(isNewMemberFine);
-        }
-
-        private MemberFineReadDTO GetSelectedMemberFine()
-        {
-            if (MemberFineData.SelectedItem.IsNull()) return null;
-
-            return (MemberFineReadDTO)MemberFineData.SelectedItem;
-        }
-
-        private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex(@"^\d*\.?\d?$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-
-        private void MemberFinePaymentDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var memberFine = GetSelectedMemberFine();
-
-            if (memberFine.IsNull()) return;
-            var selectedDate = MemberFinePaymentDate.SelectedDate;
-
-            if (selectedDate.IsNull()) return;
-
-            memberFine.PaymentDate = selectedDate.Value;
-            MemberFineData.Items.Refresh();
-        }
     }
 }

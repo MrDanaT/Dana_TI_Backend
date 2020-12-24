@@ -6,9 +6,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GamesProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/GamesProfile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MemberFinesProfile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.DAL/MappingProfiles/MemberFinesProfile.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.UI/config.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +105,7 @@
       <workItem from="1608562309002" duration="1227000" />
       <workItem from="1608653329952" duration="1383000" />
       <workItem from="1608734388325" duration="6725000" />
-      <workItem from="1608828006754" duration="1325000" />
+      <workItem from="1608828006754" duration="1566000" />
     </task>
     <servers />
   </component>
