@@ -13,38 +13,48 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="10" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="445" />
                     <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="1" Grid.Column="1">Rol management</TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">Je kan hier de rollen beheren.</TextBlock>
-                <DataGrid x:Name="RoleData" Grid.Row="2" Grid.Column="2" AutoGenerateColumns="False"
-                          CanUserDeleteRows="True" Margin="0,10" Grid.ColumnSpan="2">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Visibility="Hidden" Header="Id"
-                                            Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
-                                            IsReadOnly="True" />
-                        <DataGridTextColumn Header="Naam" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Button x:Name="GetRolesButton" Grid.Row="3" Grid.Column="1" Click="GetRolesButton_Click" Margin="2"
-                        Grid.RowSpan="2" Height="40" Width="100">
-                    Refresh gegevens
-                </Button>
-                <Button x:Name="SyncRolesButton" Grid.Row="3" Grid.Column="4" Click="SyncLeaguesButton_Click"
-                        Margin="2" Grid.RowSpan="2" Height="40" Width="100">
-                    Sync.
-                </Button>
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <DockPanel>
+                        <TextBlock >Rol management</TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Grid.RowSpan="2">Je kan hier de rollen beheren.</TextBlock>
+                    </DockPanel>
+                <DockPanel>
+                    <DataGrid Height="250" x:Name="RoleData" AutoGenerateColumns="False"
+                          IsReadOnly="True" Margin="0,10" SelectionChanged="RoleData_SelectionChanged">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Visibility="Hidden" Header="Id" Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="Naam" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+                <DockPanel>
+                        <StackPanel>
+                            <Button x:Name="GetRolesButton"  Click="GetRolesButton_Click" Height="40" Width="100">
+                                Refresh gegevens
+                            </Button>
+                        </StackPanel>
+                        <DockPanel>
+                            <StackPanel Margin="250,0" Width="100">
+                                <Label>Naam</Label>
+                                <TextBox MaxLength="20" x:Name="RoleName" TextChanged="RoleName_TextChanged"/>
+                            </StackPanel>
+                        </DockPanel>
+                        <StackPanel Margin="0,0,10,0">
+                            <Button x:Name="AddRoleButton" Height="40" Click="AddRoleButton_Click" Width="100" Margin="0,2">Voeg toe</Button>
+                            <Button x:Name="SyncRolesButton" Click="SyncLeaguesButton_Click" Height="40" Width="100">
+                                Sync.
+                            </Button>
+                        </StackPanel>
+                 </DockPanel>
+                </StackPanel>
             </Grid>
         </TabItem>
         <TabItem Header="Wedstrijdresultaten">
@@ -199,8 +209,7 @@
                 <StackPanel Grid.Row="2" Grid.Column="1">
                     <DockPanel>
                         <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False"
-                                  SelectedCellsChanged="MemberData_SelectedCellsChanged"
-                                  BeginningEdit="MemberData_BeginningEdit" CanUserDeleteRows="True"
+                                  SelectionChanged="MemberData_SelectionChanged" CanUserDeleteRows="True"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"

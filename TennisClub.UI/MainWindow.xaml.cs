@@ -74,6 +74,7 @@ namespace TennisClub.UI
 
         #endregion
 
+        #region MemberFine
         private void ClearMemberFineSelectionButton_Click(object sender, RoutedEventArgs e)
         {
             MemberFineData.UnselectAll();
@@ -140,13 +141,6 @@ namespace TennisClub.UI
             }
         }
 
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-
         private void MemberFineData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var memberFine = GetSelectedMemberFine();
@@ -171,12 +165,6 @@ namespace TennisClub.UI
             return (MemberFineReadDTO) MemberFineData.SelectedItem;
         }
 
-        private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex(@"^\d*\.?\d?$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-
         private void MemberFinePaymentDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var memberFine = GetSelectedMemberFine();
@@ -189,6 +177,8 @@ namespace TennisClub.UI
             memberFine.PaymentDate = selectedDate.Value;
             MemberFineData.Items.Refresh();
         }
+
+        #endregion
 
         #region Roles
 
@@ -264,23 +254,71 @@ namespace TennisClub.UI
             SynchroniseRoleTable();
         }
 
+        private void RoleName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var role = GetSelectedRole();
+
+            if (role.IsNull()) return;
+
+            role.Name = RoleName.Text;
+            RoleData.Items.Refresh();
+        }
+
+        private void RoleData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = GetSelectedRole();
+            if (!selectedItem.IsNull())
+            {
+                RoleName.Text = selectedItem.Name;
+            }
+        }
+
+        private void AddRoleButton_Click(object sender, RoutedEventArgs e)
+        {
+            var name = RoleName.Text;
+
+            if (!name.Equals(""))
+            {
+                var newRole = new RoleReadDTO
+                {
+                    Id = 0,
+                    Name = name
+                };
+
+                var newList = RoleData.ItemsSource.OfType<RoleReadDTO>().ToList();
+                newList.Add(newRole);
+                RoleData.ItemsSource = newList;
+
+                RoleData.Items.Refresh();
+            }
+        }
+
         /*
          * Methods
          */
+        private RoleReadDTO GetSelectedRole()
+        {
+            if (RoleData.SelectedItem.IsNull()) return null;
+
+            return (RoleReadDTO)RoleData.SelectedItem;
+        }
 
         private void SynchroniseRoleTable()
         {
             var isSucceeded = false;
-
-            for (var i = 0; i < RoleData.Items.Count - 1; i++)
+            var items = RoleData.Items;
+            for (var i = 0; i < RoleData.Items.Count; i++)
             {
                 var item = RoleData.Items[i];
                 var roleItem = (RoleReadDTO) item;
                 var originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
-
+                if (roleItem.Name.Equals("Appel2"))
+                {
+                    Console.WriteLine("hey");
+                }
                 if (originalItem.IsNull() && !roleItem.IsNull())
                     isSucceeded = CreateRole(roleItem);
-                else if (!roleItem.Equals(originalItem))
+                else if (!roleItem.Name.Equals(originalItem.Name))
                     isSucceeded = UpdateRole(roleItem.Id, new RoleUpdateDTO {Name = roleItem.Name});
                 else
                     isSucceeded = true;
@@ -638,12 +676,7 @@ namespace TennisClub.UI
             ReadActiveMembers();
         }
 
-        private void MemberData_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
-        {
-            e.Cancel = true;
-        }
-
-        private void MemberData_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void MemberData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = GetSelectedMember();
             if (!selectedItem.IsNull())
@@ -1676,5 +1709,17 @@ namespace TennisClub.UI
         }
 
         #endregion
+
+        private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex(@"^\d*\.?\d?$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
     }
 }
