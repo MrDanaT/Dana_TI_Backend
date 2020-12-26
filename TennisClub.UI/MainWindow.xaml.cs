@@ -702,7 +702,6 @@ namespace TennisClub.UI
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
-                ;
                 itemsControl.ItemsSource = tmp;
                 var tmp2 = new List<MemberReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
@@ -725,6 +724,7 @@ namespace TennisClub.UI
                 });
                 originalMemberList = tmp2;
                 MemberRoleMemberFilter.ItemsSource = tmp2;
+                createMemberlist.Clear();
                 return true;
             }
 
@@ -831,6 +831,7 @@ namespace TennisClub.UI
             if (member.IsNull()) return;
 
             var gender = (GenderReadDTO) MemberGender.SelectedItem;
+            if (gender.IsNull()) return;
             member.GenderName = gender.Name;
             member.GenderId = gender.Id;
             MemberData.Items.Refresh();
@@ -875,7 +876,7 @@ namespace TennisClub.UI
                 if (!isSucceeded) break;
             }
 
-            if (isSucceeded)
+            if (isSucceeded || originalMemberList.Count == 0)
                 foreach (var x in createMemberlist)
                 {
                     isSucceeded = CreateMember(x);
@@ -889,6 +890,8 @@ namespace TennisClub.UI
                 createMemberlist.Clear();
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
                 ReadActiveMembers();
+                ReadAllActiveSpelerMembers();
+                ReadAllMembers();
             }
             else
             {
@@ -1197,6 +1200,7 @@ namespace TennisClub.UI
             if (MemberRoleMember.SelectedItem.IsNull()) return;
 
             var member = (MemberReadDTO) MemberRoleMember.SelectedItem;
+            if (member.IsNull()) return;
             memberRole.MemberId = member.Id;
             memberRole.MemberFullName = member.FullName;
 
@@ -1212,6 +1216,7 @@ namespace TennisClub.UI
             if (MemberRoleRole.SelectedItem.IsNull()) return;
 
             var role = (RoleReadDTO) MemberRoleRole.SelectedItem;
+            if (role.IsNull()) return;
             memberRole.RoleId = role.Id;
             memberRole.RoleName = role.Name;
             MemberRoleData.Items.Refresh();
@@ -1312,6 +1317,9 @@ namespace TennisClub.UI
             {
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
                 ReadActiveMembers();
+                ReadMemberRoles();
+                ReadAllMembers();
+                ReadAllActiveSpelerMembers();
             }
             else
             {
@@ -1408,6 +1416,7 @@ namespace TennisClub.UI
                     });
                 });
                 originalGameList = tmp2;
+                createGameList.Clear();
                 return true;
             }
 
@@ -1469,6 +1478,7 @@ namespace TennisClub.UI
             if (GameMember.SelectedItem.IsNull()) return;
 
             LeagueReadDTO member = (LeagueReadDTO) GameLeague.SelectedItem;
+            if (member.IsNull()) return;
             game.LeagueName = member.Name;
             game.LeagueId = member.Id;
             GameData.Items.Refresh();
@@ -1483,6 +1493,7 @@ namespace TennisClub.UI
             if (GameMember.SelectedItem.IsNull()) return;
 
             MemberReadDTO member = (MemberReadDTO) GameMember.SelectedItem;
+            if (member.IsNull()) return;
             game.MemberFullName = member.FullName;
             game.MemberId = member.Id;
             GameData.Items.Refresh();
@@ -1602,7 +1613,7 @@ namespace TennisClub.UI
                 if (!isSucceeded) break;
             }
 
-            if (isSucceeded)
+            if (isSucceeded || originalGameList.Count == 0)
                 foreach (var x in createGameList)
                 {
                     isSucceeded = CreateGame(x);
@@ -1616,6 +1627,8 @@ namespace TennisClub.UI
                 createGameList.Clear();
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
                 ReadActiveMembers();
+                ReadGames();
+                ReadGameResults();
             }
             else
             {
@@ -1801,6 +1814,7 @@ namespace TennisClub.UI
             {
                 MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!");
                 ReadGameResults();
+                ReadMemberFines();
             }
             else
             {

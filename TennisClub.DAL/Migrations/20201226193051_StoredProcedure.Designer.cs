@@ -10,8 +10,8 @@ using TennisClub.DAL;
 namespace TennisClub.DAL.Migrations
 {
     [DbContext(typeof(TennisClubContext))]
-    [Migration("20201102111151_Init")]
-    partial class Init
+    [Migration("20201226193051_StoredProcedure")]
+    partial class StoredProcedure
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
