@@ -75,6 +75,7 @@ namespace TennisClub.UI
         #endregion
 
         #region MemberFine
+
         private void ClearMemberFineSelectionButton_Click(object sender, RoutedEventArgs e)
         {
             MemberFineData.UnselectAll();
@@ -244,6 +245,13 @@ namespace TennisClub.UI
         /*
          * Event Handlers
          */
+        private void ClearRoleSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            RoleData.UnselectAll();
+
+            RoleName.Text = "";
+        }
+
         private void GetRolesButton_Click(object sender, RoutedEventArgs e)
         {
             ReadRoles();
@@ -456,15 +464,109 @@ namespace TennisClub.UI
             ReadGameResults();
         }
 
+        private void AddGameResultButton_Click(object sender, RoutedEventArgs e)
+        {
+            var gameId = GameResultGameId.Text;
+            var setNr = GameResultSetNr.Text;
+            var scoreTeamMeber = GameResultScoreTeamMember.Text;
+            var scoreOpponent = GameResultscoreOpponent.Text;
+
+            if (!gameId.Equals("") && !setNr.Equals("")&&!scoreTeamMeber.Equals("") && !scoreOpponent.Equals(""))
+            {
+                var newGameResult = new GameResultReadDTO
+                {
+                    Id = 0,
+                    GameId = int.Parse(gameId),
+                    ScoreOpponent = byte.Parse(scoreOpponent),
+                    ScoreTeamMember = byte.Parse(scoreTeamMeber),
+                    SetNr = byte.Parse(setNr)
+                };
+
+                var newList = GameResultData.ItemsSource.OfType<GameResultReadDTO>().ToList();
+                newList.Add(newGameResult);
+                GameResultData.ItemsSource = newList;
+
+                GameResultData.Items.Refresh();
+            }
+        }
+
+        private void GameResultGameId_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var gameResult = GetSelectedGameResult();
+
+            if (gameResult.IsNull()) return;
+
+            gameResult.GameId = int.Parse((GameResultGameId.Text == "") ? "0" : GameResultGameId.Text);
+            GameResultData.Items.Refresh();
+        }
+
+        private void GameResultSetNr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var gameResult = GetSelectedGameResult();
+
+            if (gameResult.IsNull()) return;
+
+            gameResult.SetNr = byte.Parse((GameResultSetNr.Text == "") ? "0" : GameResultSetNr.Text);
+            GameResultData.Items.Refresh();
+        }
+
+        private void GameResultScoreTeamMember_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var gameResult = GetSelectedGameResult();
+
+            if (gameResult.IsNull()) return;
+
+            gameResult.ScoreTeamMember = byte.Parse((GameResultScoreTeamMember.Text == "") ? "0" : GameResultScoreTeamMember.Text);
+            GameResultData.Items.Refresh();
+        }
+
+        private void GameResultscoreOpponent_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var gameResult = GetSelectedGameResult();
+
+            if (gameResult.IsNull()) return;
+
+            gameResult.ScoreOpponent = byte.Parse((GameResultscoreOpponent.Text == "") ? "0" : GameResultscoreOpponent.Text);
+            GameResultData.Items.Refresh();
+        }
+
+        private void GameResultData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = GetSelectedGameResult();
+            if (!selectedItem.IsNull())
+            {
+                GameResultGameId.Text = selectedItem.GameId.ToString();
+                GameResultSetNr.Text = selectedItem.SetNr.ToString();
+                GameResultScoreTeamMember.Text = selectedItem.ScoreTeamMember.ToString();
+                GameResultscoreOpponent.Text = selectedItem.ScoreOpponent.ToString();
+            }
+        }
+
+        private void ClearGameResultSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            GameResultData.UnselectAll();
+
+            GameResultGameId.Text = "";
+            GameResultSetNr.Text = "";
+            GameResultscoreOpponent.Text = "";
+            GameResultScoreTeamMember.Text = "";
+        }
+
         /*
          * Methods
          */
+        private GameResultReadDTO GetSelectedGameResult()
+        {
+            if (GameResultData.SelectedItem.IsNull()) return null;
+
+            return (GameResultReadDTO)GameResultData.SelectedItem;
+        }
 
         private void SynchroniseGameResultTable()
         {
             var isSucceeded = false;
 
-            for (var i = 0; i < GameResultData.Items.Count - 1; i++)
+            for (var i = 0; i < GameResultData.Items.Count; i++)
             {
                 var item = GameResultData.Items[i];
                 var gameResultItem = (GameResultReadDTO) item;
@@ -472,7 +574,7 @@ namespace TennisClub.UI
 
                 if (originalItem.IsNull() && !gameResultItem.IsNull())
                     isSucceeded = CreateGameResult(gameResultItem);
-                else if (!gameResultItem.Equals(originalItem))
+                else if (gameResultItem.SetNr != originalItem.SetNr || gameResultItem.ScoreOpponent != originalItem.ScoreOpponent || gameResultItem.ScoreTeamMember != originalItem.ScoreTeamMember)
                     isSucceeded = UpdateGameResult(gameResultItem.Id,
                         new GameResultUpdateDTO
                         {
@@ -648,6 +750,24 @@ namespace TennisClub.UI
         /*
          * Event Handlers
          */
+
+        private void ClearMemberSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            MemberData.UnselectAll();
+
+            MemberFederationNr.Text = "";
+            MemberFirstName.Text = "";
+            MemberLastName.Text = "";
+            MemberBirthDate.SelectedDate = null;
+            MemberGender.SelectedItem = null;
+            MemberAddress.Text = "";
+            MemberNumber.Text = "";
+            MemberAddition.Text = "";
+            MemberZipcode.Text = "";
+            MemberCity.Text = "";
+            MemberPhoneNr.Text = "";
+        }
+
         private void SearchFilteredMembers_Click(object sender, RoutedEventArgs e)
         {
             ReadActiveMembers();

@@ -19,6 +19,7 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 
         private TennisClubContext TennisClubContext => Context;
 
+
         public IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member)
         {
             if (member == null) throw new ArgumentNullException();

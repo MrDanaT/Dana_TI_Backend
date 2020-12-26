@@ -42,17 +42,27 @@
                             </Button>
                         </StackPanel>
                         <DockPanel>
-                            <StackPanel Margin="250,0" Width="100">
+                            <StackPanel Margin="200,0" Width="100">
                                 <Label>Naam</Label>
                                 <TextBox MaxLength="20" x:Name="RoleName" TextChanged="RoleName_TextChanged"/>
                             </StackPanel>
                         </DockPanel>
-                        <StackPanel Margin="0,0,10,0">
-                            <Button x:Name="AddRoleButton" Height="40" Click="AddRoleButton_Click" Width="100" Margin="0,2">Voeg toe</Button>
-                            <Button x:Name="SyncRolesButton" Click="SyncLeaguesButton_Click" Height="40" Width="100">
-                                Sync.
-                            </Button>
-                        </StackPanel>
+                        <DockPanel Margin="0,2">
+                            <StackPanel>
+                                <Button x:Name="ClearRoleSelectionButton" Width="100" Margin="0,2"
+                                        Height="40" Click="ClearRoleSelectionButton_Click">
+                                    Clear selectie
+                                </Button>
+                            </StackPanel>
+                            <StackPanel >
+                                <Button HorizontalAlignment="Right" x:Name="AddRoleButton" Click="AddRoleButton_Click" 
+                                    Height="40" Width="100" Margin="0,2">Voeg toe</Button>
+                                <Button HorizontalAlignment="Right" x:Name="SyncRolesButton" Click="SyncLeaguesButton_Click" 
+                                    Height="40" Width="100" Margin="0,2">
+                                    Sync.
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
                  </DockPanel>
                 </StackPanel>
             </Grid>
@@ -93,9 +103,9 @@
                             Filter
                         </Button>
                     </DockPanel>
-                    <DockPanel>
-                        <DataGrid Height="300" x:Name="GameResultData" AutoGenerateColumns="False"
-                                  CanUserDeleteRows="False">
+                    <DockPanel Margin="0,5">
+                        <DataGrid Height="250" x:Name="GameResultData" AutoGenerateColumns="False"
+                                  IsReadOnly="True" SelectionChanged="GameResultData_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
                                                     Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
@@ -111,15 +121,53 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </DockPanel>
-                    <DockPanel>
-                        <Button HorizontalAlignment="Left" x:Name="GetGameResultsButton"
+                    <DockPanel Margin="0,5">
+                        <StackPanel>
+                            <Button HorizontalAlignment="Left" x:Name="GetGameResultsButton"
                                 Click="GetGameResultsButton_Click" Height="40" Width="100" Margin="0,5">
-                            Refresh gegevens
-                        </Button>
-                        <Button HorizontalAlignment="Right" x:Name="SyncGameResulsButton"
+                                Refresh gegevens
+                            </Button>
+                        </StackPanel>
+                        <DockPanel>
+                            <StackPanel Margin="25,0">
+                                <Label>Game id</Label>
+                                <TextBox x:Name="GameResultGameId" TextChanged="GameResultGameId_TextChanged"
+                                         PreviewTextInput="NumberValidationTextBox"/>
+                            </StackPanel>
+                            <StackPanel Margin="25,0">
+                                <Label>Set nummer</Label>
+                                <TextBox x:Name="GameResultSetNr" TextChanged="GameResultSetNr_TextChanged"
+                                         MaxLength="3" PreviewTextInput="NumberValidationTextBox"/>
+                            </StackPanel>
+                            <StackPanel Margin="25,0">
+                                <Label>Score teamlid</Label>
+                                <TextBox x:Name="GameResultScoreTeamMember" TextChanged="GameResultScoreTeamMember_TextChanged"
+                                         MaxLength="3" PreviewTextInput="NumberValidationTextBox"/>
+                            </StackPanel>
+                            <StackPanel Margin="25,0">
+                                <Label>Score opponent</Label>
+                                <TextBox x:Name="GameResultscoreOpponent" TextChanged="GameResultscoreOpponent_TextChanged"
+                                         MaxLength="3" PreviewTextInput="NumberValidationTextBox"/>
+                            </StackPanel>
+                        </DockPanel>
+                        <DockPanel Margin="0,0,5,0">
+                            <StackPanel>
+                                <Button x:Name="ClearGameResultSelectionButton" Width="95"
+                                        Height="40" Click="ClearGameResultSelectionButton_Click">
+                                    Clear selectie
+                                </Button>
+                            </StackPanel>
+                            <StackPanel>
+                            <Button HorizontalAlignment="Right" x:Name="AddGameResultButton" Height="40" Width="100"
+                                    Click="AddGameResultButton_Click">
+                                Voeg toe
+                            </Button>
+                            <Button HorizontalAlignment="Right" x:Name="SyncGameResulsButton"
                                 Click="SyncGameResulsButton_Click" Height="40" Width="100" Margin="0,5">
-                            Sync.
-                        </Button>
+                                Sync.
+                            </Button>
+                            </StackPanel>
+                        </DockPanel>
                     </DockPanel>
                 </StackPanel>
             </Grid>
@@ -206,7 +254,7 @@
                             Refresh Data
                         </Button>
                     </DockPanel>
-                    <StackPanel Margin="50,0">
+                    <StackPanel Margin="10,0">
                         <StackPanel>
                             <DockPanel>
                                 <Label Margin="5,0" Width="65">Voornaam</Label>
@@ -258,17 +306,21 @@
                             </DockPanel>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel>
-                        <DockPanel>
+                    <DockPanel>
+                        <StackPanel>
+                            <Button x:Name="ClearMemberSelectionButton" Width="100" Margin="0,5"
+                                        Height="40" Click="ClearMemberSelectionButton_Click">
+                                Clear selectie
+                            </Button>
+                        </StackPanel>
+                        <StackPanel>
                             <Button x:Name="AddMemberButton" Width="80" Height="40" Margin="0,5"
                                     Click="AddMemberButton_Click">
                                 Voeg toe
                             </Button>
-                        </DockPanel>
-                        <DockPanel>
                             <Button x:Name="SyncMembersButton" Width="80" Height="40" Click="SyncMembersButton_Click">Sync.</Button>
-                        </DockPanel>
-                    </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
                 </DockPanel>
             </Grid>
         </TabItem>
@@ -377,7 +429,7 @@
                                 <Button HorizontalAlignment="Left" x:Name="ClearMemberRoleSelectionButton" Width="100"
                                         Height="35"
                                         Margin="0,2.5" Click="ClearMemberRoleSelectionButton_OnClick">
-                                    Verwijder selectie
+                                    Clear selectie
                                 </Button>
                             </StackPanel>
                             <StackPanel>
@@ -486,7 +538,7 @@
                                 <Button x:Name="ClearGameSelectionButton" Width="100"
                                         Height="35"
                                         Margin="0,2.5" Click="ClearGameSelectionButton_OnClick">
-                                    Verwijder selectie
+                                    Clear selectie
                                 </Button>
                             </StackPanel>
                             <StackPanel>
@@ -613,7 +665,7 @@
                                 <Button x:Name="ClearMemberFineSelectionButton" Width="100"
                                         Height="35"
                                         Margin="0,2.5" Click="ClearMemberFineSelectionButton_Click">
-                                    Verwijder selectie
+                                    Clear selectie
                                 </Button>
                             </StackPanel>
                             <StackPanel>
