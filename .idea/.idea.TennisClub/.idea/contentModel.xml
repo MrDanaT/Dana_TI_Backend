@@ -161,8 +161,10 @@
           <e p="RolesProfile.cs" t="Include" />
         </e>
         <e p="Migrations" t="Include">
-          <e p="20201102111151_Init.cs" t="Include" />
-          <e p="20201102111151_Init.Designer.cs" t="Include" />
+          <e p="20201226182508_InitialMigration.cs" t="Include" />
+          <e p="20201226182508_InitialMigration.Designer.cs" t="Include" />
+          <e p="20201226193051_StoredProcedure.cs" t="Include" />
+          <e p="20201226193051_StoredProcedure.Designer.cs" t="Include" />
           <e p="TennisClubContextModelSnapshot.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
