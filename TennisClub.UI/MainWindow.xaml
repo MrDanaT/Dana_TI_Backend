@@ -124,48 +124,6 @@
                 </StackPanel>
             </Grid>
         </TabItem>
-        <TabItem Header="Leagues">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="10" />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <DockPanel>
-                        <TextBlock>League management</TextBlock>
-                        <TextBlock HorizontalAlignment="Center">Je kan hier de leagues beheren.</TextBlock>
-                    </DockPanel>
-                    <DockPanel>
-                        <DataGrid Height="320" x:Name="LeagueData" AutoGenerateColumns="False"
-                                  CanUserDeleteRows="False" Margin="0,10">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Visibility="Hidden" Header="Id"
-                                                    Binding="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
-                                                    IsReadOnly="True" />
-                                <DataGridTextColumn Header="Naam"
-                                                    Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DockPanel>
-                    <DockPanel>
-                        <Button HorizontalAlignment="Left" Height="40" x:Name="GetLeaguesButton"
-                                Click="GetLeaguesButton_Click" Width="100">
-                            Refresh gegevens
-                        </Button>
-                        <Button HorizontalAlignment="Right" x:Name="SyncLeaguesButton"
-                                Click="SyncLeaguesButton_Click" Width="100">
-                            Sync.
-                        </Button>
-                    </DockPanel>
-                </StackPanel>
-            </Grid>
-        </TabItem>
         <TabItem Header="Leden">
             <Grid>
                 <Grid.ColumnDefinitions>

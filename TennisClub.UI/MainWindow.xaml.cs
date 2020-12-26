@@ -312,10 +312,6 @@ namespace TennisClub.UI
                 var item = RoleData.Items[i];
                 var roleItem = (RoleReadDTO) item;
                 var originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
-                if (roleItem.Name.Equals("Appel2"))
-                {
-                    Console.WriteLine("hey");
-                }
                 if (originalItem.IsNull() && !roleItem.IsNull())
                     isSucceeded = CreateRole(roleItem);
                 else if (!roleItem.Name.Equals(originalItem.Name))
@@ -347,35 +343,16 @@ namespace TennisClub.UI
         private bool ReadLeagues()
         {
             var result = WebAPI.GetCall("leagues");
-            var itemsControl = LeagueData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 var tmp = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
-                itemsControl.ItemsSource = tmp;
-                var tmp2 = new List<LeagueReadDTO>(tmp.Count);
-                tmp.ForEach(item =>
-                {
-                    tmp2.Add(new LeagueReadDTO
-                    {
-                        Id = item.Id,
-                        Name = item.Name
-                    });
-                });
-                GameLeague.ItemsSource = tmp2;
+                GameLeague.ItemsSource = tmp;
                 return true;
             }
 
             Debug.WriteLine("Niet gelukt!");
             return false;
-        }
-
-        /*
-         * Event Handlers
-         */
-        private void GetLeaguesButton_Click(object sender, RoutedEventArgs e)
-        {
-            ReadLeagues();
         }
 
         #endregion
