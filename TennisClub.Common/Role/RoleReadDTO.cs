@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TennisClub.Common.Role
+﻿namespace TennisClub.Common.Role
 {
     public class RoleReadDTO : BaseReadDTO
     {

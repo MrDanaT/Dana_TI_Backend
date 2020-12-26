@@ -74,6 +74,40 @@ namespace TennisClub.UI
 
         #endregion
 
+        #region Leagues
+
+        /*
+         * CRUD
+         */
+        private bool ReadLeagues()
+        {
+            var result = WebAPI.GetCall("leagues");
+
+            if (result.Result.StatusCode == HttpStatusCode.OK)
+            {
+                var tmp = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
+                GameLeague.ItemsSource = tmp;
+                return true;
+            }
+
+            Debug.WriteLine("Niet gelukt!");
+            return false;
+        }
+
+        #endregion
+
+        private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex(@"^\d*\.?\d?$");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
         #region MemberFine
 
         private void ClearMemberFineSelectionButton_Click(object sender, RoutedEventArgs e)
@@ -275,10 +309,7 @@ namespace TennisClub.UI
         private void RoleData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = GetSelectedRole();
-            if (!selectedItem.IsNull())
-            {
-                RoleName.Text = selectedItem.Name;
-            }
+            if (!selectedItem.IsNull()) RoleName.Text = selectedItem.Name;
         }
 
         private void AddRoleButton_Click(object sender, RoutedEventArgs e)
@@ -308,7 +339,7 @@ namespace TennisClub.UI
         {
             if (RoleData.SelectedItem.IsNull()) return null;
 
-            return (RoleReadDTO)RoleData.SelectedItem;
+            return (RoleReadDTO) RoleData.SelectedItem;
         }
 
         private void SynchroniseRoleTable()
@@ -339,28 +370,6 @@ namespace TennisClub.UI
             {
                 MessageBox.Show("Er is een fout gebeurd bij het synchroniseren. Probeer dit opnieuw.");
             }
-        }
-
-        #endregion
-
-        #region Leagues
-
-        /*
-         * CRUD
-         */
-        private bool ReadLeagues()
-        {
-            var result = WebAPI.GetCall("leagues");
-
-            if (result.Result.StatusCode == HttpStatusCode.OK)
-            {
-                var tmp = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
-                GameLeague.ItemsSource = tmp;
-                return true;
-            }
-
-            Debug.WriteLine("Niet gelukt!");
-            return false;
         }
 
         #endregion
@@ -471,7 +480,7 @@ namespace TennisClub.UI
             var scoreTeamMeber = GameResultScoreTeamMember.Text;
             var scoreOpponent = GameResultscoreOpponent.Text;
 
-            if (!gameId.Equals("") && !setNr.Equals("")&&!scoreTeamMeber.Equals("") && !scoreOpponent.Equals(""))
+            if (!gameId.Equals("") && !setNr.Equals("") && !scoreTeamMeber.Equals("") && !scoreOpponent.Equals(""))
             {
                 var newGameResult = new GameResultReadDTO
                 {
@@ -496,7 +505,7 @@ namespace TennisClub.UI
 
             if (gameResult.IsNull()) return;
 
-            gameResult.GameId = int.Parse((GameResultGameId.Text == "") ? "0" : GameResultGameId.Text);
+            gameResult.GameId = int.Parse(GameResultGameId.Text == "" ? "0" : GameResultGameId.Text);
             GameResultData.Items.Refresh();
         }
 
@@ -506,7 +515,7 @@ namespace TennisClub.UI
 
             if (gameResult.IsNull()) return;
 
-            gameResult.SetNr = byte.Parse((GameResultSetNr.Text == "") ? "0" : GameResultSetNr.Text);
+            gameResult.SetNr = byte.Parse(GameResultSetNr.Text == "" ? "0" : GameResultSetNr.Text);
             GameResultData.Items.Refresh();
         }
 
@@ -516,7 +525,8 @@ namespace TennisClub.UI
 
             if (gameResult.IsNull()) return;
 
-            gameResult.ScoreTeamMember = byte.Parse((GameResultScoreTeamMember.Text == "") ? "0" : GameResultScoreTeamMember.Text);
+            gameResult.ScoreTeamMember =
+                byte.Parse(GameResultScoreTeamMember.Text == "" ? "0" : GameResultScoreTeamMember.Text);
             GameResultData.Items.Refresh();
         }
 
@@ -526,7 +536,8 @@ namespace TennisClub.UI
 
             if (gameResult.IsNull()) return;
 
-            gameResult.ScoreOpponent = byte.Parse((GameResultscoreOpponent.Text == "") ? "0" : GameResultscoreOpponent.Text);
+            gameResult.ScoreOpponent =
+                byte.Parse(GameResultscoreOpponent.Text == "" ? "0" : GameResultscoreOpponent.Text);
             GameResultData.Items.Refresh();
         }
 
@@ -559,7 +570,7 @@ namespace TennisClub.UI
         {
             if (GameResultData.SelectedItem.IsNull()) return null;
 
-            return (GameResultReadDTO)GameResultData.SelectedItem;
+            return (GameResultReadDTO) GameResultData.SelectedItem;
         }
 
         private void SynchroniseGameResultTable()
@@ -574,7 +585,9 @@ namespace TennisClub.UI
 
                 if (originalItem.IsNull() && !gameResultItem.IsNull())
                     isSucceeded = CreateGameResult(gameResultItem);
-                else if (gameResultItem.SetNr != originalItem.SetNr || gameResultItem.ScoreOpponent != originalItem.ScoreOpponent || gameResultItem.ScoreTeamMember != originalItem.ScoreTeamMember)
+                else if (gameResultItem.SetNr != originalItem.SetNr ||
+                         gameResultItem.ScoreOpponent != originalItem.ScoreOpponent ||
+                         gameResultItem.ScoreTeamMember != originalItem.ScoreTeamMember)
                     isSucceeded = UpdateGameResult(gameResultItem.Id,
                         new GameResultUpdateDTO
                         {
@@ -1806,17 +1819,5 @@ namespace TennisClub.UI
         }
 
         #endregion
-
-        private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex(@"^\d*\.?\d?$");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            var regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
     }
 }

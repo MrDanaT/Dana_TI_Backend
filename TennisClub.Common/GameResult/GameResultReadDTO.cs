@@ -1,5 +1,4 @@
-﻿using System;
-using TennisClub.Common.Game;
+﻿using TennisClub.Common.Game;
 
 namespace TennisClub.Common.GameResult
 {
