@@ -7,6 +7,7 @@
       <e p="packages" t="ExcludeRecursive" />
       <e p="TennisClub.API" t="IncludeRecursive">
         <e p="APIExtension.cs" t="Include" />
+        <e p="app.log" t="Include" />
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
@@ -125,6 +126,7 @@
           <e p="RoleUpdateDTO.cs" t="Include" />
         </e>
         <e p="TennisClub.Common.csproj" t="IncludeRecursive" />
+        <e p="Validations.cs" t="Include" />
       </e>
       <e p="TennisClub.DAL" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -233,7 +235,6 @@
           </e>
         </e>
         <e p="TennisClub.UI.csproj" t="IncludeRecursive" />
-        <e p="Validations.cs" t="Include" />
         <e p="WebAPI.cs" t="Include" />
       </e>
     </e>
