@@ -24,7 +24,6 @@
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <DockPanel>
                         <TextBlock>Rol management</TextBlock>
-                        <TextBlock HorizontalAlignment="Center">Je kan hier de rollen beheren.</TextBlock>
                     </DockPanel>
                     <DockPanel>
                         <DataGrid Height="250" x:Name="RoleData" AutoGenerateColumns="False"
@@ -86,7 +85,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Grid.Column="1">
                     <DockPanel>
-                        <Label>Je kan hier de wedstrijdresultaten beheren.</Label>
+                        <Label>Wedstrijdresultaat management</Label>
                         <Button Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top"
                                 x:Name="ClearGameResultsFilterButton" Click="ClearGameResultsFilterButton_Click">
                             Clear filter
@@ -474,7 +473,6 @@
                     <DockPanel>
                         <StackPanel>
                             <TextBlock Margin="0,10">Wedstrijd management</TextBlock>
-                            <TextBlock HorizontalAlignment="Center">Je kan hier de wedstrijden beheren.</TextBlock>
                         </StackPanel>
                         <StackPanel Width="500">
                             <Label Width="125">Lid</Label>
@@ -583,7 +581,6 @@
                     <DockPanel>
                         <StackPanel>
                             <TextBlock Margin="0,10">Boete management</TextBlock>
-                            <TextBlock HorizontalAlignment="Center">Je kan hier de boetes beheren.</TextBlock>
                         </StackPanel>
                         <StackPanel Width="175">
                             <Label Width="125">Lid</Label>
