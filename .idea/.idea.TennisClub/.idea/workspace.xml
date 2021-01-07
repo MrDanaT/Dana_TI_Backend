@@ -6,8 +6,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/MemberRoleService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/MemberRoleService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/Properties/Resources.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/Properties/Resources.resx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/Properties/Settings.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/Properties/Settings.settings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/ThemeManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/WPF.Themes.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI.Themes/WhistlerBlue/Theme.xaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI/Theme.xaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TennisClub.UI/ThemeManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TennisClub/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Game/GameReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Game/GameReadDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultReadDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.Common/Gender/GenderReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/Gender/GenderReadDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.Common/League/LeagueReadDTO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.Common/League/LeagueReadDTO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.UI/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/App.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.UI/TennisClub.UI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/TennisClub.UI.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +37,6 @@
       <option value="$PROJECT_DIR$/TennisClub.DAL/DesignTimeDbContextFactory.cs" />
       <option value="$PROJECT_DIR$/TennisClub.DAL/DALExtension.cs" />
       <option value="$PROJECT_DIR$/TennisClub.Common/MemberRole/MemberRoleReadDTO.cs" />
-      <option value="$PROJECT_DIR$/TennisClub.Common/Game/GameReadDTO.cs" />
       <option value="$PROJECT_DIR$/TennisClub.DAL/Repositories/GameRepositoryFolder/GameRepository.cs" />
       <option value="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" />
       <option value="$PROJECT_DIR$/TennisClub.API/Controllers/RolesController.cs" />
@@ -38,6 +52,10 @@
       <option value="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/MemberRoleService.cs" />
       <option value="$PROJECT_DIR$/TennisClub.BL/MemberServiceFolder/MemberService.cs" />
       <option value="$PROJECT_DIR$/TennisClub.BL/RoleServiceFolder/RoleService.cs" />
+      <option value="$PROJECT_DIR$/TennisClub.Common/Game/GameReadDTO.cs" />
+      <option value="$PROJECT_DIR$/TennisClub.Common/GameResult/GameResultReadDTO.cs" />
+      <option value="$PROJECT_DIR$/TennisClub.Common/Gender/GenderReadDTO.cs" />
+      <option value="$PROJECT_DIR$/TennisClub.Common/League/LeagueReadDTO.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1jC7zch71U9seGoCePddiJioOrN" />

@@ -10,5 +10,10 @@ namespace TennisClub.Common.Game
         public int LeagueId { get; set; }
         public string LeagueName { get; set; }
         public DateTime Date { get; set; }
+
+        public override string ToString()
+        {
+            return GameNumber;
+        }
     }
 }

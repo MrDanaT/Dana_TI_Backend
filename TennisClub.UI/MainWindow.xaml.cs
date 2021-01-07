@@ -1664,7 +1664,6 @@ namespace TennisClub.UI
             for (var i = 0; i < originalGameList.Count; i++)
             {
                 var originalItem = originalGameList.ElementAt(i);
-                ;
                 var gameItem = gameData.Find(x => x.Id == originalItem.Id);
 
                 if (!originalItem.IsNull() && gameItem.IsNull())

@@ -54,5 +54,10 @@ namespace TennisClub.Common.Member
             hash.Add(PhoneNr);
             return hash.ToHashCode();
         }
+
+        public override string ToString()
+        {
+            return FullName;
+        }
     }
 }

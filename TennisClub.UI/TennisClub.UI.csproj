@@ -15,4 +15,10 @@
     <ProjectReference Include="..\TennisClub.Common\TennisClub.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Theme.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

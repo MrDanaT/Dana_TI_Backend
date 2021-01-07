@@ -9,5 +9,10 @@ namespace TennisClub.Common.GameResult
         public byte ScoreTeamMember { get; set; }
         public byte ScoreOpponent { get; set; }
         public GameReadDTO GameNavigation { get; set; }
+
+        public override string ToString()
+        {
+            return GameId.ToString();
+        }
     }
 }
