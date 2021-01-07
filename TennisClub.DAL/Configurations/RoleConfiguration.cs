@@ -15,11 +15,11 @@ namespace TennisClub.DAL.Configurations
             builder.Property(i => i.Name).HasColumnType("varchar(20)").IsRequired();
 
             builder.HasData(
-                new Role {Id = 1, Name = "Voorzitter"},
-                new Role {Id = 2, Name = "Bestuurslid"},
-                new Role {Id = 3, Name = "Secretaris"},
-                new Role {Id = 4, Name = "Penningmeester"},
-                new Role {Id = 5, Name = "Speler"}
+                new Role { Id = 1, Name = "Voorzitter" },
+                new Role { Id = 2, Name = "Bestuurslid" },
+                new Role { Id = 3, Name = "Secretaris" },
+                new Role { Id = 4, Name = "Penningmeester" },
+                new Role { Id = 5, Name = "Speler" }
             );
 
             builder.ToTable("tblRoles");

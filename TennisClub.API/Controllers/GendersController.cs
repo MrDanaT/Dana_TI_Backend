@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TennisClub.BL.GenderServiceFolder;
+using TennisClub.Common;
 using TennisClub.Common.Gender;
 
 namespace TennisClub.API.Controllers
@@ -27,9 +28,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<GenderReadDTO> GetGenderById(int id)
         {
-            var genderFromRepo = _service.GetGenderById(id);
+            GenderReadDTO? genderFromRepo = _service.GetGenderById(id);
 
-            if (genderFromRepo == null) return NotFound();
+            if (genderFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             return Ok(genderFromRepo);
         }

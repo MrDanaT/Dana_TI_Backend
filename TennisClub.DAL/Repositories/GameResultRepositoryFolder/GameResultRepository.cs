@@ -1,8 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using TennisClub.Common;
 using TennisClub.Common.GameResult;
 using TennisClub.Common.Member;
 using TennisClub.DAL.Entities;
@@ -22,7 +23,10 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 
         public IEnumerable<GameResultReadDTO> GetGameResultsByMember(MemberReadDTO member)
         {
-            if (member == null) throw new ArgumentNullException();
+            if (member.IsNull())
+            {
+                throw new ArgumentNullException();
+            }
 
             IQueryable<GameResult> gameResultItems = TennisClubContext.GameResults
                 .AsNoTracking()
@@ -39,15 +43,15 @@ namespace TennisClub.DAL.Repositories.GameResultRepositoryFolder
 
         public override IEnumerable<GameResultReadDTO> GetAll()
         {
-            var itemsFromDB = TennisClubContext.GameResults
+            Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<GameResult, Member>? itemsFromDB = TennisClubContext.GameResults
                 .Include(x => x.GameNavigation)
                 .ThenInclude(x => x.LeagueNavigation)
                 .Include(x => x.GameNavigation)
                 .ThenInclude(x => x.MemberNavigation);
 
-            if (itemsFromDB != null)
+            if (!itemsFromDB.IsNull())
             {
-                var anderLijst = itemsFromDB.ToList();
+                List<GameResult>? anderLijst = itemsFromDB.ToList();
             }
 
             return _mapper.Map<IEnumerable<GameResultReadDTO>>(itemsFromDB);

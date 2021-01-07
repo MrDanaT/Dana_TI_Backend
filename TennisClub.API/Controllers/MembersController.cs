@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TennisClub.BL.MemberServiceFolder;
+using TennisClub.Common;
 using TennisClub.Common.Member;
 
 namespace TennisClub.API.Controllers
@@ -24,7 +25,7 @@ namespace TennisClub.API.Controllers
             string? lastName = "",
             string? location = "")
         {
-            var memberItems = _service.GetAllMembers(federationNr, firstName, lastName, location);
+            IEnumerable<MemberReadDTO>? memberItems = _service.GetAllMembers(federationNr, firstName, lastName, location);
             return Ok(memberItems);
         }
 
@@ -32,7 +33,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("active/speler")]
         public ActionResult<IEnumerable<MemberReadDTO>> GetAllActiveSpelerMembers()
         {
-            var memberItems = _service.GetAllActiveSpelerMembers();
+            IEnumerable<MemberReadDTO>? memberItems = _service.GetAllActiveSpelerMembers();
             return Ok(memberItems);
         }
 
@@ -40,9 +41,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetMemberById")]
         public ActionResult<MemberReadDTO> GetMemberById(int id)
         {
-            var memberFromRepo = _service.GetMemberById(id);
+            MemberReadDTO? memberFromRepo = _service.GetMemberById(id);
 
-            if (memberFromRepo == null) return NotFound();
+            if (memberFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             return Ok(memberFromRepo);
         }
@@ -51,18 +55,21 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<MemberReadDTO> CreateMember(MemberCreateDTO memberCreateDTO)
         {
-            var memberReadDTO = _service.CreateMember(memberCreateDTO);
+            MemberReadDTO? memberReadDTO = _service.CreateMember(memberCreateDTO);
 
-            return CreatedAtRoute(nameof(GetMemberById), new {memberReadDTO.Id}, memberReadDTO);
+            return CreatedAtRoute(nameof(GetMemberById), new { memberReadDTO.Id }, memberReadDTO);
         }
 
         // PUT: api/members/5
         [HttpPut("{id}")]
         public ActionResult UpdateMember(int id, MemberUpdateDTO updateDTO)
         {
-            var memberModelFromRepo = _service.GetMemberById(id);
+            MemberReadDTO? memberModelFromRepo = _service.GetMemberById(id);
 
-            if (memberModelFromRepo == null) return NotFound();
+            if (memberModelFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             _service.UpdateMember(id, updateDTO);
 
@@ -73,9 +80,12 @@ namespace TennisClub.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteMember(int id)
         {
-            var memberFromRepo = _service.GetMemberById(id);
+            MemberReadDTO? memberFromRepo = _service.GetMemberById(id);
 
-            if (memberFromRepo == null) return NotFound();
+            if (memberFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             _service.DeleteMember(id);
 
@@ -90,7 +100,7 @@ namespace TennisClub.API.Controllers
             string? lastName = "",
             string? location = "")
         {
-            var memberItems = _service.GetAllActiveMembers(federationNr, firstName, lastName, location);
+            IEnumerable<MemberReadDTO>? memberItems = _service.GetAllActiveMembers(federationNr, firstName, lastName, location);
 
             return Ok(memberItems);
         }

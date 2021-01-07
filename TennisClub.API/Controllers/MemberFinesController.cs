@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TennisClub.BL.MemberFineServiceFolder;
+using TennisClub.Common;
 using TennisClub.Common.MemberFine;
 
 namespace TennisClub.API.Controllers
@@ -20,7 +21,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetAllMemberFines()
         {
-            var memberFineItems = _service.GetAllMemberFines();
+            IEnumerable<MemberFineReadDTO>? memberFineItems = _service.GetAllMemberFines();
 
             return Ok(memberFineItems);
         }
@@ -29,9 +30,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetMemberFineById")]
         public ActionResult<MemberFineReadDTO> GetMemberFineById(int id)
         {
-            var memberFine = _service.GetMemberFineById(id);
+            MemberFineReadDTO? memberFine = _service.GetMemberFineById(id);
 
-            if (memberFine == null) return NotFound();
+            if (memberFine.IsNull())
+            {
+                return NotFound();
+            }
 
             return Ok(memberFine);
         }
@@ -40,19 +44,22 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<MemberFineReadDTO> CreateMemberFine(MemberFineCreateDTO memberFineCreateDto)
         {
-            var createdMemberFine = _service.CreateMemberFine(memberFineCreateDto);
+            MemberFineReadDTO? createdMemberFine = _service.CreateMemberFine(memberFineCreateDto);
 
 
-            return CreatedAtRoute(nameof(GetMemberFineById), new {createdMemberFine.Id}, createdMemberFine);
+            return CreatedAtRoute(nameof(GetMemberFineById), new { createdMemberFine.Id }, createdMemberFine);
         }
 
         // PUT: api/memberfine/5
         [HttpPut("{id}")]
         public ActionResult UpdateMemberFine(int id, MemberFineUpdateDTO updateDTO)
         {
-            var memberFineModelFromRepo = _service.GetMemberFineById(id);
+            MemberFineReadDTO? memberFineModelFromRepo = _service.GetMemberFineById(id);
 
-            if (memberFineModelFromRepo == null) return NotFound();
+            if (memberFineModelFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             _service.UpdateMemberFine(id, updateDTO);
 
@@ -63,7 +70,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<MemberFineReadDTO>> GetMemberFinesByMemberId(int id)
         {
-            var memberFineItems = _service.GetMemberFinesByMemberId(id);
+            IEnumerable<MemberFineReadDTO>? memberFineItems = _service.GetMemberFinesByMemberId(id);
 
             return Ok(memberFineItems);
         }

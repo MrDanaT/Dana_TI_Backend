@@ -25,15 +25,15 @@ namespace TennisClub.BL.GameServiceFolder
 
         public IEnumerable<GameReadDTO> GetGamesByMemberId(int id)
         {
-            var memberItem = _unitOfWork.Members.GetById(id);
-            var gameItems = _unitOfWork.Games.GetGamesByMember(memberItem);
+            Common.Member.MemberReadDTO? memberItem = _unitOfWork.Members.GetById(id);
+            IEnumerable<GameReadDTO>? gameItems = _unitOfWork.Games.GetGamesByMember(memberItem);
 
             return gameItems;
         }
 
         public GameReadDTO CreateGame(GameCreateDTO game)
         {
-            var createdGame = _unitOfWork.Games.Create(game);
+            GameReadDTO? createdGame = _unitOfWork.Games.Create(game);
             _unitOfWork.Commit();
             return createdGame;
         }

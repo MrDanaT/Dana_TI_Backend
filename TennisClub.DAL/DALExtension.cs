@@ -1,26 +1,32 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using TennisClub.DAL.Repositories;
 
 namespace TennisClub.DAL
 {
     public static class DALExtension
     {
-        public static void AddUnitOfWork(this IServiceCollection services)
+        public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            return services;
         }
 
-        public static void RegisterContext(this IServiceCollection services, string connectionString)
+        public static IServiceCollection RegisterContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<TennisClubContext>(opt => opt.UseSqlServer(connectionString));
+
+            return services;
         }
 
-        public static void RegisterAutoMapper(this IServiceCollection services)
+        public static IServiceCollection RegisterAutoMapper(this IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            return services;
         }
     }
 }

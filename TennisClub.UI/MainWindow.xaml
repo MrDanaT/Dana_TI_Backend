@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TennisClub"
-        Height="475" Width="835"
-        MinHeight="475" MinWidth="835"
+        Height="485" Width="850"
+        MinHeight="485" MinWidth="850"
         ResizeMode="NoResize">
     <TabControl>
         <TabItem Header="Rollen">
@@ -136,8 +136,8 @@
                         <DockPanel>
                             <StackPanel Margin="25,0">
                                 <Label>Game id</Label>
-                                <TextBox x:Name="GameResultGameId" TextChanged="GameResultGameId_TextChanged"
-                                         PreviewTextInput="NumberValidationTextBox" />
+                                <ComboBox x:Name="GameResultGameId" SelectionChanged="GameResultGameId_SelectionChanged" 
+                                          SelectedValue="{Binding GameResultReadDTO.Id}" DisplayMemberPath="Id" SelectedValuePath="Id"/>
                             </StackPanel>
                             <StackPanel Margin="25,0">
                                 <Label>Set nummer</Label>

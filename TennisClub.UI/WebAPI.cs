@@ -13,14 +13,14 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> GetCall(string url)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            var apiUrl = BASE_API_URL + url;
-            using (var client = new HttpClient())
+            string? apiUrl = BASE_API_URL + url;
+            using (HttpClient? client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.GetAsync(apiUrl);
+                Task<HttpResponseMessage>? response = client.GetAsync(apiUrl);
                 response.Wait();
                 return response;
             }
@@ -29,14 +29,14 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> PostCall<T>(string url, T model) where T : class
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            var apiUrl = BASE_API_URL + url;
-            using (var client = new HttpClient())
+            string? apiUrl = BASE_API_URL + url;
+            using (HttpClient? client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.PostAsJsonAsync(apiUrl, model);
+                Task<HttpResponseMessage>? response = client.PostAsJsonAsync(apiUrl, model);
                 response.Wait();
                 return response;
             }
@@ -45,14 +45,14 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> PutCall<T>(string url, T model)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            var apiUrl = BASE_API_URL + url;
-            using (var client = new HttpClient())
+            string? apiUrl = BASE_API_URL + url;
+            using (HttpClient? client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.PutAsJsonAsync(apiUrl, model);
+                Task<HttpResponseMessage>? response = client.PutAsJsonAsync(apiUrl, model);
                 response.Wait();
                 return response;
             }
@@ -61,14 +61,14 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> DeleteCall(string url)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            var apiUrl = BASE_API_URL + url;
-            using (var client = new HttpClient())
+            string? apiUrl = BASE_API_URL + url;
+            using (HttpClient? client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                var response = client.DeleteAsync(apiUrl);
+                Task<HttpResponseMessage>? response = client.DeleteAsync(apiUrl);
                 response.Wait();
                 return response;
             }

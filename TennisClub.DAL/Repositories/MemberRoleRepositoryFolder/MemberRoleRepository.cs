@@ -1,8 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using TennisClub.Common;
 using TennisClub.Common.Member;
 using TennisClub.Common.MemberRole;
 using TennisClub.DAL.Entities;
@@ -22,10 +23,13 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(int[] roleIds)
         {
-            if (roleIds == null) throw new ArgumentNullException();
+            if (roleIds.IsNull())
+            {
+                throw new ArgumentNullException();
+            }
 
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            var itemsFromDB = TennisClubContext.MemberRoles
+            IQueryable<MemberRole>? itemsFromDB = TennisClubContext.MemberRoles
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
@@ -36,10 +40,13 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByMember(MemberReadDTO member)
         {
-            if (member == null) throw new ArgumentNullException();
+            if (member.IsNull())
+            {
+                throw new ArgumentNullException();
+            }
 
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            var itemsFromDB = TennisClubContext.MemberRoles
+            IQueryable<MemberRole>? itemsFromDB = TennisClubContext.MemberRoles
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
@@ -55,7 +62,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public override IEnumerable<MemberRoleReadDTO> GetAll()
         {
-            var itemsFromDB = TennisClubContext.MemberRoles
+            List<MemberRole>? itemsFromDB = TennisClubContext.MemberRoles
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
@@ -66,9 +73,12 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public override MemberRoleReadDTO Create(MemberRoleCreateDTO entity)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
+            if (entity.IsNull())
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
 
-            var mappedObject = _mapper.Map<MemberRole>(entity);
+            MemberRole? mappedObject = _mapper.Map<MemberRole>(entity);
             mappedObject.MemberNavigation = TennisClubContext.Members.Find(mappedObject.MemberId);
             mappedObject.RoleNavigation = TennisClubContext.Roles.Find(mappedObject.RoleId);
             TennisClubContext.MemberRoles.Add(mappedObject);
@@ -77,13 +87,19 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
             return _mapper.Map<MemberRoleReadDTO>(mappedObject);
         }
 
-        public MemberRoleReadDTO GetById(int id)
+        public override MemberRoleReadDTO GetById(int id)
         {
-            if (id < 0) throw new NullReferenceException("Id is out of range");
+            if (!id.IsValidId())
+            {
+                throw new NullReferenceException("Id is out of range");
+            }
 
-            var itemFromDB = TennisClubContext.MemberRoles.Find(id);
+            MemberRole? itemFromDB = TennisClubContext.MemberRoles.Find(id);
 
-            if (itemFromDB == null) throw new NullReferenceException("Object not found");
+            if (itemFromDB.IsNull())
+            {
+                throw new NullReferenceException("Object not found");
+            }
 
             itemFromDB.MemberNavigation = TennisClubContext.Members.Find(itemFromDB.MemberId);
             itemFromDB.RoleNavigation = TennisClubContext.Roles.Find(itemFromDB.RoleId);

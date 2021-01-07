@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TennisClub.BL.GameServiceFolder;
+using TennisClub.Common;
 using TennisClub.Common.Game;
 
 namespace TennisClub.API.Controllers
@@ -20,7 +21,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<GameReadDTO>> GetAllGames()
         {
-            var gameItems = _service.GetAllGames();
+            IEnumerable<GameReadDTO>? gameItems = _service.GetAllGames();
 
             return Ok(gameItems);
         }
@@ -29,9 +30,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetGameById")]
         public ActionResult<GameReadDTO> GetGameById(int id)
         {
-            var gameItem = _service.GetGameById(id);
+            GameReadDTO? gameItem = _service.GetGameById(id);
 
-            if (gameItem == null) return NotFound();
+            if (gameItem.IsNull())
+            {
+                return NotFound();
+            }
 
             return Ok(gameItem);
         }
@@ -40,7 +44,7 @@ namespace TennisClub.API.Controllers
         [HttpGet("bymemberid/{id}")]
         public ActionResult<IEnumerable<GameReadDTO>> GetGamesByMemberId(int id)
         {
-            var gameItems = _service.GetGamesByMemberId(id);
+            IEnumerable<GameReadDTO>? gameItems = _service.GetGamesByMemberId(id);
 
             return Ok(gameItems);
         }
@@ -49,21 +53,26 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<GameReadDTO> CreateGame(GameCreateDTO gameCreateDTO)
         {
-            var createdGame = _service.CreateGame(gameCreateDTO);
+            GameReadDTO? createdGame = _service.CreateGame(gameCreateDTO);
 
-            if (createdGame == null)
+            if (createdGame.IsNull())
+            {
                 return BadRequest();
+            }
 
-            return CreatedAtRoute(nameof(GetGameById), new {createdGame.Id}, createdGame);
+            return CreatedAtRoute(nameof(GetGameById), new { createdGame.Id }, createdGame);
         }
 
         // PUT: api/games/5
         [HttpPut("{id}")]
         public ActionResult UpdateGame(int id, GameUpdateDTO updateDTO)
         {
-            var gameModelFromRepo = _service.GetGameById(id);
+            GameReadDTO? gameModelFromRepo = _service.GetGameById(id);
 
-            if (gameModelFromRepo == null) return NotFound();
+            if (gameModelFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             _service.UpdateGame(id, updateDTO);
 
@@ -74,9 +83,12 @@ namespace TennisClub.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteGame(int id)
         {
-            var gameModelFromRepo = _service.GetGameById(id);
+            GameReadDTO? gameModelFromRepo = _service.GetGameById(id);
 
-            if (gameModelFromRepo == null) return NotFound();
+            if (gameModelFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             _service.DeleteGame(id);
 

@@ -17,7 +17,7 @@ namespace TennisClub.BL.MemberServiceFolder
         public IEnumerable<MemberReadDTO> GetAllMembers(string federationNr, string firstName, string lastName,
             string location)
         {
-            var memberItems = _unitOfWork.Members.GetAll();
+            IEnumerable<MemberReadDTO>? memberItems = _unitOfWork.Members.GetAll();
 
             memberItems = GetFilteredMemberItems(memberItems, federationNr, firstName, lastName, location);
 
@@ -26,14 +26,14 @@ namespace TennisClub.BL.MemberServiceFolder
 
         public MemberReadDTO GetMemberById(int id)
         {
-            var memberFromRepo = _unitOfWork.Members.GetById(id);
+            MemberReadDTO? memberFromRepo = _unitOfWork.Members.GetById(id);
 
             return memberFromRepo;
         }
 
         public MemberReadDTO CreateMember(MemberCreateDTO member)
         {
-            var createdMember = _unitOfWork.Members.Create(member);
+            MemberReadDTO? createdMember = _unitOfWork.Members.Create(member);
             _unitOfWork.Commit();
             return createdMember;
         }
@@ -47,7 +47,7 @@ namespace TennisClub.BL.MemberServiceFolder
         public IEnumerable<MemberReadDTO> GetAllActiveMembers(string federationNr, string firstName, string lastName,
             string location)
         {
-            var memberItems = _unitOfWork.Members.GetAllActiveMembers();
+            IEnumerable<MemberReadDTO>? memberItems = _unitOfWork.Members.GetAllActiveMembers();
 
             memberItems = GetFilteredMemberItems(memberItems, federationNr, firstName, lastName, location);
 
@@ -62,7 +62,7 @@ namespace TennisClub.BL.MemberServiceFolder
 
         public IEnumerable<MemberReadDTO> GetAllActiveSpelerMembers()
         {
-            var memberItems = _unitOfWork.Members.GetAllActiveSpelerMembers();
+            IEnumerable<MemberReadDTO>? memberItems = _unitOfWork.Members.GetAllActiveSpelerMembers();
             return memberItems;
         }
 
@@ -70,18 +70,34 @@ namespace TennisClub.BL.MemberServiceFolder
             string federationNr, string firstName, string lastName, string location)
         {
             if (!string.IsNullOrEmpty(federationNr))
+            {
                 memberItems = memberItems.Where(x => x.FederationNr.ToLower().Contains(federationNr.ToLower()));
+            }
+
             if (!string.IsNullOrEmpty(firstName))
+            {
                 memberItems = memberItems.Where(x => x.FirstName.ToLower().Contains(firstName.ToLower()));
+            }
+
             if (!string.IsNullOrEmpty(lastName))
+            {
                 memberItems = memberItems.Where(x => x.LastName.ToLower().Contains(lastName.ToLower()));
+            }
+
             if (!string.IsNullOrEmpty(location))
             {
                 location = location.ToLower();
-                var tmp = memberItems.Where(x => x.City.ToLower().Contains(location));
-                if (tmp.Count() > 0) memberItems = tmp;
+                IEnumerable<MemberReadDTO>? tmp = memberItems.Where(x => x.City.ToLower().Contains(location));
+                if (tmp.Count() > 0)
+                {
+                    memberItems = tmp;
+                }
+
                 tmp = memberItems.Where(x => x.Zipcode.ToLower().Contains(location));
-                if (tmp.Count() > 0) memberItems = tmp;
+                if (tmp.Count() > 0)
+                {
+                    memberItems = tmp;
+                }
             }
 
             return memberItems;

@@ -1,7 +1,8 @@
-using System;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 using TennisClub.DAL;
 
 namespace TennisClub.API
@@ -10,14 +11,14 @@ namespace TennisClub.API
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
+            IWebHost? host = CreateWebHostBuilder(args).Build();
 
-            using (var scope = host.Services.CreateScope())
+            using (IServiceScope? scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
+                IServiceProvider? services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<TennisClubContext>();
+                    TennisClubContext? context = services.GetRequiredService<TennisClubContext>();
                     // DataSeeder.Initialize(context);
                 }
                 catch (Exception)
@@ -31,7 +32,15 @@ namespace TennisClub.API
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
+            return WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging((context, logging) =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConfiguration(context.Configuration.GetSection("Logging"));
+                    logging.AddDebug();
+                    logging.AddConsole();
+                })
+                .UseStartup<Startup>();
         }
     }
 }

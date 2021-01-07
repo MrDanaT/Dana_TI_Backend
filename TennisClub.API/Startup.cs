@@ -27,15 +27,21 @@ namespace TennisClub.API
             services.AddServices();
 
             // DAL
-            services.AddUnitOfWork();
-            services.RegisterAutoMapper();
-            services.RegisterContext(Configuration.GetConnectionString("TennisClubConnection"));
+            services.AddUnitOfWork()
+                .RegisterAutoMapper()
+                .RegisterContext(Configuration.GetConnectionString("TennisClubConnection"));
+
+            // Logging
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             app.UseHttpsRedirection();
 

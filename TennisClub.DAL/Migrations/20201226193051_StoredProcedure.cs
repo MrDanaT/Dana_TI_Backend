@@ -6,7 +6,7 @@ namespace TennisClub.DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var sp = @"CREATE PROCEDURE SoftDeleteMember
+            string? sp = @"CREATE PROCEDURE SoftDeleteMember
 	                    @pId int = 1
                         AS
                         BEGIN

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using TennisClub.BL.GameResultServiceFolder;
+using TennisClub.Common;
 using TennisClub.Common.GameResult;
 
 namespace TennisClub.API.Controllers
@@ -11,48 +13,71 @@ namespace TennisClub.API.Controllers
     public class GameResultsController : Controller
     {
         private readonly IGameResultService _service;
+        private readonly ILogger<GameResultsController> _logger;
 
-        public GameResultsController(IGameResultService service)
+        public GameResultsController(IGameResultService service, ILogger<GameResultsController> logger)
         {
             _service = service;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         // GET: api/gameresults
         [HttpGet]
         public ActionResult<IEnumerable<GameResultReadDTO>> GetAllGameResults(int? memberId, DateTime date)
         {
-            var gameResultItems = _service.GetAllGameResults(memberId, date);
-
-            return Ok(gameResultItems);
+            try
+            {
+                IEnumerable<GameResultReadDTO>? gameResultItems = _service.GetAllGameResults(memberId, date);
+                return Ok(gameResultItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
 
         // GET: api/gameresults/5
         [HttpGet("{id}", Name = "GetGameResultById")]
         public ActionResult<GameResultReadDTO> GetGameResultById(int id)
         {
-            var gameResultItem = _service.GetGameResultById(id);
+            try
+            {
+                GameResultReadDTO? gameResultItem = _service.GetGameResultById(id);
 
-            if (gameResultItem == null) return NotFound();
+                if (gameResultItem.IsNull())
+                {
+                    return NotFound();
+                }
 
-            return Ok(gameResultItem);
+                return Ok(gameResultItem);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
 
         // POST: api/gameresults
         [HttpPost]
         public ActionResult<GameResultReadDTO> CreateGameResult(GameResultCreateDTO gameResultCreateDto)
         {
-            var createdGameResult = _service.CreateGameResult(gameResultCreateDto);
+            GameResultReadDTO? createdGameResult = _service.CreateGameResult(gameResultCreateDto);
 
-            return CreatedAtRoute(nameof(GetGameResultById), new {createdGameResult.Id}, createdGameResult);
+            return CreatedAtRoute(nameof(GetGameResultById), new { createdGameResult.Id }, createdGameResult);
         }
 
         // PUT: api/gameresults/5
         [HttpPut("{id}")]
         public ActionResult UpdateGameResult(int id, GameResultUpdateDTO updateDTO)
         {
-            var gameResultModelFromRepo = _service.GetGameResultById(id);
+            GameResultReadDTO? gameResultModelFromRepo = _service.GetGameResultById(id);
 
-            if (gameResultModelFromRepo == null) return NotFound();
+            if (gameResultModelFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             _service.UpdateGameResult(id, updateDTO);
 

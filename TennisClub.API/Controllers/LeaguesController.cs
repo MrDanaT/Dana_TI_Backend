@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TennisClub.BL.LeagueServiceFolder;
+using TennisClub.Common;
 using TennisClub.Common.League;
 
 namespace TennisClub.API.Controllers
@@ -20,7 +21,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<LeagueReadDTO>> GetAllLeagues()
         {
-            var leagueItems = _service.GetAllLeagues();
+            IEnumerable<LeagueReadDTO>? leagueItems = _service.GetAllLeagues();
 
             return Ok(leagueItems);
         }
@@ -29,9 +30,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<LeagueReadDTO> GetLeagueById(int id)
         {
-            var leagueFromRepo = _service.GetLeagueById(id);
+            LeagueReadDTO? leagueFromRepo = _service.GetLeagueById(id);
 
-            if (leagueFromRepo == null) return NotFound();
+            if (leagueFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             return Ok(leagueFromRepo);
         }

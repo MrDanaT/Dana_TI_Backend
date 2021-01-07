@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 
 namespace TennisClub.DAL.Repositories
 {
@@ -14,7 +12,5 @@ namespace TennisClub.DAL.Repositories
         void Delete(int id);
         IEnumerable<TEntityReadDTO> GetAll();
         TEntityReadDTO GetById(int id);
-        IEnumerable<TEntityReadDTO> Find(Expression<Func<TEntityReadDTO, bool>> predicate);
-        TEntityReadDTO SingleOrDefault(Expression<Func<TEntityReadDTO, bool>> predicate);
     }
 }

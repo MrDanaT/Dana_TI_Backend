@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using TennisClub.BL.MemberRoleServiceFolder;
 using TennisClub.BL.MemberServiceFolder;
+using TennisClub.Common;
 using TennisClub.Common.MemberRole;
 
 namespace TennisClub.API.Controllers
@@ -24,7 +25,7 @@ namespace TennisClub.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<MemberRoleReadDTO>> GetAllMemberRoles()
         {
-            var memberRoleItems = _service.GetAllMemberRoles();
+            IEnumerable<MemberRoleReadDTO>? memberRoleItems = _service.GetAllMemberRoles();
 
             return Ok(memberRoleItems);
         }
@@ -33,9 +34,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("{id}", Name = "GetMemberRoleById")]
         public ActionResult<MemberRoleReadDTO> GetMemberRoleById(int id)
         {
-            var memberRoleItem = _service.GetMemberRoleById(id);
+            MemberRoleReadDTO? memberRoleItem = _service.GetMemberRoleById(id);
 
-            if (memberRoleItem == null) return NotFound();
+            if (memberRoleItem.IsNull())
+            {
+                return NotFound();
+            }
 
             return Ok(memberRoleItem);
         }
@@ -44,18 +48,21 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<MemberRoleReadDTO> CreateMemberRole(MemberRoleCreateDTO memberRoleCreateDTO)
         {
-            var createdMemberRole = _service.CreateMemberRole(memberRoleCreateDTO);
+            MemberRoleReadDTO? createdMemberRole = _service.CreateMemberRole(memberRoleCreateDTO);
 
-            return CreatedAtRoute(nameof(GetMemberRoleById), new {createdMemberRole.Id}, createdMemberRole);
+            return CreatedAtRoute(nameof(GetMemberRoleById), new { createdMemberRole.Id }, createdMemberRole);
         }
 
         // PATCH api/memberroles/5
         [HttpPut("{id}")]
         public ActionResult UpdateMemberRole(int id, MemberRoleUpdateDTO updateDTO)
         {
-            var memberRoleModelFromRepo = _service.GetMemberRoleById(id);
+            MemberRoleReadDTO? memberRoleModelFromRepo = _service.GetMemberRoleById(id);
 
-            if (memberRoleModelFromRepo == null) return NotFound();
+            if (memberRoleModelFromRepo.IsNull())
+            {
+                return NotFound();
+            }
 
             _service.UpdateMemberRole(id, updateDTO);
 
@@ -75,9 +82,12 @@ namespace TennisClub.API.Controllers
         [HttpGet("byroleids/{ids}")]
         public ActionResult<IEnumerable<MemberRoleReadDTO>> GetMembersByRoleIds(string ids)
         {
-            if (string.IsNullOrEmpty(ids)) return BadRequest();
+            if (string.IsNullOrEmpty(ids))
+            {
+                return BadRequest();
+            }
 
-            var memberItems = _service.GetMemberRolesByRoleIds(ids);
+            IEnumerable<MemberRoleReadDTO>? memberItems = _service.GetMemberRolesByRoleIds(ids);
 
             return Ok(memberItems);
         }
