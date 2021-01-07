@@ -15,21 +15,19 @@ namespace TennisClub.BL.RoleServiceFolder
 
         public IEnumerable<RoleReadDTO> GetAllRoles()
         {
-            IEnumerable<RoleReadDTO>? roleItems = _unitOfWork.Roles.GetAll();
-
+            var roleItems = _unitOfWork.Roles.GetAll();
             return roleItems;
         }
 
         public RoleReadDTO GetRoleById(int id)
         {
-            RoleReadDTO? roleItem = _unitOfWork.Roles.GetById(id);
-
+            var roleItem = _unitOfWork.Roles.GetById(id);
             return roleItem;
         }
 
         public RoleReadDTO CreateRole(RoleCreateDTO role)
         {
-            RoleReadDTO? createdRole = _unitOfWork.Roles.Create(role);
+            var createdRole = _unitOfWork.Roles.Create(role);
             _unitOfWork.Commit();
             return createdRole;
         }

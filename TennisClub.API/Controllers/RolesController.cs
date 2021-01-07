@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using TennisClub.BL.RoleServiceFolder;
 using TennisClub.Common;
 using TennisClub.Common.Role;
@@ -11,42 +13,63 @@ namespace TennisClub.API.Controllers
     public class RolesController : Controller
     {
         private readonly IRoleService _service;
+        private readonly ILogger<RolesController> _logger;
 
-        public RolesController(IRoleService service)
+        public RolesController(IRoleService service, ILogger<RolesController> logger)
         {
             _service = service;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         // GET: api/roles
         [HttpGet]
         public ActionResult<IEnumerable<RoleReadDTO>> GetAllRoles()
         {
-            IEnumerable<RoleReadDTO>? roleItems = _service.GetAllRoles();
-
-            return Ok(roleItems);
+            try
+            {
+                var roleItems = _service.GetAllRoles();
+                return Ok(roleItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
 
         // GET: api/roles/5
         [HttpGet("{id}", Name = "GetRoleById")]
         public ActionResult<RoleReadDTO> GetRoleById(int id)
         {
-            RoleReadDTO? roleItem = _service.GetRoleById(id);
-
-            if (roleItem.IsNull())
+            try
             {
-                return NotFound();
-            }
+                var roleItem = _service.GetRoleById(id);
 
-            return Ok(roleItem);
+                if (roleItem.IsNull()) return NotFound();
+
+                return Ok(roleItem);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
 
         // POST: api/roles
         [HttpPost]
         public ActionResult<RoleReadDTO> CreateRole(RoleCreateDTO roleCreateDTO)
         {
-            RoleReadDTO? createdRole = _service.CreateRole(roleCreateDTO);
-
-            return CreatedAtRoute(nameof(GetRoleById), new { createdRole.Id }, createdRole);
+            try
+            {
+                var createdRole = _service.CreateRole(roleCreateDTO);
+                return CreatedAtRoute(nameof(GetRoleById), new {createdRole.Id}, createdRole);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
 
 
@@ -54,16 +77,21 @@ namespace TennisClub.API.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateRole(int id, RoleUpdateDTO updateDTO)
         {
-            RoleReadDTO? roleModelFromRepo = _service.GetRoleById(id);
-
-            if (roleModelFromRepo.IsNull())
+            try
             {
-                return NotFound();
+                var roleModelFromRepo = _service.GetRoleById(id);
+
+                if (roleModelFromRepo.IsNull()) return NotFound();
+
+                _service.UpdateRole(id, updateDTO);
+
+                return NoContent();
             }
-
-            _service.UpdateRole(id, updateDTO);
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
     }
 }

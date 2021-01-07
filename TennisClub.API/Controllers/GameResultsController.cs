@@ -27,7 +27,7 @@ namespace TennisClub.API.Controllers
         {
             try
             {
-                IEnumerable<GameResultReadDTO>? gameResultItems = _service.GetAllGameResults(memberId, date);
+                var gameResultItems = _service.GetAllGameResults(memberId, date);
                 return Ok(gameResultItems);
             }
             catch (Exception ex)
@@ -43,12 +43,9 @@ namespace TennisClub.API.Controllers
         {
             try
             {
-                GameResultReadDTO? gameResultItem = _service.GetGameResultById(id);
+                var gameResultItem = _service.GetGameResultById(id);
 
-                if (gameResultItem.IsNull())
-                {
-                    return NotFound();
-                }
+                if (gameResultItem.IsNull()) return NotFound();
 
                 return Ok(gameResultItem);
             }
@@ -63,25 +60,37 @@ namespace TennisClub.API.Controllers
         [HttpPost]
         public ActionResult<GameResultReadDTO> CreateGameResult(GameResultCreateDTO gameResultCreateDto)
         {
-            GameResultReadDTO? createdGameResult = _service.CreateGameResult(gameResultCreateDto);
-
-            return CreatedAtRoute(nameof(GetGameResultById), new { createdGameResult.Id }, createdGameResult);
+            try
+            {
+                var createdGameResult = _service.CreateGameResult(gameResultCreateDto);
+                return CreatedAtRoute(nameof(GetGameResultById), new {createdGameResult.Id}, createdGameResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
 
         // PUT: api/gameresults/5
         [HttpPut("{id}")]
         public ActionResult UpdateGameResult(int id, GameResultUpdateDTO updateDTO)
         {
-            GameResultReadDTO? gameResultModelFromRepo = _service.GetGameResultById(id);
-
-            if (gameResultModelFromRepo.IsNull())
+            try
             {
-                return NotFound();
+                var gameResultModelFromRepo = _service.GetGameResultById(id);
+
+                if (gameResultModelFromRepo.IsNull()) return NotFound();
+
+                _service.UpdateGameResult(id, updateDTO);
+
+                return NoContent();
             }
-
-            _service.UpdateGameResult(id, updateDTO);
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest();
+            }
         }
     }
 }

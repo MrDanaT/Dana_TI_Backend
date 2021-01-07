@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 
@@ -19,10 +18,7 @@ namespace TennisClub.API
 
         public static IServiceCollection AddLogging(this IServiceCollection services)
         {
-            services.AddLogging(loggingBuilder =>
-            {
-                loggingBuilder.AddFile("app.log", append: true);
-            });
+            services.AddLogging(loggingBuilder => { loggingBuilder.AddFile("app.log", true); });
 
             return services;
         }

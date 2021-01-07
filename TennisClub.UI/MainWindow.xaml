@@ -136,8 +136,10 @@
                         <DockPanel>
                             <StackPanel Margin="25,0">
                                 <Label>Game id</Label>
-                                <ComboBox x:Name="GameResultGameId" SelectionChanged="GameResultGameId_SelectionChanged" 
-                                          SelectedValue="{Binding GameResultReadDTO.Id}" DisplayMemberPath="Id" SelectedValuePath="Id"/>
+                                <ComboBox x:Name="GameResultGameId"
+                                          SelectionChanged="GameResultGameId_SelectionChanged"
+                                          SelectedValue="{Binding GameResultReadDTO.Id}" DisplayMemberPath="Id"
+                                          SelectedValuePath="Id" />
                             </StackPanel>
                             <StackPanel Margin="25,0">
                                 <Label>Set nummer</Label>

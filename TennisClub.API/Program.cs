@@ -11,14 +11,14 @@ namespace TennisClub.API
     {
         public static void Main(string[] args)
         {
-            IWebHost? host = CreateWebHostBuilder(args).Build();
+            var host = CreateWebHostBuilder(args).Build();
 
-            using (IServiceScope? scope = host.Services.CreateScope())
+            using (var scope = host.Services.CreateScope())
             {
-                IServiceProvider? services = scope.ServiceProvider;
+                var services = scope.ServiceProvider;
                 try
                 {
-                    TennisClubContext? context = services.GetRequiredService<TennisClubContext>();
+                    var context = services.GetRequiredService<TennisClubContext>();
                     // DataSeeder.Initialize(context);
                 }
                 catch (Exception)

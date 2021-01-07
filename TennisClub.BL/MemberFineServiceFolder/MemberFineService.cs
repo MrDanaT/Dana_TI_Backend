@@ -15,29 +15,27 @@ namespace TennisClub.BL.MemberFineServiceFolder
 
         public IEnumerable<MemberFineReadDTO> GetAllMemberFines()
         {
-            IEnumerable<MemberFineReadDTO>? memberFineItems = _unitOfWork.MemberFines.GetAll();
-
+            var memberFineItems = _unitOfWork.MemberFines.GetAll();
             return memberFineItems;
         }
 
         public MemberFineReadDTO GetMemberFineById(int id)
         {
-            MemberFineReadDTO? memberFine = _unitOfWork.MemberFines.GetById(id);
-
+            var memberFine = _unitOfWork.MemberFines.GetById(id);
             return memberFine;
         }
 
         public MemberFineReadDTO CreateMemberFine(MemberFineCreateDTO memberFine)
         {
-            MemberFineReadDTO? createdMemberFine = _unitOfWork.MemberFines.Create(memberFine);
+            var createdMemberFine = _unitOfWork.MemberFines.Create(memberFine);
             _unitOfWork.Commit();
             return createdMemberFine;
         }
 
         public IEnumerable<MemberFineReadDTO> GetMemberFinesByMemberId(int id)
         {
-            Common.Member.MemberReadDTO? memberFromRepo = _unitOfWork.Members.GetById(id);
-            IEnumerable<MemberFineReadDTO>? memberFineItems = _unitOfWork.MemberFines.GetMemberFinesByMember(memberFromRepo);
+            var memberFromRepo = _unitOfWork.Members.GetById(id);
+            var memberFineItems = _unitOfWork.MemberFines.GetMemberFinesByMember(memberFromRepo);
 
             return memberFineItems;
         }

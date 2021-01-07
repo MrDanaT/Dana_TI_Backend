@@ -16,7 +16,7 @@ namespace TennisClub.DAL.Repositories.GenderRepositoryFolder
 
         public override IEnumerable<GenderReadDTO> GetAll()
         {
-            List<Gender>? gendersFromDb = Context.Genders.FromSqlRaw("SELECT * FROM tblGenders").AsNoTracking().ToList();
+            var gendersFromDb = Context.Genders.FromSqlRaw("SELECT * FROM tblGenders").AsNoTracking().ToList();
             return _mapper.Map<IEnumerable<GenderReadDTO>>(gendersFromDb);
         }
     }

@@ -9,12 +9,12 @@ namespace TennisClub.DAL
     {
         public TennisClubContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot? configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(Directory.GetCurrentDirectory() + "/../TennisClub.API/appsettings.json")
                 .Build();
-            DbContextOptionsBuilder<TennisClubContext>? builder = new DbContextOptionsBuilder<TennisClubContext>();
-            string? connectionString = configuration.GetConnectionString("TennisClubConnection");
+            var builder = new DbContextOptionsBuilder<TennisClubContext>();
+            var connectionString = configuration.GetConnectionString("TennisClubConnection");
             builder.UseSqlServer(connectionString);
             return new TennisClubContext(builder.Options);
         }

@@ -15,8 +15,8 @@ namespace TennisClub.DAL.Configurations
             builder.Property(i => i.Name).HasColumnType("varchar(10)").IsRequired();
 
             builder.HasData(
-                new Gender { Id = 1, Name = "Man" },
-                new Gender { Id = 2, Name = "Vrouw" }
+                new Gender {Id = 1, Name = "Man"},
+                new Gender {Id = 2, Name = "Vrouw"}
             );
 
             builder.ToTable("tblGenders");

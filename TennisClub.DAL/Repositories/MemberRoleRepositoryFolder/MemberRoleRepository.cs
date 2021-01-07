@@ -23,13 +23,10 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(int[] roleIds)
         {
-            if (roleIds.IsNull())
-            {
-                throw new ArgumentNullException();
-            }
+            if (roleIds.IsNull()) throw new ArgumentNullException();
 
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            IQueryable<MemberRole>? itemsFromDB = TennisClubContext.MemberRoles
+            var itemsFromDB = TennisClubContext.MemberRoles
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
@@ -40,13 +37,10 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByMember(MemberReadDTO member)
         {
-            if (member.IsNull())
-            {
-                throw new ArgumentNullException();
-            }
+            if (member.IsNull()) throw new ArgumentNullException();
 
             // TODO: zie of het ("=.AsNoTracking()) sneller of trager gaat hierdoor.
-            IQueryable<MemberRole>? itemsFromDB = TennisClubContext.MemberRoles
+            var itemsFromDB = TennisClubContext.MemberRoles
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
@@ -62,7 +56,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public override IEnumerable<MemberRoleReadDTO> GetAll()
         {
-            List<MemberRole>? itemsFromDB = TennisClubContext.MemberRoles
+            var itemsFromDB = TennisClubContext.MemberRoles
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
@@ -73,12 +67,9 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public override MemberRoleReadDTO Create(MemberRoleCreateDTO entity)
         {
-            if (entity.IsNull())
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
+            if (entity.IsNull()) throw new ArgumentNullException(nameof(entity));
 
-            MemberRole? mappedObject = _mapper.Map<MemberRole>(entity);
+            var mappedObject = _mapper.Map<MemberRole>(entity);
             mappedObject.MemberNavigation = TennisClubContext.Members.Find(mappedObject.MemberId);
             mappedObject.RoleNavigation = TennisClubContext.Roles.Find(mappedObject.RoleId);
             TennisClubContext.MemberRoles.Add(mappedObject);
@@ -89,17 +80,11 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
 
         public override MemberRoleReadDTO GetById(int id)
         {
-            if (!id.IsValidId())
-            {
-                throw new NullReferenceException("Id is out of range");
-            }
+            if (!id.IsValidId()) throw new NullReferenceException("Id is out of range");
 
-            MemberRole? itemFromDB = TennisClubContext.MemberRoles.Find(id);
+            var itemFromDB = TennisClubContext.MemberRoles.Find(id);
 
-            if (itemFromDB.IsNull())
-            {
-                throw new NullReferenceException("Object not found");
-            }
+            if (itemFromDB.IsNull()) throw new NullReferenceException("Object not found");
 
             itemFromDB.MemberNavigation = TennisClubContext.Members.Find(itemFromDB.MemberId);
             itemFromDB.RoleNavigation = TennisClubContext.Roles.Find(itemFromDB.RoleId);

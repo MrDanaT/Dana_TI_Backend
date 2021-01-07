@@ -13,8 +13,8 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> GetCall(string url)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            string? apiUrl = BASE_API_URL + url;
-            using (HttpClient? client = new HttpClient())
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);
@@ -29,8 +29,8 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> PostCall<T>(string url, T model) where T : class
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            string? apiUrl = BASE_API_URL + url;
-            using (HttpClient? client = new HttpClient())
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);
@@ -45,8 +45,8 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> PutCall<T>(string url, T model)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            string? apiUrl = BASE_API_URL + url;
-            using (HttpClient? client = new HttpClient())
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);
@@ -61,8 +61,8 @@ namespace TennisClub.UI
         public static Task<HttpResponseMessage> DeleteCall(string url)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            string? apiUrl = BASE_API_URL + url;
-            using (HttpClient? client = new HttpClient())
+            var apiUrl = BASE_API_URL + url;
+            using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.Timeout = TimeSpan.FromSeconds(900);

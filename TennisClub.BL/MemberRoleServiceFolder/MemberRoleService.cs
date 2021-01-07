@@ -16,21 +16,19 @@ namespace TennisClub.BL.MemberRoleServiceFolder
 
         public IEnumerable<MemberRoleReadDTO> GetAllMemberRoles()
         {
-            IEnumerable<MemberRoleReadDTO>? memberRoleItems = _unitOfWork.MemberRoles.GetAll();
-
+            var memberRoleItems = _unitOfWork.MemberRoles.GetAll();
             return memberRoleItems;
         }
 
         public MemberRoleReadDTO GetMemberRoleById(int id)
         {
-            MemberRoleReadDTO? memberRoleItem = _unitOfWork.MemberRoles.GetById(id);
-
+            var memberRoleItem = _unitOfWork.MemberRoles.GetById(id);
             return memberRoleItem;
         }
 
         public MemberRoleReadDTO CreateMemberRole(MemberRoleCreateDTO memberRole)
         {
-            MemberRoleReadDTO? createdMemberRole = _unitOfWork.MemberRoles.Create(memberRole);
+            var createdMemberRole = _unitOfWork.MemberRoles.Create(memberRole);
             _unitOfWork.Commit();
             return createdMemberRole;
         }
@@ -38,16 +36,16 @@ namespace TennisClub.BL.MemberRoleServiceFolder
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByMemberId(int id)
         {
             // TODO: Dit nakijken samen met repository.
-            Common.Member.MemberReadDTO? memberFromRepo = _unitOfWork.Members.GetById(id);
-            IEnumerable<MemberRoleReadDTO>? roleItems = _unitOfWork.MemberRoles.GetMemberRolesByMember(memberFromRepo);
-
+            var memberFromRepo = _unitOfWork.Members.GetById(id);
+            var roleItems = _unitOfWork.MemberRoles.GetMemberRolesByMember(memberFromRepo);
+            
             return roleItems;
         }
 
         public IEnumerable<MemberRoleReadDTO> GetMemberRolesByRoleIds(string roleIds)
         {
-            int[]? intIds = roleIds.Split(',').Where(x => !string.IsNullOrEmpty(x)).Select(int.Parse).ToArray();
-            IEnumerable<MemberRoleReadDTO>? memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoleIds(intIds);
+            var intIds = roleIds.Split(',').Where(x => !string.IsNullOrEmpty(x)).Select(int.Parse).ToArray();
+            var memberItems = _unitOfWork.MemberRoles.GetMemberRolesByRoleIds(intIds);
 
             return memberItems;
         }

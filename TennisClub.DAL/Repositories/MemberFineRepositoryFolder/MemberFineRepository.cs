@@ -22,7 +22,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public override IEnumerable<MemberFineReadDTO> GetAll()
         {
-            Microsoft.EntityFrameworkCore.Query.IIncludableQueryable<MemberFine, Member>? memberFineItems = TennisClubContext.MemberFines
+            var memberFineItems = TennisClubContext.MemberFines
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation);
 
@@ -31,12 +31,9 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public override MemberFineReadDTO Create(MemberFineCreateDTO entity)
         {
-            if (entity.IsNull())
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
+            if (entity.IsNull()) throw new ArgumentNullException(nameof(entity));
 
-            MemberFine? mappedObject = _mapper.Map<MemberFine>(entity);
+            var mappedObject = _mapper.Map<MemberFine>(entity);
             mappedObject.MemberNavigation = TennisClubContext.Members.Find(mappedObject.MemberId);
             TennisClubContext.MemberFines.Add(mappedObject);
             TennisClubContext.SaveChanges();
@@ -46,17 +43,11 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public override MemberFineReadDTO GetById(int id)
         {
-            if (!id.IsValidId())
-            {
-                throw new NullReferenceException("Id is out of range");
-            }
+            if (!id.IsValidId()) throw new NullReferenceException("Id is out of range");
 
-            MemberFine? itemFromDB = Context.MemberFines.Find(id);
+            var itemFromDB = Context.MemberFines.Find(id);
 
-            if (itemFromDB.IsNull())
-            {
-                throw new NullReferenceException("Object not found");
-            }
+            if (itemFromDB.IsNull()) throw new NullReferenceException("Object not found");
 
             itemFromDB.MemberNavigation = TennisClubContext.Members.Find(itemFromDB.MemberId);
 
@@ -65,7 +56,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public IEnumerable<MemberFineReadDTO> GetMemberFinesByMember(MemberReadDTO member)
         {
-            IQueryable<MemberFine>? memberFineItems = TennisClubContext.MemberFines
+            var memberFineItems = TennisClubContext.MemberFines
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Where(mf => mf.MemberId == member.Id)
@@ -76,22 +67,13 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
         public override void Update(int id, MemberFineUpdateDTO entity)
         {
-            if (!id.IsValidId())
-            {
-                throw new NullReferenceException("Id is out of range");
-            }
+            if (!id.IsValidId()) throw new NullReferenceException("Id is out of range");
 
-            MemberFine? memberFineFromRepo = Context.MemberFines.Find(id);
+            var memberFineFromRepo = Context.MemberFines.Find(id);
 
-            if (memberFineFromRepo.IsNull())
-            {
-                throw new NullReferenceException("Object not found");
-            }
+            if (memberFineFromRepo.IsNull()) throw new NullReferenceException("Object not found");
 
-            if (memberFineFromRepo.PaymentDate.IsNull())
-            {
-                base.Update(id, entity);
-            }
+            if (memberFineFromRepo.PaymentDate.IsNull()) base.Update(id, entity);
         }
 
         public override void Delete(int id)
