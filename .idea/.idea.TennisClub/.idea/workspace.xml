@@ -5,7 +5,10 @@
     <projectFile>TennisClub.UI/TennisClub.UI.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="" />
+    <list default="true" id="897b530a-8190-4fea-8b35-a3eb1ef098e4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/MemberRoleService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.BL/MemberRoleServiceFolder/MemberRoleService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/TennisClub.UI/MainWindow.xaml.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +120,7 @@
       <workItem from="1608828006754" duration="1566000" />
       <workItem from="1609006572663" duration="1949000" />
       <workItem from="1609016060940" duration="525000" />
-      <workItem from="1610041347299" duration="2326000" />
+      <workItem from="1610041347299" duration="2947000" />
     </task>
     <servers />
   </component>

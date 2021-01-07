@@ -153,7 +153,8 @@ namespace TennisClub.UI
 
                 if (newList.Exists(x => x.FineNumber.ToString().Equals(fineNumber)))
                 {
-                    MessageBox.Show("De combinatie van de game id en set nr zijn niet uniek!", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("De combinatie van de game id en set nr zijn niet uniek!", "Fout!",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
 
@@ -331,7 +332,8 @@ namespace TennisClub.UI
 
                 if (newList.Exists(x => x.Name == name))
                 {
-                    MessageBox.Show("Er bestaat al een rol met deze naam!", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Er bestaat al een rol met deze naam!", "Fout!", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                     return;
                 }
 
@@ -348,7 +350,8 @@ namespace TennisClub.UI
             }
             else
             {
-                MessageBox.Show("De naam van de rol is niet ingevuld. Gelieve deze in te vullen.", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("De naam van de rol is niet ingevuld. Gelieve deze in te vullen.", "Fout!",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -502,14 +505,15 @@ namespace TennisClub.UI
 
             if (!gameId.Equals("") && !setNr.Equals("") && !scoreTeamMeber.Equals("") && !scoreOpponent.Equals(""))
             {
-
                 var newList = GameResultData.ItemsSource.OfType<GameResultReadDTO>().ToList();
 
                 if (newList.Exists(x => x.GameId == int.Parse(gameId) && x.SetNr == int.Parse(setNr)))
                 {
-                    MessageBox.Show("De combinatie van de game id en set nr zijn niet uniek!", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("De combinatie van de game id en set nr zijn niet uniek!", "Fout!",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+
                 var newGameResult = new GameResultReadDTO
                 {
                     Id = 0,
@@ -526,7 +530,8 @@ namespace TennisClub.UI
             }
             else
             {
-                MessageBox.Show("1 of meerdere velden zijn verkeerd ingevuld. Gelieve dit na te kijken.", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("1 of meerdere velden zijn verkeerd ingevuld. Gelieve dit na te kijken.", "Fout!",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1064,7 +1069,8 @@ namespace TennisClub.UI
 
                 if (newList.Exists(x => x.FederationNr.Equals(MemberFederationNr.Text)))
                 {
-                    MessageBox.Show("Er bestaat al een lid met dit bondsnummer!", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Er bestaat al een lid met dit bondsnummer!", "Fout!", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                     return;
                 }
 
@@ -1094,7 +1100,8 @@ namespace TennisClub.UI
             }
             else
             {
-                MessageBox.Show("1 of meerdere velden zijn verkeerd ingevuld. Gelieve dit na te kijken.", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("1 of meerdere velden zijn verkeerd ingevuld. Gelieve dit na te kijken.", "Fout!",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1602,7 +1609,8 @@ namespace TennisClub.UI
 
                 if (newList.Exists(x => x.GameNumber.Equals(GameNumber.Text)))
                 {
-                    MessageBox.Show("Er bestaat al een game met dit game nummer!", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Er bestaat al een game met dit game nummer!", "Fout!", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                     return;
                 }
 
@@ -1635,7 +1643,8 @@ namespace TennisClub.UI
             }
             else
             {
-                MessageBox.Show("1 of meerdere velden zijn verkeerd ingevuld. Gelieve dit na te kijken.", "Fout!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("1 of meerdere velden zijn verkeerd ingevuld. Gelieve dit na te kijken.", "Fout!",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

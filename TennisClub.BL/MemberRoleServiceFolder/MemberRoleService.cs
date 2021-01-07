@@ -38,7 +38,7 @@ namespace TennisClub.BL.MemberRoleServiceFolder
             // TODO: Dit nakijken samen met repository.
             var memberFromRepo = _unitOfWork.Members.GetById(id);
             var roleItems = _unitOfWork.MemberRoles.GetMemberRolesByMember(memberFromRepo);
-            
+
             return roleItems;
         }
 
