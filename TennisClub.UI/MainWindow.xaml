@@ -26,7 +26,7 @@
                         <TextBlock>Rol management</TextBlock>
                     </DockPanel>
                     <DockPanel>
-                        <DataGrid Height="250" x:Name="RoleData" AutoGenerateColumns="False"
+                        <DataGrid Height="275" x:Name="RoleData" AutoGenerateColumns="False"
                                   IsReadOnly="True" Margin="0,10" SelectionChanged="RoleData_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
@@ -37,7 +37,7 @@
                         </DataGrid>
                     </DockPanel>
                     <DockPanel>
-                        <StackPanel>
+                        <StackPanel Margin="0,2">
                             <Button x:Name="GetRolesButton" Click="GetRolesButton_Click" Height="40" Width="100">
                                 Refresh gegevens
                             </Button>
@@ -50,14 +50,14 @@
                         </DockPanel>
                         <DockPanel Margin="0,2">
                             <StackPanel>
-                                <Button x:Name="ClearRoleSelectionButton" Width="100" Margin="0,2"
+                                <Button x:Name="ClearRoleSelectionButton" Width="100" 
                                         Height="40" Click="ClearRoleSelectionButton_Click">
                                     Clear selectie
                                 </Button>
                             </StackPanel>
                             <StackPanel>
                                 <Button HorizontalAlignment="Right" x:Name="AddRoleButton" Click="AddRoleButton_Click"
-                                        Height="40" Width="100" Margin="0,2">
+                                        Height="40" Width="100" >
                                     Voeg toe
                                 </Button>
                                 <Button HorizontalAlignment="Right" x:Name="SyncRolesButton"
