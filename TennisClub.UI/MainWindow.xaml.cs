@@ -32,6 +32,8 @@ namespace TennisClub.UI
             Setup();
         }
 
+        private List<MemberReadDTO> allMembers;
+
         private void Setup()
         {
             originalGameResultList = new List<GameResultReadDTO>();
@@ -40,6 +42,7 @@ namespace TennisClub.UI
             createMemberlist = new List<MemberReadDTO>();
             createGameList = new List<GameReadDTO>();
             originalMemberFineList = new List<MemberFineReadDTO>();
+            allMembers = new List<MemberReadDTO>();
 
             ReadRoles();
             ReadAllMembers();
@@ -99,8 +102,17 @@ namespace TennisClub.UI
 
         private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            var regex = new Regex(@"^\d*\.?\d?$");
-            e.Handled = !regex.IsMatch(e.Text);
+            bool approvedDecimalPoint = false;
+            string seperator = ",";
+
+            if (e.Text.Equals(seperator))
+            {
+                if (!((TextBox)sender).Text.Contains(seperator))
+                    approvedDecimalPoint = true;
+            }
+
+            if (!(char.IsDigit(e.Text, e.Text.Length - 1) || approvedDecimalPoint))
+                e.Handled = true;
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -141,13 +153,11 @@ namespace TennisClub.UI
 
         private void AddMemberFineButton_Click(object sender, RoutedEventArgs e)
         {
-            var fineNumber = MemberFineFineNumber.Text;
-            var amount = MemberFineAmount.Text;
             var member = MemberFineMember.SelectedItem;
             var handoutDate = MemberFineHandoutDate.SelectedDate;
             var paymentDate = MemberFinePaymentDate.SelectedDate;
 
-            if (!fineNumber.Equals("") && !member.IsNull() && !handoutDate.IsNull())
+            if (int.TryParse(MemberFineFineNumber.Text, out int fineNumber) && decimal.TryParse(MemberFineAmount.Text, out decimal amount) && !member.IsNull() && !handoutDate.IsNull())
             {
                 var newList = MemberFineData.ItemsSource.OfType<MemberFineReadDTO>().ToList();
 
@@ -161,8 +171,8 @@ namespace TennisClub.UI
                 var newMemberFine = new MemberFineReadDTO
                 {
                     Id = 0,
-                    FineNumber = int.Parse(fineNumber),
-                    Amount = decimal.Parse(amount),
+                    FineNumber = fineNumber,
+                    Amount = amount,
                     HandoutDate = handoutDate.Value
                 };
 
@@ -326,7 +336,7 @@ namespace TennisClub.UI
         {
             var name = RoleName.Text;
 
-            if (!name.Equals(""))
+            if (!string.IsNullOrEmpty(name))
             {
                 var newList = RoleData.ItemsSource.OfType<RoleReadDTO>().ToList();
 
@@ -498,16 +508,14 @@ namespace TennisClub.UI
 
         private void AddGameResultButton_Click(object sender, RoutedEventArgs e)
         {
-            var gameId = GameResultGameId.Text;
-            var setNr = GameResultSetNr.Text;
-            var scoreTeamMeber = GameResultScoreTeamMember.Text;
-            var scoreOpponent = GameResultscoreOpponent.Text;
-
-            if (!gameId.Equals("") && !setNr.Equals("") && !scoreTeamMeber.Equals("") && !scoreOpponent.Equals(""))
+            if (int.TryParse(GameResultGameId.SelectedValue.ToString(), out var gameId) &&
+                byte.TryParse(GameResultSetNr.Text, out var setNr) &&
+                byte.TryParse(GameResultScoreTeamMember.Text, out var scoreTeamMember) &&
+                byte.TryParse(GameResultscoreOpponent.Text, out var scoreOpponent))
             {
                 var newList = GameResultData.ItemsSource.OfType<GameResultReadDTO>().ToList();
 
-                if (newList.Exists(x => x.GameId == int.Parse(gameId) && x.SetNr == int.Parse(setNr)))
+                if (newList.Exists(x => x.GameId == gameId && x.SetNr == setNr))
                 {
                     MessageBox.Show("De combinatie van de game id en set nr zijn niet uniek!", "Fout!",
                         MessageBoxButton.OK, MessageBoxImage.Error);
@@ -517,10 +525,10 @@ namespace TennisClub.UI
                 var newGameResult = new GameResultReadDTO
                 {
                     Id = 0,
-                    GameId = int.Parse(gameId),
-                    ScoreOpponent = byte.Parse(scoreOpponent),
-                    ScoreTeamMember = byte.Parse(scoreTeamMeber),
-                    SetNr = byte.Parse(setNr)
+                    GameId = gameId,
+                    ScoreOpponent = scoreOpponent,
+                    ScoreTeamMember = scoreTeamMember,
+                    SetNr = setNr
                 };
 
                 newList.Add(newGameResult);
@@ -705,6 +713,7 @@ namespace TennisClub.UI
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
                 var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
+                allMembers = tmp;
                 MemberRoleMember.ItemsSource = tmp;
                 MemberRoleMemberFilter.ItemsSource = tmp;
                 GameMemberFilter.ItemsSource = tmp;
@@ -1062,19 +1071,20 @@ namespace TennisClub.UI
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
             var birthDate = MemberBirthDate.SelectedDate;
+            var gender = (GenderReadDTO) MemberGender.SelectedItem;
 
-            if (!birthDate.IsNull())
+            if (!birthDate.IsNull() && !gender.IsNull() && !string.IsNullOrEmpty(MemberFirstName.Text) &&
+                !string.IsNullOrEmpty(MemberLastName.Text) && !string.IsNullOrEmpty(MemberAddress.Text) &&
+                !string.IsNullOrEmpty(MemberNumber.Text) && !string.IsNullOrEmpty(MemberZipcode.Text) &&
+                !string.IsNullOrEmpty(MemberCity.Text))
             {
-                var newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
-
-                if (newList.Exists(x => x.FederationNr.Equals(MemberFederationNr.Text)))
+                if (allMembers.Exists(x => x.FederationNr.Equals(MemberFederationNr.Text)) || createMemberlist.Exists(x => x.FederationNr.Equals(MemberFederationNr.Text)))
                 {
                     MessageBox.Show("Er bestaat al een lid met dit bondsnummer!", "Fout!", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                     return;
                 }
 
-                var gender = (GenderReadDTO) MemberGender.SelectedItem;
                 var newMember = new MemberReadDTO
                 {
                     Addition = MemberAddition.Text,
@@ -1092,6 +1102,7 @@ namespace TennisClub.UI
                     Deleted = false
                 };
 
+                var newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
                 newList.Add(newMember);
                 createMemberlist.Add(newMember);
                 MemberData.ItemsSource = newList;
@@ -1603,11 +1614,13 @@ namespace TennisClub.UI
         {
             var date = GameDate.SelectedDate;
 
-            if (!date.IsNull())
+            if (!date.IsNull() && !string.IsNullOrEmpty(GameNumber.Text) && !GameMember.SelectedItem.IsNull() &&
+                !GameMember.SelectedValue.IsNull() && !GameLeague.SelectedItem.IsNull() &&
+                !GameLeague.SelectedValue.IsNull())
             {
                 var newList = GameData.ItemsSource.OfType<GameReadDTO>().ToList();
 
-                if (newList.Exists(x => x.GameNumber.Equals(GameNumber.Text)))
+                if (newList.Exists(x => x.GameNumber.Equals(GameNumber.Text)) || createGameList.Exists(x => x.GameNumber.Equals(GameNumber.Text)))
                 {
                     MessageBox.Show("Er bestaat al een game met dit game nummer!", "Fout!", MessageBoxButton.OK,
                         MessageBoxImage.Error);
@@ -1621,19 +1634,13 @@ namespace TennisClub.UI
                     Date = date.Value
                 };
 
-                if (!GameMember.SelectedItem.IsNull() && !GameMember.SelectedValue.IsNull())
-                {
-                    var member = (MemberReadDTO) GameMember.SelectedItem;
-                    newGame.MemberFullName = member.FullName;
-                    newGame.MemberId = member.Id;
-                }
+                var member = (MemberReadDTO) GameMember.SelectedItem;
+                newGame.MemberFullName = member.FullName;
+                newGame.MemberId = member.Id;
 
-                if (!GameLeague.SelectedItem.IsNull() && !GameLeague.SelectedValue.IsNull())
-                {
-                    var league = (LeagueReadDTO) GameLeague.SelectedItem;
-                    newGame.LeagueName = league.Name;
-                    newGame.LeagueId = league.Id;
-                }
+                var league = (LeagueReadDTO) GameLeague.SelectedItem;
+                newGame.LeagueName = league.Name;
+                newGame.LeagueId = league.Id;
 
                 newList.Add(newGame);
                 createGameList.Add(newGame);

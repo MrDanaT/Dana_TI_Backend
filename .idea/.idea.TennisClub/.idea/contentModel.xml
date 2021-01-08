@@ -236,7 +236,6 @@
         </e>
         <e p="TennisClub.UI.csproj" t="IncludeRecursive" />
         <e p="Theme.xaml" t="Include" />
-        <e p="ThemeManager.cs" t="Include" />
         <e p="WebAPI.cs" t="Include" />
       </e>
     </e>
