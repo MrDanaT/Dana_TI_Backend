@@ -73,7 +73,7 @@ namespace TennisClub.DAL.Repositories.MemberFineRepositoryFolder
 
             if (memberFineFromRepo.IsNull()) throw new NullReferenceException("Object not found");
 
-            if (memberFineFromRepo.PaymentDate.IsNull()) base.Update(id, entity);
+            if (memberFineFromRepo.PaymentDate.Equals(new DateTime()) || memberFineFromRepo.PaymentDate.Equals(new DateTime(1,1,1,12,0,0)) || !memberFineFromRepo.PaymentDate.IsNull()) base.Update(id, entity);
         }
 
         public override void Delete(int id)

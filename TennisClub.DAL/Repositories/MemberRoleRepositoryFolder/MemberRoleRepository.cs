@@ -30,7 +30,7 @@ namespace TennisClub.DAL.Repositories.MemberRoleRepositoryFolder
                 .AsNoTracking()
                 .Include(x => x.MemberNavigation)
                 .Include(x => x.RoleNavigation)
-                .Where(mr => roleIds.Any(r => r == mr.MemberId));
+                .Where(mr => roleIds.Any(r => r == mr.RoleId));
 
             return _mapper.Map<IEnumerable<MemberRoleReadDTO>>(itemsFromDB);
         }

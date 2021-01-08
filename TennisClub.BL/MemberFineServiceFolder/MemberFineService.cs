@@ -43,7 +43,7 @@ namespace TennisClub.BL.MemberFineServiceFolder
         public void UpdateMemberFine(int id, MemberFineUpdateDTO updateDTO)
         {
             _unitOfWork.MemberFines.Update(id, updateDTO);
-            _unitOfWork.Commit();
+            var x = _unitOfWork.Commit();
         }
     }
 }

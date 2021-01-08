@@ -32,14 +32,13 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
         {
             var members = TennisClubContext.Members;
 
-            var memberRoles = TennisClubContext.MemberRoles.Where(mr =>
-                members.Contains(mr.MemberNavigation) && (mr.EndDate.Equals(new DateTime()) || mr.EndDate == null) &&
-                mr.RoleId == 5).Select(x => x.MemberId);
+            var memberRoles = TennisClubContext.MemberRoles
+                .Include(x => x.RoleNavigation)
+                .Where(mr => members
+                                .Contains(mr.MemberNavigation) && (mr.EndDate.Equals(new DateTime()) || mr.EndDate == null || mr.EndDate.Equals(new DateTime(1, 1, 1, 12, 0, 0))) && mr.RoleNavigation.Name.Equals("Speler"))
+                .Select(x => x.MemberNavigation);
 
-            var itemsFromDB = members.Where(x => memberRoles.Contains(x.Id)).AsNoTracking()
-                .Include(x => x.GenderNavigation);
-
-            return _mapper.Map<IEnumerable<MemberReadDTO>>(itemsFromDB);
+            return _mapper.Map<IEnumerable<MemberReadDTO>>(memberRoles);
         }
 
         public override void Delete(int id)

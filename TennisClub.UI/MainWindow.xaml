@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="TennisClub"
-        Height="515" Width="850"
-        MinHeight="485" MinWidth="850"
+        Height="515" Width="855"
+        MinHeight="515" MinWidth="855"
         ResizeMode="NoResize">
     <TabControl>
         <TabItem Header="Rollen">
@@ -22,7 +22,7 @@
                     <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Grid.Column="1">
-                    <DockPanel  Height="60">
+                    <DockPanel Height="60">
                         <Label>Rol management</Label>
                     </DockPanel>
                     <DockPanel>
@@ -88,7 +88,7 @@
                         <DockPanel>
                             <Label>Wedstrijdresultaat management</Label>
                             <Button Width="100" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                x:Name="ClearGameResultsFilterButton" Click="ClearGameResultsFilterButton_Click">
+                                    x:Name="ClearGameResultsFilterButton" Click="ClearGameResultsFilterButton_Click">
                                 Clear filter
                             </Button>
                         </DockPanel>
@@ -100,11 +100,12 @@
                             <DockPanel>
                                 <Label>Filter op spelernaam:</Label>
                                 <ComboBox Width="150" Margin="10,0" x:Name="GameResultPlayerComboBoxFilter"
-                                      SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName"
-                                      SelectedValuePath="Id" />
+                                          SelectedValue="{Binding MemberReadDTO.Id}" DisplayMemberPath="FullName"
+                                          SelectedValuePath="Id" />
                             </DockPanel>
-                            <Button HorizontalAlignment="Right" Width="100" Height="25" x:Name="SearchFilteredGameResults"
-                                Click="SearchFilteredGameResults_Click">
+                            <Button HorizontalAlignment="Right" Width="100" Height="25"
+                                    x:Name="SearchFilteredGameResults"
+                                    Click="SearchFilteredGameResults_Click">
                                 Filter
                             </Button>
                         </DockPanel>
@@ -209,7 +210,7 @@
                         <Label Width="65" Margin="55,0">Voornaam</Label>
                         <Label Width="75" Margin="60,0">Achternaam</Label>
                         <Label Width="90" HorizontalAlignment="Left" Margin="50,0">Postcode/stad</Label>
-                        <Button HorizontalAlignment="Right" VerticalAlignment="Top"  Width="100" Height="25" 
+                        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="25"
                                 x:Name="ClearMemberFilterButton" Click="ClearMemberFilterButton_Click">
                             Clear
                         </Button>
@@ -220,14 +221,14 @@
                         <TextBox x:Name="MemberFilterLastName" Width="60" Margin="60,0" />
                         <TextBox x:Name="MemberFilterLocation" Width="60" Margin="60,0" />
                         <Button HorizontalAlignment="Right" Width="100" x:Name="FilterMembersButton"
-                                Click="SearchFilteredMembers_Click" Height="25" > 
+                                Click="SearchFilteredMembers_Click" Height="25">
                             Filter
                         </Button>
                     </DockPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1">
                     <DockPanel>
-                        <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False"  Width="820"
+                        <DataGrid Margin="0,10" Height="210" x:Name="MemberData" CanUserAddRows="False" Width="820"
                                   SelectionChanged="MemberData_SelectionChanged" CanUserDeleteRows="True"
                                   AutoGenerateColumns="False">
                             <DataGrid.Columns>
@@ -267,7 +268,7 @@
                             Refresh Data
                         </Button>
                     </DockPanel>
-                    <StackPanel Margin="10,0">
+                    <StackPanel Margin="7.5,0">
                         <StackPanel>
                             <DockPanel>
                                 <Label Margin="5,0" Width="65">Voornaam</Label>
@@ -359,19 +360,20 @@
                                 <Label>Ledenrol management</Label>
                             </StackPanel>
                         </DockPanel>
-                        <StackPanel Margin="300,0,0,0">
+                        <StackPanel Width="500">
                             <Label Height="25" Width="125">Lid</Label>
                             <ComboBox Width="125" SelectionChanged="MemberRoleMemberFilter_SelectionChanged"
-                                  x:Name="MemberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
-                                  DisplayMemberPath="FullName" SelectedValuePath="Id" />
+                                      x:Name="MemberRoleMemberFilter" SelectedValue="{Binding MemberReadDTO.Id}"
+                                      DisplayMemberPath="FullName" SelectedValuePath="Id" />
                         </StackPanel>
                         <StackPanel>
-                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25" 
-                                x:Name="ClearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">
+                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25"
+                                    x:Name="ClearMemberRoleFilterButton" Click="ClearMemberRoleFilterButton_Click">
                                 Clear
                             </Button>
-                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25"  x:Name="FilterMemberRolesButton"
-                                Click="FilterMemberRolesButton_Click">
+                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25"
+                                    x:Name="FilterMemberRolesButton"
+                                    Click="FilterMemberRolesButton_Click">
                                 Filter
                             </Button>
                         </StackPanel>
@@ -387,7 +389,8 @@
                                      SelectedValuePath="Id" ScrollViewer.VerticalScrollBarVisibility="Visible" />
                         </StackPanel>
                         <DataGrid Height="225" x:Name="MemberRoleData" CanUserAddRows="False" CanUserDeleteRows="False"
-                                  AutoGenerateColumns="False" SelectionChanged="MemberRoleData_OnSelectionChanged" Width="700"
+                                  AutoGenerateColumns="False" SelectionChanged="MemberRoleData_OnSelectionChanged"
+                                  Width="700"
                                   IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Visibility="Hidden" Header="Id"
@@ -443,17 +446,20 @@
                         </DockPanel>
                         <DockPanel Margin="0,5">
                             <StackPanel>
-                                <Button HorizontalAlignment="Left" x:Name="ClearMemberRoleSelectionButton" Height="40" Width="100"
+                                <Button HorizontalAlignment="Left" x:Name="ClearMemberRoleSelectionButton" Height="40"
+                                        Width="100"
                                         Margin="0,2.5" Click="ClearMemberRoleSelectionButton_OnClick">
                                     Clear selectie
                                 </Button>
                             </StackPanel>
                             <StackPanel>
-                                <Button HorizontalAlignment="Right" x:Name="AddMemberRoleButton" Height="40" Width="100"
+                                <Button HorizontalAlignment="Right" x:Name="AddMemberRoleButton" Height="40"
+                                        Width="100"
                                         Margin="0,2.5" Click="AddMemberRoleButton_Click">
                                     Voeg toe
                                 </Button>
-                                <Button HorizontalAlignment="Right" x:Name="SyncMemberRolesButton" Height="40" Width="100"
+                                <Button HorizontalAlignment="Right" x:Name="SyncMemberRolesButton" Height="40"
+                                        Width="100"
                                         Margin="0,2.5" Click="SyncMemberRolesButton_Click">
                                     Sync.
                                 </Button>
@@ -486,11 +492,12 @@
                                       DisplayMemberPath="FullName" SelectedValuePath="Id" />
                         </StackPanel>
                         <StackPanel>
-                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25" 
+                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25"
                                     x:Name="ClearGameFilterButton" Click="ClearGameFilterButton_OnClick">
                                 Clear
                             </Button>
-                            <Button HorizontalAlignment="Right" Margin="0,2.5,0,0" Width="100" Height="25"  x:Name="FilterGamesButton"
+                            <Button HorizontalAlignment="Right" Margin="0,2.5,0,0" Width="100" Height="25"
+                                    x:Name="FilterGamesButton"
                                     Click="FilterGamesButton_OnClick">
                                 Filter
                             </Button>
@@ -594,18 +601,18 @@
                         </StackPanel>
                         <StackPanel Width="175">
                             <Label Height="25" Width="125">Uitschrijvingsdatum</Label>
-                            <DatePicker  Width="125" x:Name="MemberFineHandoutDateFilter" />
+                            <DatePicker Width="125" x:Name="MemberFineHandoutDateFilter" />
                         </StackPanel>
                         <StackPanel Width="175">
                             <Label Height="25" Width="125">Betalingsdatum</Label>
                             <DatePicker Width="125" x:Name="MemberFinePaymentDateFilter" />
                         </StackPanel>
                         <StackPanel>
-                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25" 
+                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25"
                                     x:Name="ClearMemberFineFilterButton" Click="ClearMemberFineFilterButton_Click">
                                 Clear
                             </Button>
-                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25" 
+                            <Button HorizontalAlignment="Right" Margin="0,2.5" Width="100" Height="25"
                                     x:Name="FilterMemberFinesButton"
                                     Click="FilterMemberFinesButton_Click">
                                 Filter
