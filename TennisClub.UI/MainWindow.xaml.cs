@@ -1221,6 +1221,12 @@ namespace TennisClub.UI
         {
             var startDate = MemberRoleStartDate.SelectedDate;
             var endDate = MemberRoleEndDate.SelectedDate;
+
+            if (endDate.IsNull())
+            {
+                endDate = new DateTime();
+            }
+
             var member = (MemberReadDTO) MemberRoleMember.SelectedItem;
             var role = (RoleReadDTO) MemberRoleRole.SelectedItem;
 
