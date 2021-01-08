@@ -63,11 +63,11 @@ namespace TennisClub.UI
          */
         private bool ReadGenders()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall("genders");
+            var result = WebAPI.GetCall("genders");
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<GenderReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<GenderReadDTO>>().Result;
                 MemberGender.ItemsSource = tmp.ToList();
                 return true;
             }
@@ -85,11 +85,11 @@ namespace TennisClub.UI
          */
         private bool ReadLeagues()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall("leagues");
+            var result = WebAPI.GetCall("leagues");
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<LeagueReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<LeagueReadDTO>>().Result;
                 GameLeague.ItemsSource = tmp;
                 return true;
             }
@@ -102,26 +102,19 @@ namespace TennisClub.UI
 
         private void FloatNumberValidation_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            bool approvedDecimalPoint = false;
+            var approvedDecimalPoint = false;
             string seperator = ",";
 
             if (e.Text.Equals(seperator))
-            {
-                if (!((TextBox)sender).Text.Contains(seperator))
-                {
+                if (!((TextBox) sender).Text.Contains(seperator))
                     approvedDecimalPoint = true;
-                }
-            }
 
-            if (!(char.IsDigit(e.Text, e.Text.Length - 1) || approvedDecimalPoint))
-            {
-                e.Handled = true;
-            }
+            if (!(char.IsDigit(e.Text, e.Text.Length - 1) || approvedDecimalPoint)) e.Handled = true;
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex? regex = new Regex("[^0-9]+");
+            var regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -147,12 +140,9 @@ namespace TennisClub.UI
             MemberFineMember.IsEnabled = isEnabled;
             MemberFineHandoutDate.IsEnabled = isEnabled;
 
-            MemberFineReadDTO? memberFine = GetSelectedMemberFine();
+            var memberFine = GetSelectedMemberFine();
 
-            if (memberFine.IsNull())
-            {
-                return;
-            }
+            if (memberFine.IsNull()) return;
 
             MemberFinePaymentDate.IsEnabled =
                 memberFine.PaymentDate.IsNull() || memberFine.PaymentDate.Date.Equals(new DateTime());
@@ -160,14 +150,14 @@ namespace TennisClub.UI
 
         private void AddMemberFineButton_Click(object sender, RoutedEventArgs e)
         {
-            object? member = MemberFineMember.SelectedItem;
-            DateTime? handoutDate = MemberFineHandoutDate.SelectedDate;
-            DateTime? paymentDate = MemberFinePaymentDate.SelectedDate;
+            var member = MemberFineMember.SelectedItem;
+            var handoutDate = MemberFineHandoutDate.SelectedDate;
+            var paymentDate = MemberFinePaymentDate.SelectedDate;
 
-            if (int.TryParse(MemberFineFineNumber.Text, out int fineNumber) &&
-                decimal.TryParse(MemberFineAmount.Text, out decimal amount) && !member.IsNull() && !handoutDate.IsNull())
+            if (int.TryParse(MemberFineFineNumber.Text, out var fineNumber) &&
+                decimal.TryParse(MemberFineAmount.Text, out var amount) && !member.IsNull() && !handoutDate.IsNull())
             {
-                List<MemberFineReadDTO>? newList = MemberFineData.ItemsSource.OfType<MemberFineReadDTO>().ToList();
+                var newList = MemberFineData.ItemsSource.OfType<MemberFineReadDTO>().ToList();
 
                 if (newList.Exists(x => x.FineNumber == fineNumber))
                 {
@@ -176,7 +166,7 @@ namespace TennisClub.UI
                     return;
                 }
 
-                MemberFineReadDTO? newMemberFine = new MemberFineReadDTO
+                var newMemberFine = new MemberFineReadDTO
                 {
                     Id = 0,
                     FineNumber = fineNumber,
@@ -185,15 +175,11 @@ namespace TennisClub.UI
                 };
 
                 if (paymentDate.IsNull())
-                {
                     newMemberFine.PaymentDate = new DateTime();
-                }
                 else
-                {
                     newMemberFine.PaymentDate = paymentDate.Value;
-                }
 
-                MemberReadDTO? actualMember = (MemberReadDTO)member;
+                var actualMember = (MemberReadDTO) member;
                 if (!actualMember.IsNull())
                 {
                     newMemberFine.MemberFullName = actualMember.FullName;
@@ -214,12 +200,9 @@ namespace TennisClub.UI
 
         private void MemberFineData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberFineReadDTO? memberFine = GetSelectedMemberFine();
+            var memberFine = GetSelectedMemberFine();
 
-            if (memberFine.IsNull())
-            {
-                return;
-            }
+            if (memberFine.IsNull()) return;
 
             MemberFineFineNumber.Text = memberFine.FineNumber.ToString();
             MemberFineAmount.Text = memberFine.Amount.ToString();
@@ -227,36 +210,27 @@ namespace TennisClub.UI
             MemberFineHandoutDate.SelectedDate = memberFine.HandoutDate;
             MemberFinePaymentDate.SelectedDate = memberFine.PaymentDate;
 
-            bool isNewMemberFine = originalMemberFineList.Contains(memberFine);
+            var isNewMemberFine = originalMemberFineList.Contains(memberFine);
 
             SetMemberFineBoxEnable(isNewMemberFine);
         }
 
         private MemberFineReadDTO GetSelectedMemberFine()
         {
-            if (MemberFineData.SelectedItem.IsNull())
-            {
-                return null;
-            }
+            if (MemberFineData.SelectedItem.IsNull()) return null;
 
-            return (MemberFineReadDTO)MemberFineData.SelectedItem;
+            return (MemberFineReadDTO) MemberFineData.SelectedItem;
         }
 
         private void MemberFinePaymentDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberFineReadDTO? memberFine = GetSelectedMemberFine();
+            var memberFine = GetSelectedMemberFine();
 
-            if (memberFine.IsNull())
-            {
-                return;
-            }
+            if (memberFine.IsNull()) return;
 
-            DateTime? selectedDate = MemberFinePaymentDate.SelectedDate;
+            var selectedDate = MemberFinePaymentDate.SelectedDate;
 
-            if (selectedDate.IsNull())
-            {
-                return;
-            }
+            if (selectedDate.IsNull()) return;
 
             memberFine.PaymentDate = selectedDate.Value;
             MemberFineData.Items.Refresh();
@@ -273,11 +247,11 @@ namespace TennisClub.UI
          */
         private bool CreateRole(RoleReadDTO item)
         {
-            RoleCreateDTO? newRole = new RoleCreateDTO
+            var newRole = new RoleCreateDTO
             {
                 Name = item.Name
             };
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.PostCall("roles", newRole);
+            var response = WebAPI.PostCall("roles", newRole);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
@@ -291,16 +265,16 @@ namespace TennisClub.UI
 
         private bool ReadRoles()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall("roles");
-            DataGrid? itemsControl = RoleData;
+            var result = WebAPI.GetCall("roles");
+            var itemsControl = RoleData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<RoleReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<RoleReadDTO>>().Result;
                 ;
                 itemsControl.ItemsSource = tmp;
-                List<RoleReadDTO>? tmp2 = new List<RoleReadDTO>(tmp.Count);
-                tmp.ForEach(item => { tmp2.Add(new RoleReadDTO { Id = item.Id, Name = item.Name }); });
+                var tmp2 = new List<RoleReadDTO>(tmp.Count);
+                tmp.ForEach(item => { tmp2.Add(new RoleReadDTO {Id = item.Id, Name = item.Name}); });
                 originalRoleList = tmp2;
                 MemberRoleRolesFilter.ItemsSource = tmp2;
                 MemberRoleRole.ItemsSource = tmp2;
@@ -313,7 +287,7 @@ namespace TennisClub.UI
 
         private bool UpdateRole(int id, RoleUpdateDTO item)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.PutCall($"roles/{id}", item);
+            var result = WebAPI.PutCall($"roles/{id}", item);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -347,12 +321,9 @@ namespace TennisClub.UI
 
         private void RoleName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            RoleReadDTO? role = GetSelectedRole();
+            var role = GetSelectedRole();
 
-            if (role.IsNull())
-            {
-                return;
-            }
+            if (role.IsNull()) return;
 
             role.Name = RoleName.Text;
             RoleData.Items.Refresh();
@@ -360,20 +331,17 @@ namespace TennisClub.UI
 
         private void RoleData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RoleReadDTO? selectedItem = GetSelectedRole();
-            if (!selectedItem.IsNull())
-            {
-                RoleName.Text = selectedItem.Name;
-            }
+            var selectedItem = GetSelectedRole();
+            if (!selectedItem.IsNull()) RoleName.Text = selectedItem.Name;
         }
 
         private void AddRoleButton_Click(object sender, RoutedEventArgs e)
         {
-            string? name = RoleName.Text;
+            var name = RoleName.Text;
 
             if (!string.IsNullOrEmpty(name))
             {
-                List<RoleReadDTO>? newList = RoleData.ItemsSource.OfType<RoleReadDTO>().ToList();
+                var newList = RoleData.ItemsSource.OfType<RoleReadDTO>().ToList();
 
                 if (newList.Exists(x => x.Name == name))
                 {
@@ -382,7 +350,7 @@ namespace TennisClub.UI
                     return;
                 }
 
-                RoleReadDTO? newRole = new RoleReadDTO
+                var newRole = new RoleReadDTO
                 {
                     Id = 0,
                     Name = name
@@ -405,45 +373,34 @@ namespace TennisClub.UI
          */
         private RoleReadDTO GetSelectedRole()
         {
-            if (RoleData.SelectedItem.IsNull())
-            {
-                return null;
-            }
+            if (RoleData.SelectedItem.IsNull()) return null;
 
-            return (RoleReadDTO)RoleData.SelectedItem;
+            return (RoleReadDTO) RoleData.SelectedItem;
         }
 
         private void SynchroniseRoleTable()
         {
-            bool isSucceeded = false;
-            ItemCollection? items = RoleData.Items;
-            for (int i = 0; i < RoleData.Items.Count; i++)
+            var isSucceeded = false;
+            var items = RoleData.Items;
+            for (var i = 0; i < RoleData.Items.Count; i++)
             {
-                object? item = RoleData.Items[i];
-                RoleReadDTO? roleItem = (RoleReadDTO)item;
-                RoleReadDTO? originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
+                var item = RoleData.Items[i];
+                var roleItem = (RoleReadDTO) item;
+                var originalItem = originalRoleList.Find(x => x.Id == roleItem.Id);
                 if (originalItem.IsNull() && !roleItem.IsNull())
-                {
                     isSucceeded = CreateRole(roleItem);
-                }
                 else if (!roleItem.Name.Equals(originalItem.Name))
-                {
-                    isSucceeded = UpdateRole(roleItem.Id, new RoleUpdateDTO { Name = roleItem.Name });
-                }
+                    isSucceeded = UpdateRole(roleItem.Id, new RoleUpdateDTO {Name = roleItem.Name});
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
             {
-                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 ReadRoles();
             }
             else
@@ -464,14 +421,14 @@ namespace TennisClub.UI
 
         private bool CreateGameResult(GameResultReadDTO item)
         {
-            GameResultCreateDTO? newGameResult = new GameResultCreateDTO
+            var newGameResult = new GameResultCreateDTO
             {
                 GameId = item.GameId,
                 ScoreOpponent = item.ScoreOpponent,
                 ScoreTeamMember = item.ScoreTeamMember,
                 SetNr = item.SetNr
             };
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.PostCall("gameresults", newGameResult);
+            var response = WebAPI.PostCall("gameresults", newGameResult);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
@@ -485,15 +442,15 @@ namespace TennisClub.UI
 
         private bool ReadGameResults()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall($"gameresults?{GetGameResultFilters()}");
-            DataGrid? itemsControl = GameResultData;
+            var result = WebAPI.GetCall($"gameresults?{GetGameResultFilters()}");
+            var itemsControl = GameResultData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<GameResultReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<GameResultReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<GameResultReadDTO>>().Result;
                 ;
                 itemsControl.ItemsSource = tmp;
-                List<GameResultReadDTO>? tmp2 = new List<GameResultReadDTO>(tmp.Count);
+                var tmp2 = new List<GameResultReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
                 {
                     tmp2.Add(new GameResultReadDTO
@@ -515,7 +472,7 @@ namespace TennisClub.UI
 
         private bool UpdateGameResult(int id, GameResultUpdateDTO item)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.PutCall($"gameresults/{id}", item);
+            var result = WebAPI.PutCall($"gameresults/{id}", item);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -555,12 +512,12 @@ namespace TennisClub.UI
 
         private void AddGameResultButton_Click(object sender, RoutedEventArgs e)
         {
-            if (int.TryParse(GameResultGameId.SelectedValue.ToString(), out int gameId) &&
-                byte.TryParse(GameResultSetNr.Text, out byte setNr) &&
-                byte.TryParse(GameResultScoreTeamMember.Text, out byte scoreTeamMember) &&
-                byte.TryParse(GameResultscoreOpponent.Text, out byte scoreOpponent))
+            if (int.TryParse(GameResultGameId.SelectedValue.ToString(), out var gameId) &&
+                byte.TryParse(GameResultSetNr.Text, out var setNr) &&
+                byte.TryParse(GameResultScoreTeamMember.Text, out var scoreTeamMember) &&
+                byte.TryParse(GameResultscoreOpponent.Text, out var scoreOpponent))
             {
-                List<GameResultReadDTO>? newList = GameResultData.ItemsSource.OfType<GameResultReadDTO>().ToList();
+                var newList = GameResultData.ItemsSource.OfType<GameResultReadDTO>().ToList();
 
                 if (newList.Exists(x => x.GameId == gameId && x.SetNr == setNr))
                 {
@@ -569,7 +526,7 @@ namespace TennisClub.UI
                     return;
                 }
 
-                GameResultReadDTO? newGameResult = new GameResultReadDTO
+                var newGameResult = new GameResultReadDTO
                 {
                     Id = 0,
                     GameId = gameId,
@@ -592,12 +549,9 @@ namespace TennisClub.UI
 
         private void GameResultGameId_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameResultReadDTO? gameResult = GetSelectedGameResult();
+            var gameResult = GetSelectedGameResult();
 
-            if (gameResult.IsNull())
-            {
-                return;
-            }
+            if (gameResult.IsNull()) return;
 
             gameResult.GameId = int.Parse(GameResultGameId.SelectedValue.IsNull()
                 ? "0"
@@ -607,12 +561,9 @@ namespace TennisClub.UI
 
         private void GameResultSetNr_TextChanged(object sender, TextChangedEventArgs e)
         {
-            GameResultReadDTO? gameResult = GetSelectedGameResult();
+            var gameResult = GetSelectedGameResult();
 
-            if (gameResult.IsNull())
-            {
-                return;
-            }
+            if (gameResult.IsNull()) return;
 
             gameResult.SetNr = byte.Parse(GameResultSetNr.Text == "" ? "0" : GameResultSetNr.Text);
             GameResultData.Items.Refresh();
@@ -620,12 +571,9 @@ namespace TennisClub.UI
 
         private void GameResultScoreTeamMember_TextChanged(object sender, TextChangedEventArgs e)
         {
-            GameResultReadDTO? gameResult = GetSelectedGameResult();
+            var gameResult = GetSelectedGameResult();
 
-            if (gameResult.IsNull())
-            {
-                return;
-            }
+            if (gameResult.IsNull()) return;
 
             gameResult.ScoreTeamMember =
                 byte.Parse(GameResultScoreTeamMember.Text == "" ? "0" : GameResultScoreTeamMember.Text);
@@ -634,12 +582,9 @@ namespace TennisClub.UI
 
         private void GameResultscoreOpponent_TextChanged(object sender, TextChangedEventArgs e)
         {
-            GameResultReadDTO? gameResult = GetSelectedGameResult();
+            var gameResult = GetSelectedGameResult();
 
-            if (gameResult.IsNull())
-            {
-                return;
-            }
+            if (gameResult.IsNull()) return;
 
             gameResult.ScoreOpponent =
                 byte.Parse(GameResultscoreOpponent.Text == "" ? "0" : GameResultscoreOpponent.Text);
@@ -648,7 +593,7 @@ namespace TennisClub.UI
 
         private void GameResultData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameResultReadDTO? selectedItem = GetSelectedGameResult();
+            var selectedItem = GetSelectedGameResult();
             if (!selectedItem.IsNull())
             {
                 GameResultGameId.Text = selectedItem.GameId.ToString();
@@ -673,32 +618,26 @@ namespace TennisClub.UI
          */
         private GameResultReadDTO GetSelectedGameResult()
         {
-            if (GameResultData.SelectedItem.IsNull())
-            {
-                return null;
-            }
+            if (GameResultData.SelectedItem.IsNull()) return null;
 
-            return (GameResultReadDTO)GameResultData.SelectedItem;
+            return (GameResultReadDTO) GameResultData.SelectedItem;
         }
 
         private void SynchroniseGameResultTable()
         {
-            bool isSucceeded = false;
+            var isSucceeded = false;
 
-            for (int i = 0; i < GameResultData.Items.Count; i++)
+            for (var i = 0; i < GameResultData.Items.Count; i++)
             {
-                object? item = GameResultData.Items[i];
-                GameResultReadDTO? gameResultItem = (GameResultReadDTO)item;
-                GameResultReadDTO? originalItem = originalGameResultList.Find(x => x.Id == gameResultItem.Id);
+                var item = GameResultData.Items[i];
+                var gameResultItem = (GameResultReadDTO) item;
+                var originalItem = originalGameResultList.Find(x => x.Id == gameResultItem.Id);
 
                 if (originalItem.IsNull() && !gameResultItem.IsNull())
-                {
                     isSucceeded = CreateGameResult(gameResultItem);
-                }
                 else if (gameResultItem.SetNr != originalItem.SetNr ||
                          gameResultItem.ScoreOpponent != originalItem.ScoreOpponent ||
                          gameResultItem.ScoreTeamMember != originalItem.ScoreTeamMember)
-                {
                     isSucceeded = UpdateGameResult(gameResultItem.Id,
                         new GameResultUpdateDTO
                         {
@@ -706,21 +645,16 @@ namespace TennisClub.UI
                             SetNr = gameResultItem.SetNr,
                             ScoreTeamMember = gameResultItem.ScoreTeamMember
                         });
-                }
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
             {
-                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 ReadGameResults();
             }
             else
@@ -731,8 +665,8 @@ namespace TennisClub.UI
 
         private string GetGameResultFilters()
         {
-            string? memberIdUrl = $"memberId={GameResultPlayerComboBoxFilter.SelectedValue}";
-            string? selectedDateUrl =
+            var memberIdUrl = $"memberId={GameResultPlayerComboBoxFilter.SelectedValue}";
+            var selectedDateUrl =
                 $"date={GameResultdatePickerFilter.SelectedDate.GetValueOrDefault().ToShortDateString()}";
 
             return
@@ -751,7 +685,7 @@ namespace TennisClub.UI
          */
         private bool CreateMember(MemberReadDTO memberItem)
         {
-            MemberCreateDTO? newMember = new MemberCreateDTO
+            var newMember = new MemberCreateDTO
             {
                 Addition = memberItem.Addition,
                 Address = memberItem.Address,
@@ -765,7 +699,7 @@ namespace TennisClub.UI
                 PhoneNr = memberItem.PhoneNr,
                 Zipcode = memberItem.Zipcode
             };
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.PostCall("members", newMember);
+            var response = WebAPI.PostCall("members", newMember);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
@@ -779,11 +713,11 @@ namespace TennisClub.UI
 
         private void ReadAllMembers()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall("members");
+            var result = WebAPI.GetCall("members");
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<MemberReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
                 allMembers = tmp;
                 MemberRoleMember.ItemsSource = tmp;
                 MemberRoleMemberFilter.ItemsSource = tmp;
@@ -800,11 +734,11 @@ namespace TennisClub.UI
 
         private void ReadAllActiveSpelerMembers()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall("members/active/speler");
+            var result = WebAPI.GetCall("members/active/speler");
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<MemberReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
                 GameMember.ItemsSource = tmp;
             }
             else
@@ -815,14 +749,14 @@ namespace TennisClub.UI
 
         private bool ReadActiveMembers()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall($"members/active?{GetMemberFilters()}");
-            DataGrid? itemsControl = MemberData;
+            var result = WebAPI.GetCall($"members/active?{GetMemberFilters()}");
+            var itemsControl = MemberData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<MemberReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberReadDTO>>().Result;
                 itemsControl.ItemsSource = tmp;
-                List<MemberReadDTO>? tmp2 = new List<MemberReadDTO>(tmp.Count);
+                var tmp2 = new List<MemberReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
                 {
                     tmp2.Add(new MemberReadDTO
@@ -853,7 +787,7 @@ namespace TennisClub.UI
 
         private bool UpdateMember(int id, MemberUpdateDTO memberUpdateDTO)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
+            var result = WebAPI.PutCall($"members/{id}", memberUpdateDTO);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -867,7 +801,7 @@ namespace TennisClub.UI
 
         private bool DeleteMember(int id)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.DeleteCall($"members/{id}");
+            var response = WebAPI.DeleteCall($"members/{id}");
 
             if (response.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -907,7 +841,7 @@ namespace TennisClub.UI
 
         private void MemberData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberReadDTO? selectedItem = GetSelectedMember();
+            var selectedItem = GetSelectedMember();
             if (!selectedItem.IsNull())
             {
                 MemberAddition.Text = selectedItem.Addition;
@@ -945,18 +879,12 @@ namespace TennisClub.UI
 
         private void MemberGender_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
-            GenderReadDTO? gender = (GenderReadDTO)MemberGender.SelectedItem;
-            if (gender.IsNull())
-            {
-                return;
-            }
+            var gender = (GenderReadDTO) MemberGender.SelectedItem;
+            if (gender.IsNull()) return;
 
             member.GenderName = gender.Name;
             member.GenderId = gender.Id;
@@ -968,24 +896,19 @@ namespace TennisClub.UI
          */
         private void SynchroniseMemberTable()
         {
-            bool isSucceeded = false;
-            List<MemberReadDTO>? memberData = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+            var isSucceeded = false;
+            var memberData = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
 
-            for (int i = 0; i < originalMemberList.Count; i++)
+            for (var i = 0; i < originalMemberList.Count; i++)
             {
-                MemberReadDTO? originalItem = originalMemberList.ElementAt(i);
-                MemberReadDTO? memberItem = memberData.Find(x => x.Id == originalItem.Id);
+                var originalItem = originalMemberList.ElementAt(i);
+                var memberItem = memberData.Find(x => x.Id == originalItem.Id);
 
                 if (!originalItem.IsNull() && memberItem.IsNull())
-                {
                     isSucceeded = DeleteMember(originalItem.Id);
-                }
                 else if (originalItem.IsNull() && !memberItem.IsNull())
-                {
                     continue;
-                }
                 else if (!originalItem.Equals(memberItem))
-                {
                     isSucceeded = UpdateMember(originalItem.Id,
                         new MemberUpdateDTO
                         {
@@ -1001,35 +924,25 @@ namespace TennisClub.UI
                             PhoneNr = memberItem.PhoneNr,
                             Zipcode = memberItem.Zipcode
                         });
-                }
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded || originalMemberList.Count == 0)
-            {
-                foreach (MemberReadDTO? x in createMemberlist)
+                foreach (var x in createMemberlist)
                 {
                     isSucceeded = CreateMember(x);
 
-                    if (!isSucceeded)
-                    {
-                        break;
-                    }
+                    if (!isSucceeded) break;
                 }
-            }
 
             if (isSucceeded)
             {
                 createMemberlist.Clear();
-                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 ReadActiveMembers();
                 ReadAllActiveSpelerMembers();
                 ReadAllMembers();
@@ -1042,32 +955,26 @@ namespace TennisClub.UI
 
         private string GetMemberFilters()
         {
-            string? federationNrUrl = $"federationNr={MemberFilterFederationNr.Text}";
-            string? lastNameUrl = $"lastName={MemberFilterLastName.Text}";
-            string? firstNameUrl = $"firstName={MemberFilterFirstName.Text}";
-            string? locationUrl = $"location={MemberFilterLocation.Text}";
+            var federationNrUrl = $"federationNr={MemberFilterFederationNr.Text}";
+            var lastNameUrl = $"lastName={MemberFilterLastName.Text}";
+            var firstNameUrl = $"firstName={MemberFilterFirstName.Text}";
+            var locationUrl = $"location={MemberFilterLocation.Text}";
             return
                 $"{(string.IsNullOrEmpty(MemberFilterFederationNr.Text) ? "" : federationNrUrl)}&{(string.IsNullOrEmpty(MemberFilterLastName.Text) ? "" : lastNameUrl)}&{(string.IsNullOrEmpty(MemberFilterFirstName.Text) ? "" : firstNameUrl)}&{(string.IsNullOrEmpty(MemberFilterLocation.Text) ? "" : locationUrl)}";
         }
 
         private MemberReadDTO GetSelectedMember()
         {
-            if (MemberData.SelectedItem.IsNull())
-            {
-                return null;
-            }
+            if (MemberData.SelectedItem.IsNull()) return null;
 
-            return (MemberReadDTO)MemberData.SelectedItem;
+            return (MemberReadDTO) MemberData.SelectedItem;
         }
 
         private void MemberFirstName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.FirstName = MemberFirstName.Text;
             MemberData.Items.Refresh();
@@ -1075,12 +982,9 @@ namespace TennisClub.UI
 
         private void MemberLastName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.LastName = MemberLastName.Text;
             MemberData.Items.Refresh();
@@ -1088,12 +992,9 @@ namespace TennisClub.UI
 
         private void MemberAddress_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Address = MemberAddress.Text;
             MemberData.Items.Refresh();
@@ -1101,12 +1002,9 @@ namespace TennisClub.UI
 
         private void MemberNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Number = MemberNumber.Text;
             MemberData.Items.Refresh();
@@ -1114,12 +1012,9 @@ namespace TennisClub.UI
 
         private void MemberAddition_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Addition = MemberAddition.Text;
             MemberData.Items.Refresh();
@@ -1127,12 +1022,9 @@ namespace TennisClub.UI
 
         private void MemberZipcode_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.Zipcode = MemberZipcode.Text;
             MemberData.Items.Refresh();
@@ -1140,12 +1032,9 @@ namespace TennisClub.UI
 
         private void MemberCity_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.City = MemberCity.Text;
             MemberData.Items.Refresh();
@@ -1153,12 +1042,9 @@ namespace TennisClub.UI
 
         private void MemberPhoneNr_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.PhoneNr = MemberPhoneNr.Text;
             MemberData.Items.Refresh();
@@ -1166,12 +1052,9 @@ namespace TennisClub.UI
 
         private void MemberFederationNr_TextChanged(object sender, TextChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
             member.FederationNr = MemberFederationNr.Text;
             MemberData.Items.Refresh();
@@ -1179,19 +1062,13 @@ namespace TennisClub.UI
 
         private void MemberBirthDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberReadDTO? member = GetSelectedMember();
+            var member = GetSelectedMember();
 
-            if (member.IsNull())
-            {
-                return;
-            }
+            if (member.IsNull()) return;
 
-            DateTime? selectedDate = MemberBirthDate.SelectedDate;
+            var selectedDate = MemberBirthDate.SelectedDate;
 
-            if (selectedDate.IsNull())
-            {
-                return;
-            }
+            if (selectedDate.IsNull()) return;
 
             member.BirthDate = selectedDate.Value;
             MemberData.Items.Refresh();
@@ -1199,8 +1076,8 @@ namespace TennisClub.UI
 
         private void AddMemberButton_Click(object sender, RoutedEventArgs e)
         {
-            DateTime? birthDate = MemberBirthDate.SelectedDate;
-            GenderReadDTO? gender = (GenderReadDTO)MemberGender.SelectedItem;
+            var birthDate = MemberBirthDate.SelectedDate;
+            var gender = (GenderReadDTO) MemberGender.SelectedItem;
 
             if (!birthDate.IsNull() && !gender.IsNull() && !string.IsNullOrEmpty(MemberFirstName.Text) &&
                 !string.IsNullOrEmpty(MemberLastName.Text) && !string.IsNullOrEmpty(MemberAddress.Text) &&
@@ -1215,7 +1092,7 @@ namespace TennisClub.UI
                     return;
                 }
 
-                MemberReadDTO? newMember = new MemberReadDTO
+                var newMember = new MemberReadDTO
                 {
                     Addition = MemberAddition.Text,
                     Address = MemberAddress.Text,
@@ -1232,7 +1109,7 @@ namespace TennisClub.UI
                     Deleted = false
                 };
 
-                List<MemberReadDTO>? newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
+                var newList = MemberData.ItemsSource.OfType<MemberReadDTO>().ToList();
                 newList.Add(newMember);
                 createMemberlist.Add(newMember);
                 MemberData.ItemsSource = newList;
@@ -1257,13 +1134,13 @@ namespace TennisClub.UI
          */
         private bool CreateMemberRole(MemberRoleReadDTO memberRoleItem)
         {
-            MemberRoleCreateDTO? newMemberRole = new MemberRoleCreateDTO
+            var newMemberRole = new MemberRoleCreateDTO
             {
                 MemberId = memberRoleItem.MemberId,
                 RoleId = memberRoleItem.RoleId,
                 StartDate = memberRoleItem.StartDate
             };
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.PostCall("memberroles", newMemberRole);
+            var response = WebAPI.PostCall("memberroles", newMemberRole);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
@@ -1277,14 +1154,14 @@ namespace TennisClub.UI
 
         private bool ReadMemberRoles()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall($"memberroles{GetMemberRoleFilters()}");
-            DataGrid? itemsControl = MemberRoleData;
+            var result = WebAPI.GetCall($"memberroles{GetMemberRoleFilters()}");
+            var itemsControl = MemberRoleData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<MemberRoleReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<MemberRoleReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberRoleReadDTO>>().Result;
                 itemsControl.ItemsSource = tmp;
-                List<MemberRoleReadDTO>? tmp2 = new List<MemberRoleReadDTO>(tmp.Count);
+                var tmp2 = new List<MemberRoleReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
                 {
                     tmp2.Add(new MemberRoleReadDTO
@@ -1308,7 +1185,7 @@ namespace TennisClub.UI
 
         private bool UpdateMemberRole(int id, MemberRoleUpdateDTO memberRoleUpdateDTO)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.PutCall($"memberroles/{id}", memberRoleUpdateDTO);
+            var result = WebAPI.PutCall($"memberroles/{id}", memberRoleUpdateDTO);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -1342,22 +1219,26 @@ namespace TennisClub.UI
 
         private void AddMemberRoleButton_Click(object sender, RoutedEventArgs e)
         {
-            DateTime? startDate = MemberRoleStartDate.SelectedDate;
-            DateTime? endDate = MemberRoleEndDate.SelectedDate;
-            MemberReadDTO? member = (MemberReadDTO)MemberRoleMember.SelectedItem;
-            RoleReadDTO? role = (RoleReadDTO)MemberRoleRole.SelectedItem;
+            var startDate = MemberRoleStartDate.SelectedDate;
+            var endDate = MemberRoleEndDate.SelectedDate;
+            var member = (MemberReadDTO) MemberRoleMember.SelectedItem;
+            var role = (RoleReadDTO) MemberRoleRole.SelectedItem;
 
             if (!startDate.IsNull() && !member.IsNull() && !role.IsNull())
             {
-                List<MemberRoleReadDTO>? newList = MemberRoleData.ItemsSource.OfType<MemberRoleReadDTO>().ToList();
+                var newList = MemberRoleData.ItemsSource.OfType<MemberRoleReadDTO>().ToList();
 
-                if (newList.Exists(x => x.MemberId == member.Id && x.RoleId == role.Id && x.StartDate.Equals(startDate) && x.EndDate.Equals(endDate)))
+                if (newList.Exists(x =>
+                    x.MemberId == member.Id && x.RoleId == role.Id && x.StartDate.Equals(startDate) &&
+                    x.EndDate.Equals(endDate)))
                 {
-                    MessageBox.Show("Er is al een rol toegewijzen aan de gekozen speler op de ingevoerde data!", "Fout!", MessageBoxButton.OK,
+                    MessageBox.Show("Er is al een rol toegewijzen aan de gekozen speler op de ingevoerde data!",
+                        "Fout!", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                     return;
                 }
-                MemberRoleReadDTO? newMemberRole = new MemberRoleReadDTO
+
+                var newMemberRole = new MemberRoleReadDTO
                 {
                     Id = 0,
                     StartDate = startDate.Value,
@@ -1367,10 +1248,7 @@ namespace TennisClub.UI
                     RoleName = role.Name
                 };
 
-                if (!endDate.IsNull())
-                {
-                    newMemberRole.EndDate = endDate.Value;
-                }
+                if (!endDate.IsNull()) newMemberRole.EndDate = endDate.Value;
 
                 newList.Add(newMemberRole);
                 MemberRoleData.ItemsSource = newList;
@@ -1401,23 +1279,14 @@ namespace TennisClub.UI
 
         private void MemberRoleMember_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberRoleReadDTO? memberRole = GetSelectedMemberRole();
+            var memberRole = GetSelectedMemberRole();
 
-            if (memberRole.IsNull())
-            {
-                return;
-            }
+            if (memberRole.IsNull()) return;
 
-            if (MemberRoleMember.SelectedItem.IsNull())
-            {
-                return;
-            }
+            if (MemberRoleMember.SelectedItem.IsNull()) return;
 
-            MemberReadDTO? member = (MemberReadDTO)MemberRoleMember.SelectedItem;
-            if (member.IsNull())
-            {
-                return;
-            }
+            var member = (MemberReadDTO) MemberRoleMember.SelectedItem;
+            if (member.IsNull()) return;
 
             memberRole.MemberId = member.Id;
             memberRole.MemberFullName = member.FullName;
@@ -1427,23 +1296,14 @@ namespace TennisClub.UI
 
         private void MemberRoleRole_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberRoleReadDTO? memberRole = GetSelectedMemberRole();
+            var memberRole = GetSelectedMemberRole();
 
-            if (memberRole.IsNull())
-            {
-                return;
-            }
+            if (memberRole.IsNull()) return;
 
-            if (MemberRoleRole.SelectedItem.IsNull())
-            {
-                return;
-            }
+            if (MemberRoleRole.SelectedItem.IsNull()) return;
 
-            RoleReadDTO? role = (RoleReadDTO)MemberRoleRole.SelectedItem;
-            if (role.IsNull())
-            {
-                return;
-            }
+            var role = (RoleReadDTO) MemberRoleRole.SelectedItem;
+            if (role.IsNull()) return;
 
             memberRole.RoleId = role.Id;
             memberRole.RoleName = role.Name;
@@ -1452,17 +1312,11 @@ namespace TennisClub.UI
 
         private void MemberRoleStartDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
         {
-            MemberRoleReadDTO? memberRole = GetSelectedMemberRole();
+            var memberRole = GetSelectedMemberRole();
 
-            if (memberRole.IsNull())
-            {
-                return;
-            }
+            if (memberRole.IsNull()) return;
 
-            if (!MemberRoleStartDate.SelectedDate.HasValue)
-            {
-                return;
-            }
+            if (!MemberRoleStartDate.SelectedDate.HasValue) return;
 
             memberRole.StartDate = MemberRoleStartDate.SelectedDate.Value;
             MemberRoleData.Items.Refresh();
@@ -1470,17 +1324,11 @@ namespace TennisClub.UI
 
         private void MemberRoleEndDate_OnSelectedDateChanged(object? sender, SelectionChangedEventArgs e)
         {
-            MemberRoleReadDTO? memberRole = GetSelectedMemberRole();
+            var memberRole = GetSelectedMemberRole();
 
-            if (memberRole.IsNull())
-            {
-                return;
-            }
+            if (memberRole.IsNull()) return;
 
-            if (!MemberRoleEndDate.SelectedDate.HasValue)
-            {
-                return;
-            }
+            if (!MemberRoleEndDate.SelectedDate.HasValue) return;
 
             memberRole.EndDate = MemberRoleEndDate.SelectedDate.Value;
             MemberRoleData.Items.Refresh();
@@ -1488,19 +1336,16 @@ namespace TennisClub.UI
 
         private void MemberRoleData_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MemberRoleReadDTO? memberRole = GetSelectedMemberRole();
+            var memberRole = GetSelectedMemberRole();
 
-            if (memberRole.IsNull())
-            {
-                return;
-            }
+            if (memberRole.IsNull()) return;
 
             MemberRoleMember.SelectedValue = memberRole.MemberId;
             MemberRoleRole.SelectedValue = memberRole.RoleId;
             MemberRoleStartDate.SelectedDate = memberRole.StartDate;
             MemberRoleEndDate.SelectedDate = memberRole.EndDate;
 
-            bool isNewMember = originalMemberRoleList.Contains(memberRole);
+            var isNewMember = originalMemberRoleList.Contains(memberRole);
 
             SetMemberRoleBoxEnable(isNewMember);
         }
@@ -1522,13 +1367,13 @@ namespace TennisClub.UI
          */
         private void SynchroniseMemberRoleTable()
         {
-            bool isSucceeded = false;
+            var isSucceeded = false;
 
-            for (int i = 0; i < MemberRoleData.Items.Count; i++)
+            for (var i = 0; i < MemberRoleData.Items.Count; i++)
             {
-                object? item = MemberRoleData.Items[i];
-                MemberRoleReadDTO? memberRoleItem = (MemberRoleReadDTO)item;
-                MemberRoleReadDTO? originalItem = originalMemberRoleList.Find(x => x.Id == memberRoleItem.Id);
+                var item = MemberRoleData.Items[i];
+                var memberRoleItem = (MemberRoleReadDTO) item;
+                var originalItem = originalMemberRoleList.Find(x => x.Id == memberRoleItem.Id);
 
                 if (!originalItem.IsNull() && memberRoleItem.IsNull())
                 {
@@ -1553,15 +1398,13 @@ namespace TennisClub.UI
                     isSucceeded = true;
                 }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
             {
-                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 ReadActiveMembers();
                 ReadMemberRoles();
                 ReadAllMembers();
@@ -1582,7 +1425,7 @@ namespace TennisClub.UI
 
         private string GetMemberRoleFilters()
         {
-            string? result = "";
+            var result = "";
 
             if (!MemberRoleMemberFilter.SelectedItem.IsNull())
             {
@@ -1591,13 +1434,10 @@ namespace TennisClub.UI
             else if (MemberRoleRolesFilter.SelectedItems.Count > 0)
             {
                 result += "/byroleids/";
-                foreach (object? item in MemberRoleRolesFilter.SelectedItems)
+                foreach (var item in MemberRoleRolesFilter.SelectedItems)
                 {
-                    RoleReadDTO? role = (RoleReadDTO)item;
-                    if (!role.IsNull())
-                    {
-                        result += role.Id + ",";
-                    }
+                    var role = (RoleReadDTO) item;
+                    if (!role.IsNull()) result += role.Id + ",";
                 }
             }
 
@@ -1606,12 +1446,9 @@ namespace TennisClub.UI
 
         private MemberRoleReadDTO GetSelectedMemberRole()
         {
-            if (MemberRoleData.SelectedItem.IsNull())
-            {
-                return null;
-            }
+            if (MemberRoleData.SelectedItem.IsNull()) return null;
 
-            MemberRoleReadDTO? memberRole = (MemberRoleReadDTO)MemberRoleData.SelectedItem;
+            var memberRole = (MemberRoleReadDTO) MemberRoleData.SelectedItem;
 
             return memberRole;
         }
@@ -1628,14 +1465,14 @@ namespace TennisClub.UI
          */
         private bool CreateGame(GameReadDTO gameReadDto)
         {
-            GameCreateDTO? newGame = new GameCreateDTO
+            var newGame = new GameCreateDTO
             {
                 Date = gameReadDto.Date,
                 GameNumber = gameReadDto.GameNumber,
                 LeagueId = gameReadDto.LeagueId,
                 MemberId = gameReadDto.MemberId
             };
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.PostCall("games", newGame);
+            var response = WebAPI.PostCall("games", newGame);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
@@ -1649,14 +1486,14 @@ namespace TennisClub.UI
 
         private bool ReadGames()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall($"games{GetGamesFilter()}");
-            DataGrid? itemsControl = GameData;
+            var result = WebAPI.GetCall($"games{GetGamesFilter()}");
+            var itemsControl = GameData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<GameReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<GameReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<GameReadDTO>>().Result;
                 itemsControl.ItemsSource = tmp;
-                List<GameReadDTO>? tmp2 = new List<GameReadDTO>(tmp.Count);
+                var tmp2 = new List<GameReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
                 {
                     tmp2.Add(new GameReadDTO
@@ -1682,7 +1519,7 @@ namespace TennisClub.UI
 
         private bool UpdateGame(int id, GameUpdateDTO gameUpdateDto)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.PutCall($"games/{id}", gameUpdateDto);
+            var result = WebAPI.PutCall($"games/{id}", gameUpdateDto);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -1696,7 +1533,7 @@ namespace TennisClub.UI
 
         private bool DeleteGame(int id)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.DeleteCall($"games/{id}");
+            var response = WebAPI.DeleteCall($"games/{id}");
 
             if (response.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -1715,12 +1552,9 @@ namespace TennisClub.UI
 
         private void GameData_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameReadDTO? game = GetSelectedGame();
+            var game = GetSelectedGame();
 
-            if (game.IsNull())
-            {
-                return;
-            }
+            if (game.IsNull()) return;
 
             GameDate.SelectedDate = game.Date;
             GameMember.SelectedValue = game.MemberId;
@@ -1730,23 +1564,14 @@ namespace TennisClub.UI
 
         private void GameLeague_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameReadDTO? game = GetSelectedGame();
+            var game = GetSelectedGame();
 
-            if (game.IsNull())
-            {
-                return;
-            }
+            if (game.IsNull()) return;
 
-            if (GameMember.SelectedItem.IsNull())
-            {
-                return;
-            }
+            if (GameMember.SelectedItem.IsNull()) return;
 
-            LeagueReadDTO member = (LeagueReadDTO)GameLeague.SelectedItem;
-            if (member.IsNull())
-            {
-                return;
-            }
+            LeagueReadDTO member = (LeagueReadDTO) GameLeague.SelectedItem;
+            if (member.IsNull()) return;
 
             game.LeagueName = member.Name;
             game.LeagueId = member.Id;
@@ -1755,23 +1580,14 @@ namespace TennisClub.UI
 
         private void GameMember_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameReadDTO? game = GetSelectedGame();
+            var game = GetSelectedGame();
 
-            if (game.IsNull())
-            {
-                return;
-            }
+            if (game.IsNull()) return;
 
-            if (GameMember.SelectedItem.IsNull())
-            {
-                return;
-            }
+            if (GameMember.SelectedItem.IsNull()) return;
 
-            MemberReadDTO member = (MemberReadDTO)GameMember.SelectedItem;
-            if (member.IsNull())
-            {
-                return;
-            }
+            MemberReadDTO member = (MemberReadDTO) GameMember.SelectedItem;
+            if (member.IsNull()) return;
 
             game.MemberFullName = member.FullName;
             game.MemberId = member.Id;
@@ -1780,17 +1596,11 @@ namespace TennisClub.UI
 
         private void GameDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            GameReadDTO? game = GetSelectedGame();
+            var game = GetSelectedGame();
 
-            if (game.IsNull())
-            {
-                return;
-            }
+            if (game.IsNull()) return;
 
-            if (!GameDate.SelectedDate.HasValue)
-            {
-                return;
-            }
+            if (!GameDate.SelectedDate.HasValue) return;
 
             game.Date = GameDate.SelectedDate.Value;
             GameData.Items.Refresh();
@@ -1826,13 +1636,13 @@ namespace TennisClub.UI
 
         private void AddGameButton_OnClick(object sender, RoutedEventArgs e)
         {
-            DateTime? date = GameDate.SelectedDate;
+            var date = GameDate.SelectedDate;
 
             if (!date.IsNull() && !string.IsNullOrEmpty(GameNumber.Text) && !GameMember.SelectedItem.IsNull() &&
                 !GameMember.SelectedValue.IsNull() && !GameLeague.SelectedItem.IsNull() &&
                 !GameLeague.SelectedValue.IsNull())
             {
-                List<GameReadDTO>? newList = GameData.ItemsSource.OfType<GameReadDTO>().ToList();
+                var newList = GameData.ItemsSource.OfType<GameReadDTO>().ToList();
 
                 if (newList.Exists(x => x.GameNumber.Equals(GameNumber.Text)) ||
                     createGameList.Exists(x => x.GameNumber.Equals(GameNumber.Text)))
@@ -1842,18 +1652,18 @@ namespace TennisClub.UI
                     return;
                 }
 
-                GameReadDTO? newGame = new GameReadDTO
+                var newGame = new GameReadDTO
                 {
                     Id = 0,
                     GameNumber = GameNumber.Text,
                     Date = date.Value
                 };
 
-                MemberReadDTO? member = (MemberReadDTO)GameMember.SelectedItem;
+                var member = (MemberReadDTO) GameMember.SelectedItem;
                 newGame.MemberFullName = member.FullName;
                 newGame.MemberId = member.Id;
 
-                LeagueReadDTO? league = (LeagueReadDTO)GameLeague.SelectedItem;
+                var league = (LeagueReadDTO) GameLeague.SelectedItem;
                 newGame.LeagueName = league.Name;
                 newGame.LeagueId = league.Id;
 
@@ -1880,24 +1690,19 @@ namespace TennisClub.UI
          */
         private void SynchroniseGameTable()
         {
-            bool isSucceeded = false;
-            List<GameReadDTO>? gameData = GameData.ItemsSource.OfType<GameReadDTO>().ToList();
+            var isSucceeded = false;
+            var gameData = GameData.ItemsSource.OfType<GameReadDTO>().ToList();
 
-            for (int i = 0; i < originalGameList.Count; i++)
+            for (var i = 0; i < originalGameList.Count; i++)
             {
-                GameReadDTO? originalItem = originalGameList.ElementAt(i);
-                GameReadDTO? gameItem = gameData.Find(x => x.Id == originalItem.Id);
+                var originalItem = originalGameList.ElementAt(i);
+                var gameItem = gameData.Find(x => x.Id == originalItem.Id);
 
                 if (!originalItem.IsNull() && gameItem.IsNull())
-                {
                     isSucceeded = DeleteGame(originalItem.Id);
-                }
                 else if (originalItem.IsNull() && !gameItem.IsNull())
-                {
                     continue;
-                }
                 else if (!originalItem.Equals(gameItem))
-                {
                     isSucceeded = UpdateGame(originalItem.Id,
                         new GameUpdateDTO
                         {
@@ -1906,35 +1711,25 @@ namespace TennisClub.UI
                             LeagueId = gameItem.LeagueId,
                             MemberId = gameItem.MemberId
                         });
-                }
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded || originalGameList.Count == 0)
-            {
-                foreach (GameReadDTO? x in createGameList)
+                foreach (var x in createGameList)
                 {
                     isSucceeded = CreateGame(x);
 
-                    if (!isSucceeded)
-                    {
-                        break;
-                    }
+                    if (!isSucceeded) break;
                 }
-            }
 
             if (isSucceeded)
             {
                 createGameList.Clear();
-                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 ReadActiveMembers();
                 ReadGames();
                 ReadGameResults();
@@ -1947,41 +1742,30 @@ namespace TennisClub.UI
 
         private string GetGamesFilter()
         {
-            string? result = "";
+            var result = "";
 
             if (!GameMemberFilter.SelectedItem.IsNull())
-            {
-                result += "/bymemberid/" + ((MemberReadDTO)GameMemberFilter.SelectedItem).Id;
-            }
+                result += "/bymemberid/" + ((MemberReadDTO) GameMemberFilter.SelectedItem).Id;
 
             return result;
         }
 
         private GameReadDTO GetSelectedGame()
         {
-            if (GameData.SelectedItem.IsNull())
-            {
-                return null;
-            }
+            if (GameData.SelectedItem.IsNull()) return null;
 
-            GameReadDTO? game = (GameReadDTO)GameData.SelectedItem;
+            var game = (GameReadDTO) GameData.SelectedItem;
 
             return game;
         }
 
         private void GameNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
-            GameReadDTO? game = GetSelectedGame();
+            var game = GetSelectedGame();
 
-            if (game.IsNull())
-            {
-                return;
-            }
+            if (game.IsNull()) return;
 
-            if (GameMember.SelectedItem.IsNull())
-            {
-                return;
-            }
+            if (GameMember.SelectedItem.IsNull()) return;
 
             game.GameNumber = GameNumber.Text;
             GameData.Items.Refresh();
@@ -1998,7 +1782,7 @@ namespace TennisClub.UI
          */
         private bool CreateMemberFine(MemberFineReadDTO item)
         {
-            MemberFineCreateDTO? newMemberFine = new MemberFineCreateDTO
+            var newMemberFine = new MemberFineCreateDTO
             {
                 Amount = item.Amount,
                 FineNumber = item.FineNumber,
@@ -2006,7 +1790,7 @@ namespace TennisClub.UI
                 MemberId = item.MemberId,
                 PaymentDate = item.PaymentDate
             };
-            System.Threading.Tasks.Task<HttpResponseMessage>? response = WebAPI.PostCall("memberfines", newMemberFine);
+            var response = WebAPI.PostCall("memberfines", newMemberFine);
 
             if (response.Result.StatusCode == HttpStatusCode.Created)
             {
@@ -2020,27 +1804,27 @@ namespace TennisClub.UI
 
         private bool ReadMemberFines()
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.GetCall($"memberfines{GetMemberFineFilters()}");
-            DataGrid? itemsControl = MemberFineData;
+            var result = WebAPI.GetCall($"memberfines{GetMemberFineFilters()}");
+            var itemsControl = MemberFineData;
 
             if (result.Result.StatusCode == HttpStatusCode.OK)
             {
-                List<MemberFineReadDTO>? tmp = result.Result.Content.ReadAsAsync<List<MemberFineReadDTO>>().Result;
+                var tmp = result.Result.Content.ReadAsAsync<List<MemberFineReadDTO>>().Result;
 
                 if (!MemberFineHandoutDateFilter.SelectedDate.IsNull())
                 {
-                    DateTime date = MemberFineHandoutDateFilter.SelectedDate.Value.Date;
+                    var date = MemberFineHandoutDateFilter.SelectedDate.Value.Date;
                     tmp = tmp.Where(x => x.HandoutDate.Date.Equals(date)).ToList();
                 }
 
                 if (!MemberFinePaymentDateFilter.SelectedDate.IsNull())
                 {
-                    DateTime date = MemberFinePaymentDateFilter.SelectedDate.Value.Date;
+                    var date = MemberFinePaymentDateFilter.SelectedDate.Value.Date;
                     tmp = tmp.Where(x => x.PaymentDate.Equals(date)).ToList();
                 }
 
                 itemsControl.ItemsSource = tmp;
-                List<MemberFineReadDTO>? tmp2 = new List<MemberFineReadDTO>(tmp.Count);
+                var tmp2 = new List<MemberFineReadDTO>(tmp.Count);
                 tmp.ForEach(item =>
                 {
                     tmp2.Add(new MemberFineReadDTO
@@ -2063,7 +1847,7 @@ namespace TennisClub.UI
 
         private bool UpdateMemberFine(int id, MemberFineUpdateDTO item)
         {
-            System.Threading.Tasks.Task<HttpResponseMessage>? result = WebAPI.PutCall($"memberfines/{id}", item);
+            var result = WebAPI.PutCall($"memberfines/{id}", item);
 
             if (result.Result.StatusCode == HttpStatusCode.NoContent)
             {
@@ -2108,40 +1892,32 @@ namespace TennisClub.UI
 
         private void SynchroniseMemberFineTable()
         {
-            bool isSucceeded = false;
+            var isSucceeded = false;
 
-            for (int i = 0; i < MemberFineData.Items.Count; i++)
+            for (var i = 0; i < MemberFineData.Items.Count; i++)
             {
-                object? item = MemberFineData.Items[i];
-                MemberFineReadDTO? memberFineItem = (MemberFineReadDTO)item;
-                MemberFineReadDTO? originalItem = originalMemberFineList.Find(x => x.Id == memberFineItem.Id);
+                var item = MemberFineData.Items[i];
+                var memberFineItem = (MemberFineReadDTO) item;
+                var originalItem = originalMemberFineList.Find(x => x.Id == memberFineItem.Id);
 
                 if (originalItem.IsNull() && !memberFineItem.IsNull())
-                {
                     isSucceeded = CreateMemberFine(memberFineItem);
-                }
                 else if (!memberFineItem.PaymentDate.Equals(originalItem.PaymentDate))
-                {
                     isSucceeded = UpdateMemberFine(memberFineItem.Id,
                         new MemberFineUpdateDTO
                         {
                             PaymentDate = memberFineItem.PaymentDate
                         });
-                }
                 else
-                {
                     isSucceeded = true;
-                }
 
-                if (!isSucceeded)
-                {
-                    break;
-                }
+                if (!isSucceeded) break;
             }
 
             if (isSucceeded)
             {
-                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("De tabel is succesvol gesynchroniseerd met de database!", "Succes!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
                 ReadGameResults();
                 ReadMemberFines();
             }
@@ -2153,12 +1929,10 @@ namespace TennisClub.UI
 
         private string GetMemberFineFilters()
         {
-            string? result = "";
+            var result = "";
 
             if (!MemberFineMemberFilter.SelectedValue.IsNull())
-            {
                 result += "/bymemberid/" + MemberFineMemberFilter.SelectedValue;
-            }
 
             return result;
         }

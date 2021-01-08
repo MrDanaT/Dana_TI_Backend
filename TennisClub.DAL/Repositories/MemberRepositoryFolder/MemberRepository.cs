@@ -35,7 +35,10 @@ namespace TennisClub.DAL.Repositories.MemberRepositoryFolder
             var memberRoles = TennisClubContext.MemberRoles
                 .Include(x => x.RoleNavigation)
                 .Where(mr => members
-                                .Contains(mr.MemberNavigation) && (mr.EndDate.Equals(new DateTime()) || mr.EndDate == null || mr.EndDate.Equals(new DateTime(1, 1, 1, 12, 0, 0))) && mr.RoleNavigation.Name.Equals("Speler"))
+                                 .Contains(mr.MemberNavigation) &&
+                             (mr.EndDate.Equals(new DateTime()) || mr.EndDate == null ||
+                              mr.EndDate.Equals(new DateTime(1, 1, 1, 12, 0, 0))) &&
+                             mr.RoleNavigation.Name.Equals("Speler"))
                 .Select(x => x.MemberNavigation);
 
             return _mapper.Map<IEnumerable<MemberReadDTO>>(memberRoles);
